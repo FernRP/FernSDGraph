@@ -39,9 +39,8 @@ namespace FernNPRCore.StableDiffusionGraph
         public override void OnAddedToGraph()
         {
             base.OnAddedToGraph();
-            base.OnEnable();
             var resolution = SDUtil.GetMainGameViewSize();
-            SDUtil.SDLog($"Camera Capture Width: {resolution.x} + Height: + {resolution.y}");
+            SDUtil.Log($"Camera Capture Width: {resolution.x} + Height: + {resolution.y}");
 
             if (currentCamere == null)
             {
@@ -59,6 +58,19 @@ namespace FernNPRCore.StableDiffusionGraph
 
         public override object OnRequestValue(Port port)
         {
+            var resolution = SDUtil.GetMainGameViewSize();
+            if (currentCamere == null)
+            {
+                currentCamere = Camera.main;
+            }
+            if (cameraRT == null)
+            {
+                cameraRT = RenderTexture.GetTemporary((int)resolution.x, (int)resolution.y, 24, RenderTextureFormat.DefaultHDR);
+            } else
+            {
+                cameraRT.Release();
+                cameraRT = RenderTexture.GetTemporary((int)resolution.x, (int)resolution.y, 24, RenderTextureFormat.DefaultHDR);
+            }
             var tempRT = currentCamere.targetTexture;
             currentCamere.targetTexture = cameraRT;
             currentCamere.Render();

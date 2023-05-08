@@ -29,7 +29,7 @@ namespace FernNPRCore.StableDiffusionGraph
             samplerNode.OnUpdateSeedField += OnUpadteSeed;
 
             List<string> samplerMethodList = new List<string>();
-            samplerMethodList.AddRange(SDDataHandle.samplers);
+            samplerMethodList.AddRange(SDDataHandle.Instance.samplers);
 
             var samplerMethodDropdown = new DropdownField(samplerMethodList, 0);
             samplerMethodDropdown.RegisterValueChangedCallback(e =>
@@ -57,6 +57,7 @@ namespace FernNPRCore.StableDiffusionGraph
             labelSeed.style.marginRight = 5;
             
             longField = new LongField();
+            longField.value = -1;
             longField.RegisterValueChangedCallback((e) =>
             {
                 samplerNode.Seed = e.newValue;

@@ -57,7 +57,7 @@ namespace FernNPRCore.StableDiffusionGraph
             {
                 if (Seed == 0)
                 {
-                    Seed = GenerateRandomLong(-1, Int64.MaxValue);
+                    Seed = -1;
                 }
                 yield return (GenerateAsync());
             }
@@ -88,27 +88,27 @@ namespace FernNPRCore.StableDiffusionGraph
 
         IEnumerator GenerateAsync()
         {
-
+            long seed = Seed;
+            if (seed == -1)
+                seed = GenerateRandomLong(-1, Int64.MaxValue);
             // Generate the image
             HttpWebRequest httpWebRequest = null;
             //try
             {
                 // Make a HTTP POST request to the Stable Diffusion server
                 httpWebRequest =
-                    (HttpWebRequest)WebRequest.Create(SDDataHandle.serverURL + SDDataHandle.ImageToImageAPI);
+                    (HttpWebRequest)WebRequest.Create(SDDataHandle.Instance.GetServerURL() + SDDataHandle.Instance.ImageToImageAPI);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
 
                 // add auth-header to request
-                if (SDDataHandle.UseAuth && !SDDataHandle.Username.Equals("") && !SDDataHandle.Password.Equals(""))
+                if (SDDataHandle.Instance.GetUseAuth() && !string.IsNullOrEmpty(SDDataHandle.Instance.GetUserName()) && !string.IsNullOrEmpty(SDDataHandle.Instance.GetPassword()))
                 {
                     httpWebRequest.PreAuthenticate = true;
-                    byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDDataHandle.Username + ":" + SDDataHandle.Password);
+                    byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDDataHandle.Instance.GetUserName() + ":" + SDDataHandle.Instance.GetPassword());
                     string encodedCredentials = Convert.ToBase64String(bytesToEncode);
                     httpWebRequest.Headers.Add("Authorization", "Basic " + encodedCredentials);
                 }
-                
-
                 // Send the generation parameters along with the POST request
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
@@ -132,7 +132,7 @@ namespace FernNPRCore.StableDiffusionGraph
                     
                     if (controlNetData != null)
                     {
-                        SDUtil.SDLog("use ControlNet");
+                        SDUtil.Log("use ControlNet");
                         SDParamsInImg2ImgControlNet sd = new SDParamsInImg2ImgControlNet();
 
 
@@ -145,7 +145,7 @@ namespace FernNPRCore.StableDiffusionGraph
                         sd.denoising_strength = DenisoStrength;
                         sd.width = Screen.width;
                         sd.height = Screen.height;
-                        sd.seed = Seed;
+                        sd.seed = seed;
                         sd.tiling = false;
                         sd.sampler_name = SamplerMethod;
                         sd.alwayson_scripts = new ALWAYSONSCRIPTS();
@@ -154,7 +154,7 @@ namespace FernNPRCore.StableDiffusionGraph
                         json = JsonConvert.SerializeObject(sd);
                     }else if (MaskImage != null)
                     {
-                        SDUtil.SDLog("use Mask");
+                        SDUtil.Log("use Mask");
                         
                         SDParamsInImg2ImgMask sd = new SDParamsInImg2ImgMask();
                         sd.init_images = new string[] { inputImgString };
@@ -165,7 +165,7 @@ namespace FernNPRCore.StableDiffusionGraph
                         sd.denoising_strength = DenisoStrength;
                         sd.width = Screen.width;
                         sd.height = Screen.height;
-                        sd.seed = Seed;
+                        sd.seed = seed;
                         sd.tiling = false;
                         sd.sampler_name = SamplerMethod;
                         byte[] maskImgBytes = MaskImage.EncodeToPNG();
@@ -181,7 +181,7 @@ namespace FernNPRCore.StableDiffusionGraph
                     }
                     else
                     {
-                        SDUtil.SDLog("use Only Img2Img");
+                        SDUtil.Log("use Only Img2Img");
                         SDParamsInImg2Img sd = new SDParamsInImg2Img();
 
 
@@ -194,7 +194,7 @@ namespace FernNPRCore.StableDiffusionGraph
                         sd.denoising_strength = DenisoStrength;
                         sd.width = Screen.width;
                         sd.height = Screen.height;
-                        sd.seed = Seed;
+                        sd.seed = seed;
                         sd.tiling = false;
                         sd.sampler_name = SamplerMethod;
 
@@ -219,7 +219,7 @@ namespace FernNPRCore.StableDiffusionGraph
             }
             // catch (Exception e)
             // {
-            //     Debug.LogError(e.Message + "\n\n" + e.StackTrace);
+            //     SDUtil.LogError(e.Message + "\n\n" + e.StackTrace);
             // }
 
             // Read the output of generation
@@ -230,7 +230,7 @@ namespace FernNPRCore.StableDiffusionGraph
 
                 while (!webResponse.IsCompleted)
                 {
-                    if (SDDataHandle.UseAuth && !SDDataHandle.Username.Equals("") && !SDDataHandle.Password.Equals(""))
+                    //if (SDDataHandle.Instance.UseAuth && !SDDataHandle.Instance.Username.Equals("") && !SDDataHandle.Instance.Password.Equals(""))
                         //UpdateGenerationProgressWithAuth();
                         // else
                         // UpdateGenerationProgress();
@@ -252,7 +252,7 @@ namespace FernNPRCore.StableDiffusionGraph
                     // If no image, there was probably an error so abort
                     if (json.images == null || json.images.Length == 0)
                     {
-                        Debug.LogError(
+                        SDUtil.LogError(
                             "No image was return by the server. This should not happen. Verify that the server is correctly setup.");
 
 #if UNITY_EDITOR
@@ -275,13 +275,12 @@ namespace FernNPRCore.StableDiffusionGraph
 
                             // Read the seed that was used by Stable Diffusion to generate this result
                             outSeed = info.seed;
-                            Seed = 0;
                             OnUpdateSeedField?.Invoke(Seed, outSeed);
                         }
                     }
                     catch (Exception e)
                     {
-                        Debug.LogError(e.Message + "\n\n" + e.StackTrace);
+                        SDUtil.LogError(e.Message + "\n\n" + e.StackTrace);
                     }
                 }
             }

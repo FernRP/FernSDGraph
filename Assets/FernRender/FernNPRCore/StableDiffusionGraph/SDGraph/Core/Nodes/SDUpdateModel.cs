@@ -22,7 +22,7 @@ namespace FernNPRCore.StableDiffusionGraph
         public override IEnumerator Execute()
         {
             Model = GetInputValue("Model", this.Model);
-            Debug.Log(Model);
+            SDUtil.Log(Model);
             yield return SetModelAsync(Model);
         }
 
@@ -40,12 +40,12 @@ namespace FernNPRCore.StableDiffusionGraph
         public IEnumerator SetModelAsync(string modelName)
         {
             // Stable diffusion API url for setting a model
-            string url = SDDataHandle.serverURL + SDDataHandle.OptionAPI;
+            string url = SDDataHandle.Instance.GetServerURL() + SDDataHandle.Instance.OptionAPI;
 
             // Load the list of models if not filled already
             if (string.IsNullOrEmpty(Model))
             {
-                Debug.Log("Model is null");
+                SDUtil.Log("Model is null");
                 yield return null;
             }
 
@@ -57,10 +57,10 @@ namespace FernNPRCore.StableDiffusionGraph
                 httpWebRequest.Method = "POST";
 
                 // add auth-header to request
-                if (SDDataHandle.UseAuth && !SDDataHandle.Username.Equals("") && !SDDataHandle.Password.Equals(""))
+                if (SDDataHandle.Instance.GetUseAuth() && !string.IsNullOrEmpty(SDDataHandle.Instance.GetUserName()) && !string.IsNullOrEmpty(SDDataHandle.Instance.GetPassword()))
                 {
                     httpWebRequest.PreAuthenticate = true;
-                    byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDDataHandle.Username + ":" + SDDataHandle.Password);
+                    byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDDataHandle.Instance.GetUserName() + ":" + SDDataHandle.Instance.GetPassword());
                     string encodedCredentials = Convert.ToBase64String(bytesToEncode);
                     httpWebRequest.Headers.Add("Authorization", "Basic " + encodedCredentials);
                 }
@@ -92,7 +92,7 @@ namespace FernNPRCore.StableDiffusionGraph
             }
             catch (WebException e)
             {
-                Debug.Log("Error: " + e.Message);
+                SDUtil.Log("Error: " + e.Message);
             }
         }
     }

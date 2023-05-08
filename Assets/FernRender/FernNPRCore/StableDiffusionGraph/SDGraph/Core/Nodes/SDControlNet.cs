@@ -58,20 +58,20 @@ namespace FernNPRCore.StableDiffusionGraph
         IEnumerator ControlNetModelListAsync()
         {
             // Stable diffusion API url for getting the models list
-            string url = SDDataHandle.serverURL + SDDataHandle.ControlNetModelList;
+            string url = SDDataHandle.Instance.GetServerURL() + SDDataHandle.Instance.ControlNetModelList;
 
             UnityWebRequest request = new UnityWebRequest(url, "GET");
             request.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
             request.SetRequestHeader("Content-Type", "application/json");
-        
-            if (SDDataHandle.UseAuth && !SDDataHandle.Username.Equals("") && !SDDataHandle.Password.Equals(""))
+
+            if (SDDataHandle.Instance.GetUseAuth() && !string.IsNullOrEmpty(SDDataHandle.Instance.GetUserName()) && !string.IsNullOrEmpty(SDDataHandle.Instance.GetPassword()))
             {
-                Debug.Log("Using API key to authenticate");
-                byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDDataHandle.Username + ":" + SDDataHandle.Password);
+                SDUtil.Log("Using API key to authenticate");
+                byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDDataHandle.Instance.GetUserName() + ":" + SDDataHandle.Instance.GetPassword());
                 string encodedCredentials = Convert.ToBase64String(bytesToEncode);
                 request.SetRequestHeader("Authorization", "Basic " + encodedCredentials);
             }
-        
+
             yield return request.SendWebRequest();
 
             try
@@ -89,7 +89,7 @@ namespace FernNPRCore.StableDiffusionGraph
             }
             catch (Exception)
             {
-                Debug.Log("Server needs and API key authentication. Please check your settings!");
+                SDUtil.Log("Server needs and API key authentication. Please check your settings!");
             }
         }
         
@@ -100,20 +100,20 @@ namespace FernNPRCore.StableDiffusionGraph
         IEnumerator ControlNetMoudleList()
         {
             // Stable diffusion API url for getting the models list
-            string url = SDDataHandle.serverURL + SDDataHandle.ControlNetMoudleList;
+            string url = SDDataHandle.Instance.GetServerURL() + SDDataHandle.Instance.ControlNetMoudleList;
 
             UnityWebRequest request = new UnityWebRequest(url, "GET");
             request.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
             request.SetRequestHeader("Content-Type", "application/json");
-        
-            if (SDDataHandle.UseAuth && !SDDataHandle.Username.Equals("") && !SDDataHandle.Password.Equals(""))
+
+            if (SDDataHandle.Instance.GetUseAuth() && !string.IsNullOrEmpty(SDDataHandle.Instance.GetUserName()) && !string.IsNullOrEmpty(SDDataHandle.Instance.GetPassword()))
             {
-                Debug.Log("Using API key to authenticate");
-                byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDDataHandle.Username + ":" + SDDataHandle.Password);
+                SDUtil.Log("Using API key to authenticate");
+                byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDDataHandle.Instance.GetUserName() + ":" + SDDataHandle.Instance.GetPassword());
                 string encodedCredentials = Convert.ToBase64String(bytesToEncode);
                 request.SetRequestHeader("Authorization", "Basic " + encodedCredentials);
             }
-        
+
             yield return request.SendWebRequest();
 
             try
@@ -131,7 +131,7 @@ namespace FernNPRCore.StableDiffusionGraph
             }
             catch (Exception)
             {
-                Debug.Log("Server needs and API key authentication. Please check your settings!");
+                SDUtil.Log("Server needs and API key authentication. Please check your settings!");
             }
         }
         
@@ -173,14 +173,14 @@ namespace FernNPRCore.StableDiffusionGraph
             // HttpWebRequest httpWebRequest = null;
             // try
             // {
-            //     string url = SDDataHandle.serverURL + SDDataHandle.ControlNetDetect;
+            //     string url = SDDataHandle.Instance.serverURL + SDDataHandle.Instance.ControlNetDetect;
             //     httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
             //     httpWebRequest.ContentType = "application/json";
             //     httpWebRequest.Method = "POST";
-            //     if (SDDataHandle.UseAuth && !SDDataHandle.Username.Equals("") && !SDDataHandle.Password.Equals(""))
+            //     if (SDDataHandle.Instance.UseAuth && !SDDataHandle.Instance.Username.Equals("") && !SDDataHandle.Instance.Password.Equals(""))
             //     {
-            //         Debug.Log("Using API key to authenticate");
-            //         byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDDataHandle.Username + ":" + SDDataHandle.Password);
+            //         SDUtil.Log("Using API key to authenticate");
+            //         byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDDataHandle.Instance.Username + ":" + SDDataHandle.Instance.Password);
             //         string encodedCredentials = Convert.ToBase64String(bytesToEncode);
             //         httpWebRequest.Headers.Add("Authorization", "Basic " + encodedCredentials);
             //     }
@@ -194,13 +194,13 @@ namespace FernNPRCore.StableDiffusionGraph
             //         detect.controlnet_input_images = new []{inputImgString};
             //         detect.controlnet_module = module;
             //         string json = JsonConvert.SerializeObject(detect);
-            //         Debug.Log(json);
+            //         SDUtil.Log(json);
             //         streamWriter.Write(json);
             //     }
             // }            
             // catch (Exception e)
             // {
-            //     Debug.LogError(e.Message + "\n\n" + e.StackTrace);
+            //     SDUtil.LogError(e.Message + "\n\n" + e.StackTrace);
             // }
             //
             // // Read the output of generation
@@ -210,7 +210,7 @@ namespace FernNPRCore.StableDiffusionGraph
             //     Task<WebResponse> webResponse = httpWebRequest.GetResponseAsync();
             //     while (!webResponse.IsCompleted)
             //     {
-            //         if (SDDataHandle.UseAuth && !SDDataHandle.Username.Equals("") && !SDDataHandle.Password.Equals(""))
+            //         if (SDDataHandle.Instance.UseAuth && !SDDataHandle.Instance.Username.Equals("") && !SDDataHandle.Instance.Password.Equals(""))
             //             //UpdateGenerationProgressWithAuth();
             //             // else
             //             // UpdateGenerationProgress();
@@ -223,7 +223,7 @@ namespace FernNPRCore.StableDiffusionGraph
             //     {
             //         // Decode the response as a JSON string
             //         string result = streamReader.ReadToEnd();
-            //         Debug.Log(result);
+            //         SDUtil.Log(result);
             //     }
             //     yield return null;
             // }
