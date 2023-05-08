@@ -39,6 +39,7 @@ namespace FernNPRCore.StableDiffusionGraph
         public string OptionAPI = "/sdapi/v1/options";
         public string DataDirAPI = "/sdapi/v1/cmd-flags";
         public string ProgressAPI = "/sdapi/v1/progress";
+        public string SavePath = "TmpPhotos";
         public bool UseAuth = false;
         public string Username = "";
         public string Password = "";
@@ -47,6 +48,8 @@ namespace FernNPRCore.StableDiffusionGraph
         "Euler a", "Euler", "LMS", "Heun", "DPM2", "DPM2 a", "DPM++ 2S a", "DPM++ 2M", "DPM++ SDE", "DPM fast", "DPM adaptive",
         "LMS Karras", "DPM2 Karras", "DPM2 a Karras", "DPM++ 2S a Karras", "DPM++ 2M Karras", "DPM++ SDE Karras", "DDIM", "PLMS"
     };
+
+        public StringStringDic loraBlockWeightPresets;
 
         public string modelUse;
         public string loraUse;

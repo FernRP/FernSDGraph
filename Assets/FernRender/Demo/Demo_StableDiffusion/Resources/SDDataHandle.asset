@@ -47,6 +47,80 @@ MonoBehaviour:
   - DPM++ SDE Karras
   - DDIM
   - PLMS
+  loraBlockWeightPresets:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 0
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 0
+    _keyValues:
+    - NONE
+    - ALL
+    - INS
+    - IND
+    - INALL
+    - MIDD
+    - OUTD
+    - OUTS
+    - OUTALL
+    - ALL0.5
+    - ONLYFACE
+    - DEFACE
+    - CLOTHES
+    - COLOR-STYLE
+    - BACKGROUND
+    - ACT
+    _keys:
+    - NONE
+    - ALL
+    - INS
+    - IND
+    - INALL
+    - MIDD
+    - OUTD
+    - OUTS
+    - OUTALL
+    - ALL0.5
+    - ONLYFACE
+    - DEFACE
+    - CLOTHES
+    - COLOR-STYLE
+    - BACKGROUND
+    - ACT
+    _values:
+    - 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    - 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+    - 1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+    - 1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0
+    - 1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0
+    - 1,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0
+    - 1,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0
+    - 1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1
+    - 1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1
+    - 0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+    - 1,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0
+    - 1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1
+    - 0,0,0,1,1,0,0.2,0.8,0.8,1,1,0.2,0,0,0,0,0
+    - 1,0,0,0,0,0,0,0,0,0,0,0.8,1,1,1,1,1
+    - 1,1,1,1,1,1,1,1,0.2,0,0,0.8,1,1,1,0,0
+    - 1,1,1,1,1,1,0.2,1,0.2,0,0,0.8,1,1,1,0,0
   modelUse: 
   loraUse: 
   OverrideSettings: 1
