@@ -24,9 +24,6 @@ namespace FernShaderGraph
         public override int latestVersion => 2;
 
         [SerializeField]
-        WorkflowMode m_WorkflowMode = WorkflowMode.Metallic;
-
-        [SerializeField]
         NormalDropOffSpace m_NormalDropOffSpace = NormalDropOffSpace.Tangent;
 
         [SerializeField]
@@ -41,12 +38,6 @@ namespace FernShaderGraph
         }
 
         protected override ShaderID shaderID => ShaderID.SG_Lit;
-
-        public WorkflowMode workflowMode
-        {
-            get => m_WorkflowMode;
-            set => m_WorkflowMode = value;
-        }
 
         public NormalDropOffSpace normalDropOffSpace
         {
@@ -94,8 +85,8 @@ namespace FernShaderGraph
             }
 
             // Process SubShaders
-            context.AddSubShader(PostProcessSubShader(SubShaders.LitComputeDotsSubShader(target, workflowMode, target.renderType, target.renderQueue, target.disableBatching, complexLit, blendModePreserveSpecular)));
-            context.AddSubShader(PostProcessSubShader(SubShaders.LitGLESSubShader(target, workflowMode, target.renderType, target.renderQueue, target.disableBatching, complexLit, blendModePreserveSpecular)));
+            context.AddSubShader(PostProcessSubShader(SubShaders.LitComputeDotsSubShader(target, target.renderType, target.renderQueue, target.disableBatching, complexLit, blendModePreserveSpecular)));
+            context.AddSubShader(PostProcessSubShader(SubShaders.LitGLESSubShader(target, target.renderType, target.renderQueue, target.disableBatching, complexLit, blendModePreserveSpecular)));
         }
 
         public override void ProcessPreviewMaterial(Material material)
@@ -106,7 +97,6 @@ namespace FernShaderGraph
                 // (technically not necessary since we are always recreating the material from the shader each time,
                 // which will pull over the defaults from the shader definition)
                 // but if that ever changes, this will ensure the defaults are set
-                material.SetFloat(Property.SpecularWorkflowMode, (float)workflowMode);
                 material.SetFloat(Property.CastShadows, target.castShadows ? 1.0f : 0.0f);
                 material.SetFloat(Property.ReceiveShadows, target.receiveShadows ? 1.0f : 0.0f);
                 material.SetFloat(Property.SurfaceType, (float)target.surfaceType);
@@ -157,8 +147,7 @@ namespace FernShaderGraph
 
             // when the surface options are material controlled, we must show all of these blocks
             // when target controlled, we can cull the unnecessary blocks
-            context.AddBlock(BlockFields.SurfaceDescription.Specular, (workflowMode == WorkflowMode.Specular) || target.allowMaterialOverride);
-            context.AddBlock(BlockFields.SurfaceDescription.Metallic, (workflowMode == WorkflowMode.Metallic) || target.allowMaterialOverride);
+            context.AddBlock(BlockFields.SurfaceDescription.Metallic);
             context.AddBlock(BlockFields.SurfaceDescription.Alpha, (target.surfaceType == SurfaceType.Transparent || target.alphaClip) || target.allowMaterialOverride);
             context.AddBlock(BlockFields.SurfaceDescription.AlphaClipThreshold, (target.alphaClip) || target.allowMaterialOverride);
 
@@ -174,7 +163,10 @@ namespace FernShaderGraph
             context.AddBlock(FernSG_Field.SurfaceDescription.StylizedSpecularSoftness, target.specularModel == SpecularModel.STYLIZED);
             
             context.AddBlock(FernSG_Field.SurfaceDescription.GeometryAAStrength, target.geometryAA);
-            context.AddBlock(FernSG_Field.SurfaceDescription.GeometryAAVariant, target.geometryAA);
+            context.AddBlock(FernSG_Field.SurfaceDescription.GeometryAAVariant, target.geometryAA); 
+            
+            context.AddBlock(FernSG_Field.SurfaceDescription.LightenColor);
+            context.AddBlock(FernSG_Field.SurfaceDescription.DarkColor);
         }
 
         public override void CollectShaderProperties(PropertyCollector collector, GenerationMode generationMode)
@@ -182,7 +174,6 @@ namespace FernShaderGraph
             // if using material control, add the material property to control workflow mode
             if (target.allowMaterialOverride)
             {
-                collector.AddFloatProperty(Property.SpecularWorkflowMode, (float)workflowMode);
                 collector.AddFloatProperty(Property.CastShadows, target.castShadows ? 1.0f : 0.0f);
                 collector.AddFloatProperty(Property.ReceiveShadows, target.receiveShadows ? 1.0f : 0.0f);
 
@@ -213,16 +204,6 @@ namespace FernShaderGraph
         {
             var universalTarget = (target as FernSG_UniversalTarget);
             universalTarget.AddDefaultMaterialOverrideGUI(ref context, onChange, registerUndo);
-
-            context.AddProperty("Workflow Mode", new EnumField(WorkflowMode.Metallic) { value = workflowMode }, (evt) =>
-            {
-                if (Equals(workflowMode, evt.newValue))
-                    return;
-
-                registerUndo("Change Workflow");
-                workflowMode = (WorkflowMode)evt.newValue;
-                onChange();
-            });
 
             universalTarget.AddDefaultSurfacePropertiesGUI(ref context, onChange, registerUndo, showReceiveShadows: true);
             
@@ -286,7 +267,6 @@ namespace FernShaderGraph
             if (!(masterNode is PBRMasterNode1 pbrMasterNode))
                 return false;
 
-            m_WorkflowMode = (WorkflowMode)pbrMasterNode.m_Model;
             m_NormalDropOffSpace = (NormalDropOffSpace)pbrMasterNode.m_NormalDropOffSpace;
 
             // Handle mapping of Normal block specifically
@@ -317,13 +297,11 @@ namespace FernShaderGraph
                 { BlockFields.SurfaceDescription.Occlusion, 6 },
                 { BlockFields.SurfaceDescription.Alpha, 7 },
                 { BlockFields.SurfaceDescription.AlphaClipThreshold, 8 },
+                { FernSG_Field.SurfaceDescription.DarkColor, 12 },
+                { FernSG_Field.SurfaceDescription.LightenColor, 13 },
             };
 
-            // PBRMasterNode adds/removes Metallic/Specular based on settings
-            if (m_WorkflowMode == WorkflowMode.Specular)
-                blockMap.Add(BlockFields.SurfaceDescription.Specular, 3);
-            else if (m_WorkflowMode == WorkflowMode.Metallic)
-                blockMap.Add(BlockFields.SurfaceDescription.Metallic, 2);
+            blockMap.Add(BlockFields.SurfaceDescription.Metallic, 2);
 
             return true;
         }
@@ -354,7 +332,7 @@ namespace FernShaderGraph
         static class SubShaders
         {
             // SM 4.5, compute with dots instancing
-            public static SubShaderDescriptor LitComputeDotsSubShader(FernSG_UniversalTarget target, WorkflowMode workflowMode, string renderType, string renderQueue, string disableBatchingTag, bool complexLit, bool blendModePreserveSpecular)
+            public static SubShaderDescriptor LitComputeDotsSubShader(FernSG_UniversalTarget target, string renderType, string renderQueue, string disableBatchingTag, bool complexLit, bool blendModePreserveSpecular)
             {
                 SubShaderDescriptor result = new SubShaderDescriptor()
                 {
@@ -368,12 +346,12 @@ namespace FernShaderGraph
                 };
 
                 if (complexLit)
-                    result.passes.Add(LitPasses.ForwardOnly(target, workflowMode, complexLit, blendModePreserveSpecular, CoreBlockMasks.Vertex, LitBlockMasks.FragmentComplexLit, CorePragmas.ForwardSM45, LitKeywords.DOTSForward));
+                    result.passes.Add(LitPasses.ForwardOnly(target, complexLit, blendModePreserveSpecular, CoreBlockMasks.Vertex, LitBlockMasks.FragmentComplexLit, CorePragmas.ForwardSM45, LitKeywords.DOTSForward));
                 else
-                    result.passes.Add(LitPasses.Forward(target, workflowMode, blendModePreserveSpecular, CorePragmas.ForwardSM45, LitKeywords.DOTSForward));
+                    result.passes.Add(LitPasses.Forward(target, blendModePreserveSpecular, CorePragmas.ForwardSM45, LitKeywords.DOTSForward));
 
                 if (!complexLit)
-                    result.passes.Add(LitPasses.GBuffer(target, workflowMode, blendModePreserveSpecular));
+                    result.passes.Add(LitPasses.GBuffer(target, blendModePreserveSpecular));
 
                 // cull the shadowcaster pass if we know it will never be used
                 if (target.castShadows || target.allowMaterialOverride)
@@ -397,7 +375,7 @@ namespace FernShaderGraph
                 return result;
             }
 
-            public static SubShaderDescriptor LitGLESSubShader(FernSG_UniversalTarget target, WorkflowMode workflowMode, string renderType, string renderQueue, string disableBatchingTag, bool complexLit, bool blendModePreserveSpecular)
+            public static SubShaderDescriptor LitGLESSubShader(FernSG_UniversalTarget target, string renderType, string renderQueue, string disableBatchingTag, bool complexLit, bool blendModePreserveSpecular)
             {
                 // SM 2.0, GLES
 
@@ -416,9 +394,9 @@ namespace FernShaderGraph
                 };
 
                 if (complexLit)
-                    result.passes.Add(LitPasses.ForwardOnly(target, workflowMode, complexLit, blendModePreserveSpecular, CoreBlockMasks.Vertex, LitBlockMasks.FragmentComplexLit, CorePragmas.Forward, LitKeywords.Forward));
+                    result.passes.Add(LitPasses.ForwardOnly(target, complexLit, blendModePreserveSpecular, CoreBlockMasks.Vertex, LitBlockMasks.FragmentComplexLit, CorePragmas.Forward, LitKeywords.Forward));
                 else
-                    result.passes.Add(LitPasses.Forward(target, workflowMode, blendModePreserveSpecular, CorePragmas.Forward, LitKeywords.Forward));
+                    result.passes.Add(LitPasses.Forward(target, blendModePreserveSpecular, CorePragmas.Forward, LitKeywords.Forward));
 
                 // cull the shadowcaster pass if we know it will never be used
                 if (target.castShadows || target.allowMaterialOverride)
@@ -447,14 +425,6 @@ namespace FernShaderGraph
         #region Passes
         static class LitPasses
         {
-            static void AddWorkflowModeControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target, WorkflowMode workflowMode)
-            {
-                if (target.allowMaterialOverride)
-                    pass.keywords.Add(LitDefines.SpecularSetup);
-                else if (workflowMode == WorkflowMode.Specular)
-                    pass.defines.Add(LitDefines.SpecularSetup, 1);
-            }
-
             static void AddReceiveShadowsControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target, bool receiveShadows)
             {
                 if (target.allowMaterialOverride)
@@ -465,7 +435,6 @@ namespace FernShaderGraph
 
             public static PassDescriptor Forward(
                 FernSG_UniversalTarget target,
-                WorkflowMode workflowMode,
                 bool blendModePreserveSpecular,
                 PragmaCollection pragmas,
                 KeywordCollection keywords)
@@ -504,7 +473,6 @@ namespace FernShaderGraph
 
                 CorePasses.AddTargetSurfaceControlsToPass(ref result, target, blendModePreserveSpecular);
                 CorePasses.AddAlphaToMaskControlToPass(ref result, target);
-                AddWorkflowModeControlToPass(ref result, target, workflowMode);
                 AddReceiveShadowsControlToPass(ref result, target, target.receiveShadows);
                 CorePasses.AddLODCrossFadeControlToPass(ref result, target);
                 CorePasses.AddDiffusionModelControlToPass(ref result, target);
@@ -516,7 +484,6 @@ namespace FernShaderGraph
 
             public static PassDescriptor ForwardOnly(
                 FernSG_UniversalTarget target,
-                WorkflowMode workflowMode,
                 bool complexLit,
                 bool blendModePreserveSpecular,
                 BlockFieldDescriptor[] vertexBlocks,
@@ -561,7 +528,6 @@ namespace FernShaderGraph
 
                 CorePasses.AddTargetSurfaceControlsToPass(ref result, target, blendModePreserveSpecular);
                 CorePasses.AddAlphaToMaskControlToPass(ref result, target);
-                AddWorkflowModeControlToPass(ref result, target, workflowMode);
                 AddReceiveShadowsControlToPass(ref result, target, target.receiveShadows);
                 CorePasses.AddLODCrossFadeControlToPass(ref result, target);
 
@@ -569,7 +535,7 @@ namespace FernShaderGraph
             }
 
             // Deferred only in SM4.5, MRT not supported in GLES2
-            public static PassDescriptor GBuffer(FernSG_UniversalTarget target, WorkflowMode workflowMode, bool blendModePreserveSpecular)
+            public static PassDescriptor GBuffer(FernSG_UniversalTarget target, bool blendModePreserveSpecular)
             {
                 var result = new PassDescriptor
                 {
@@ -604,7 +570,6 @@ namespace FernShaderGraph
                 };
 
                 CorePasses.AddTargetSurfaceControlsToPass(ref result, target, blendModePreserveSpecular);
-                AddWorkflowModeControlToPass(ref result, target, workflowMode);
                 AddReceiveShadowsControlToPass(ref result, target, target.receiveShadows);
                 CorePasses.AddLODCrossFadeControlToPass(ref result, target);
 
@@ -791,6 +756,8 @@ namespace FernShaderGraph
                 FernSG_Field.SurfaceDescription.CellSmoothness,
                 FernSG_Field.SurfaceDescription.GeometryAAVariant,
                 FernSG_Field.SurfaceDescription.GeometryAAStrength,
+                FernSG_Field.SurfaceDescription.DarkColor,
+                FernSG_Field.SurfaceDescription.LightenColor,
             };
 
             public static readonly BlockFieldDescriptor[] FragmentComplexLit = new BlockFieldDescriptor[]
@@ -808,7 +775,16 @@ namespace FernShaderGraph
                 BlockFields.SurfaceDescription.AlphaClipThreshold,
                 BlockFields.SurfaceDescription.CoatMask,
                 BlockFields.SurfaceDescription.CoatSmoothness,
+                FernSG_Field.SurfaceDescription.RampColor,
                 FernSG_Field.SurfaceDescription.SpecularColor,
+                FernSG_Field.SurfaceDescription.StylizedSpecularSize,
+                FernSG_Field.SurfaceDescription.StylizedSpecularSoftness,
+                FernSG_Field.SurfaceDescription.CellThreshold,
+                FernSG_Field.SurfaceDescription.CellSmoothness,
+                FernSG_Field.SurfaceDescription.GeometryAAVariant,
+                FernSG_Field.SurfaceDescription.GeometryAAStrength,
+                FernSG_Field.SurfaceDescription.DarkColor,
+                FernSG_Field.SurfaceDescription.LightenColor,
             };
 
             public static readonly BlockFieldDescriptor[] FragmentMeta = new BlockFieldDescriptor[]

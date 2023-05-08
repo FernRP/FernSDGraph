@@ -104,11 +104,11 @@ half3 NPRDiffuseLighting(BRDFData brdfData, half3 rampColor, LightingData lighti
     half3 diffuse = 0;
 
     #if _LAMBERTIAN
-        diffuse = radiance;
+        diffuse = lerp(addSurfData.darkColor.rgb, addSurfData.lightenColor.rgb, radiance);
     #elif _RAMPSHADING
         diffuse = rampColor.rgb;
     #elif _CELLSHADING
-        diffuse = CellShadingDiffuse(radiance, addSurfData.cellThreshold, addSurfData.cellSoftness);
+        diffuse = CellShadingDiffuse(radiance, addSurfData.cellThreshold, addSurfData.cellSoftness, addSurfData.lightenColor.rgb, addSurfData.darkColor.rgb);
     #endif
     
     diffuse *= brdfData.diffuse;
@@ -372,6 +372,8 @@ void frag(
         addSurfData.geometryAAStrength = surfaceDescription.GeometryAAStrength;
         surfData.smoothness = GeometryAA(inputData.normalWS, surfData.smoothness, addSurfData);
     #endif
+    addSurfData.darkColor = surfaceDescription.DarkColor;
+    addSurfData.lightenColor = surfaceDescription.LightenColor;
 
     surfData.albedo = AlphaModulate(surfData.albedo, surfData.alpha);
 

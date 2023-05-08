@@ -29,6 +29,8 @@ struct FernSGAddSurfaceData
 {
     half3 rampColor;
     half3 specularColor;
+    half3 darkColor;
+    half3 lightenColor;
     half StylizedSpecularSize;
     half StylizedSpecularSoftness;
     half cellThreshold;

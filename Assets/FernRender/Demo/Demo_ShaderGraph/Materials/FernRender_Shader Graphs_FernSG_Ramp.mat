@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_New Shader Graph
+  m_Name: FernRender_Shader Graphs_FernSG_Ramp
   m_Shader: {fileID: -6465566751694194690, guid: b73c259df24c6c247afc64d6e15c6868,
     type: 3}
   m_Parent: {fileID: 0}
