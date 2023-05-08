@@ -152,11 +152,11 @@ inline void NPRMainLightCorrect(half lightDirectionObliqueWeight, inout Light ma
     #endif
 }
 
-half3 LightingLambert(half3 lightColor, half3 lightDir, half3 normal)
-{
-    half NdotL = saturate(dot(normal, lightDir));
-    return lightColor * NdotL;
-}
+// half3 LightingLambert(half3 lightColor, half3 lightDir, half3 normal)
+// {
+//     half NdotL = saturate(dot(normal, lightDir));
+//     return lightColor * NdotL;
+// }
 
 half3 VertexLighting(float3 positionWS, half3 normalWS)
 {
