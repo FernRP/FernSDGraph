@@ -48,10 +48,10 @@ namespace FernShaderGraph
             
             
             public static BlockFieldDescriptor DarkColor = new BlockFieldDescriptor(FernSG_Field.SurfaceDescription.name, "DarkColor", "Dark Color", 
-                "SURFACEDESCRIPTION_DARKCOLOR", new ColorControl(Color.white, false), ShaderStage.Fragment);
+                "SURFACEDESCRIPTION_DARKCOLOR", new ColorControl(Color.black, false), ShaderStage.Fragment);
             
             public static BlockFieldDescriptor LightenColor = new BlockFieldDescriptor(FernSG_Field.SurfaceDescription.name, "LightenColor", "Lighten Color", 
-                "SURFACEDESCRIPTION_LIGHTENCOLOR", new ColorControl(Color.black, false), ShaderStage.Fragment);
+                "SURFACEDESCRIPTION_LIGHTENCOLOR", new ColorControl(Color.white, false), ShaderStage.Fragment);
         }
     }
 }
