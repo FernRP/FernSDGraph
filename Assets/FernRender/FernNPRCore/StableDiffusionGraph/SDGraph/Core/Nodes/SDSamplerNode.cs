@@ -183,6 +183,9 @@ namespace FernNPRCore.StableDiffusionGraph
 
                             // Read the seed that was used by Stable Diffusion to generate this result
                             outSeed = info.seed;
+                            if (!Directory.Exists(SDDataHandle.Instance.SavePath))
+                                Directory.CreateDirectory(SDDataHandle.Instance.SavePath);
+                            File.WriteAllBytes($"{SDDataHandle.Instance.SavePath}/img_{outSeed}.png", imageData);
                             OnUpdateSeedField?.Invoke(Seed,outSeed);
                         }
                     }
