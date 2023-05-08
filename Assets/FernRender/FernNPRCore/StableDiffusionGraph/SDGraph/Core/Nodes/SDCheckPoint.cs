@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Unity.EditorCoroutines.Editor;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Networking;
 
 namespace FernNPRCore.StableDiffusionGraph
@@ -32,7 +33,7 @@ namespace FernNPRCore.StableDiffusionGraph
         /// Get the list of available Stable Diffusion models.
         /// </summary>
         /// <returns></returns>
-        public IEnumerator ListModelsAsync()
+        public IEnumerator ListModelsAsync(UnityAction unityAction=null)
         {
             // Stable diffusion API url for getting the models list
             string url = SDDataHandle.Instance.GetServerURL() + SDDataHandle.Instance.ModelsAPI;
@@ -65,6 +66,7 @@ namespace FernNPRCore.StableDiffusionGraph
 
                 // Convert the list into an array and store it for futur use
                 modelNames = modelsNames.ToArray();
+                unityAction?.Invoke();
             }
             catch (Exception)
             {

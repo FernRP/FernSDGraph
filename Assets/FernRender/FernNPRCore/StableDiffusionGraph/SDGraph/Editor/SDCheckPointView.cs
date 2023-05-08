@@ -36,38 +36,41 @@ namespace FernNPRCore.StableDiffusionGraph
         private void OnAsync()
         {
             var checkPoint = Target as SDCheckPoint;
-            if(checkPoint == null) return;
-            modelNames = checkPoint.modelNames;
-            if (modelNames != null && modelNames.Length > 0)
-            {
-                extensionContainer.Clear();
-                // Create a VisualElement with a popup field
-                var listContainer = new VisualElement();
-                listContainer.style.flexDirection = FlexDirection.Row;
-                listContainer.style.alignItems = Align.Center;
-                listContainer.style.justifyContent = Justify.Center;
-
-                List<string> stringList = new List<string>();
-                stringList.AddRange(checkPoint.modelNames);
-                var popup = new PopupField<string>(stringList, checkPoint.currentIndex);
-
-                // Add a callback to perform additional actions on value change
-                popup.RegisterValueChangedCallback(evt =>
+            if (checkPoint == null) return;
+            EditorCoroutineUtility.StartCoroutine(checkPoint.ListModelsAsync(
+                () =>
                 {
-                    Debug.Log("Selected item: " + evt.newValue);
-                    checkPoint.Model = evt.newValue;
-                    checkPoint.currentIndex = stringList.IndexOf(evt.newValue);
-                });
+                    modelNames = checkPoint.modelNames;
+                    if (modelNames != null && modelNames.Length > 0)
+                    {
+                        extensionContainer.Clear();
+                        // Create a VisualElement with a popup field
+                        var listContainer = new VisualElement();
+                        listContainer.style.flexDirection = FlexDirection.Row;
+                        listContainer.style.alignItems = Align.Center;
+                        listContainer.style.justifyContent = Justify.Center;
 
-                listContainer.Add(popup);
+                        List<string> stringList = new List<string>();
+                        stringList.AddRange(checkPoint.modelNames);
+                        var popup = new PopupField<string>(stringList, checkPoint.currentIndex);
 
-                extensionContainer.Add(listContainer);
-                RefreshExpandedState();
-            }
-            else
-            {
-                EditorCoroutineUtility.StartCoroutine(checkPoint.ListModelsAsync(), this);
-            }
+                        // Add a callback to perform additional actions on value change
+                        popup.RegisterValueChangedCallback(evt =>
+                        {
+                            Debug.Log("Selected item: " + evt.newValue);
+                            checkPoint.Model = evt.newValue;
+                            checkPoint.currentIndex = stringList.IndexOf(evt.newValue);
+                        });
+
+                        listContainer.Add(popup);
+
+                        extensionContainer.Add(listContainer);
+                        RefreshExpandedState();
+                    }
+
+                }
+
+                ), this);
         }
     }
 }
