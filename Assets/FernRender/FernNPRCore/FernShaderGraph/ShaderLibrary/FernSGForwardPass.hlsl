@@ -55,6 +55,16 @@ void InitializeInputData(Varyings input, SurfaceDescription surfaceDescription, 
     #endif
 }
 
+inline half GeometryAA(half3 normalWS, half smoothness, FernSGAddSurfaceData addSurfData)
+{
+    half dx = dot(ddx(normalWS),ddx(normalWS));
+    half dy = dot(ddy(normalWS),ddy(normalWS));
+    half roughness = 1 - smoothness;
+    half roughnessAA = roughness * roughness + min(LerpWhiteTo(32, addSurfData.geometryAAVariant) * (dx + dy), addSurfData.geometryAAStrength * addSurfData.geometryAAStrength);
+    roughnessAA = saturate(roughnessAA);
+    half smoothnessAA = smoothness * (1 - roughnessAA);
+    return smoothnessAA;
+}
 
 
 LightingData InitializeLightingData(Light mainLight, Varyings input, half3 normalWS, half3 viewDirectionWS)
@@ -89,43 +99,57 @@ LightingData InitializeLightingData(Light mainLight, Varyings input, half3 norma
 //                         Shading Function                                  //
 ///////////////////////////////////////////////////////////////////////////////
 
-half3 NPRDiffuseLighting(BRDFData brdfData, half3 rampColor, LightingData lightingData, half radiance)
+half3 NPRDiffuseLighting(BRDFData brdfData, half3 rampColor, LightingData lightingData, FernSGAddSurfaceData addSurfData, half radiance)
 {
     half3 diffuse = 0;
 
     #if _LAMBERTIAN
-    diffuse = radiance;
+        diffuse = radiance;
     #elif _RAMPSHADING
-    diffuse = rampColor.rgb;
+        diffuse = rampColor.rgb;
+    #elif _CELLSHADING
+        diffuse = CellShadingDiffuse(radiance, addSurfData.cellThreshold, addSurfData.cellSoftness);
     #endif
+    
     diffuse *= brdfData.diffuse;
     return diffuse;
 }
 
+/**
+ * \brief NPR Specular
+ * \param brdfData 
+ * \param surfData 
+ * \param input 
+ * \param inputData 
+ * \param albedo 
+ * \param addSurfData 
+ * \param radiance 
+ * \param lightData 
+ * \return 
+ */
 half3 NPRSpecularLighting(BRDFData brdfData, NPRSurfaceData surfData, Varyings input, InputData inputData, half3 albedo, FernSGAddSurfaceData addSurfData, half radiance, LightingData lightData)
 {
     half3 specular = 0;
     #if _STYLIZED
-    specular = StylizedSpecular(albedo, lightData.NdotHClamp, addSurfData.StylizedSpecularSize, addSurfData.StylizedSpecularSoftness) * surfData.specularIntensity;
+        specular = StylizedSpecular(albedo, lightData.NdotHClamp, addSurfData.StylizedSpecularSize, addSurfData.StylizedSpecularSoftness);
     #elif _BLINNPHONG
-    specular = BlinnPhongSpecular((1 - brdfData.perceptualRoughness) * _Shininess, lightData.NdotHClamp) * surfData.specularIntensity;
+        specular = BlinnPhongSpecular((1 - brdfData.perceptualRoughness), lightData.NdotHClamp);
     #elif _KAJIYAHAIR
-    half2 anisoUV = input.uv.xy * _AnisoShiftScale;
-    AnisoSpecularData anisoSpecularData;
-    InitAnisoSpecularData(anisoSpecularData);
-    specular = AnisotropyDoubleSpecular(brdfData, anisoUV, input.tangentWS, inputData, lightData, anisoSpecularData,
-        TEXTURE2D_ARGS(_AnisoShiftMap, sampler_AnisoShiftMap));
+        half2 anisoUV = input.uv.xy * _AnisoShiftScale;
+        AnisoSpecularData anisoSpecularData;
+        InitAnisoSpecularData(anisoSpecularData);
+        specular = AnisotropyDoubleSpecular(brdfData, anisoUV, input.tangentWS, inputData, lightData, anisoSpecularData,
+            TEXTURE2D_ARGS(_AnisoShiftMap, sampler_AnisoShiftMap));
     #elif _ANGLERING
-    AngleRingSpecularData angleRingSpecularData;
-    InitAngleRingSpecularData(surfData.specularIntensity, angleRingSpecularData);
-    specular = AngleRingSpecular(angleRingSpecularData, inputData, radiance, lightData);
-    #else
-    specular = GGXDirectBRDFSpecular(brdfData, lightData.LdotHClamp, lightData.NdotHClamp) * surfData.specularIntensity;
+        AngleRingSpecularData angleRingSpecularData;
+        InitAngleRingSpecularData(1, angleRingSpecularData);
+        specular = AngleRingSpecular(angleRingSpecularData, inputData, radiance, lightData);
+    #elif _GGX
+        specular = GGXDirectBRDFSpecular(brdfData, lightData.LdotHClamp, lightData.NdotHClamp);
     #endif
     specular *= addSurfData.specularColor.rgb * radiance * brdfData.specular;
     return specular;
 }
-
 
 /**
  * \brief Main Lighting, consists of NPR and PBR Lighting Equation
@@ -141,13 +165,116 @@ half3 NPRSpecularLighting(BRDFData brdfData, NPRSurfaceData surfData, Varyings i
 half3 NPRMainLightDirectLighting(BRDFData brdfData, BRDFData brdfDataClearCoat, Varyings input, InputData inputData,
                                  NPRSurfaceData surfData, half radiance, FernSGAddSurfaceData addSurfData, LightingData lightData)
 {
-    half3 diffuse = NPRDiffuseLighting(brdfData, addSurfData.rampColor, lightData, radiance);
+    half3 diffuse = NPRDiffuseLighting(brdfData, addSurfData.rampColor, lightData, addSurfData, radiance);
     half3 specular = NPRSpecularLighting(brdfData, surfData, input, inputData, surfData.albedo, addSurfData, radiance, lightData);
     half3 brdf = (diffuse + specular) * lightData.lightColor;
     return brdf;
 }
 
+/**
+ * \brief AdditionLighting, Lighting Equation base on MainLight, TODO: if cell-shading should use other lighting equation
+ * \param brdfData 
+ * \param brdfDataClearCoat 
+ * \param input 
+ * \param inputData 
+ * \param surfData 
+ * \param addInputData 
+ * \param shadowMask 
+ * \param meshRenderingLayers 
+ * \param aoFactor 
+ * \return 
+ */
+half3 NPRAdditionLightDirectLighting(BRDFData brdfData, BRDFData brdfDataClearCoat, Varyings input, InputData inputData,
+                                     NPRSurfaceData surfData,half4 shadowMask, half meshRenderingLayers, FernSGAddSurfaceData addSurfData,
+                                     AmbientOcclusionFactor aoFactor)
+{
+    half3 additionLightColor = 0;
+    #if defined(_ADDITIONAL_LIGHTS)
+    uint pixelLightCount = GetAdditionalLightsCount();
 
+    #if USE_FORWARD_PLUS
+    for (uint lightIndex = 0; lightIndex < min(URP_FP_DIRECTIONAL_LIGHTS_COUNT, MAX_VISIBLE_LIGHTS); lightIndex++)
+    {
+        FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK
+
+        Light light = GetAdditionalLight(lightIndex, inputData, shadowMask, aoFactor);
+
+    #ifdef _LIGHT_LAYERS
+        if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
+    #endif
+        {
+            LightingData lightingData = InitializeLightingData(light, input, inputData.normalWS, inputData.viewDirectionWS);
+            half radiance = LightingRadiance(lightingData);
+            // Additional Light Filter Referenced from https://github.com/unity3d-jp/UnityChanToonShaderVer2_Project
+            float pureIntencity = max(0.001,(0.299 * lightingData.lightColor.r + 0.587 * lightingData.lightColor.g + 0.114 * lightingData.lightColor.b));
+            //lightingData.lightColor = max(0, lerp(lightingData.lightColor, lerp(0, min(lightingData.lightColor, lightingData.lightColor / pureIntencity * _LightIntensityClamp), 1), _Is_Filter_LightColor));
+            half3 addLightColor = NPRMainLightDirectLighting(brdfData, brdfDataClearCoat, input, inputData, surfData, radiance, addSurfData, lightingData);
+            additionLightColor += addLightColor;
+        }
+    }
+    #endif
+
+    #if USE_CLUSTERED_LIGHTING
+    for (uint lightIndex = 0; lightIndex < min(_AdditionalLightsDirectionalCount, MAX_VISIBLE_LIGHTS); lightIndex++)
+    {
+        Light light = GetAdditionalLight(lightIndex, inputData, shadowMask, aoFactor);
+    #ifdef _LIGHT_LAYERS
+        if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
+    #endif
+        {
+            LightingData lightingData = InitializeLightingData(light, input, inputData.normalWS, inputData.viewDirectionWS);
+            half radiance = LightingRadiance(lightingData);
+            // Additional Light Filter Referenced from https://github.com/unity3d-jp/UnityChanToonShaderVer2_Project
+            float pureIntencity = max(0.001,(0.299 * lightingData.lightColor.r + 0.587 * lightingData.lightColor.g + 0.114 * lightingData.lightColor.b));
+            //lightingData.lightColor = max(0, lerp(lightingData.lightColor, lerp(0, min(lightingData.lightColor, lightingData.lightColor / pureIntencity * _LightIntensityClamp), 1), _Is_Filter_LightColor));
+            half3 addLightColor = NPRMainLightDirectLighting(brdfData, brdfDataClearCoat, input, inputData, surfData, radiance, addSurfData, lightingData);
+            additionLightColor += addLightColor;
+        }
+    }
+    #endif
+
+    LIGHT_LOOP_BEGIN(pixelLightCount)
+        Light light = GetAdditionalLight(lightIndex, inputData, shadowMask, aoFactor);
+    #ifdef _LIGHT_LAYERS
+        if (IsMatchingLightLayer(light.layerMask, meshRenderingLayers))
+    #endif
+        {
+            LightingData lightingData = InitializeLightingData(light, input, inputData.normalWS, inputData.viewDirectionWS);
+            half radiance = LightingRadiance(lightingData);
+            // Additional Light Filter Referenced from https://github.com/unity3d-jp/UnityChanToonShaderVer2_Project
+            float pureIntencity = max(0.001,(0.299 * lightingData.lightColor.r + 0.587 * lightingData.lightColor.g + 0.114 * lightingData.lightColor.b));
+           // TODO: Add SG defined:
+           // lightingData.lightColor = max(0, lerp(lightingData.lightColor, lerp(0, min(lightingData.lightColor, lightingData.lightColor / pureIntencity * _LightIntensityClamp), 1), _Is_Filter_LightColor));
+            half3 addLightColor = NPRMainLightDirectLighting(brdfData, brdfDataClearCoat, input, inputData, surfData, radiance, addSurfData, lightingData);
+            additionLightColor += addLightColor;
+        }
+    LIGHT_LOOP_END
+    #endif
+
+    // vertex lighting only lambert diffuse for now...
+    #if defined(_ADDITIONAL_LIGHTS_VERTEX)
+        additionLightColor += inputData.vertexLighting * brdfData.diffuse;
+    #endif
+
+    return additionLightColor;
+}
+
+half3 NPRIndirectLighting(BRDFData brdfData, InputData inputData, Varyings input, half occlusion)
+{
+    half3 indirectDiffuse = inputData.bakedGI * occlusion;
+    half3 reflectVector = reflect(-inputData.viewDirectionWS, inputData.normalWS);
+    half NoV = saturate(dot(inputData.normalWS, inputData.viewDirectionWS));
+    half fresnelTerm = Pow4(1.0 - NoV);
+    half3 indirectSpecular = NPRGlossyEnvironmentReflection(reflectVector, inputData.positionWS, inputData.normalizedScreenSpaceUV, brdfData.perceptualRoughness, occlusion);
+    half3 indirectColor = EnvironmentBRDF(brdfData, indirectDiffuse, indirectSpecular, fresnelTerm);
+
+    #if _MATCAP
+        half3 matCap = SamplerMatCap(_MatCapColor, input.uv.zw, inputData.normalWS, inputData.normalizedScreenSpaceUV, TEXTURE2D_ARGS(_MatCapTex, sampler_MatCapTex));
+        indirectColor += lerp(matCap, matCap * brdfData.diffuse, _MatCapAlbedoWeight);
+    #endif
+
+    return indirectColor;
+}
 
 // ====================== Vert/Fragment ============================
 PackedVaryings vert(Attributes input)
@@ -220,25 +347,30 @@ void frag(
     surfData.normalTS            = normalTS;
     surfData.clearCoatMask       = 0;
     surfData.clearCoatSmoothness = 1;
-    surfData.specularIntensity = 1;
 
     #ifdef _CLEARCOAT
         surfData.clearCoatMask       = saturate(surfaceDescription.CoatMask);
         surfData.clearCoatSmoothness = saturate(surfaceDescription.CoatSmoothness);
     #endif
 
-    half3 rampColor;
-    #ifdef _RAMPSHADING
-        rampColor = surfaceDescription.RampColor;
-    #endif
-
     // Init AddSurfaceData
     FernSGAddSurfaceData addSurfData = (FernSGAddSurfaceData)0;
-    addSurfData.rampColor = rampColor;
-    #ifdef _STYLIZED
-        addSurfData.specularColor = surfaceDescription.SpecularColor;
+    addSurfData.specularColor = surfaceDescription.SpecularColor;
+    #if _RAMPSHADING
+        addSurfData.rampColor = surfaceDescription.RampColor;
+    #endif
+    #if _STYLIZED
         addSurfData.StylizedSpecularSize = surfaceDescription.StylizedSpecularSize;
         addSurfData.StylizedSpecularSoftness = surfaceDescription.StylizedSpecularSoftness;
+    #endif
+    #if _CELLSHADING
+        addSurfData.cellThreshold = surfaceDescription.CellThreshold;
+        addSurfData.cellSoftness = surfaceDescription.CellSmoothness;
+    #endif
+    #if _SPECULARAA
+        addSurfData.geometryAAVariant = surfaceDescription.GeometryAAVariant;
+        addSurfData.geometryAAStrength = surfaceDescription.GeometryAAStrength;
+        surfData.smoothness = GeometryAA(inputData.normalWS, surfData.smoothness, addSurfData);
     #endif
 
     surfData.albedo = AlphaModulate(surfData.albedo, surfData.alpha);
@@ -253,13 +385,13 @@ void frag(
     Light mainLight = GetMainLight(inputData.shadowCoord, inputData.positionWS, shadowMask);
     MixRealtimeAndBakedGI(mainLight, inputData.normalWS, inputData.bakedGI);
     #if defined(_SCREEN_SPACE_OCCLUSION)
-    AmbientOcclusionFactor aoFactor = GetScreenSpaceAmbientOcclusion(inputData.normalizedScreenSpaceUV);
-    mainLight.color *= aoFactor.directAmbientOcclusion;
-    surfaceData.occlusion = min(surfaceData.occlusion, aoFactor.indirectAmbientOcclusion);
-    #else
-    AmbientOcclusionFactor aoFactor;
-    aoFactor.indirectAmbientOcclusion = 1;
-    aoFactor.directAmbientOcclusion = 1;
+        AmbientOcclusionFactor aoFactor = GetScreenSpaceAmbientOcclusion(inputData.normalizedScreenSpaceUV);
+        mainLight.color *= aoFactor.directAmbientOcclusion;
+        surfaceData.occlusion = min(surfaceData.occlusion, aoFactor.indirectAmbientOcclusion);
+        #else
+        AmbientOcclusionFactor aoFactor;
+        aoFactor.indirectAmbientOcclusion = 1;
+        aoFactor.directAmbientOcclusion = 1;
     #endif
 
     BRDFData brdfData, clearCoatbrdfData;
@@ -271,7 +403,8 @@ void frag(
     half4 color = 0;
     color.rgb = NPRMainLightDirectLighting(brdfData, clearCoatbrdfData, unpacked, inputData, surfData, radiance, addSurfData, lightingData);
 
-    //color = UniversalFragmentPBR(inputData, surface);
+    color.rgb += NPRAdditionLightDirectLighting(brdfData, clearCoatbrdfData, unpacked, inputData, surfData, shadowMask, meshRenderingLayers, addSurfData, aoFactor);
+    color.rgb += NPRIndirectLighting(brdfData, inputData, unpacked, surfData.occlusion);
     color.rgb = MixFog(color.rgb, inputData.fogCoord);
 
     color.a = OutputAlpha(color.a, isTransparent);

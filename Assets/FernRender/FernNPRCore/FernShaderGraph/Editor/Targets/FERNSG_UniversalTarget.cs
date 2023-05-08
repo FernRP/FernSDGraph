@@ -104,7 +104,7 @@ namespace FernShaderGraph
     
     internal enum DiffusionModel
     {
-        Cell = 2, 
+        Cell = 2,
         Ramp = 1,
         Lambert = 0
     }
@@ -194,6 +194,10 @@ namespace FernShaderGraph
         
         [SerializeField] 
         SpecularModel m_SpecularModel = SpecularModel.GGX;
+        
+        [SerializeField]
+        bool m_GeometryAA = false;
+
         // ==============================================
 
         [SerializeField]
@@ -325,6 +329,13 @@ namespace FernShaderGraph
             get => m_SpecularModel;
             set => m_SpecularModel = value;
         }
+        
+        public bool geometryAA
+        {
+            get => m_GeometryAA;
+            set => m_GeometryAA = value;
+        }
+
 //=====================================
 
         public bool supportsLodCrossFade
@@ -962,6 +973,14 @@ namespace FernShaderGraph
                     :
                     pass.defines.Add(CoreKeywordDescriptors.SpecularModel, 2);
                     break;
+            }
+        }
+        
+        internal static void AddGeometryAAControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target)
+        {
+            if(target.geometryAA)
+            {
+                pass.defines.Add(CoreKeywordDescriptors.UseGeometryAA, 1);
             }
         }
 
@@ -2212,6 +2231,15 @@ namespace FernShaderGraph
                 new KeywordEntry() { displayName = "STYLIZED", referenceName = "STYLIZED 1" },
                 new KeywordEntry() { displayName = "BLINNPHONG", referenceName = "BLINNPHONG 1" },
             }
+        };
+        
+        public static readonly KeywordDescriptor UseGeometryAA = new KeywordDescriptor()
+        {
+            displayName = "Geometry AA",
+            referenceName = "_SPECULARAA",
+            type = KeywordType.Boolean,
+            definition = KeywordDefinition.Predefined,
+            scope = KeywordScope.Local,
         };
     }
     #endregion

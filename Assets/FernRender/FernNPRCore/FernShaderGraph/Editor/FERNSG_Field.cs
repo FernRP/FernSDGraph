@@ -39,6 +39,12 @@ namespace FernShaderGraph
             
             public static BlockFieldDescriptor StylizedSpecularSoftness = new BlockFieldDescriptor(FernSG_Field.SurfaceDescription.name, "StylizedSpecularSoftness", "Stylized Specular Softness", 
                 "SURFACEDESCRIPTION_STYLIZEDSPECULARSOFTNESS", new FloatControl(0.1f), ShaderStage.Fragment);
+            
+            public static BlockFieldDescriptor GeometryAAStrength = new BlockFieldDescriptor(FernSG_Field.SurfaceDescription.name, "GeometryAAStrength", "Geometry AA Strength", 
+                "SURFACEDESCRIPTION_GEOMETRYAASTRENGTH", new FloatControl(1f), ShaderStage.Fragment);
+            
+            public static BlockFieldDescriptor GeometryAAVariant = new BlockFieldDescriptor(FernSG_Field.SurfaceDescription.name, "GeometryAAVariant", "Geometry AA Variant", 
+                "SURFACEDESCRIPTION_GEOMETRYAAVARIANT", new FloatControl(1f), ShaderStage.Fragment);
         }
     }
 }

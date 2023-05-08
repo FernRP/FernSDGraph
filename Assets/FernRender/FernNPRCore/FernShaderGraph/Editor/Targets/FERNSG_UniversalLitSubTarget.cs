@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using Mono.Cecil;
 using UnityEditor;
 using UnityEditor.Rendering.Universal;
 using UnityEditor.Rendering.Universal.ShaderGraph;
@@ -29,7 +30,7 @@ namespace FernShaderGraph
         NormalDropOffSpace m_NormalDropOffSpace = NormalDropOffSpace.Tangent;
 
         [SerializeField]
-        bool m_ClearCoat = false;
+        bool m_ClearCoat = false; 
 
         [SerializeField]
         bool m_BlendModePreserveSpecular = true;
@@ -67,7 +68,7 @@ namespace FernShaderGraph
                 return clearCoat; // && <complex feature>
             }
         }
-
+        
         public bool blendModePreserveSpecular
         {
             get => m_BlendModePreserveSpecular;
@@ -171,6 +172,9 @@ namespace FernShaderGraph
             context.AddBlock(FernSG_Field.SurfaceDescription.SpecularColor);
             context.AddBlock(FernSG_Field.SurfaceDescription.StylizedSpecularSize, target.specularModel == SpecularModel.STYLIZED);
             context.AddBlock(FernSG_Field.SurfaceDescription.StylizedSpecularSoftness, target.specularModel == SpecularModel.STYLIZED);
+            
+            context.AddBlock(FernSG_Field.SurfaceDescription.GeometryAAStrength, target.geometryAA);
+            context.AddBlock(FernSG_Field.SurfaceDescription.GeometryAAVariant, target.geometryAA);
         }
 
         public override void CollectShaderProperties(PropertyCollector collector, GenerationMode generationMode)
@@ -221,6 +225,16 @@ namespace FernShaderGraph
             });
 
             universalTarget.AddDefaultSurfacePropertiesGUI(ref context, onChange, registerUndo, showReceiveShadows: true);
+            
+            context.AddProperty("Geometry AA", new Toggle() { value = target.geometryAA }, (evt) =>
+            {
+                if (Equals(target.geometryAA, evt.newValue))
+                    return;
+
+                registerUndo("Change Geometry AA");
+                target.geometryAA = evt.newValue;
+                onChange();
+            });
 
             context.AddProperty("Fragment Normal Space", new EnumField(NormalDropOffSpace.Tangent) { value = normalDropOffSpace }, (evt) =>
             {
@@ -241,6 +255,8 @@ namespace FernShaderGraph
                 clearCoat = evt.newValue;
                 onChange();
             });
+            
+            
 
             if (target.surfaceType == SurfaceType.Transparent)
             {
@@ -493,6 +509,7 @@ namespace FernShaderGraph
                 CorePasses.AddLODCrossFadeControlToPass(ref result, target);
                 CorePasses.AddDiffusionModelControlToPass(ref result, target);
                 CorePasses.AddSpecularModelControlToPass(ref result, target);
+                CorePasses.AddGeometryAAControlToPass(ref result, target);
                 
                 return result;
             }
@@ -770,6 +787,10 @@ namespace FernShaderGraph
                 FernSG_Field.SurfaceDescription.SpecularColor,
                 FernSG_Field.SurfaceDescription.StylizedSpecularSize,
                 FernSG_Field.SurfaceDescription.StylizedSpecularSoftness,
+                FernSG_Field.SurfaceDescription.CellThreshold,
+                FernSG_Field.SurfaceDescription.CellSmoothness,
+                FernSG_Field.SurfaceDescription.GeometryAAVariant,
+                FernSG_Field.SurfaceDescription.GeometryAAStrength,
             };
 
             public static readonly BlockFieldDescriptor[] FragmentComplexLit = new BlockFieldDescriptor[]
@@ -787,6 +808,7 @@ namespace FernShaderGraph
                 BlockFields.SurfaceDescription.AlphaClipThreshold,
                 BlockFields.SurfaceDescription.CoatMask,
                 BlockFields.SurfaceDescription.CoatSmoothness,
+                FernSG_Field.SurfaceDescription.SpecularColor,
             };
 
             public static readonly BlockFieldDescriptor[] FragmentMeta = new BlockFieldDescriptor[]

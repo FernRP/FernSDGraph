@@ -15,7 +15,6 @@ struct NPRSurfaceData
     half  alpha;
     half  clearCoatMask;
     half  clearCoatSmoothness;
-    half  specularIntensity;
     half  diffuseID;
     half  innerLine;
     
@@ -32,6 +31,10 @@ struct FernSGAddSurfaceData
     half3 specularColor;
     half StylizedSpecularSize;
     half StylizedSpecularSoftness;
+    half cellThreshold;
+    half cellSoftness;
+    half geometryAAVariant;
+    half geometryAAStrength;
 };
 
 struct AnisoSpecularData

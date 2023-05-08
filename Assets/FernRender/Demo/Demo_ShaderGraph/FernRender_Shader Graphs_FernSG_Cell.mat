@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_New Shader Graph
-  m_Shader: {fileID: -6465566751694194690, guid: b73c259df24c6c247afc64d6e15c6868,
+  m_Name: FernRender_Shader Graphs_FernSG_Cell
+  m_Shader: {fileID: -6465566751694194690, guid: 6f7182ab52e07544e8d0e2dc73c6cc47,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -24,16 +24,8 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _Ramp:
-        m_Texture: {fileID: 2800000, guid: 0c0e3d13586e2be4a9d63ee9dbbc2200, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _RampTex:
-        m_Texture: {fileID: 2800000, guid: 73131ef27d38b4d45b2091da76bff8aa, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Texture2DAsset_da5c3d634298450ea678040379081a52_Out_0:
-        m_Texture: {fileID: 2800000, guid: 0c0e3d13586e2be4a9d63ee9dbbc2200, type: 3}
+    - _Texture2D:
+        m_Texture: {fileID: 2800000, guid: 83d22d0b3e2230643b78e9b437da237e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -50,16 +42,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CellThreshold: 0
+    - _CellSoftness: 0.01
+    - _CellThreshld: 0.37
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _StylizedSpecularSize: 0.16
-    - _StylizedSpecularSoftness: 0.6
-    - _UOffset: 0.32
-    - _UVOffset: 0.54
-    - _UseHalfLambert: 1
-    - _VOffsert: 1
-    - _VOffset: 0.53
+    - _Smoothness: 0.73
     m_Colors:
-    - _SpecularColor: {r: 0, g: 39.8615, b: 13.73188, a: 0}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 0}
+    - _SpecularColor: {r: 3.9999998, g: 3.9999998, b: 3.9999998, a: 0}
   m_BuildTextureStacks: []

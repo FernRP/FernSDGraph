@@ -187,14 +187,14 @@ half LightingRadiance(LightingData lightingData)
  * \param shadowSmooth 
  * \param diffuse [Out]
  */
-inline half3 CellShadingDiffuse(inout half radiance, half cellThreshold, half cellSmooth, half3 highColor, half3 darkColor)
+inline half3 CellShadingDiffuse(inout half radiance, half cellThreshold, half cellSmooth)
 {
     half3 diffuse = 0;
     //cellSmooth *= 0.5;
     radiance = saturate(1 + (radiance - cellThreshold - cellSmooth) / max(cellSmooth, 1e-3));
     // 0.5 cellThreshold 0.5 smooth = Lambert
     //radiance = LinearStep(cellThreshold - cellSmooth, cellThreshold + cellSmooth, radiance);
-    diffuse = lerp(darkColor.rgb, highColor.rgb, radiance);
+    diffuse = radiance;
     return diffuse;
 }
 
