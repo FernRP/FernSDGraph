@@ -1,4 +1,4 @@
-//#define GETLOARMODELS TODO: Wait for lora's api to pass
+//#define GETLOARMODELS //TODO: Wait for lora's api to pass
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,6 +8,7 @@ using FernGraph;
 using Newtonsoft.Json;
 using Unity.EditorCoroutines.Editor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Networking;
 
 namespace FernNPRCore.StableDiffusionGraph
@@ -23,7 +24,11 @@ namespace FernNPRCore.StableDiffusionGraph
         [Output("Lora")] public string lora;
         public string loraDir;
         public List<string> loraNames;
+        public Dictionary<string, string> loraPrompts;
         public int currentIndex = 0;
+        public bool useLoraBlockWeight;
+        public string loraBlockWeightPresetName;
+        public int currentLoraBlockWeightPresetIndex = 0;
 
         public StableDiffusionGraph stableGraph;
         
@@ -38,7 +43,7 @@ namespace FernNPRCore.StableDiffusionGraph
         /// Get the list of available Stable Diffusion models.
         /// </summary>
         /// <returns></returns>
-        public IEnumerator ListLoraAsync()
+        public IEnumerator ListLoraAsync(UnityAction unityAction=null)
         {
 #if GETLOARMODELS
             if (loraNames == null)
@@ -68,9 +73,14 @@ namespace FernNPRCore.StableDiffusionGraph
                 SDUtil.Log(request.downloadHandler.text);
                 // Deserialize the response to a class
                 SDLoraModel[] ms = JsonConvert.DeserializeObject<SDLoraModel[]>(request.downloadHandler.text);
-
+                if (loraPrompts == null)
+                    loraPrompts = new Dictionary<string, string>();
                 foreach (var m in ms)
+                {
+                    loraPrompts[m.name] = m.prompt;
                     loraNames.Add(m.name);
+                }
+                unityAction?.Invoke();
             }
             catch (Exception)
             {
@@ -108,6 +118,7 @@ namespace FernNPRCore.StableDiffusionGraph
                 {
                     loraNames.Add(Path.GetFileNameWithoutExtension(f));
                 }
+                unityAction?.Invoke();
             }
             catch (Exception)
             {
@@ -121,11 +132,14 @@ namespace FernNPRCore.StableDiffusionGraph
         {
             prompt = GetInputValue("Prompt", this.prompt);
             loraPrompt = GetInputValue("LoRAPrompt", this.loraPrompt);
-            if (!string.IsNullOrEmpty(loraPrompt))
+            if (!string.IsNullOrEmpty(loraPrompt)&&!loraPrompt.EndsWith(","))
+                loraPrompt += ",";
+            string loraBlockWeight = "";
+            if (useLoraBlockWeight)
             {
-                loraPrompt = $"{loraPrompt},";
+                loraBlockWeight = $":{SDDataHandle.Instance.loraBlockWeightPresets[loraBlockWeightPresetName]}";
             }
-            string result = $"{prompt},{loraPrompt}<lora:{lora}:{strength}>";
+            string result = $"{prompt},{loraPrompt}<lora:{lora}:{strength}{loraBlockWeight}>";
             return result;
         }
     }
