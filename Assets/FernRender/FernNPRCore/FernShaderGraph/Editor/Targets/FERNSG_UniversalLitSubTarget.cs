@@ -165,8 +165,8 @@ namespace FernShaderGraph
             context.AddBlock(FernSG_Field.SurfaceDescription.GeometryAAStrength, target.geometryAA);
             context.AddBlock(FernSG_Field.SurfaceDescription.GeometryAAVariant, target.geometryAA); 
             
-            context.AddBlock(FernSG_Field.SurfaceDescription.LightenColor);
-            context.AddBlock(FernSG_Field.SurfaceDescription.DarkColor);
+            context.AddBlock(FernSG_Field.SurfaceDescription.LightenColor, target.diffusionModel != DiffusionModel.Ramp);
+            context.AddBlock(FernSG_Field.SurfaceDescription.DarkColor, target.diffusionModel != DiffusionModel.Ramp);
         }
 
         public override void CollectShaderProperties(PropertyCollector collector, GenerationMode generationMode)

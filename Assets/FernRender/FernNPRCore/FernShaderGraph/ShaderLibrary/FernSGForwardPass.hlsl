@@ -372,8 +372,11 @@ void frag(
         addSurfData.geometryAAStrength = surfaceDescription.GeometryAAStrength;
         surfData.smoothness = GeometryAA(inputData.normalWS, surfData.smoothness, addSurfData);
     #endif
-    addSurfData.darkColor = surfaceDescription.DarkColor;
-    addSurfData.lightenColor = surfaceDescription.LightenColor;
+
+    #if !_RAMPSHADING
+        addSurfData.darkColor = surfaceDescription.DarkColor;
+        addSurfData.lightenColor = surfaceDescription.LightenColor;
+    #endif
 
     surfData.albedo = AlphaModulate(surfData.albedo, surfData.alpha);
 
@@ -404,7 +407,6 @@ void frag(
     
     half4 color = 0;
     color.rgb = NPRMainLightDirectLighting(brdfData, clearCoatbrdfData, unpacked, inputData, surfData, radiance, addSurfData, lightingData);
-
     color.rgb += NPRAdditionLightDirectLighting(brdfData, clearCoatbrdfData, unpacked, inputData, surfData, shadowMask, meshRenderingLayers, addSurfData, aoFactor);
     color.rgb += NPRIndirectLighting(brdfData, inputData, unpacked, surfData.occlusion);
     color.rgb = MixFog(color.rgb, inputData.fogCoord);
