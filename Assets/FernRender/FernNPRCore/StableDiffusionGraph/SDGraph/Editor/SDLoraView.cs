@@ -14,10 +14,13 @@ namespace FernNPRCore.StableDiffusionGraph
     public class SDLoraView : NodeView
     {
         bool foldout = false;
+        PopupField<string> popup = new PopupField<string>();
 
         protected override void OnInitialize()
         {
             base.OnInitialize();
+            
+            PortView loRAPrompt = GetInputPort("LoRAPrompt");
 
             var lora = Target as SDLora;
             if(lora == null) return;
@@ -32,9 +35,33 @@ namespace FernNPRCore.StableDiffusionGraph
             titleButtonContainer.Add(button);
             onGuiContainer = new IMGUIContainer(OnGUI);
             extensionContainer.Add(onGuiContainer);
-
+            
+            // Add a callback to perform additional actions on value change
+            popup.RegisterValueChangedCallback(evt =>
+            {
+                SDUtil.Log($"Selected lora: {evt.newValue}");
+                lora.lora = evt.newValue;
+                lora.currentIndex = lora.loraNames.IndexOf(evt.newValue);
+                if (lora.loraPrompts != null && lora.loraPrompts.TryGetValue(lora.lora, out var prompt))
+                {
+                    lora.loraPrompt = prompt;
+                    SDUtil.Log(lora.loraPrompt);
+                }
+                else
+                {
+                    SDUtil.LogWarning("Can't Get Lora Prompt");
+                }
+                loRAPrompt.OnUpdatePortViewElement(this);
+            });
             RefreshExpandedState();
         }
+
+        public override void OnDirty()
+        {
+            base.OnDirty();
+            RefreshExpandedState();
+        }
+
         IMGUIContainer onGuiContainer;
         List<string> loraWeightPresetName;
 
@@ -72,6 +99,7 @@ namespace FernNPRCore.StableDiffusionGraph
                 }
                 EditorGUILayout.EndVertical();
             }
+            
             EditorGUILayout.EndFoldoutHeaderGroup();
         }
 
@@ -81,38 +109,24 @@ namespace FernNPRCore.StableDiffusionGraph
             var lora = Target as SDLora;
             if(lora == null) return;
             EditorCoroutineUtility.StartCoroutine(lora.ListLoraAsync(
-                () => {
-                    if (lora.loraNames != null && lora.loraNames.Count > 0)
-                    {
-                        extensionContainer.Clear();
-                        // Create a VisualElement with a popup field
-                        var listContainer = new VisualElement();
-                        listContainer.style.flexDirection = FlexDirection.Row;
-                        listContainer.style.alignItems = Align.Center;
-                        listContainer.style.justifyContent = Justify.Center;
+            () => {
+                    extensionContainer.Clear();
+                    // Create a VisualElement with a popup field
+                    var listContainer = new VisualElement();
+                    listContainer.style.flexDirection = FlexDirection.Row;
+                    listContainer.style.alignItems = Align.Center;
+                    listContainer.style.justifyContent = Justify.Center;
 
-                        var popup = new PopupField<string>(lora.loraNames, lora.currentIndex);
-
-                        // Add a callback to perform additional actions on value change
-                        popup.RegisterValueChangedCallback(evt =>
-                        {
-                            SDUtil.Log($"Selected lora: {evt.newValue}");
-                            lora.lora = evt.newValue;
-                            lora.currentIndex = lora.loraNames.IndexOf(evt.newValue);
-                            if (lora.loraPrompts != null && lora.loraPrompts.ContainsKey(lora.lora))
-                            {
-                                lora.loraPrompt = lora.loraPrompts[lora.lora];
-                            }
-                        });
-
-                        listContainer.Add(popup);
-                        extensionContainer.Add(listContainer);
-                        if(!extensionContainer.Contains(onGuiContainer))
-                            extensionContainer.Add(onGuiContainer);
-                        RefreshExpandedState();
-                    }
+                    popup.choices = lora.loraNames;
+                    popup.index = lora.currentIndex;
+                    
+                    listContainer.Add(popup);
+                    extensionContainer.Add(listContainer);
+                    if(!extensionContainer.Contains(onGuiContainer))
+                        extensionContainer.Add(onGuiContainer);
+                    RefreshExpandedState();
                 }
-                ), this);
+            ), this);
         }
     }
 }

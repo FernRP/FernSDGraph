@@ -188,7 +188,7 @@ namespace FernGraph
             }
 
             // Short circuit Convert.ChangeType if we can cast quicker
-            if (value == null || typeof(T).IsAssignableFrom(value.GetType()))
+            if (value == null || value is T)
             {
                 return (T)value;
             }
@@ -333,7 +333,7 @@ namespace FernGraph
             UpdateConnections();
         }
 
-        internal void OnValidate()
+        public void OnValidate()
         {
             UpdateConnections();
         }

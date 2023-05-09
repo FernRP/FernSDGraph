@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using FernGraph;
+using FernGraph.Editor;
 using Newtonsoft.Json;
 using Unity.EditorCoroutines.Editor;
 using UnityEngine;
@@ -17,7 +18,6 @@ namespace FernNPRCore.StableDiffusionGraph
     [Tags("SD Node")]
     public class SDLora : Node
     {
-        
         [Input("Prompt")] public string prompt;
         [Input("LoRAPrompt")] public string loraPrompt = "";
         [Input("Strength")] public float strength = 1;
@@ -30,12 +30,9 @@ namespace FernNPRCore.StableDiffusionGraph
         public string loraBlockWeightPresetName;
         public int currentLoraBlockWeightPresetIndex = 0;
 
-        public StableDiffusionGraph stableGraph;
-        
         public override void OnAddedToGraph()
         {
             base.OnAddedToGraph();
-            stableGraph = Graph as StableDiffusionGraph;
             EditorCoroutineUtility.StartCoroutine(ListLoraAsync(), this);
         }
 
@@ -111,7 +108,6 @@ namespace FernNPRCore.StableDiffusionGraph
                 // Keep only the names of the models
                 loraDir = m.lora_dir;
                 string[] files = Directory.GetFiles(loraDir, "*.safetensors", SearchOption.AllDirectories);
-                SDUtil.Log(files.Length.ToString());
                 if (loraNames == null) loraNames = new List<string>();
                 loraNames.Clear();
                 foreach (var f in files)
@@ -141,6 +137,8 @@ namespace FernNPRCore.StableDiffusionGraph
             }
             string result = $"{prompt},{loraPrompt}<lora:{lora}:{strength}{loraBlockWeight}>";
             return result;
+            
+            
         }
     }
 }

@@ -19,21 +19,85 @@ MonoBehaviour:
   - rid: 7516382605447528464
   - rid: 7516382605447528465
   - rid: 7516382605447528466
-  - rid: 7516382615629201410
   - rid: 7516382615629201411
-  - rid: 7516382615629201412
+  - rid: 91303650015576107
   comments: []
   assetVersion: 1
   references:
     version: 2
     RefIds:
+    - rid: 91303650015576107
+      type: {class: SDLora, ns: FernNPRCore.StableDiffusionGraph, asm: Assembly-CSharp}
+      data:
+        id: 1a33f59c-705f-49ef-ab28-0c163399afc7
+        name: SD Lora
+        graph: {fileID: 11400000}
+        position: {x: 5451.3335, y: -195.33328}
+        ports:
+        - name: Prompt
+          type: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+          capacity: 0
+          direction: 0
+          connections:
+          - nodeId: 64a31354-9147-4e15-9387-7247a044f795
+            portName: Text
+        - name: LoRAPrompt
+          type: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+          capacity: 0
+          direction: 0
+          connections: []
+        - name: Strength
+          type: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+          capacity: 0
+          direction: 0
+          connections: []
+        - name: Lora
+          type: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+          capacity: 1
+          direction: 1
+          connections:
+          - nodeId: c451f7f3-dc9b-4bdd-b24b-a14586d63dfd
+            portName: Positive
+        prompt: 
+        loraPrompt: 
+        strength: 1
+        lora: LORAJingyiJuChinese_jingyi10
+        loraDir: D:\ForkProject\stable-diffusion-webui\models\Lora
+        loraNames:
+        - bustCupCumInBetweenBooba_v10
+        - cheeseDaddysLandscapes_35
+        - chineseCosplayerXiaorouseeu_v10
+        - doggystylePov_v10
+        - doggystyle_lora32V1
+        - hmsCheshireAzurLane_delta
+        - japaneseDollLikeness_v10
+        - kagurazakaMayufuLora_v01
+        - koreanDollLikeness_v10
+        - koreanDollLikeness_v15
+        - LORAChineseDoll_chinesedolllikeness1
+        - LORAJingyiJuChinese_jingyi10
+        - povDoggystyleLora1MB_povdoggy
+        - spaMikoLora_v01
+        - taiwanDollLikeness_v10
+        - wakamezakeCumBetweenThighs_v10
+        - "animeLineartStyle_v20Offset(\u7EBF\u7A3F)"
+        - jackscape
+        - Jordan_3
+        - sakimori-000017
+        - xsarchitectural-12NightMoonsci-fi
+        - chilloutmixss30_v30
+        - "chilloutmixss_xss10(\u4E00\u6817\u6C99\u5B50)"
+        currentIndex: 11
+        useLoraBlockWeight: 0
+        loraBlockWeightPresetName: 
+        currentLoraBlockWeightPresetIndex: 0
     - rid: 7516382605447528448
       type: {class: SDStart, ns: FernNPRCore.StableDiffusionGraph, asm: Assembly-CSharp}
       data:
         id: a0eb5498-a3de-4a59-8897-104c878ffa9c
         name: SD Start
         graph: {fileID: 11400000}
-        position: {x: 5987.2803, y: -512}
+        position: {x: 5969.6665, y: -497.33334}
         ports:
         - name: SDFlowOut
           type: FernNPRCore.StableDiffusionGraph.SDFlowData, Assembly-CSharp, Version=0.0.0.0,
@@ -51,7 +115,7 @@ MonoBehaviour:
           - nodeId: a69f67d4-221f-4e3e-b57a-8bcb405e23a4
             portName: Model
         Model: Girl_chilloutmix_NiCkpt
-        serverURL: http://127.0.0.1:7860
+        serverURL: https://3108n063s1.imdo.co
         overrideSettings: 1
         useAuth: 0
         user: 
@@ -62,7 +126,7 @@ MonoBehaviour:
         id: a69f67d4-221f-4e3e-b57a-8bcb405e23a4
         name: SD Check Point
         graph: {fileID: 11400000}
-        position: {x: 5764.6133, y: -455.33337}
+        position: {x: 5717.332, y: -497.33328}
         ports:
         - name: Model
           type: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -78,7 +142,6 @@ MonoBehaviour:
         - Dreamlike_dreamlikeDiffusion10_10
         - Dreamlike_dreamshaper_331BakedVae
         - Girl_aresMix_v01
-        - Girl_chilloutmix_NiCkpt
         - Girl_chilloutmix_NiPrunedFp32
         - Girl_feiji_v2
         - Girl_kaelvinsmixhc_releaseV10
@@ -87,12 +150,13 @@ MonoBehaviour:
         - unstableinkdream_v6
         - v1-5-pruned-emaonly
         - "\u4E2D\u56FD\u6A21\u7279_kaelvinsmixhc_releaseV10"
+        - "\u52A8\u6F2B_experience_70"
         - "\u52A8\u6F2B_UnstableInkDream_unstableinkdream_v6"
         - "\u52A8\u6F2B_\u539A\u6D82\u98CE\u683C_dalcefoPainting_v4"
         - "\u7EFC\u5408_anythingV3_fp16"
         - "\u7EFC\u5408_anythingV3Inpainting_1-inpainting"
         - "\u98CE\u683C\u5316\u4EBA\u50CF_portrait_10"
-        - "\u52A8\u6F2B_experience_70"
+        - Girl_chilloutmix_NiCkpt
         currentIndex: 5
     - rid: 7516382605447528462
       type: {class: StringNode, ns: FernNPRCore.StableDiffusionGraph, asm: Assembly-CSharp}
@@ -100,14 +164,14 @@ MonoBehaviour:
         id: 64a31354-9147-4e15-9387-7247a044f795
         name: String Node
         graph: {fileID: 11400000}
-        position: {x: 5068.6133, y: -284}
+        position: {x: 4926.6665, y: -195.33328}
         ports:
         - name: Text
           type: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
           capacity: 1
           direction: 1
           connections:
-          - nodeId: 63190da3-9768-450d-948a-eb6bf2ceb178
+          - nodeId: 1a33f59c-705f-49ef-ab28-0c163399afc7
             portName: Prompt
         Text: 1girl
     - rid: 7516382605447528464
@@ -116,14 +180,14 @@ MonoBehaviour:
         id: c451f7f3-dc9b-4bdd-b24b-a14586d63dfd
         name: SD Prompt
         graph: {fileID: 11400000}
-        position: {x: 6061.2803, y: -199.33337}
+        position: {x: 5844, y: -100}
         ports:
         - name: Positive
           type: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
           capacity: 0
           direction: 0
           connections:
-          - nodeId: 541e9e5c-dd3f-412f-99c5-62e267cfbb2b
+          - nodeId: 1a33f59c-705f-49ef-ab28-0c163399afc7
             portName: Lora
         - name: Negative
           type: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -140,7 +204,7 @@ MonoBehaviour:
           connections:
           - nodeId: 16ac8968-d1c5-47b6-a3d9-cc32ca7a9dc5
             portName: Prompt
-        Positive: "1girl,<lora::1>,<lora:animeLineartStyle_v20Offset(\u7EBF\u7A3F):1>"
+        Positive: 1girl,Can't Get Lora Prompt,<lora:koreanDollLikeness_v15:1>
         Negative: "nsfw\uFF0Cpaintings, sketches, (worst quality:2), (low quality:2),
           (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)),
           skin spots, acnes, skin blemishes, age spot, (outdoor:1.6), glans, anime\uFF0C(worst
@@ -175,7 +239,7 @@ MonoBehaviour:
         id: 055b3a44-032a-4f9f-827b-226f8a30a35d
         name: String Node
         graph: {fileID: 11400000}
-        position: {x: 5629.947, y: -108.666626}
+        position: {x: 5451.3335, y: -13.999989}
         ports:
         - name: Text
           type: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -243,70 +307,7 @@ MonoBehaviour:
             portName: Seed
         Image: {fileID: 0}
         OutImage: {fileID: 0}
-        seed: 71673411830730350
-    - rid: 7516382615629201410
-      type: {class: SDLora, ns: FernNPRCore.StableDiffusionGraph, asm: Assembly-CSharp}
-      data:
-        id: 541e9e5c-dd3f-412f-99c5-62e267cfbb2b
-        name: SD Lora
-        graph: {fileID: 11400000}
-        position: {x: 5751.2803, y: -269.33337}
-        ports:
-        - name: Prompt
-          type: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-          capacity: 0
-          direction: 0
-          connections:
-          - nodeId: 63190da3-9768-450d-948a-eb6bf2ceb178
-            portName: Lora
-        - name: LoRAPrompt
-          type: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-          capacity: 0
-          direction: 0
-          connections: []
-        - name: Strength
-          type: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-          capacity: 0
-          direction: 0
-          connections: []
-        - name: Lora
-          type: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-          capacity: 1
-          direction: 1
-          connections:
-          - nodeId: c451f7f3-dc9b-4bdd-b24b-a14586d63dfd
-            portName: Positive
-        prompt: 1girl,<lora::1>
-        loraPrompt: 
-        strength: 1
-        lora: "animeLineartStyle_v20Offset(\u7EBF\u7A3F)"
-        loraDir: D:\ForkProject\stable-diffusion-webui\models\Lora
-        loraNames:
-        - bustCupCumInBetweenBooba_v10
-        - cheeseDaddysLandscapes_35
-        - chineseCosplayerXiaorouseeu_v10
-        - doggystylePov_v10
-        - doggystyle_lora32V1
-        - hmsCheshireAzurLane_delta
-        - japaneseDollLikeness_v10
-        - kagurazakaMayufuLora_v01
-        - koreanDollLikeness_v10
-        - koreanDollLikeness_v15
-        - LORAChineseDoll_chinesedolllikeness1
-        - LORAJingyiJuChinese_jingyi10
-        - povDoggystyleLora1MB_povdoggy
-        - spaMikoLora_v01
-        - taiwanDollLikeness_v10
-        - wakamezakeCumBetweenThighs_v10
-        - "animeLineartStyle_v20Offset(\u7EBF\u7A3F)"
-        - jackscape
-        - Jordan_3
-        - sakimori-000017
-        - xsarchitectural-12NightMoonsci-fi
-        - chilloutmixss30_v30
-        - "chilloutmixss_xss10(\u4E00\u6817\u6C99\u5B50)"
-        currentIndex: 16
-        stableGraph: {fileID: 11400000}
+        seed: 1990170385325845343
     - rid: 7516382615629201411
       type: {class: SDSamplerNode, ns: FernNPRCore.StableDiffusionGraph, asm: Assembly-CSharp}
       data:
@@ -371,69 +372,6 @@ MonoBehaviour:
         Step: 20
         CFG: 7
         OutputImage: {fileID: 0}
-        outSeed: 71673411830730350
+        outSeed: 1990170385325845343
         Seed: -1
         SamplerMethod: Euler
-    - rid: 7516382615629201412
-      type: {class: SDLora, ns: FernNPRCore.StableDiffusionGraph, asm: Assembly-CSharp}
-      data:
-        id: 63190da3-9768-450d-948a-eb6bf2ceb178
-        name: SD Lora
-        graph: {fileID: 11400000}
-        position: {x: 5462.6133, y: -284}
-        ports:
-        - name: Prompt
-          type: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-          capacity: 0
-          direction: 0
-          connections:
-          - nodeId: 64a31354-9147-4e15-9387-7247a044f795
-            portName: Text
-        - name: LoRAPrompt
-          type: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-          capacity: 0
-          direction: 0
-          connections: []
-        - name: Strength
-          type: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-          capacity: 0
-          direction: 0
-          connections: []
-        - name: Lora
-          type: System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-          capacity: 1
-          direction: 1
-          connections:
-          - nodeId: 541e9e5c-dd3f-412f-99c5-62e267cfbb2b
-            portName: Prompt
-        prompt: 1girl
-        loraPrompt: 
-        strength: 1
-        lora: 
-        loraDir: D:\ForkProject\stable-diffusion-webui\models\Lora
-        loraNames:
-        - bustCupCumInBetweenBooba_v10
-        - cheeseDaddysLandscapes_35
-        - chineseCosplayerXiaorouseeu_v10
-        - doggystylePov_v10
-        - doggystyle_lora32V1
-        - hmsCheshireAzurLane_delta
-        - japaneseDollLikeness_v10
-        - kagurazakaMayufuLora_v01
-        - koreanDollLikeness_v10
-        - koreanDollLikeness_v15
-        - LORAChineseDoll_chinesedolllikeness1
-        - LORAJingyiJuChinese_jingyi10
-        - povDoggystyleLora1MB_povdoggy
-        - spaMikoLora_v01
-        - taiwanDollLikeness_v10
-        - wakamezakeCumBetweenThighs_v10
-        - "animeLineartStyle_v20Offset(\u7EBF\u7A3F)"
-        - jackscape
-        - Jordan_3
-        - sakimori-000017
-        - xsarchitectural-12NightMoonsci-fi
-        - chilloutmixss30_v30
-        - "chilloutmixss_xss10(\u4E00\u6817\u6C99\u5B50)"
-        currentIndex: 0
-        stableGraph: {fileID: 11400000}

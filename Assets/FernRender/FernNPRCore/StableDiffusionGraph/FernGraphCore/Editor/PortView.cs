@@ -16,7 +16,7 @@ namespace FernGraph.Editor
         /// </summary>
         public bool HideEditorFieldOnConnection { get; set; } = true;
 
-        private VisualElement editorField;
+        public VisualElement editorField;
         
         public PortView(
             Orientation portOrientation, 
@@ -111,6 +111,19 @@ namespace FernGraph.Editor
             if (!connected && editorField != null)
             {
                 editorField.style.display = DisplayStyle.Flex;
+               
+            }
+        }
+
+        public void OnUpdatePortViewElement(NodeView nodeView)
+        {
+            var reflection = NodeReflection.GetNodeType(nodeView.Target.GetType());
+            var element = reflection.GetPortByName(Target.Name)?.GetControlElement(nodeView);
+
+            if (element != null)
+            {
+                editorField.Clear();
+                editorField.Add(element);
             }
         }
     }
