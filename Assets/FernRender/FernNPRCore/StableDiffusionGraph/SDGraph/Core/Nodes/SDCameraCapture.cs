@@ -11,6 +11,8 @@ namespace FernNPRCore.StableDiffusionGraph
     public class SDCameraCapture : Node, IUpdateNode
     {
         [Output("Capture")] public Texture2D Capture;
+        [Output("Width")] public int Width;
+        [Output("Height")] public int Height;
 
         public Camera currentCamere;
         public RenderTexture cameraRT;
@@ -42,6 +44,8 @@ namespace FernNPRCore.StableDiffusionGraph
             var resolution = SDUtil.GetMainGameViewSize();
             SDUtil.Log($"Camera Capture Width: {resolution.x} + Height: + {resolution.y}");
 
+            Width = (int)resolution.x;
+            Height = (int)resolution.y;
             if (currentCamere == null)
             {
                 currentCamere = Camera.main;

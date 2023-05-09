@@ -24,6 +24,8 @@ namespace FernNPRCore.StableDiffusionGraph
         [Input] public int Step = 20;
         [Input] public int CFG = 7;
         [Input] public float DenisoStrength = 0.75f;
+        [Input] public int width = 512;
+        [Input] public int height = 512;
         [Output("Out Image")] public Texture2D OutputImage;
         [Output("Seed")] public long outSeed;
 
@@ -37,8 +39,6 @@ namespace FernNPRCore.StableDiffusionGraph
 
         public Action<long, long> OnUpdateSeedField;
 
-        private int width = 512;
-        private int height = 512;
         private float aspect;
         private Color whiteColor = new Color(1, 1, 1, 1);
 
@@ -48,10 +48,6 @@ namespace FernNPRCore.StableDiffusionGraph
             controlNetData = GetInputValue("ControlNet", controlNetData);
             InputImage = GetInputValue("In Image", this.InputImage);
             MaskImage = GetInputValue("Mask", this.MaskImage);
-
-            var vec2 = SDUtil.GetMainGameViewSize();
-            width = (int)vec2.x;
-            height = (int)vec2.y;
             
             if (InputImage != null)
             {

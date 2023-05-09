@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using FernGraph;
 using FernGraph.Editor;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -30,6 +31,14 @@ namespace FernNPRCore.StableDiffusionGraph
             PortView inView = GetInputPort("In Image");
             if (inView != null) inView.AddToClassList("PreviewInImg");
             
+            var button = new Button(OnAsync);
+            button.style.backgroundImage = SDTextureHandle.RefreshIcon;
+            button.style.width = 20;
+            button.style.height = 20;
+            button.style.alignSelf = Align.Auto;
+            button.style.bottom = 5;
+            titleContainer.Add(button);
+
             style.transformOrigin = new TransformOrigin(0, 0);
             style.scale = new StyleScale(Vector3.one);
             style.maxWidth = 256;
@@ -59,7 +68,8 @@ namespace FernNPRCore.StableDiffusionGraph
             capture = Target as SDCameraCapture;
             if (capture != null)
             {
-                enableUpdateCheck = new Toggle();
+                enableUpdateCheck = new Toggle("AutoRefresh");
+                enableUpdateCheck.value = capture.enableUpdate;
                 enableUpdateCheck.RegisterValueChangedCallback(e =>
                 {
                     capture.enableUpdate = e.newValue;
@@ -71,6 +81,15 @@ namespace FernNPRCore.StableDiffusionGraph
             }
 
             RefreshExpandedState();
+        }
+
+        private void OnAsync()
+        {
+            if (capture == null) return;
+            var enableUpdate = capture.enableUpdate;
+            capture.enableUpdate = true;
+            capture.Update();
+            capture.enableUpdate = enableUpdate;
         }
 
         protected override void OnDestroy()

@@ -21,6 +21,8 @@ namespace FernNPRCore.StableDiffusionGraph
         [Input("ControlNet")] public ControlNetData controlNetData;
         [Input] public int Step = 20;
         [Input] public int CFG = 7;
+        [Input("Width")] public int width = 512;
+        [Input("Height")] public int height = 512;
         [Output("Out Image")] public Texture2D OutputImage;
         [Output("Seed")] public long outSeed;
 
@@ -29,8 +31,6 @@ namespace FernNPRCore.StableDiffusionGraph
         public long Seed = -1;
         public string SamplerMethod = "Euler";
 
-        private int width = 512;
-        private int height = 512;
         private float aspect;
 
 
@@ -38,9 +38,6 @@ namespace FernNPRCore.StableDiffusionGraph
         {
             Prompt = GetInputValue("Prompt", this.Prompt);
             controlNetData = GetInputValue("ControlNet", controlNetData);
-            var vec2 = SDUtil.GetMainGameViewSize();
-            width = (int)vec2.x;
-            height = (int)vec2.y;
             if (Seed == 0)
                 Seed = -1;
             yield return (GenerateAsync());
