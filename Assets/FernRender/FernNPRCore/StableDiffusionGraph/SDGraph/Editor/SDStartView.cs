@@ -48,11 +48,16 @@ namespace FernNPRCore.StableDiffusionGraph
                 EditorGUILayout.BeginVertical();
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Override Settings", GUILayout.MaxWidth(120));
-                config.overrideSettings = EditorGUILayout.Toggle(
+                var newOverrideSettings = EditorGUILayout.Toggle(
                     config.overrideSettings,
                     styleCheckbox,
                     GUILayout.MaxWidth(150)
                 );
+                if (config.overrideSettings != newOverrideSettings)
+                {
+                    config.overrideSettings = newOverrideSettings;
+                    SDDataHandle.Instance.OverrideSettings= newOverrideSettings;
+                }
                 EditorGUILayout.EndHorizontal();
                 if (config.overrideSettings)
                 {

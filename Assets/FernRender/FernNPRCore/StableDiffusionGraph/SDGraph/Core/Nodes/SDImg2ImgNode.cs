@@ -277,7 +277,7 @@ namespace FernNPRCore.StableDiffusionGraph
                             outSeed = info.seed;
                             if (!Directory.Exists(SDDataHandle.Instance.SavePath))
                                 Directory.CreateDirectory(SDDataHandle.Instance.SavePath);
-                            File.WriteAllBytes($"{SDDataHandle.Instance.SavePath}/img_{outSeed}.png", imageData);
+                            File.WriteAllBytes($"{SDDataHandle.Instance.SavePath}/img_{DateTime.Now.ToString("yyyyMMddHHmmss")}_{outSeed}.png", imageData);
                             OnUpdateSeedField?.Invoke(Seed, outSeed);
                         }
                     }
