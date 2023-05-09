@@ -18,8 +18,7 @@ Material:
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap:
-    RenderType: Opaque
+  stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -31,6 +30,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Cubemap:
+        m_Texture: {fileID: 8900000, guid: fc9bff5e343bad94d91ec6569bc59f13, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture2D:
@@ -61,11 +64,14 @@ Material:
     - _CellThreshld: 0.267
     - _Cull: 2
     - _DstBlend: 0
+    - _EnvRotate: 100
     - _Metallic: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0.73
+    - _Smoothness: 0.629
+    - _SpecularSize: 0.1
+    - _SpecularSoftness: 0.183
     - _SrcBlend: 1
     - _Surface: 0
     - _ZTest: 4
@@ -73,5 +79,7 @@ Material:
     - _ZWriteControl: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 0}
+    - _DarkColor: {r: 0, g: 0, b: 0, a: 0}
+    - _LightenColor: {r: 1, g: 1, b: 1, a: 0}
     - _SpecularColor: {r: 3.9999998, g: 3.9999998, b: 3.9999998, a: 0}
   m_BuildTextureStacks: []

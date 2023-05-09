@@ -28,7 +28,7 @@ namespace FernShaderGraph
 
         [SerializeField]
         bool m_ClearCoat = false; 
-
+        
         [SerializeField]
         bool m_BlendModePreserveSpecular = true;
 
@@ -51,15 +51,7 @@ namespace FernShaderGraph
             set => m_ClearCoat = value;
         }
 
-        private bool complexLit
-        {
-            get
-            {
-                // Rules for switching to ComplexLit with forward only pass
-                return clearCoat; // && <complex feature>
-            }
-        }
-        
+
         public bool blendModePreserveSpecular
         {
             get => m_BlendModePreserveSpecular;
@@ -85,8 +77,9 @@ namespace FernShaderGraph
             }
 
             // Process SubShaders
-            context.AddSubShader(PostProcessSubShader(SubShaders.LitComputeDotsSubShader(target, target.renderType, target.renderQueue, target.disableBatching, complexLit, blendModePreserveSpecular)));
-            context.AddSubShader(PostProcessSubShader(SubShaders.LitGLESSubShader(target, target.renderType, target.renderQueue, target.disableBatching, complexLit, blendModePreserveSpecular)));
+            context.AddSubShader(PostProcessSubShader(SubShaders.LitComputeDotsSubShader(target, target.renderType, target.renderQueue, target.disableBatching, blendModePreserveSpecular)));
+            context.AddSubShader(PostProcessSubShader(SubShaders.LitGLESSubShader(target, target.renderType, target.renderQueue, target.disableBatching, blendModePreserveSpecular)));
+            
         }
 
         public override void ProcessPreviewMaterial(Material material)
@@ -167,6 +160,9 @@ namespace FernShaderGraph
             
             context.AddBlock(FernSG_Field.SurfaceDescription.LightenColor, target.diffusionModel != DiffusionModel.Ramp);
             context.AddBlock(FernSG_Field.SurfaceDescription.DarkColor, target.diffusionModel != DiffusionModel.Ramp);
+            
+            context.AddBlock(FernSG_Field.SurfaceDescription.EnvReflection, target.envReflectionMode == EnvReflectionMode.Custom);
+            context.AddBlock(FernSG_Field.SurfaceDescription.EnvRotate, target.envRotate && target.envReflectionMode == default);
         }
 
         public override void CollectShaderProperties(PropertyCollector collector, GenerationMode generationMode)
@@ -205,18 +201,6 @@ namespace FernShaderGraph
             var universalTarget = (target as FernSG_UniversalTarget);
             universalTarget.AddDefaultMaterialOverrideGUI(ref context, onChange, registerUndo);
 
-            universalTarget.AddDefaultSurfacePropertiesGUI(ref context, onChange, registerUndo, showReceiveShadows: true);
-            
-            context.AddProperty("Geometry AA", new Toggle() { value = target.geometryAA }, (evt) =>
-            {
-                if (Equals(target.geometryAA, evt.newValue))
-                    return;
-
-                registerUndo("Change Geometry AA");
-                target.geometryAA = evt.newValue;
-                onChange();
-            });
-
             context.AddProperty("Fragment Normal Space", new EnumField(NormalDropOffSpace.Tangent) { value = normalDropOffSpace }, (evt) =>
             {
                 if (Equals(normalDropOffSpace, evt.newValue))
@@ -226,19 +210,7 @@ namespace FernShaderGraph
                 normalDropOffSpace = (NormalDropOffSpace)evt.newValue;
                 onChange();
             });
-
-            context.AddProperty("Clear Coat", new Toggle() { value = clearCoat }, (evt) =>
-            {
-                if (Equals(clearCoat, evt.newValue))
-                    return;
-
-                registerUndo("Change Clear Coat");
-                clearCoat = evt.newValue;
-                onChange();
-            });
             
-            
-
             if (target.surfaceType == SurfaceType.Transparent)
             {
                 if (target.alphaMode == AlphaMode.Alpha || target.alphaMode == AlphaMode.Additive)
@@ -252,6 +224,93 @@ namespace FernShaderGraph
                         onChange();
                     });
             }
+            
+            universalTarget.AddDefaultSurfacePropertiesGUI(ref context, onChange, registerUndo, showReceiveShadows: true);
+            
+            var foldoutFernControl = new TargetPropertyGUIFoldout() { text = "Fern Control", name = "foldout" };
+
+            foldoutFernControl.AddProperty("Depth Normal", 1,new Toggle() { value = target.depthNormal }, (evt) =>
+            {
+                if (Equals(target.depthNormal, evt.newValue))
+                    return;
+
+                registerUndo("Change Depth Normal");
+                target.depthNormal = evt.newValue;
+                onChange();
+            });
+
+            foldoutFernControl.AddProperty("Universal 2D", 1,new Toggle() { value = target._2D }, (evt) =>
+            {
+                if (Equals(target._2D, evt.newValue))
+                    return;
+
+                registerUndo("Change Universal 2D");
+                target._2D = evt.newValue;
+                onChange();
+            });
+                        
+            foldoutFernControl.AddProperty("Geometry AA", 1, new Toggle() { value = target.geometryAA }, (evt) =>
+            {
+                if (Equals(target.geometryAA, evt.newValue))
+                    return;
+
+                registerUndo("Change Geometry AA");
+                target.geometryAA = evt.newValue;
+                onChange();
+            });
+
+            foldoutFernControl.AddProperty("Clear Coat", 1, new Toggle() { value = clearCoat }, (evt) =>
+            {
+                if (Equals(clearCoat, evt.newValue))
+                    return;
+
+                registerUndo("Change Clear Coat");
+                clearCoat = evt.newValue;
+                onChange();
+            });
+             
+            foldoutFernControl.AddProperty("Diffusion Model",1,  new EnumField(DiffusionModel.Lambert) { value = target.diffusionModel }, (evt) =>
+            {
+                if (Equals(target.diffusionModel, evt.newValue))
+                    return;
+
+                registerUndo("Change Diffusion Model");
+                target.diffusionModel = (DiffusionModel)evt.newValue;
+                onChange();
+            });
+            
+            foldoutFernControl.AddProperty("Specular Model",1,  new EnumField(SpecularModel.GGX) { value = target.specularModel }, (evt) =>
+            {
+                if (Equals(target.specularModel, evt.newValue))
+                    return;
+
+                registerUndo("Change Specular Model");
+                target.specularModel = (SpecularModel)evt.newValue;
+                onChange();
+            });
+            
+            foldoutFernControl.AddProperty("Env Reflection Mode",1,  new EnumField(EnvReflectionMode.Default) { value = target.envReflectionMode }, (evt) =>
+            {
+                if (Equals(target.envReflectionMode, evt.newValue))
+                    return;
+
+                registerUndo("Change Env Reflection Mode");
+                target.envReflectionMode = (EnvReflectionMode)evt.newValue;
+                onChange();
+            });
+            
+            foldoutFernControl.AddProperty("Env Rotate",1,  new Toggle(){ value = target.envRotate}, (evt) =>
+            {
+                if (Equals(target.envRotate, evt.newValue))
+                    return;
+
+                registerUndo("Change Env Rotate");
+                target.envRotate = evt.newValue;
+                onChange();
+            });
+            
+            context.Add(foldoutFernControl);
+            
         }
 
         protected override int ComputeMaterialNeedsUpdateHash()
@@ -332,7 +391,7 @@ namespace FernShaderGraph
         static class SubShaders
         {
             // SM 4.5, compute with dots instancing
-            public static SubShaderDescriptor LitComputeDotsSubShader(FernSG_UniversalTarget target, string renderType, string renderQueue, string disableBatchingTag, bool complexLit, bool blendModePreserveSpecular)
+            public static SubShaderDescriptor LitComputeDotsSubShader(FernSG_UniversalTarget target, string renderType, string renderQueue, string disableBatchingTag, bool blendModePreserveSpecular)
             {
                 SubShaderDescriptor result = new SubShaderDescriptor()
                 {
@@ -345,13 +404,11 @@ namespace FernShaderGraph
                     passes = new PassCollection()
                 };
 
-                if (complexLit)
-                    result.passes.Add(LitPasses.ForwardOnly(target, complexLit, blendModePreserveSpecular, CoreBlockMasks.Vertex, LitBlockMasks.FragmentComplexLit, CorePragmas.ForwardSM45, LitKeywords.DOTSForward));
-                else
-                    result.passes.Add(LitPasses.Forward(target, blendModePreserveSpecular, CorePragmas.ForwardSM45, LitKeywords.DOTSForward));
+               
+                result.passes.Add(LitPasses.Forward(target, blendModePreserveSpecular, CorePragmas.ForwardSM45, LitKeywords.DOTSForward));
 
-                if (!complexLit)
-                    result.passes.Add(LitPasses.GBuffer(target, blendModePreserveSpecular));
+                // if (!complexLit)
+                //     result.passes.Add(LitPasses.GBuffer(target, blendModePreserveSpecular));
 
                 // cull the shadowcaster pass if we know it will never be used
                 if (target.castShadows || target.allowMaterialOverride)
@@ -360,22 +417,22 @@ namespace FernShaderGraph
                 if (target.mayWriteDepth)
                     result.passes.Add(PassVariant(CorePasses.DepthOnly(target), CorePragmas.InstancedSM45));
 
-                if (complexLit)
-                    result.passes.Add(PassVariant(LitPasses.DepthNormalOnly(target), CorePragmas.InstancedSM45));
-                else
+                if (target.depthNormal)
                     result.passes.Add(PassVariant(LitPasses.DepthNormal(target), CorePragmas.InstancedSM45));
+               
                 result.passes.Add(PassVariant(LitPasses.Meta(target), CorePragmas.DefaultSM45));
                 // Currently neither of these passes (selection/picking) can be last for the game view for
                 // UI shaders to render correctly. Verify [1352225] before changing this order.
                 result.passes.Add(PassVariant(CorePasses.SceneSelection(target), CorePragmas.DefaultSM45));
                 result.passes.Add(PassVariant(CorePasses.ScenePicking(target), CorePragmas.DefaultSM45));
 
-                result.passes.Add(PassVariant(LitPasses._2D(target), CorePragmas.DefaultSM45));
+                if(target._2D)
+                    result.passes.Add(PassVariant(LitPasses._2D(target), CorePragmas.DefaultSM45));
 
                 return result;
             }
 
-            public static SubShaderDescriptor LitGLESSubShader(FernSG_UniversalTarget target, string renderType, string renderQueue, string disableBatchingTag, bool complexLit, bool blendModePreserveSpecular)
+            public static SubShaderDescriptor LitGLESSubShader(FernSG_UniversalTarget target, string renderType, string renderQueue, string disableBatchingTag, bool blendModePreserveSpecular)
             {
                 // SM 2.0, GLES
 
@@ -393,10 +450,7 @@ namespace FernShaderGraph
                     passes = new PassCollection()
                 };
 
-                if (complexLit)
-                    result.passes.Add(LitPasses.ForwardOnly(target, complexLit, blendModePreserveSpecular, CoreBlockMasks.Vertex, LitBlockMasks.FragmentComplexLit, CorePragmas.Forward, LitKeywords.Forward));
-                else
-                    result.passes.Add(LitPasses.Forward(target, blendModePreserveSpecular, CorePragmas.Forward, LitKeywords.Forward));
+                result.passes.Add(LitPasses.Forward(target, blendModePreserveSpecular, CorePragmas.Forward, LitKeywords.FernForward));
 
                 // cull the shadowcaster pass if we know it will never be used
                 if (target.castShadows || target.allowMaterialOverride)
@@ -405,9 +459,7 @@ namespace FernShaderGraph
                 if (target.mayWriteDepth)
                     result.passes.Add(CorePasses.DepthOnly(target));
 
-                if (complexLit)
-                    result.passes.Add(CorePasses.DepthNormalOnly(target));
-                else
+                if(target.depthNormal)
                     result.passes.Add(CorePasses.DepthNormal(target));
                 result.passes.Add(LitPasses.Meta(target));
                 // Currently neither of these passes (selection/picking) can be last for the game view for
@@ -415,7 +467,8 @@ namespace FernShaderGraph
                 result.passes.Add(CorePasses.SceneSelection(target));
                 result.passes.Add(CorePasses.ScenePicking(target));
 
-                result.passes.Add(LitPasses._2D(target));
+                if(target._2D)
+                    result.passes.Add(LitPasses._2D(target));
 
                 return result;
             }
@@ -439,6 +492,68 @@ namespace FernShaderGraph
                 PragmaCollection pragmas,
                 KeywordCollection keywords)
             {
+                KeywordCollection addForward = new KeywordCollection
+                {
+                    keywords
+                };
+
+                if (target.ScreenSpaceAmbientOcclusion)
+                {
+                    addForward.Add(CoreKeywordDescriptors.ScreenSpaceAmbientOcclusion);
+                }
+                if (target.StaticLightmap)
+                {
+                    addForward.Add(CoreKeywordDescriptors.StaticLightmap);
+                }                
+                if (target.DynamicLightmap)
+                {
+                    addForward.Add(CoreKeywordDescriptors.DynamicLightmap);
+                }                
+                if (target.DirectionalLightmapCombined)
+                {
+                    addForward.Add(CoreKeywordDescriptors.DirectionalLightmapCombined);
+                }       
+                if (target.AdditionalLights)
+                {
+                    addForward.Add(CoreKeywordDescriptors.AdditionalLights);
+                }   
+                if (target.AdditionalLightShadows)
+                {
+                    addForward.Add(CoreKeywordDescriptors.AdditionalLightShadows);
+                }                
+                if (target.ReflectionProbeBlending)
+                {
+                    addForward.Add(CoreKeywordDescriptors.ReflectionProbeBlending);
+                }                
+                if (target.ReflectionProbeBoxProjection)
+                {
+                    addForward.Add(CoreKeywordDescriptors.ReflectionProbeBoxProjection);
+                }                
+                if (target.LightmapShadowMixing)
+                {
+                    addForward.Add(CoreKeywordDescriptors.LightmapShadowMixing);
+                }                
+                if (target.DBuffer)
+                {
+                    addForward.Add(CoreKeywordDescriptors.DBuffer);
+                }                
+                if (target.LightLayers)
+                {
+                    addForward.Add(CoreKeywordDescriptors.LightLayers);
+                }                
+                if (target.DebugDisplay)
+                {
+                    addForward.Add(CoreKeywordDescriptors.DebugDisplay);
+                }                
+                if (target.LightCookies)
+                {
+                    addForward.Add(CoreKeywordDescriptors.LightCookies);
+                }
+                if (target.ForwardPlus)
+                {
+                    addForward.Add(CoreKeywordDescriptors.ForwardPlus);
+                }
+                
                 var result = new PassDescriptor()
                 {
                     // Definition
@@ -464,7 +579,7 @@ namespace FernShaderGraph
                     renderStates = CoreRenderStates.UberSwitchedRenderState(target, blendModePreserveSpecular),
                     pragmas = pragmas ?? CorePragmas.Forward,     // NOTE: SM 2.0 only GL
                     defines = new DefineCollection() { CoreDefines.UseFragmentFog },
-                    keywords = new KeywordCollection() { keywords },
+                    keywords = new KeywordCollection() { addForward },
                     includes = LitIncludes.Forward,
 
                     // Custom Interpolator Support
@@ -476,6 +591,8 @@ namespace FernShaderGraph
                 AddReceiveShadowsControlToPass(ref result, target, target.receiveShadows);
                 CorePasses.AddLODCrossFadeControlToPass(ref result, target);
                 CorePasses.AddDiffusionModelControlToPass(ref result, target);
+                CorePasses.AddEnvRotateControlToPass(ref result, target);
+                CorePasses.AddEnvReflectionModeControlToPass(ref result, target);
                 CorePasses.AddSpecularModelControlToPass(ref result, target);
                 CorePasses.AddGeometryAAControlToPass(ref result, target);
                 
@@ -748,31 +865,6 @@ namespace FernShaderGraph
                 BlockFields.SurfaceDescription.Occlusion,
                 BlockFields.SurfaceDescription.Alpha,
                 BlockFields.SurfaceDescription.AlphaClipThreshold,
-                FernSG_Field.SurfaceDescription.RampColor,
-                FernSG_Field.SurfaceDescription.SpecularColor,
-                FernSG_Field.SurfaceDescription.StylizedSpecularSize,
-                FernSG_Field.SurfaceDescription.StylizedSpecularSoftness,
-                FernSG_Field.SurfaceDescription.CellThreshold,
-                FernSG_Field.SurfaceDescription.CellSmoothness,
-                FernSG_Field.SurfaceDescription.GeometryAAVariant,
-                FernSG_Field.SurfaceDescription.GeometryAAStrength,
-                FernSG_Field.SurfaceDescription.DarkColor,
-                FernSG_Field.SurfaceDescription.LightenColor,
-            };
-
-            public static readonly BlockFieldDescriptor[] FragmentComplexLit = new BlockFieldDescriptor[]
-            {
-                BlockFields.SurfaceDescription.BaseColor,
-                BlockFields.SurfaceDescription.NormalOS,
-                BlockFields.SurfaceDescription.NormalTS,
-                BlockFields.SurfaceDescription.NormalWS,
-                BlockFields.SurfaceDescription.Emission,
-                BlockFields.SurfaceDescription.Metallic,
-                BlockFields.SurfaceDescription.Specular,
-                BlockFields.SurfaceDescription.Smoothness,
-                BlockFields.SurfaceDescription.Occlusion,
-                BlockFields.SurfaceDescription.Alpha,
-                BlockFields.SurfaceDescription.AlphaClipThreshold,
                 BlockFields.SurfaceDescription.CoatMask,
                 BlockFields.SurfaceDescription.CoatSmoothness,
                 FernSG_Field.SurfaceDescription.RampColor,
@@ -785,6 +877,8 @@ namespace FernShaderGraph
                 FernSG_Field.SurfaceDescription.GeometryAAStrength,
                 FernSG_Field.SurfaceDescription.DarkColor,
                 FernSG_Field.SurfaceDescription.LightenColor,
+                FernSG_Field.SurfaceDescription.EnvReflection,
+                FernSG_Field.SurfaceDescription.EnvRotate,
             };
 
             public static readonly BlockFieldDescriptor[] FragmentMeta = new BlockFieldDescriptor[]
@@ -901,10 +995,31 @@ namespace FernShaderGraph
                 { CoreKeywordDescriptors.LightCookies },
                 { CoreKeywordDescriptors.ForwardPlus },
             };
-
+            
+            public static readonly KeywordCollection FernForward = new KeywordCollection
+            {
+                //{ CoreKeywordDescriptors.ScreenSpaceAmbientOcclusion },
+                //{ CoreKeywordDescriptors.StaticLightmap },
+                //{ CoreKeywordDescriptors.DynamicLightmap },
+                //{ CoreKeywordDescriptors.DirectionalLightmapCombined },
+                { CoreKeywordDescriptors.MainLightShadows },
+                //{ CoreKeywordDescriptors.AdditionalLights },
+                //{ CoreKeywordDescriptors.AdditionalLightShadows },
+                //{ CoreKeywordDescriptors.ReflectionProbeBlending },
+                //{ CoreKeywordDescriptors.ReflectionProbeBoxProjection },
+                { CoreKeywordDescriptors.ShadowsSoft },
+                //{ CoreKeywordDescriptors.LightmapShadowMixing },
+                //{ CoreKeywordDescriptors.ShadowsShadowmask },
+                //{ CoreKeywordDescriptors.DBuffer },
+               // { CoreKeywordDescriptors.LightLayers },
+                //{ CoreKeywordDescriptors.DebugDisplay },
+                //{ CoreKeywordDescriptors.LightCookies },
+                //{ CoreKeywordDescriptors.ForwardPlus },
+            };
+            
             public static readonly KeywordCollection DOTSForward = new KeywordCollection
             {
-                { Forward },
+                { FernForward },
                 { CoreKeywordDescriptors.WriteRenderingLayers },
             };
 

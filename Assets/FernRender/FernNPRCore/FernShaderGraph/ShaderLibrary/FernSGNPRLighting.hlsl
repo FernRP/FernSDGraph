@@ -21,6 +21,7 @@
 
 #define PI8 25.1327
 #define INV_PI8 0.039789
+#define UNITY_PI 3.14159265358979323846
 
 #if defined(LIGHTMAP_ON)
     #define DECLARE_LIGHTMAP_OR_SH(lmName, shName, index) float2 lmName : TEXCOORD##index
@@ -43,6 +44,19 @@ half4 _DepthTextureSourceSize;
 half _CameraAspect;
 half _CameraFOV;
 
+
+///////////////////////////////////////////////////////////////////////////////
+//                          Lighting Data                                    //
+///////////////////////////////////////////////////////////////////////////////
+
+float3 RotateAroundYInDegrees (float3 vertex, float degrees)
+{
+    float alpha = degrees * UNITY_PI / 180.0;
+    float sina, cosa;
+    sincos(alpha, sina, cosa);
+    float2x2 m = float2x2(cosa, -sina, sina, cosa);
+    return float3(mul(m, vertex.xz), vertex.y).xzy;
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -302,9 +316,8 @@ inline half3 AngleRingSpecular(AngleRingSpecularData specularData, InputData inp
 
 half3 NPRGlossyEnvironmentReflection(half3 reflectVector, half3 positionWS, half2 normalizedScreenSpaceUV, half perceptualRoughness, half occlusion)
 {
-    #if !defined(_ENVIRONMENTREFLECTIONS_OFF)
+    #if _ENVDEFAULT
         half3 irradiance;
-    
         #if defined(_REFLECTION_PROBE_BLENDING) || USE_FORWARD_PLUS
             irradiance = CalculateIrradianceFromReflectionProbes(reflectVector, positionWS, perceptualRoughness, normalizedScreenSpaceUV);
         #else
@@ -327,6 +340,17 @@ half3 NPRGlossyEnvironmentReflection(half3 reflectVector, half3 positionWS, half
     #endif // GLOSSY_REFLECTIONS
 }
 
+half3 NPRGlossyEnvironmentReflection_Custom(half4 encodedIrradiance, half occlusion)
+{
+    half3 irradiance;
+
+    #if defined(UNITY_USE_NATIVE_HDR)
+        irradiance = encodedIrradiance.rgb;
+    #else
+        irradiance = DecodeHDREnvironment(encodedIrradiance, unity_SpecCube0_HDR);
+    #endif
+    return irradiance * occlusion;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //                         Depth Screen Space                                //

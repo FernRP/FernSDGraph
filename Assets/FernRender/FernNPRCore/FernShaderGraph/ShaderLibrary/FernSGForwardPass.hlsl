@@ -259,13 +259,22 @@ half3 NPRAdditionLightDirectLighting(BRDFData brdfData, BRDFData brdfDataClearCo
     return additionLightColor;
 }
 
-half3 NPRIndirectLighting(BRDFData brdfData, InputData inputData, Varyings input, half occlusion)
+half3 NPRIndirectLighting(BRDFData brdfData, InputData inputData, Varyings input, FernSGAddSurfaceData addSurfData, half occlusion)
 {
     half3 indirectDiffuse = inputData.bakedGI * occlusion;
     half3 reflectVector = reflect(-inputData.viewDirectionWS, inputData.normalWS);
+    reflectVector = RotateAroundYInDegrees(reflectVector, addSurfData.envRotate);
     half NoV = saturate(dot(inputData.normalWS, inputData.viewDirectionWS));
     half fresnelTerm = Pow4(1.0 - NoV);
-    half3 indirectSpecular = NPRGlossyEnvironmentReflection(reflectVector, inputData.positionWS, inputData.normalizedScreenSpaceUV, brdfData.perceptualRoughness, occlusion);
+    half3 indirectSpecular = 0;
+    #if _ENVDEFAULT
+        indirectSpecular = NPRGlossyEnvironmentReflection(reflectVector, inputData.positionWS, inputData.normalizedScreenSpaceUV, brdfData.perceptualRoughness, occlusion);
+    #elif _ENVCUSTOM
+        indirectSpecular = NPRGlossyEnvironmentReflection_Custom(addSurfData.envCustomReflection, occlusion);
+    #else
+        indirectSpecular = _GlossyEnvironmentColor.rgb * occlusion;
+    #endif
+    
     half3 indirectColor = EnvironmentBRDF(brdfData, indirectDiffuse, indirectSpecular, fresnelTerm);
 
     #if _MATCAP
@@ -372,6 +381,12 @@ void frag(
         addSurfData.geometryAAStrength = surfaceDescription.GeometryAAStrength;
         surfData.smoothness = GeometryAA(inputData.normalWS, surfData.smoothness, addSurfData);
     #endif
+    #if _ENVCUSTOM
+        addSurfData.envCustomReflection = surfaceDescription.EnvReflection;
+    #endif
+    #if _ENVROTATE
+        addSurfData.envRotate = surfaceDescription.EnvRotate;
+    #endif
 
     #if !_RAMPSHADING
         addSurfData.darkColor = surfaceDescription.DarkColor;
@@ -408,7 +423,7 @@ void frag(
     half4 color = 0;
     color.rgb = NPRMainLightDirectLighting(brdfData, clearCoatbrdfData, unpacked, inputData, surfData, radiance, addSurfData, lightingData);
     color.rgb += NPRAdditionLightDirectLighting(brdfData, clearCoatbrdfData, unpacked, inputData, surfData, shadowMask, meshRenderingLayers, addSurfData, aoFactor);
-    color.rgb += NPRIndirectLighting(brdfData, inputData, unpacked, surfData.occlusion);
+    color.rgb += NPRIndirectLighting(brdfData, inputData, unpacked, addSurfData, surfData.occlusion);
     color.rgb = MixFog(color.rgb, inputData.fogCoord);
 
     color.a = OutputAlpha(color.a, isTransparent);

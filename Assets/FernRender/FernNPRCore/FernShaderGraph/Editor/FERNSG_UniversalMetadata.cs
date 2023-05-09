@@ -23,6 +23,13 @@ namespace FernShaderGraph
 
         [SerializeField]
         bool m_CastShadows;
+        
+        [SerializeField]
+        bool m_DepthNormal;
+        
+        [SerializeField]
+        bool m_2D;
+
 
         public ShaderUtils.ShaderID shaderID
         {
@@ -52,5 +59,19 @@ namespace FernShaderGraph
             get => m_CastShadows;
             set => m_CastShadows = value;
         }
+
+        public bool depthNormal
+        {
+            get => m_DepthNormal;
+            set => m_DepthNormal = value;
+        }
+        
+            
+        public bool _2D
+        {
+            get => m_2D;
+            set => m_2D = value;
+        }
     }
+
 }

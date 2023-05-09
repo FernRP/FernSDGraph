@@ -27,6 +27,7 @@ struct NPRSurfaceData
 
 struct FernSGAddSurfaceData
 {
+    half4 envCustomReflection;
     half3 rampColor;
     half3 specularColor;
     half3 darkColor;
@@ -37,6 +38,7 @@ struct FernSGAddSurfaceData
     half cellSoftness;
     half geometryAAVariant;
     half geometryAAStrength;
+    half envRotate;
 };
 
 struct AnisoSpecularData

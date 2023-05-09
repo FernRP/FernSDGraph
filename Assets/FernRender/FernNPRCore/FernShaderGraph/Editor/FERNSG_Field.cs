@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.ShaderGraph;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 using XDiffGui;
 
 namespace FernShaderGraph
@@ -52,6 +53,12 @@ namespace FernShaderGraph
             
             public static BlockFieldDescriptor LightenColor = new BlockFieldDescriptor(FernSG_Field.SurfaceDescription.name, "LightenColor", "Lighten Color", 
                 "SURFACEDESCRIPTION_LIGHTENCOLOR", new ColorControl(Color.white, false), ShaderStage.Fragment);
+            
+            public static BlockFieldDescriptor EnvReflection = new BlockFieldDescriptor(FernSG_Field.SurfaceDescription.name, "EnvReflection", "Env Reflection", 
+                "SURFACEDESCRIPTION_ENVREFLECTION", new ColorRGBAControl(Color.black), ShaderStage.Fragment);
+            
+            public static BlockFieldDescriptor EnvRotate = new BlockFieldDescriptor(FernSG_Field.SurfaceDescription.name, "EnvRotate", "Env Rotation", 
+                "SURFACEDESCRIPTION_ENVROTATION", new FloatControl(0), ShaderStage.Fragment);
         }
     }
 }

@@ -108,13 +108,20 @@ namespace FernShaderGraph
         Ramp = 1,
         Lambert = 0
     }
-    
+
     internal enum SpecularModel
     {
         None = 3,
         BLINNPHONG = 2, 
         STYLIZED = 1,
         GGX = 0
+    }
+    
+    internal enum EnvReflectionMode
+    {
+        None = 2,
+        Custom = 1,
+        Default = 0
     }
 
     sealed class FernSG_UniversalTarget : Target, IHasMetadata, ILegacyTarget
@@ -193,10 +200,67 @@ namespace FernShaderGraph
         DiffusionModel m_DiffusionModel = DiffusionModel.Lambert;
         
         [SerializeField] 
-        SpecularModel m_SpecularModel = SpecularModel.GGX;
+        SpecularModel m_SpecularModel = SpecularModel.GGX; 
+        
+        [SerializeField] 
+        EnvReflectionMode m_EnvReflection = EnvReflectionMode.Default;
         
         [SerializeField]
         bool m_GeometryAA = false;
+        
+        [SerializeField]
+        bool m_depthNormal = false;
+        
+        [SerializeField]
+        private bool m_2D;
+        
+        [SerializeField]
+        bool m_EnvRotate = false; 
+        
+        [SerializeField]
+        bool m_ScreenSpaceAmbientOcclusion = false; 
+        
+        [SerializeField]
+        bool m_StaticLightmap = false; 
+        
+        [SerializeField]
+        bool m_DynamicLightmap = false; 
+        
+        [SerializeField]
+        bool m_DirectionalLightmapCombined = false; 
+        
+        [SerializeField]
+        bool m_AdditionalLights = true;
+        
+        [SerializeField]
+        bool m_AdditionalLightShadows = true;
+         
+        [SerializeField]
+        bool m_ReflectionProbeBlending = true;
+        
+        [SerializeField]
+        bool m_ReflectionProbeBoxProjection = true;
+        
+        [SerializeField]
+        bool m_LightmapShadowMixing = true;
+        
+        [SerializeField]
+        bool m_ShadowsShadowmask = true;    
+        
+        [SerializeField]
+        bool m_DBuffer = true;
+        
+        [SerializeField]
+        bool m_LightLayers = true;
+                
+        [SerializeField]
+        bool m_DebugDisplay = true;
+        
+        [SerializeField]
+        bool m_LightCookies = true;        
+
+        [SerializeField]
+        bool m_ForwardPlus = true;
 
         // ==============================================
 
@@ -205,6 +269,7 @@ namespace FernShaderGraph
 
         [SerializeField]
         bool m_SupportVFX;
+
 
         internal override bool ignoreCustomInterpolators => false;
         internal override int padCustomInterpolatorLimit => 4;
@@ -316,7 +381,7 @@ namespace FernShaderGraph
             get => m_ReceiveShadows;
             set => m_ReceiveShadows = value;
         }
-        
+
         //=================== Fern Keyword ====================
         public DiffusionModel diffusionModel
         {
@@ -330,10 +395,124 @@ namespace FernShaderGraph
             set => m_SpecularModel = value;
         }
         
+        public EnvReflectionMode envReflectionMode
+        {
+            get => m_EnvReflection;
+            set => m_EnvReflection = value;
+        }
+        
         public bool geometryAA
         {
             get => m_GeometryAA;
             set => m_GeometryAA = value;
+        }
+
+        public bool depthNormal
+        {
+            get => m_depthNormal;
+            set => m_depthNormal = value;
+        }
+
+        public bool _2D
+        {
+            get => m_2D;
+            set => m_2D = value;
+        }
+        
+        public bool envRotate
+        {
+            get => m_EnvRotate;
+            set => m_EnvRotate = value;
+        }
+
+        public bool ScreenSpaceAmbientOcclusion
+        {
+            get => m_ScreenSpaceAmbientOcclusion;
+            set => m_ScreenSpaceAmbientOcclusion = value;
+        }
+
+        public bool StaticLightmap
+        {
+            get => m_StaticLightmap;
+            set => m_StaticLightmap = value;
+        }
+
+        public bool DynamicLightmap
+        {
+            get => m_DynamicLightmap;
+            set => m_DynamicLightmap = value;
+        }
+
+        public bool DirectionalLightmapCombined
+        {
+            get => m_DirectionalLightmapCombined;
+            set => m_DirectionalLightmapCombined = value;
+        }
+
+        public bool AdditionalLights
+        {
+            get => m_AdditionalLights;
+            set => m_AdditionalLights = value;
+        }
+
+        public bool AdditionalLightShadows
+        {
+            get => m_AdditionalLightShadows;
+            set => m_AdditionalLightShadows = value;
+        }
+
+        public bool ReflectionProbeBlending
+        {
+            get => m_ReflectionProbeBlending;
+            set => m_ReflectionProbeBlending = value;
+        }
+
+        public bool ReflectionProbeBoxProjection
+        {
+            get => m_ReflectionProbeBoxProjection;
+            set => m_ReflectionProbeBoxProjection = value;
+        }
+
+        public bool LightmapShadowMixing
+        {
+            get => m_LightmapShadowMixing;
+            set => m_LightmapShadowMixing = value;
+        }
+
+        public bool ShadowsShadowmask
+        {
+            get => m_ShadowsShadowmask;
+            set => m_ShadowsShadowmask = value;
+        }
+
+        public bool DBuffer
+        {
+            get => m_DBuffer;
+            set => m_DBuffer = value;
+        }
+
+        public bool LightLayers
+        {
+            get => m_LightLayers;
+            set => m_LightLayers = value;
+        }
+
+        public bool DebugDisplay
+        {
+            get => m_DebugDisplay;
+            set => m_DebugDisplay = value;
+        }
+        
+        public bool LightCookies
+        {
+            get => m_LightCookies;
+            set => m_LightCookies = value;
+        }
+
+        public bool ForwardPlus
+        {
+            get => m_ForwardPlus;
+            set => m_ForwardPlus = value;
         }
 
 //=====================================
@@ -570,6 +749,7 @@ namespace FernShaderGraph
                 alphaMode = (AlphaMode)evt.newValue;
                 onChange();
             });
+            
 
             context.AddProperty("Render Face", new EnumField(RenderFace.Front) { value = renderFace }, (evt) =>
             {
@@ -583,7 +763,7 @@ namespace FernShaderGraph
 
             context.AddProperty("Depth Write", new EnumField(ZWriteControl.Auto) { value = zWriteControl }, (evt) =>
             {
-                if (Equals(zWriteControl, evt.newValue))
+                if (Equals(zWriteControl, evt.newValue)) 
                     return;
 
                 registerUndo("Change Depth Write Control");
@@ -642,25 +822,146 @@ namespace FernShaderGraph
                 onChange();
             });
             
-            context.AddProperty("Diffusion Model", new EnumField(DiffusionModel.Lambert) { value = diffusionModel }, (evt) =>
-            {
-                if (Equals(diffusionModel, evt.newValue))
-                    return;
-
-                registerUndo("Change Diffusion Model");
-                diffusionModel = (DiffusionModel)evt.newValue;
-                onChange();
-            });
+            var foldout = new TargetPropertyGUIFoldout() { text = "Keyword optimization", name = "foldout" };
             
-            context.AddProperty("Specular Model", new EnumField(SpecularModel.GGX) { value = specularModel }, (evt) =>
+            //foldout.AddLabel("\nKeyword optimization", 0);
+            foldout.AddProperty("SSAO", 1,new Toggle() { value = ScreenSpaceAmbientOcclusion }, (evt) =>
             {
-                if (Equals(specularModel, evt.newValue))
+                if (Equals(ScreenSpaceAmbientOcclusion, evt.newValue))
                     return;
 
-                registerUndo("Change Specular Model");
-                specularModel = (SpecularModel)evt.newValue;
+                registerUndo("Change SSAO");
+                ScreenSpaceAmbientOcclusion = evt.newValue;
                 onChange();
             });
+            foldout.AddProperty("Static Lightmap", 1,new Toggle() { value = StaticLightmap }, (evt) =>
+            {
+                if (Equals(StaticLightmap, evt.newValue))
+                    return;
+
+                registerUndo("Change Static Lightmap");
+                StaticLightmap = evt.newValue;
+                onChange();
+            });
+            foldout.AddProperty("Dynamic Lightmap", 1,new Toggle() { value = DynamicLightmap }, (evt) =>
+            {
+                if (Equals(DynamicLightmap, evt.newValue))
+                    return;
+
+                registerUndo("Change Dynamic Lightmap");
+                DynamicLightmap = evt.newValue;
+                onChange();
+            });
+            foldout.AddProperty("Directional Lightmap Combined", 1,new Toggle() { value = DirectionalLightmapCombined }, (evt) =>
+            {
+                if (Equals(DirectionalLightmapCombined, evt.newValue))
+                    return;
+
+                registerUndo("Change Directional Lightmap Combined");
+                DirectionalLightmapCombined = evt.newValue;
+                onChange();
+            });
+            foldout.AddProperty("Additional Lights", 1,new Toggle() { value = AdditionalLights }, (evt) =>
+            {
+                if (Equals(AdditionalLights, evt.newValue))
+                    return;
+
+                registerUndo("Change Additional Lights");
+                AdditionalLights = evt.newValue;
+                onChange();
+            });
+            foldout.AddProperty("AdditionalLight Shadows", 1,new Toggle() { value = AdditionalLightShadows }, (evt) =>
+            {
+                if (Equals(AdditionalLightShadows, evt.newValue))
+                    return;
+
+                registerUndo("Change AdditionalLight Shadows");
+                AdditionalLightShadows = evt.newValue;
+                onChange();
+            });
+            foldout.AddProperty("ReflectionProbe Blending", 1,new Toggle() { value = ReflectionProbeBlending }, (evt) =>
+            {
+                if (Equals(ReflectionProbeBlending, evt.newValue))
+                    return;
+
+                registerUndo("Change ReflectionProbe Blending");
+                ReflectionProbeBlending = evt.newValue;
+                onChange();
+            });
+            foldout.AddProperty("ReflectionProbeBox Projection", 1,new Toggle() { value = ReflectionProbeBoxProjection }, (evt) =>
+            {
+                if (Equals(ReflectionProbeBoxProjection, evt.newValue))
+                    return;
+
+                registerUndo("Change ReflectionProbeBox Projection");
+                ReflectionProbeBoxProjection = evt.newValue;
+                onChange();
+            });
+            foldout.AddProperty("LightmapShadow Mixing", 1,new Toggle() { value = LightmapShadowMixing }, (evt) =>
+            {
+                if (Equals(LightmapShadowMixing, evt.newValue))
+                    return;
+
+                registerUndo("Change LightmapShadow Mixing");
+                LightmapShadowMixing = evt.newValue;
+                onChange();
+            });
+            foldout.AddProperty("ShadowsShadowmask", 1,new Toggle() { value = ShadowsShadowmask }, (evt) =>
+            {
+                if (Equals(ShadowsShadowmask, evt.newValue))
+                    return;
+
+                registerUndo("Change ShadowsShadowmask");
+                ShadowsShadowmask = evt.newValue;
+                onChange();
+            });
+            foldout.AddProperty("DBuffer", 1,new Toggle() { value = DBuffer }, (evt) =>
+            {
+                if (Equals(DBuffer, evt.newValue))
+                    return;
+
+                registerUndo("Change DBuffer");
+                DBuffer = evt.newValue;
+                onChange();
+            });
+            foldout.AddProperty("LightLayers", 1,new Toggle() { value = LightLayers }, (evt) =>
+            {
+                if (Equals(LightLayers, evt.newValue))
+                    return;
+
+                registerUndo("Change LightLayers");
+                LightLayers = evt.newValue;
+                onChange();
+            });
+            foldout.AddProperty("DebugDisplay", 1,new Toggle() { value = DebugDisplay }, (evt) =>
+            {
+                if (Equals(DebugDisplay, evt.newValue))
+                    return;
+
+                registerUndo("Change DebugDisplay");
+                DebugDisplay = evt.newValue;
+                onChange();
+            });
+            foldout.AddProperty("LightCookies", 1,new Toggle() { value = LightCookies }, (evt) =>
+            {
+                if (Equals(LightCookies, evt.newValue))
+                    return;
+
+                registerUndo("Change LightCookies");
+                LightCookies = evt.newValue;
+                onChange();
+            });
+            foldout.AddProperty("ForwardPlus", 1,new Toggle() { value = ForwardPlus }, (evt) =>
+            {
+                if (Equals(ForwardPlus, evt.newValue))
+                    return;
+
+                registerUndo("Change ForwardPlus");
+                ForwardPlus = evt.newValue;
+                onChange();
+            });
+            context.Add(foldout);
+            
         }
 
         public bool TrySetActiveSubTarget(Type subTargetType)
@@ -958,7 +1259,46 @@ namespace FernShaderGraph
             }
         }
         
+        internal static void AddEnvRotateControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target)
+        {
+            if (target.envRotate)
+            {
+                pass.defines.Add(CoreKeywordDescriptors.UseEnvRotate, 1);
+            }
+        }
+        
+        internal static void AddEnvReflectionModeControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target)
+        {
+            switch (target.envReflectionMode)
+            {
+                case EnvReflectionMode.Default:
+                    pass.defines.Add(CoreKeywordDescriptors.EnvReflectionMode, 0);
+                    break;
+                case EnvReflectionMode.Custom:
+                    pass.defines.Add(CoreKeywordDescriptors.EnvReflectionMode, 1);
+                    break;
+            }
+        }
+        
         internal static void AddSpecularModelControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target)
+        {
+            switch (target.specularModel)
+            {
+                case SpecularModel.GGX:
+                    pass.defines.Add(CoreKeywordDescriptors.SpecularModel, 0);
+                    break;
+                case SpecularModel.STYLIZED:
+                    pass.defines.Add(CoreKeywordDescriptors.SpecularModel, 1);
+
+                    break;
+                case SpecularModel.BLINNPHONG
+                    :
+                    pass.defines.Add(CoreKeywordDescriptors.SpecularModel, 2);
+                    break;
+            }
+        }
+        
+        internal static void AddEnvReflectionModelControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target)
         {
             switch (target.specularModel)
             {
@@ -983,7 +1323,7 @@ namespace FernShaderGraph
                 pass.defines.Add(CoreKeywordDescriptors.UseGeometryAA, 1);
             }
         }
-
+        
         internal static void AddTargetSurfaceControlsToPass(ref PassDescriptor pass, FernSG_UniversalTarget target, bool blendModePreserveSpecular = false)
         {
             // the surface settings can either be material controlled or target controlled
@@ -2233,10 +2573,33 @@ namespace FernShaderGraph
             }
         };
         
+        public static readonly KeywordDescriptor EnvReflectionMode = new KeywordDescriptor()
+        {
+            displayName = "Env Reflection Mode",
+            referenceName = "",
+            type = KeywordType.Enum,
+            definition = KeywordDefinition.Predefined,
+            scope = KeywordScope.Local,
+            entries = new KeywordEntry[]
+            {
+                new KeywordEntry() { displayName = "Default", referenceName = "ENVDEFAULT 1" },
+                new KeywordEntry() { displayName = "CUSTOM", referenceName = "ENVCUSTOM 1" },
+            }
+        };
+        
         public static readonly KeywordDescriptor UseGeometryAA = new KeywordDescriptor()
         {
             displayName = "Geometry AA",
             referenceName = "_SPECULARAA",
+            type = KeywordType.Boolean,
+            definition = KeywordDefinition.Predefined,
+            scope = KeywordScope.Local,
+        };
+        
+        public static readonly KeywordDescriptor UseEnvRotate = new KeywordDescriptor()
+        {
+            displayName = "Env Rotate",
+            referenceName = "_ENVROTATE",
             type = KeywordType.Boolean,
             definition = KeywordDefinition.Predefined,
             scope = KeywordScope.Local,
