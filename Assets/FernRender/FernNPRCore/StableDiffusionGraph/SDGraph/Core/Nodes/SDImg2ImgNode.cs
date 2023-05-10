@@ -259,7 +259,7 @@ namespace FernNPRCore.StableDiffusionGraph
 
                     // Decode the image from Base64 string into an array of bytes
                     byte[] imageData = Convert.FromBase64String(json.images[0]);
-                    OutputImage = new Texture2D(width, height, DefaultFormat.HDR, TextureCreationFlags.None);
+                    OutputImage = new Texture2D(width, height, DefaultFormat.LDR, TextureCreationFlags.None); // TODO: Add HDR/LDR Toggle
                     OutputImage.LoadImage(imageData);
 
                     try
