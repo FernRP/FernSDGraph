@@ -17,6 +17,18 @@ using static Unity.Rendering.Universal.ShaderUtils;
 
 namespace FernShaderGraph
 {
+
+    internal struct LitSubTargetParams
+    {
+        public DiffusionModel diffusionModel;
+        public SpecularModel specularModel;
+        public EnvReflectionMode envReflectionMode;
+        public bool geometryAA;
+        public bool depthNormal;
+        public bool _2D;
+        public bool envRotate;
+    }
+    
     sealed class FernSG_UniversalLitSubTarget : FernSG_UniversalSubTarget, ILegacyTarget
     {
         static readonly GUID kSourceCodeGuid = new GUID("d6c78107b64145745805d963de80cc17"); // FernSG_UniversalLitSubTarget.cs
@@ -44,19 +56,76 @@ namespace FernShaderGraph
             get => m_NormalDropOffSpace;
             set => m_NormalDropOffSpace = value;
         }
+        
+        [SerializeField] DiffusionModel m_DiffusionModel = DiffusionModel.Lambert;
+
+        [SerializeField] SpecularModel m_SpecularModel = SpecularModel.GGX;
+
+        [SerializeField] EnvReflectionMode m_EnvReflection = EnvReflectionMode.Default;
+
+        [SerializeField] bool m_GeometryAA = false;
+
+        [SerializeField] bool m_depthNormal = false;
+
+        [SerializeField] private bool m_2D;
+        
+        [SerializeField] bool m_EnvRotate = false;
+        
+        public DiffusionModel diffusionModel
+        {
+            get => m_DiffusionModel;
+            set => m_DiffusionModel = value;
+        }
+
+        public SpecularModel specularModel
+        {
+            get => m_SpecularModel;
+            set => m_SpecularModel = value;
+        }
+
+        public EnvReflectionMode envReflectionMode
+        {
+            get => m_EnvReflection;
+            set => m_EnvReflection = value;
+        }
+
+        public bool geometryAA
+        {
+            get => m_GeometryAA;
+            set => m_GeometryAA = value;
+        }
+
+        public bool depthNormal
+        {
+            get => m_depthNormal;
+            set => m_depthNormal = value;
+        }
+
+        public bool _2D
+        {
+            get => m_2D;
+            set => m_2D = value;
+        }
 
         public bool clearCoat
         {
             get => m_ClearCoat;
             set => m_ClearCoat = value;
         }
-
+        
+        public bool envRotate
+        {
+            get => m_EnvRotate;
+            set => m_EnvRotate = value;
+        }
 
         public bool blendModePreserveSpecular
         {
             get => m_BlendModePreserveSpecular;
             set => m_BlendModePreserveSpecular = value;
         }
+
+        private LitSubTargetParams m_litSubTargetParams;
 
         [SerializeField] private bool fernControlFoldout = false;
 
@@ -79,10 +148,19 @@ namespace FernShaderGraph
 #endif
                 context.AddCustomEditorForRenderPipeline(gui.FullName, universalRPType);
             }
+            
+            // setup subtargetparas
+            m_litSubTargetParams.diffusionModel = diffusionModel;
+            m_litSubTargetParams.specularModel = specularModel;
+            m_litSubTargetParams.envReflectionMode = envReflectionMode;
+            m_litSubTargetParams.geometryAA = geometryAA;
+            m_litSubTargetParams.depthNormal = depthNormal;
+            m_litSubTargetParams._2D = _2D;
+            m_litSubTargetParams.envRotate = envRotate;
 
             // Process SubShaders
-            context.AddSubShader(PostProcessSubShader(SubShaders.LitComputeDotsSubShader(target, target.renderType, target.renderQueue, target.disableBatching, blendModePreserveSpecular)));
-            context.AddSubShader(PostProcessSubShader(SubShaders.LitGLESSubShader(target, target.renderType, target.renderQueue, target.disableBatching, blendModePreserveSpecular)));
+            context.AddSubShader(PostProcessSubShader(SubShaders.LitComputeDotsSubShader(target, m_litSubTargetParams, target.renderType, target.renderQueue, target.disableBatching, blendModePreserveSpecular)));
+            context.AddSubShader(PostProcessSubShader(SubShaders.LitGLESSubShader(target, m_litSubTargetParams, target.renderType, target.renderQueue, target.disableBatching, blendModePreserveSpecular)));
 
             // if (foldoutFernControl != null)
             // {
@@ -162,21 +240,21 @@ namespace FernShaderGraph
             context.AddBlock(BlockFields.SurfaceDescription.CoatMask, clearCoat);
             context.AddBlock(BlockFields.SurfaceDescription.CoatSmoothness, clearCoat);
             
-            context.AddBlock(FernSG_Field.SurfaceDescription.CellThreshold, target.diffusionModel == DiffusionModel.Cell);
-            context.AddBlock(FernSG_Field.SurfaceDescription.CellSmoothness, target.diffusionModel == DiffusionModel.Cell);
-            context.AddBlock(FernSG_Field.SurfaceDescription.RampColor, target.diffusionModel == DiffusionModel.Ramp);
+            context.AddBlock(FernSG_Field.SurfaceDescription.CellThreshold, diffusionModel == DiffusionModel.Cell);
+            context.AddBlock(FernSG_Field.SurfaceDescription.CellSmoothness, diffusionModel == DiffusionModel.Cell);
+            context.AddBlock(FernSG_Field.SurfaceDescription.RampColor, diffusionModel == DiffusionModel.Ramp);
             context.AddBlock(FernSG_Field.SurfaceDescription.SpecularColor);
-            context.AddBlock(FernSG_Field.SurfaceDescription.StylizedSpecularSize, target.specularModel == SpecularModel.STYLIZED);
-            context.AddBlock(FernSG_Field.SurfaceDescription.StylizedSpecularSoftness, target.specularModel == SpecularModel.STYLIZED);
+            context.AddBlock(FernSG_Field.SurfaceDescription.StylizedSpecularSize, specularModel == SpecularModel.STYLIZED);
+            context.AddBlock(FernSG_Field.SurfaceDescription.StylizedSpecularSoftness, specularModel == SpecularModel.STYLIZED);
             
-            context.AddBlock(FernSG_Field.SurfaceDescription.GeometryAAStrength, target.geometryAA);
-            context.AddBlock(FernSG_Field.SurfaceDescription.GeometryAAVariant, target.geometryAA); 
+            context.AddBlock(FernSG_Field.SurfaceDescription.GeometryAAStrength, geometryAA);
+            context.AddBlock(FernSG_Field.SurfaceDescription.GeometryAAVariant, geometryAA); 
             
-            context.AddBlock(FernSG_Field.SurfaceDescription.LightenColor, target.diffusionModel != DiffusionModel.Ramp);
-            context.AddBlock(FernSG_Field.SurfaceDescription.DarkColor, target.diffusionModel != DiffusionModel.Ramp);
+            context.AddBlock(FernSG_Field.SurfaceDescription.LightenColor, diffusionModel != DiffusionModel.Ramp);
+            context.AddBlock(FernSG_Field.SurfaceDescription.DarkColor, diffusionModel != DiffusionModel.Ramp);
             
-            context.AddBlock(FernSG_Field.SurfaceDescription.EnvReflection, target.envReflectionMode == EnvReflectionMode.Custom);
-            context.AddBlock(FernSG_Field.SurfaceDescription.EnvRotate, target.envRotate && target.envReflectionMode == default);
+            context.AddBlock(FernSG_Field.SurfaceDescription.EnvReflection, envReflectionMode == EnvReflectionMode.Custom);
+            context.AddBlock(FernSG_Field.SurfaceDescription.EnvRotate, envRotate && envReflectionMode == default);
         }
 
         public override void CollectShaderProperties(PropertyCollector collector, GenerationMode generationMode)
@@ -253,33 +331,33 @@ namespace FernShaderGraph
 
             if (fernControlFoldout)
             {
-                context.AddProperty("Depth Normal", 1,new Toggle() { value = target.depthNormal }, (evt) =>
+                context.AddProperty("Depth Normal", 1,new Toggle() { value = depthNormal }, (evt) =>
                 {
-                    if (Equals(target.depthNormal, evt.newValue))
+                    if (Equals(depthNormal, evt.newValue))
                         return;
 
                     registerUndo("Change Depth Normal");
-                    target.depthNormal = evt.newValue;
+                    depthNormal = evt.newValue;
                     onChange();
                 });
 
-                context.AddProperty("Universal 2D", 1,new Toggle() { value = target._2D }, (evt) =>
+                context.AddProperty("Universal 2D", 1,new Toggle() { value = _2D }, (evt) =>
                 {
-                    if (Equals(target._2D, evt.newValue))
+                    if (Equals(_2D, evt.newValue))
                         return;
 
                     registerUndo("Change Universal 2D");
-                    target._2D = evt.newValue;
+                    _2D = evt.newValue;
                     onChange();
                 });
                             
-                context.AddProperty("Geometry AA", 1, new Toggle() { value = target.geometryAA }, (evt) =>
+                context.AddProperty("Geometry AA", 1, new Toggle() { value = geometryAA }, (evt) =>
                 {
-                    if (Equals(target.geometryAA, evt.newValue))
+                    if (Equals(geometryAA, evt.newValue))
                         return;
 
                     registerUndo("Change Geometry AA");
-                    target.geometryAA = evt.newValue;
+                    geometryAA = evt.newValue;
                     onChange();
                 });
 
@@ -293,43 +371,43 @@ namespace FernShaderGraph
                     onChange();
                 });
                  
-                context.AddProperty("Diffusion Model",1,  new EnumField(DiffusionModel.Lambert) { value = target.diffusionModel }, (evt) =>
+                context.AddProperty("Diffusion Model",1,  new EnumField(DiffusionModel.Lambert) { value = diffusionModel }, (evt) =>
                 {
-                    if (Equals(target.diffusionModel, evt.newValue))
+                    if (Equals(diffusionModel, evt.newValue))
                         return;
 
                     registerUndo("Change Diffusion Model");
-                    target.diffusionModel = (DiffusionModel)evt.newValue;
+                    diffusionModel = (DiffusionModel)evt.newValue;
                     onChange();
                 });
                 
-                context.AddProperty("Specular Model",1,  new EnumField(SpecularModel.GGX) { value = target.specularModel }, (evt) =>
+                context.AddProperty("Specular Model",1,  new EnumField(SpecularModel.GGX) { value = specularModel }, (evt) =>
                 {
-                    if (Equals(target.specularModel, evt.newValue))
+                    if (Equals(specularModel, evt.newValue))
                         return;
 
                     registerUndo("Change Specular Model");
-                    target.specularModel = (SpecularModel)evt.newValue;
+                    specularModel = (SpecularModel)evt.newValue;
                     onChange();
                 });
                 
-                context.AddProperty("Env Reflection Mode",1,  new EnumField(EnvReflectionMode.Default) { value = target.envReflectionMode }, (evt) =>
+                context.AddProperty("Env Reflection Mode",1,  new EnumField(EnvReflectionMode.Default) { value = envReflectionMode }, (evt) =>
                 {
-                    if (Equals(target.envReflectionMode, evt.newValue))
+                    if (Equals(envReflectionMode, evt.newValue))
                         return;
 
                     registerUndo("Change Env Reflection Mode");
-                    target.envReflectionMode = (EnvReflectionMode)evt.newValue;
+                    envReflectionMode = (EnvReflectionMode)evt.newValue;
                     onChange();
                 });
                 
-                context.AddProperty("Env Rotate",1,  new Toggle(){ value = target.envRotate}, (evt) =>
+                context.AddProperty("Env Rotate",1,  new Toggle(){ value = envRotate}, (evt) =>
                 {
-                    if (Equals(target.envRotate, evt.newValue))
+                    if (Equals(envRotate, evt.newValue))
                         return;
 
                     registerUndo("Change Env Rotate");
-                    target.envRotate = evt.newValue;
+                    envRotate = evt.newValue;
                     onChange();
                 });
             }
@@ -414,7 +492,7 @@ namespace FernShaderGraph
         static class SubShaders
         {
             // SM 4.5, compute with dots instancing
-            public static SubShaderDescriptor LitComputeDotsSubShader(FernSG_UniversalTarget target, string renderType, string renderQueue, string disableBatchingTag, bool blendModePreserveSpecular)
+            public static SubShaderDescriptor LitComputeDotsSubShader(FernSG_UniversalTarget target, LitSubTargetParams litSubTargetParams, string renderType, string renderQueue, string disableBatchingTag, bool blendModePreserveSpecular)
             {
                 SubShaderDescriptor result = new SubShaderDescriptor()
                 {
@@ -428,7 +506,7 @@ namespace FernShaderGraph
                 };
 
                
-                result.passes.Add(LitPasses.Forward(target, blendModePreserveSpecular, CorePragmas.ForwardSM45, LitKeywords.DOTSForward));
+                result.passes.Add(LitPasses.Forward(target, litSubTargetParams, blendModePreserveSpecular, CorePragmas.ForwardSM45, LitKeywords.DOTSForward));
 
                 // if (!complexLit)
                 //     result.passes.Add(LitPasses.GBuffer(target, blendModePreserveSpecular));
@@ -440,7 +518,7 @@ namespace FernShaderGraph
                 if (target.mayWriteDepth)
                     result.passes.Add(PassVariant(CorePasses.DepthOnly(target), CorePragmas.InstancedSM45));
 
-                if (target.depthNormal)
+                if (litSubTargetParams.depthNormal)
                     result.passes.Add(PassVariant(LitPasses.DepthNormal(target), CorePragmas.InstancedSM45));
                
                 result.passes.Add(PassVariant(LitPasses.Meta(target), CorePragmas.DefaultSM45));
@@ -449,13 +527,13 @@ namespace FernShaderGraph
                 result.passes.Add(PassVariant(CorePasses.SceneSelection(target), CorePragmas.DefaultSM45));
                 result.passes.Add(PassVariant(CorePasses.ScenePicking(target), CorePragmas.DefaultSM45));
 
-                if(target._2D)
+                if(litSubTargetParams._2D)
                     result.passes.Add(PassVariant(LitPasses._2D(target), CorePragmas.DefaultSM45));
 
                 return result;
             }
 
-            public static SubShaderDescriptor LitGLESSubShader(FernSG_UniversalTarget target, string renderType, string renderQueue, string disableBatchingTag, bool blendModePreserveSpecular)
+            public static SubShaderDescriptor LitGLESSubShader(FernSG_UniversalTarget target, LitSubTargetParams litSubTargetParams, string renderType, string renderQueue, string disableBatchingTag, bool blendModePreserveSpecular)
             {
                 // SM 2.0, GLES
 
@@ -473,7 +551,7 @@ namespace FernShaderGraph
                     passes = new PassCollection()
                 };
 
-                result.passes.Add(LitPasses.Forward(target, blendModePreserveSpecular, CorePragmas.Forward, LitKeywords.FernForward));
+                result.passes.Add(LitPasses.Forward(target, litSubTargetParams, blendModePreserveSpecular, CorePragmas.Forward, LitKeywords.FernForward));
 
                 // cull the shadowcaster pass if we know it will never be used
                 if (target.castShadows || target.allowMaterialOverride)
@@ -482,7 +560,7 @@ namespace FernShaderGraph
                 if (target.mayWriteDepth)
                     result.passes.Add(CorePasses.DepthOnly(target));
 
-                if(target.depthNormal)
+                if(litSubTargetParams.depthNormal)
                     result.passes.Add(CorePasses.DepthNormal(target));
                 result.passes.Add(LitPasses.Meta(target));
                 // Currently neither of these passes (selection/picking) can be last for the game view for
@@ -490,7 +568,7 @@ namespace FernShaderGraph
                 result.passes.Add(CorePasses.SceneSelection(target));
                 result.passes.Add(CorePasses.ScenePicking(target));
 
-                if(target._2D)
+                if(litSubTargetParams._2D)
                     result.passes.Add(LitPasses._2D(target));
 
                 return result;
@@ -508,9 +586,95 @@ namespace FernShaderGraph
                 else if (!receiveShadows)
                     pass.defines.Add(LitKeywords.ReceiveShadowsOff, 1);
             }
+            
+            internal static void AddEnvRotateControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target, LitSubTargetParams litSubTargetParams)
+            {
+                if (litSubTargetParams.envRotate)
+                {
+                    pass.defines.Add(CoreKeywordDescriptors.UseEnvRotate, 1);
+                }
+            }
+            
+             internal static void AddDiffusionModelControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target, LitSubTargetParams litSubTargetParams)
+        {
+            switch (litSubTargetParams.diffusionModel)
+            {
+                case DiffusionModel.Lambert:
+                    pass.defines.Add(CoreKeywordDescriptors.DiffuseModel, 0);
+                    break;
+                case DiffusionModel.Cell:
+                    pass.defines.Add(CoreKeywordDescriptors.DiffuseModel, 1);
+
+                    break;
+                case DiffusionModel.Ramp:
+                    pass.defines.Add(CoreKeywordDescriptors.DiffuseModel, 2);
+                    break;
+            }
+        }
+
+        
+
+        internal static void AddEnvReflectionModeControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target, LitSubTargetParams litSubTargetParams)
+        {
+            switch (litSubTargetParams.envReflectionMode)
+            {
+                case EnvReflectionMode.Default:
+                    pass.defines.Add(CoreKeywordDescriptors.EnvReflectionMode, 0);
+                    break;
+                case EnvReflectionMode.Custom:
+                    pass.defines.Add(CoreKeywordDescriptors.EnvReflectionMode, 1);
+                    break;
+            }
+        }
+
+        internal static void AddSpecularModelControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target, LitSubTargetParams litSubTargetParams)
+        {
+            switch (litSubTargetParams.specularModel)
+            {
+                case SpecularModel.GGX:
+                    pass.defines.Add(CoreKeywordDescriptors.SpecularModel, 0);
+                    break;
+                case SpecularModel.STYLIZED:
+                    pass.defines.Add(CoreKeywordDescriptors.SpecularModel, 1);
+
+                    break;
+                case SpecularModel.BLINNPHONG
+                    :
+                    pass.defines.Add(CoreKeywordDescriptors.SpecularModel, 2);
+                    break;
+            }
+        }
+
+        internal static void AddEnvReflectionModelControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target, LitSubTargetParams litSubTargetParams)
+        {
+            switch (litSubTargetParams.specularModel)
+            {
+                case SpecularModel.GGX:
+                    pass.defines.Add(CoreKeywordDescriptors.SpecularModel, 0);
+                    break;
+                case SpecularModel.STYLIZED:
+                    pass.defines.Add(CoreKeywordDescriptors.SpecularModel, 1);
+
+                    break;
+                case SpecularModel.BLINNPHONG
+                    :
+                    pass.defines.Add(CoreKeywordDescriptors.SpecularModel, 2);
+                    break;
+            }
+        }
+
+        internal static void AddGeometryAAControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target, LitSubTargetParams litSubTargetParams)
+        {
+            if (litSubTargetParams.geometryAA)
+            {
+                pass.defines.Add(CoreKeywordDescriptors.UseGeometryAA, 1);
+            }
+        }
+
 
             public static PassDescriptor Forward(
                 FernSG_UniversalTarget target,
+                LitSubTargetParams litSubTargetParams,
                 bool blendModePreserveSpecular,
                 PragmaCollection pragmas,
                 KeywordCollection keywords)
@@ -613,11 +777,11 @@ namespace FernShaderGraph
                 CorePasses.AddAlphaToMaskControlToPass(ref result, target);
                 AddReceiveShadowsControlToPass(ref result, target, target.receiveShadows);
                 CorePasses.AddLODCrossFadeControlToPass(ref result, target);
-                CorePasses.AddDiffusionModelControlToPass(ref result, target);
-                CorePasses.AddEnvRotateControlToPass(ref result, target);
-                CorePasses.AddEnvReflectionModeControlToPass(ref result, target);
-                CorePasses.AddSpecularModelControlToPass(ref result, target);
-                CorePasses.AddGeometryAAControlToPass(ref result, target);
+                AddDiffusionModelControlToPass(ref result, target, litSubTargetParams);
+                AddEnvRotateControlToPass(ref result, target, litSubTargetParams);
+                AddEnvReflectionModeControlToPass(ref result, target, litSubTargetParams);
+                AddSpecularModelControlToPass(ref result, target, litSubTargetParams);
+                AddGeometryAAControlToPass(ref result, target, litSubTargetParams);
                 
                 return result;
             }

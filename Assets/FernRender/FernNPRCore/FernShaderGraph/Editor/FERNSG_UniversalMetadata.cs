@@ -59,19 +59,6 @@ namespace FernShaderGraph
             get => m_CastShadows;
             set => m_CastShadows = value;
         }
-
-        public bool depthNormal
-        {
-            get => m_DepthNormal;
-            set => m_DepthNormal = value;
-        }
-        
-            
-        public bool _2D
-        {
-            get => m_2D;
-            set => m_2D = value;
-        }
     }
 
 }

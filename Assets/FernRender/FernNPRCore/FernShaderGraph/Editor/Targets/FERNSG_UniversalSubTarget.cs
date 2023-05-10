@@ -65,8 +65,6 @@ namespace FernShaderGraph
             urpMetadata.surfaceType = target.surfaceType;
             urpMetadata.alphaMode = target.alphaMode;
             urpMetadata.castShadows = target.castShadows;
-            urpMetadata.depthNormal = target.depthNormal;
-            urpMetadata._2D = target._2D;
             return urpMetadata;
         }
 

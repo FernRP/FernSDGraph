@@ -384,7 +384,7 @@ void frag(
     #if _ENVCUSTOM
         addSurfData.envCustomReflection = surfaceDescription.EnvReflection;
     #endif
-    #if _ENVROTATE
+    #if _ENVROTATE && _ENDEFAULT
         addSurfData.envRotate = surfaceDescription.EnvRotate;
     #endif
 
@@ -424,6 +424,7 @@ void frag(
     color.rgb = NPRMainLightDirectLighting(brdfData, clearCoatbrdfData, unpacked, inputData, surfData, radiance, addSurfData, lightingData);
     color.rgb += NPRAdditionLightDirectLighting(brdfData, clearCoatbrdfData, unpacked, inputData, surfData, shadowMask, meshRenderingLayers, addSurfData, aoFactor);
     color.rgb += NPRIndirectLighting(brdfData, inputData, unpacked, addSurfData, surfData.occlusion);
+    color.rgb += surfData.emission;
     color.rgb = MixFog(color.rgb, inputData.fogCoord);
 
     color.a = OutputAlpha(color.a, isTransparent);

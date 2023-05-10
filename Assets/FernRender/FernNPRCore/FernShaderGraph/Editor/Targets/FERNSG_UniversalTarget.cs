@@ -190,27 +190,14 @@ namespace FernShaderGraph
         [SerializeField] bool m_SupportsLODCrossFade = false;
 
         // =============== Fern Toggle ==================
-        [SerializeField] DiffusionModel m_DiffusionModel = DiffusionModel.Lambert;
 
-        [SerializeField] SpecularModel m_SpecularModel = SpecularModel.GGX;
+        [SerializeField] bool m_ScreenSpaceAmbientOcclusion = true;
 
-        [SerializeField] EnvReflectionMode m_EnvReflection = EnvReflectionMode.Default;
+        [SerializeField] bool m_StaticLightmap = true;
 
-        [SerializeField] bool m_GeometryAA = false;
+        [SerializeField] bool m_DynamicLightmap = true;
 
-        [SerializeField] bool m_depthNormal = false;
-
-        [SerializeField] private bool m_2D;
-
-        [SerializeField] bool m_EnvRotate = false;
-
-        [SerializeField] bool m_ScreenSpaceAmbientOcclusion = false;
-
-        [SerializeField] bool m_StaticLightmap = false;
-
-        [SerializeField] bool m_DynamicLightmap = false;
-
-        [SerializeField] bool m_DirectionalLightmapCombined = false;
+        [SerializeField] bool m_DirectionalLightmapCombined = true;
 
         [SerializeField] bool m_AdditionalLights = true;
 
@@ -354,47 +341,8 @@ namespace FernShaderGraph
         }
 
         //=================== Fern Keyword ====================
-        public DiffusionModel diffusionModel
-        {
-            get => m_DiffusionModel;
-            set => m_DiffusionModel = value;
-        }
 
-        public SpecularModel specularModel
-        {
-            get => m_SpecularModel;
-            set => m_SpecularModel = value;
-        }
 
-        public EnvReflectionMode envReflectionMode
-        {
-            get => m_EnvReflection;
-            set => m_EnvReflection = value;
-        }
-
-        public bool geometryAA
-        {
-            get => m_GeometryAA;
-            set => m_GeometryAA = value;
-        }
-
-        public bool depthNormal
-        {
-            get => m_depthNormal;
-            set => m_depthNormal = value;
-        }
-
-        public bool _2D
-        {
-            get => m_2D;
-            set => m_2D = value;
-        }
-
-        public bool envRotate
-        {
-            get => m_EnvRotate;
-            set => m_EnvRotate = value;
-        }
 
         public bool ScreenSpaceAmbientOcclusion
         {
@@ -1243,88 +1191,7 @@ namespace FernShaderGraph
             }
         }
 
-        internal static void AddDiffusionModelControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target)
-        {
-            switch (target.diffusionModel)
-            {
-                case DiffusionModel.Lambert:
-                    pass.defines.Add(CoreKeywordDescriptors.DiffuseModel, 0);
-                    break;
-                case DiffusionModel.Cell:
-                    pass.defines.Add(CoreKeywordDescriptors.DiffuseModel, 1);
-
-                    break;
-                case DiffusionModel.Ramp:
-                    pass.defines.Add(CoreKeywordDescriptors.DiffuseModel, 2);
-                    break;
-            }
-        }
-
-        internal static void AddEnvRotateControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target)
-        {
-            if (target.envRotate)
-            {
-                pass.defines.Add(CoreKeywordDescriptors.UseEnvRotate, 1);
-            }
-        }
-
-        internal static void AddEnvReflectionModeControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target)
-        {
-            switch (target.envReflectionMode)
-            {
-                case EnvReflectionMode.Default:
-                    pass.defines.Add(CoreKeywordDescriptors.EnvReflectionMode, 0);
-                    break;
-                case EnvReflectionMode.Custom:
-                    pass.defines.Add(CoreKeywordDescriptors.EnvReflectionMode, 1);
-                    break;
-            }
-        }
-
-        internal static void AddSpecularModelControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target)
-        {
-            switch (target.specularModel)
-            {
-                case SpecularModel.GGX:
-                    pass.defines.Add(CoreKeywordDescriptors.SpecularModel, 0);
-                    break;
-                case SpecularModel.STYLIZED:
-                    pass.defines.Add(CoreKeywordDescriptors.SpecularModel, 1);
-
-                    break;
-                case SpecularModel.BLINNPHONG
-                    :
-                    pass.defines.Add(CoreKeywordDescriptors.SpecularModel, 2);
-                    break;
-            }
-        }
-
-        internal static void AddEnvReflectionModelControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target)
-        {
-            switch (target.specularModel)
-            {
-                case SpecularModel.GGX:
-                    pass.defines.Add(CoreKeywordDescriptors.SpecularModel, 0);
-                    break;
-                case SpecularModel.STYLIZED:
-                    pass.defines.Add(CoreKeywordDescriptors.SpecularModel, 1);
-
-                    break;
-                case SpecularModel.BLINNPHONG
-                    :
-                    pass.defines.Add(CoreKeywordDescriptors.SpecularModel, 2);
-                    break;
-            }
-        }
-
-        internal static void AddGeometryAAControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target)
-        {
-            if (target.geometryAA)
-            {
-                pass.defines.Add(CoreKeywordDescriptors.UseGeometryAA, 1);
-            }
-        }
-
+       
         internal static void AddTargetSurfaceControlsToPass(ref PassDescriptor pass, FernSG_UniversalTarget target,
             bool blendModePreserveSpecular = false)
         {

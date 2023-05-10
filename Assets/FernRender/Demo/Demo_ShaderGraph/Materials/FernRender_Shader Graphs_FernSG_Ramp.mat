@@ -29,7 +29,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RampTex:
-        m_Texture: {fileID: 2800000, guid: 73131ef27d38b4d45b2091da76bff8aa, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0c0e3d13586e2be4a9d63ee9dbbc2200, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_d42b19677643477cb99c743e1c5f241e_Texture_1:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture2DAsset_da5c3d634298450ea678040379081a52_Out_0:
@@ -51,15 +55,17 @@ Material:
     m_Ints: []
     m_Floats:
     - _CellThreshold: 0
+    - _EnvRotate: 177
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _StylizedSpecularSize: 0.16
+    - _StylizedSpecularSize: 0.1
     - _StylizedSpecularSoftness: 0.6
-    - _UOffset: 0.32
+    - _UOffset: -0.281
     - _UVOffset: 0.54
     - _UseHalfLambert: 1
     - _VOffsert: 1
-    - _VOffset: 0.53
+    - _VOffset: 1
     m_Colors:
-    - _SpecularColor: {r: 0, g: 39.8615, b: 13.73188, a: 0}
+    - _BaseColor: {r: 0.6410943, g: 0.67858905, b: 0.7924528, a: 0}
+    - _SpecularColor: {r: 4, g: 4, b: 4, a: 0}
   m_BuildTextureStacks: []
