@@ -74,13 +74,13 @@ namespace FernShaderGraph
         ForceDisabled = 2
     }
 
-    enum ZTestMode  // the values here match UnityEngine.Rendering.CompareFunction
+    enum ZTestMode // the values here match UnityEngine.Rendering.CompareFunction
     {
         Disabled = 0,
         Never = 1,
         Less = 2,
         Equal = 3,
-        LEqual = 4,     // default for most rendering
+        LEqual = 4, // default for most rendering
         Greater = 5,
         NotEqual = 6,
         GEqual = 7,
@@ -97,11 +97,11 @@ namespace FernShaderGraph
 
     internal enum RenderFace
     {
-        Front = 2,      // = CullMode.Back -- render front face only
-        Back = 1,       // = CullMode.Front -- render back face only
-        Both = 0        // = CullMode.Off -- render both faces
+        Front = 2, // = CullMode.Back -- render front face only
+        Back = 1, // = CullMode.Front -- render back face only
+        Both = 0 // = CullMode.Off -- render both faces
     }
-    
+
     internal enum DiffusionModel
     {
         Cell = 2,
@@ -112,11 +112,11 @@ namespace FernShaderGraph
     internal enum SpecularModel
     {
         None = 3,
-        BLINNPHONG = 2, 
+        BLINNPHONG = 2,
         STYLIZED = 1,
         GGX = 0
     }
-    
+
     internal enum EnvReflectionMode
     {
         None = 2,
@@ -132,18 +132,24 @@ namespace FernShaderGraph
         public override int latestVersion => 1;
 
         // Constants
-        static readonly GUID kSourceCodeGuid = new GUID("8c72f47fdde33b14a9340e325ce56f4d"); // FernSG_UniversalTarget.cs
+        static readonly GUID
+            kSourceCodeGuid = new GUID("8c72f47fdde33b14a9340e325ce56f4d"); // FernSG_UniversalTarget.cs
+
         public const string kPipelineTag = "UniversalPipeline";
         public const string kLitMaterialTypeTag = "\"UniversalMaterialType\" = \"Lit\"";
         public const string kUnlitMaterialTypeTag = "\"UniversalMaterialType\" = \"Unlit\"";
-        public static readonly string[] kSharedTemplateDirectories = GenerationUtils.GetDefaultSharedTemplateDirectories().Union(new string[]
-        {
-            "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Templates"
+
+        public static readonly string[] kSharedTemplateDirectories = GenerationUtils
+            .GetDefaultSharedTemplateDirectories().Union(new string[]
+            {
+                "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Templates"
 #if HAS_VFX_GRAPH
             , "Packages/com.unity.visualeffectgraph/Editor/ShaderGraph/Templates"
 #endif
-        }).ToArray();
-        public const string kUberTemplatePath = "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Templates/ShaderPass.template";
+            }).ToArray();
+
+        public const string kUberTemplatePath =
+            "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Templates/ShaderPass.template";
 
         // SubTarget
         List<SubTarget> m_SubTargets;
@@ -151,8 +157,7 @@ namespace FernShaderGraph
         int activeSubTargetIndex => m_SubTargets.IndexOf(m_ActiveSubTarget);
 
         // Subtarget Data
-        [SerializeField]
-        List<JsonData<JsonObject>> m_Datas = new List<JsonData<JsonObject>>();
+        [SerializeField] List<JsonData<JsonObject>> m_Datas = new List<JsonData<JsonObject>>();
 
         // View
         PopupField<string> m_SubTargetField;
@@ -161,121 +166,87 @@ namespace FernShaderGraph
         Toggle m_SupportVFXToggle;
 #endif
 
-        [SerializeField]
-        JsonData<SubTarget> m_ActiveSubTarget;
+        [SerializeField] JsonData<SubTarget> m_ActiveSubTarget;
 
         // when checked, allows the material to control ALL surface settings (uber shader style)
-        [SerializeField]
-        bool m_AllowMaterialOverride = false;
+        [SerializeField] bool m_AllowMaterialOverride = false;
 
-        [SerializeField]
-        SurfaceType m_SurfaceType = SurfaceType.Opaque;
+        [SerializeField] SurfaceType m_SurfaceType = SurfaceType.Opaque;
 
-        [SerializeField]
-        ZTestMode m_ZTestMode = ZTestMode.LEqual;
+        [SerializeField] ZTestMode m_ZTestMode = ZTestMode.LEqual;
 
-        [SerializeField]
-        ZWriteControl m_ZWriteControl = ZWriteControl.Auto;
+        [SerializeField] ZWriteControl m_ZWriteControl = ZWriteControl.Auto;
 
-        [SerializeField]
-        AlphaMode m_AlphaMode = AlphaMode.Alpha;
+        [SerializeField] AlphaMode m_AlphaMode = AlphaMode.Alpha;
 
-        [SerializeField]
-        RenderFace m_RenderFace = RenderFace.Front;
+        [SerializeField] RenderFace m_RenderFace = RenderFace.Front;
 
-        [SerializeField]
-        bool m_AlphaClip = false;
+        [SerializeField] bool m_AlphaClip = false;
 
-        [SerializeField]
-        bool m_CastShadows = true;
+        [SerializeField] bool m_CastShadows = true;
 
-        [SerializeField]
-        bool m_ReceiveShadows = true;
+        [SerializeField] bool m_ReceiveShadows = true;
 
-        [SerializeField]
-        bool m_SupportsLODCrossFade = false;
-        
+        [SerializeField] bool m_SupportsLODCrossFade = false;
+
         // =============== Fern Toggle ==================
-        [SerializeField] 
-        DiffusionModel m_DiffusionModel = DiffusionModel.Lambert;
-        
-        [SerializeField] 
-        SpecularModel m_SpecularModel = SpecularModel.GGX; 
-        
-        [SerializeField] 
-        EnvReflectionMode m_EnvReflection = EnvReflectionMode.Default;
-        
-        [SerializeField]
-        bool m_GeometryAA = false;
-        
-        [SerializeField]
-        bool m_depthNormal = false;
-        
-        [SerializeField]
-        private bool m_2D;
-        
-        [SerializeField]
-        bool m_EnvRotate = false; 
-        
-        [SerializeField]
-        bool m_ScreenSpaceAmbientOcclusion = false; 
-        
-        [SerializeField]
-        bool m_StaticLightmap = false; 
-        
-        [SerializeField]
-        bool m_DynamicLightmap = false; 
-        
-        [SerializeField]
-        bool m_DirectionalLightmapCombined = false; 
-        
-        [SerializeField]
-        bool m_AdditionalLights = true;
-        
-        [SerializeField]
-        bool m_AdditionalLightShadows = true;
-         
-        [SerializeField]
-        bool m_ReflectionProbeBlending = true;
-        
-        [SerializeField]
-        bool m_ReflectionProbeBoxProjection = true;
-        
-        [SerializeField]
-        bool m_LightmapShadowMixing = true;
-        
-        [SerializeField]
-        bool m_ShadowsShadowmask = true;    
-        
-        [SerializeField]
-        bool m_DBuffer = true;
-        
-        [SerializeField]
-        bool m_LightLayers = true;
-                
-        [SerializeField]
-        bool m_DebugDisplay = true;
-        
-        [SerializeField]
-        bool m_LightCookies = true;        
+        [SerializeField] DiffusionModel m_DiffusionModel = DiffusionModel.Lambert;
 
-        [SerializeField]
-        bool m_ForwardPlus = true;
+        [SerializeField] SpecularModel m_SpecularModel = SpecularModel.GGX;
+
+        [SerializeField] EnvReflectionMode m_EnvReflection = EnvReflectionMode.Default;
+
+        [SerializeField] bool m_GeometryAA = false;
+
+        [SerializeField] bool m_depthNormal = false;
+
+        [SerializeField] private bool m_2D;
+
+        [SerializeField] bool m_EnvRotate = false;
+
+        [SerializeField] bool m_ScreenSpaceAmbientOcclusion = false;
+
+        [SerializeField] bool m_StaticLightmap = false;
+
+        [SerializeField] bool m_DynamicLightmap = false;
+
+        [SerializeField] bool m_DirectionalLightmapCombined = false;
+
+        [SerializeField] bool m_AdditionalLights = true;
+
+        [SerializeField] bool m_AdditionalLightShadows = true;
+
+        [SerializeField] bool m_ReflectionProbeBlending = true;
+
+        [SerializeField] bool m_ReflectionProbeBoxProjection = true;
+
+        [SerializeField] bool m_LightmapShadowMixing = true;
+
+        [SerializeField] bool m_ShadowsShadowmask = true;
+
+        [SerializeField] bool m_DBuffer = true;
+
+        [SerializeField] bool m_LightLayers = true;
+
+        [SerializeField] bool m_DebugDisplay = true;
+
+        [SerializeField] bool m_LightCookies = true;
+
+        [SerializeField] bool m_ForwardPlus = true;
 
         // ==============================================
 
-        [SerializeField]
-        string m_CustomEditorGUI;
+        [SerializeField] string m_CustomEditorGUI;
 
-        [SerializeField]
-        bool m_SupportVFX;
+        [SerializeField] bool m_SupportVFX;
 
 
         internal override bool ignoreCustomInterpolators => false;
         internal override int padCustomInterpolatorLimit => 4;
+
         internal override bool prefersSpritePreview =>
             activeSubTarget is UniversalSpriteUnlitSubTarget or UniversalSpriteLitSubTarget or
-                               UniversalSpriteCustomLitSubTarget;
+                UniversalSpriteCustomLitSubTarget;
 
         public FernSG_UniversalTarget()
         {
@@ -388,19 +359,19 @@ namespace FernShaderGraph
             get => m_DiffusionModel;
             set => m_DiffusionModel = value;
         }
-        
+
         public SpecularModel specularModel
         {
             get => m_SpecularModel;
             set => m_SpecularModel = value;
         }
-        
+
         public EnvReflectionMode envReflectionMode
         {
             get => m_EnvReflection;
             set => m_EnvReflection = value;
         }
-        
+
         public bool geometryAA
         {
             get => m_GeometryAA;
@@ -418,7 +389,7 @@ namespace FernShaderGraph
             get => m_2D;
             set => m_2D = value;
         }
-        
+
         public bool envRotate
         {
             get => m_EnvRotate;
@@ -502,7 +473,7 @@ namespace FernShaderGraph
             get => m_DebugDisplay;
             set => m_DebugDisplay = value;
         }
-        
+
         public bool LightCookies
         {
             get => m_LightCookies;
@@ -565,14 +536,19 @@ namespace FernShaderGraph
             SRPFilterAttribute srpFilter = NodeClassCache.GetAttributeOnNodeType<SRPFilterAttribute>(nodeType);
             bool worksWithThisSrp = srpFilter == null || srpFilter.srpTypes.Contains(typeof(UniversalRenderPipeline));
 
-            SubTargetFilterAttribute subTargetFilter = NodeClassCache.GetAttributeOnNodeType<SubTargetFilterAttribute>(nodeType);
-            bool worksWithThisSubTarget = subTargetFilter == null || subTargetFilter.subTargetTypes.Contains(activeSubTarget.GetType());
+            SubTargetFilterAttribute subTargetFilter =
+                NodeClassCache.GetAttributeOnNodeType<SubTargetFilterAttribute>(nodeType);
+            bool worksWithThisSubTarget = subTargetFilter == null ||
+                                          subTargetFilter.subTargetTypes.Contains(activeSubTarget.GetType());
 
             if (activeSubTarget.IsActive())
                 worksWithThisSubTarget &= activeSubTarget.IsNodeAllowedBySubTarget(nodeType);
 
             return worksWithThisSrp && worksWithThisSubTarget && base.IsNodeAllowedByTarget(nodeType);
         }
+
+        private TargetPropertyGUIFoldout foldout;
+        [SerializeField] private bool keyworldFoldout = false;
 
         public override void Setup(ref TargetSetupContext context)
         {
@@ -606,8 +582,8 @@ namespace FernShaderGraph
             var descs = context.blocks.Select(x => x.descriptor);
             // Core fields
             context.AddField(Fields.GraphVertex, descs.Contains(BlockFields.VertexDescription.Position) ||
-                descs.Contains(BlockFields.VertexDescription.Normal) ||
-                descs.Contains(BlockFields.VertexDescription.Tangent));
+                                                 descs.Contains(BlockFields.VertexDescription.Normal) ||
+                                                 descs.Contains(BlockFields.VertexDescription.Tangent));
             context.AddField(Fields.GraphPixel);
 
             // SubTarget fields
@@ -617,7 +593,8 @@ namespace FernShaderGraph
         public override void GetActiveBlocks(ref TargetActiveBlockContext context)
         {
             // Core blocks
-            if (!(m_ActiveSubTarget.value is UnityEditor.Rendering.Fullscreen.ShaderGraph.FullscreenSubTarget<FernSG_UniversalTarget>))
+            if (!(m_ActiveSubTarget.value is
+                    UnityEditor.Rendering.Fullscreen.ShaderGraph.FullscreenSubTarget<FernSG_UniversalTarget>))
             {
                 context.AddBlock(BlockFields.VertexDescription.Position);
                 context.AddBlock(BlockFields.VertexDescription.Normal);
@@ -650,7 +627,8 @@ namespace FernShaderGraph
             m_ActiveSubTarget.value.CollectShaderProperties(collector, generationMode);
         }
 
-        public override void GetPropertiesGUI(ref TargetPropertyGUIContext context, Action onChange, Action<String> registerUndo)
+        public override void GetPropertiesGUI(ref TargetPropertyGUIContext context, Action onChange,
+            Action<String> registerUndo)
         {
             // Core properties
             m_SubTargetField = new PopupField<string>(m_SubTargetNames, activeSubTargetIndex);
@@ -706,14 +684,15 @@ namespace FernShaderGraph
             Never = 1,
             Less = 2,
             Equal = 3,
-            LEqual = 4,     // default for most rendering
+            LEqual = 4, // default for most rendering
             Greater = 5,
             NotEqual = 6,
             GEqual = 7,
             Always = 8,
         };
 
-        public void AddDefaultMaterialOverrideGUI(ref TargetPropertyGUIContext context, Action onChange, Action<String> registerUndo)
+        public void AddDefaultMaterialOverrideGUI(ref TargetPropertyGUIContext context, Action onChange,
+            Action<String> registerUndo)
         {
             // At some point we may want to convert this to be a per-property control
             // or Unify the UX with the upcoming "lock" feature of the Material Variant properties
@@ -728,7 +707,8 @@ namespace FernShaderGraph
             });
         }
 
-        public void AddDefaultSurfacePropertiesGUI(ref TargetPropertyGUIContext context, Action onChange, Action<String> registerUndo, bool showReceiveShadows)
+        public void AddDefaultSurfacePropertiesGUI(ref TargetPropertyGUIContext context, Action onChange,
+            Action<String> registerUndo, bool showReceiveShadows)
         {
             context.AddProperty("Surface Type", new EnumField(SurfaceType.Opaque) { value = surfaceType }, (evt) =>
             {
@@ -740,16 +720,17 @@ namespace FernShaderGraph
                 onChange();
             });
 
-            context.AddProperty("Blending Mode", new EnumField(AlphaMode.Alpha) { value = alphaMode }, surfaceType == SurfaceType.Transparent, (evt) =>
-            {
-                if (Equals(alphaMode, evt.newValue))
-                    return;
+            context.AddProperty("Blending Mode", new EnumField(AlphaMode.Alpha) { value = alphaMode },
+                surfaceType == SurfaceType.Transparent, (evt) =>
+                {
+                    if (Equals(alphaMode, evt.newValue))
+                        return;
 
-                registerUndo("Change Blend");
-                alphaMode = (AlphaMode)evt.newValue;
-                onChange();
-            });
-            
+                    registerUndo("Change Blend");
+                    alphaMode = (AlphaMode)evt.newValue;
+                    onChange();
+                });
+
 
             context.AddProperty("Render Face", new EnumField(RenderFace.Front) { value = renderFace }, (evt) =>
             {
@@ -763,7 +744,7 @@ namespace FernShaderGraph
 
             context.AddProperty("Depth Write", new EnumField(ZWriteControl.Auto) { value = zWriteControl }, (evt) =>
             {
-                if (Equals(zWriteControl, evt.newValue)) 
+                if (Equals(zWriteControl, evt.newValue))
                     return;
 
                 registerUndo("Change Depth Write Control");
@@ -771,15 +752,16 @@ namespace FernShaderGraph
                 onChange();
             });
 
-            context.AddProperty("Depth Test", new EnumField(ZTestModeForUI.LEqual) { value = (ZTestModeForUI)zTestMode }, (evt) =>
-            {
-                if (Equals(zTestMode, evt.newValue))
-                    return;
+            context.AddProperty("Depth Test",
+                new EnumField(ZTestModeForUI.LEqual) { value = (ZTestModeForUI)zTestMode }, (evt) =>
+                {
+                    if (Equals(zTestMode, evt.newValue))
+                        return;
 
-                registerUndo("Change Depth Test");
-                zTestMode = (ZTestMode)evt.newValue;
-                onChange();
-            });
+                    registerUndo("Change Depth Test");
+                    zTestMode = (ZTestMode)evt.newValue;
+                    onChange();
+                });
 
             context.AddProperty("Alpha Clipping", new Toggle() { value = alphaClip }, (evt) =>
             {
@@ -821,147 +803,159 @@ namespace FernShaderGraph
                 supportsLodCrossFade = evt.newValue;
                 onChange();
             });
-            
-            var foldout = new TargetPropertyGUIFoldout() { text = "Keyword optimization", name = "foldout" };
-            
-            //foldout.AddLabel("\nKeyword optimization", 0);
-            foldout.AddProperty("SSAO", 1,new Toggle() { value = ScreenSpaceAmbientOcclusion }, (evt) =>
-            {
-                if (Equals(ScreenSpaceAmbientOcclusion, evt.newValue))
-                    return;
 
-                registerUndo("Change SSAO");
-                ScreenSpaceAmbientOcclusion = evt.newValue;
+            foldout = new TargetPropertyGUIFoldout()
+                { text = "Keyword Check", value = keyworldFoldout, name = "Keyword Control" };
+            foldout.RegisterCallback<ChangeEvent<bool>>(evt =>
+            {
+                keyworldFoldout = !keyworldFoldout;
                 onChange();
             });
-            foldout.AddProperty("Static Lightmap", 1,new Toggle() { value = StaticLightmap }, (evt) =>
-            {
-                if (Equals(StaticLightmap, evt.newValue))
-                    return;
 
-                registerUndo("Change Static Lightmap");
-                StaticLightmap = evt.newValue;
-                onChange();
-            });
-            foldout.AddProperty("Dynamic Lightmap", 1,new Toggle() { value = DynamicLightmap }, (evt) =>
-            {
-                if (Equals(DynamicLightmap, evt.newValue))
-                    return;
-
-                registerUndo("Change Dynamic Lightmap");
-                DynamicLightmap = evt.newValue;
-                onChange();
-            });
-            foldout.AddProperty("Directional Lightmap Combined", 1,new Toggle() { value = DirectionalLightmapCombined }, (evt) =>
-            {
-                if (Equals(DirectionalLightmapCombined, evt.newValue))
-                    return;
-
-                registerUndo("Change Directional Lightmap Combined");
-                DirectionalLightmapCombined = evt.newValue;
-                onChange();
-            });
-            foldout.AddProperty("Additional Lights", 1,new Toggle() { value = AdditionalLights }, (evt) =>
-            {
-                if (Equals(AdditionalLights, evt.newValue))
-                    return;
-
-                registerUndo("Change Additional Lights");
-                AdditionalLights = evt.newValue;
-                onChange();
-            });
-            foldout.AddProperty("AdditionalLight Shadows", 1,new Toggle() { value = AdditionalLightShadows }, (evt) =>
-            {
-                if (Equals(AdditionalLightShadows, evt.newValue))
-                    return;
-
-                registerUndo("Change AdditionalLight Shadows");
-                AdditionalLightShadows = evt.newValue;
-                onChange();
-            });
-            foldout.AddProperty("ReflectionProbe Blending", 1,new Toggle() { value = ReflectionProbeBlending }, (evt) =>
-            {
-                if (Equals(ReflectionProbeBlending, evt.newValue))
-                    return;
-
-                registerUndo("Change ReflectionProbe Blending");
-                ReflectionProbeBlending = evt.newValue;
-                onChange();
-            });
-            foldout.AddProperty("ReflectionProbeBox Projection", 1,new Toggle() { value = ReflectionProbeBoxProjection }, (evt) =>
-            {
-                if (Equals(ReflectionProbeBoxProjection, evt.newValue))
-                    return;
-
-                registerUndo("Change ReflectionProbeBox Projection");
-                ReflectionProbeBoxProjection = evt.newValue;
-                onChange();
-            });
-            foldout.AddProperty("LightmapShadow Mixing", 1,new Toggle() { value = LightmapShadowMixing }, (evt) =>
-            {
-                if (Equals(LightmapShadowMixing, evt.newValue))
-                    return;
-
-                registerUndo("Change LightmapShadow Mixing");
-                LightmapShadowMixing = evt.newValue;
-                onChange();
-            });
-            foldout.AddProperty("ShadowsShadowmask", 1,new Toggle() { value = ShadowsShadowmask }, (evt) =>
-            {
-                if (Equals(ShadowsShadowmask, evt.newValue))
-                    return;
-
-                registerUndo("Change ShadowsShadowmask");
-                ShadowsShadowmask = evt.newValue;
-                onChange();
-            });
-            foldout.AddProperty("DBuffer", 1,new Toggle() { value = DBuffer }, (evt) =>
-            {
-                if (Equals(DBuffer, evt.newValue))
-                    return;
-
-                registerUndo("Change DBuffer");
-                DBuffer = evt.newValue;
-                onChange();
-            });
-            foldout.AddProperty("LightLayers", 1,new Toggle() { value = LightLayers }, (evt) =>
-            {
-                if (Equals(LightLayers, evt.newValue))
-                    return;
-
-                registerUndo("Change LightLayers");
-                LightLayers = evt.newValue;
-                onChange();
-            });
-            foldout.AddProperty("DebugDisplay", 1,new Toggle() { value = DebugDisplay }, (evt) =>
-            {
-                if (Equals(DebugDisplay, evt.newValue))
-                    return;
-
-                registerUndo("Change DebugDisplay");
-                DebugDisplay = evt.newValue;
-                onChange();
-            });
-            foldout.AddProperty("LightCookies", 1,new Toggle() { value = LightCookies }, (evt) =>
-            {
-                if (Equals(LightCookies, evt.newValue))
-                    return;
-
-                registerUndo("Change LightCookies");
-                LightCookies = evt.newValue;
-                onChange();
-            });
-            foldout.AddProperty("ForwardPlus", 1,new Toggle() { value = ForwardPlus }, (evt) =>
-            {
-                if (Equals(ForwardPlus, evt.newValue))
-                    return;
-
-                registerUndo("Change ForwardPlus");
-                ForwardPlus = evt.newValue;
-                onChange();
-            });
             context.Add(foldout);
-            
+
+            if (keyworldFoldout)
+            {
+                context.AddProperty("SSAO", 1, new Toggle() { value = ScreenSpaceAmbientOcclusion }, (evt) =>
+                {
+                    if (Equals(ScreenSpaceAmbientOcclusion, evt.newValue))
+                        return;
+
+                    registerUndo("Change SSAO");
+                    ScreenSpaceAmbientOcclusion = evt.newValue;
+                    onChange();
+                });
+                context.AddProperty("Static Lightmap", 1, new Toggle() { value = StaticLightmap }, (evt) =>
+                {
+                    if (Equals(StaticLightmap, evt.newValue))
+                        return;
+
+                    registerUndo("Change Static Lightmap");
+                    StaticLightmap = evt.newValue;
+                    onChange();
+                });
+                context.AddProperty("Dynamic Lightmap", 1, new Toggle() { value = DynamicLightmap }, (evt) =>
+                {
+                    if (Equals(DynamicLightmap, evt.newValue))
+                        return;
+
+                    registerUndo("Change Dynamic Lightmap");
+                    DynamicLightmap = evt.newValue;
+                    onChange();
+                });
+                context.AddProperty("Directional Lightmap Combined", 1,
+                    new Toggle() { value = DirectionalLightmapCombined }, (evt) =>
+                    {
+                        if (Equals(DirectionalLightmapCombined, evt.newValue))
+                            return;
+
+                        registerUndo("Change Directional Lightmap Combined");
+                        DirectionalLightmapCombined = evt.newValue;
+                        onChange();
+                    });
+                context.AddProperty("Additional Lights", 1, new Toggle() { value = AdditionalLights }, (evt) =>
+                {
+                    if (Equals(AdditionalLights, evt.newValue))
+                        return;
+
+                    registerUndo("Change Additional Lights");
+                    AdditionalLights = evt.newValue;
+                    onChange();
+                });
+                context.AddProperty("AdditionalLight Shadows", 1, new Toggle() { value = AdditionalLightShadows },
+                    (evt) =>
+                    {
+                        if (Equals(AdditionalLightShadows, evt.newValue))
+                            return;
+
+                        registerUndo("Change AdditionalLight Shadows");
+                        AdditionalLightShadows = evt.newValue;
+                        onChange();
+                    });
+                context.AddProperty("ReflectionProbe Blending", 1, new Toggle() { value = ReflectionProbeBlending },
+                    (evt) =>
+                    {
+                        if (Equals(ReflectionProbeBlending, evt.newValue))
+                            return;
+
+                        registerUndo("Change ReflectionProbe Blending");
+                        ReflectionProbeBlending = evt.newValue;
+                        onChange();
+                    });
+                context.AddProperty("ReflectionProbeBox Projection", 1,
+                    new Toggle() { value = ReflectionProbeBoxProjection }, (evt) =>
+                    {
+                        if (Equals(ReflectionProbeBoxProjection, evt.newValue))
+                            return;
+
+                        registerUndo("Change ReflectionProbeBox Projection");
+                        ReflectionProbeBoxProjection = evt.newValue;
+                        onChange();
+                    });
+                context.AddProperty("LightmapShadow Mixing", 1, new Toggle() { value = LightmapShadowMixing }, (evt) =>
+                {
+                    if (Equals(LightmapShadowMixing, evt.newValue))
+                        return;
+
+                    registerUndo("Change LightmapShadow Mixing");
+                    LightmapShadowMixing = evt.newValue;
+                    onChange();
+                });
+                context.AddProperty("ShadowsShadowmask", 1, new Toggle() { value = ShadowsShadowmask }, (evt) =>
+                {
+                    if (Equals(ShadowsShadowmask, evt.newValue))
+                        return;
+
+                    registerUndo("Change ShadowsShadowmask");
+                    ShadowsShadowmask = evt.newValue;
+                    onChange();
+                });
+                context.AddProperty("DBuffer", 1, new Toggle() { value = DBuffer }, (evt) =>
+                {
+                    if (Equals(DBuffer, evt.newValue))
+                        return;
+
+                    registerUndo("Change DBuffer");
+                    DBuffer = evt.newValue;
+                    onChange();
+                });
+                context.AddProperty("LightLayers", 1, new Toggle() { value = LightLayers }, (evt) =>
+                {
+                    if (Equals(LightLayers, evt.newValue))
+                        return;
+
+                    registerUndo("Change LightLayers");
+                    LightLayers = evt.newValue;
+                    onChange();
+                });
+                context.AddProperty("DebugDisplay", 1, new Toggle() { value = DebugDisplay }, (evt) =>
+                {
+                    if (Equals(DebugDisplay, evt.newValue))
+                        return;
+
+                    registerUndo("Change DebugDisplay");
+                    DebugDisplay = evt.newValue;
+                    onChange();
+                });
+                context.AddProperty("LightCookies", 1, new Toggle() { value = LightCookies }, (evt) =>
+                {
+                    if (Equals(LightCookies, evt.newValue))
+                        return;
+
+                    registerUndo("Change LightCookies");
+                    LightCookies = evt.newValue;
+                    onChange();
+                });
+                context.AddProperty("ForwardPlus", 1, new Toggle() { value = ForwardPlus }, (evt) =>
+                {
+                    if (Equals(ForwardPlus, evt.newValue))
+                        return;
+
+                    registerUndo("Change ForwardPlus");
+                    ForwardPlus = evt.newValue;
+                    onChange();
+                });
+            }
         }
 
         public bool TrySetActiveSubTarget(Type subTargetType)
@@ -1043,7 +1037,8 @@ namespace FernShaderGraph
             ClearUnusedData();
         }
 
-        public bool TryUpgradeFromMasterNode(IMasterNode1 masterNode, out Dictionary<BlockFieldDescriptor, int> blockMap)
+        public bool TryUpgradeFromMasterNode(IMasterNode1 masterNode,
+            out Dictionary<BlockFieldDescriptor, int> blockMap)
         {
             void UpgradeAlphaClip()
             {
@@ -1079,10 +1074,14 @@ namespace FernShaderGraph
                     m_CustomEditorGUI = unlitMasterNode.m_OverrideEnabled ? unlitMasterNode.m_ShaderGUIOverride : "";
                     break;
                 case SpriteLitMasterNode1 spriteLitMasterNode:
-                    m_CustomEditorGUI = spriteLitMasterNode.m_OverrideEnabled ? spriteLitMasterNode.m_ShaderGUIOverride : "";
+                    m_CustomEditorGUI = spriteLitMasterNode.m_OverrideEnabled
+                        ? spriteLitMasterNode.m_ShaderGUIOverride
+                        : "";
                     break;
                 case SpriteUnlitMasterNode1 spriteUnlitMasterNode:
-                    m_CustomEditorGUI = spriteUnlitMasterNode.m_OverrideEnabled ? spriteUnlitMasterNode.m_ShaderGUIOverride : "";
+                    m_CustomEditorGUI = spriteUnlitMasterNode.m_OverrideEnabled
+                        ? spriteUnlitMasterNode.m_ShaderGUIOverride
+                        : "";
                     break;
             }
 
@@ -1159,8 +1158,7 @@ namespace FernShaderGraph
         [Serializable]
         class UniversalTargetLegacySerialization
         {
-            [SerializeField]
-            public bool m_TwoSided = false;
+            [SerializeField] public bool m_TwoSided = false;
         }
 
         public override void OnAfterDeserialize(string json)
@@ -1175,11 +1173,13 @@ namespace FernShaderGraph
                     var oldSettings = JsonUtility.FromJson<UniversalTargetLegacySerialization>(json);
                     this.m_RenderFace = oldSettings.m_TwoSided ? RenderFace.Both : RenderFace.Front;
                 }
+
                 ChangeVersion(latestVersion);
             }
         }
 
         #region Metadata
+
         string IHasMetadata.identifier
         {
             get
@@ -1203,6 +1203,7 @@ namespace FernShaderGraph
     }
 
     #region Passes
+
     static class CorePasses
     {
         /// <summary>
@@ -1241,7 +1242,7 @@ namespace FernShaderGraph
                 pass.defines.Add(CoreKeywordDescriptors.UseUnityCrossFade, 1);
             }
         }
-        
+
         internal static void AddDiffusionModelControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target)
         {
             switch (target.diffusionModel)
@@ -1258,7 +1259,7 @@ namespace FernShaderGraph
                     break;
             }
         }
-        
+
         internal static void AddEnvRotateControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target)
         {
             if (target.envRotate)
@@ -1266,7 +1267,7 @@ namespace FernShaderGraph
                 pass.defines.Add(CoreKeywordDescriptors.UseEnvRotate, 1);
             }
         }
-        
+
         internal static void AddEnvReflectionModeControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target)
         {
             switch (target.envReflectionMode)
@@ -1279,7 +1280,7 @@ namespace FernShaderGraph
                     break;
             }
         }
-        
+
         internal static void AddSpecularModelControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target)
         {
             switch (target.specularModel)
@@ -1297,7 +1298,7 @@ namespace FernShaderGraph
                     break;
             }
         }
-        
+
         internal static void AddEnvReflectionModelControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target)
         {
             switch (target.specularModel)
@@ -1315,16 +1316,17 @@ namespace FernShaderGraph
                     break;
             }
         }
-        
+
         internal static void AddGeometryAAControlToPass(ref PassDescriptor pass, FernSG_UniversalTarget target)
         {
-            if(target.geometryAA)
+            if (target.geometryAA)
             {
                 pass.defines.Add(CoreKeywordDescriptors.UseGeometryAA, 1);
             }
         }
-        
-        internal static void AddTargetSurfaceControlsToPass(ref PassDescriptor pass, FernSG_UniversalTarget target, bool blendModePreserveSpecular = false)
+
+        internal static void AddTargetSurfaceControlsToPass(ref PassDescriptor pass, FernSG_UniversalTarget target,
+            bool blendModePreserveSpecular = false)
         {
             // the surface settings can either be material controlled or target controlled
             if (target.allowMaterialOverride)
@@ -1342,7 +1344,8 @@ namespace FernShaderGraph
                     pass.defines.Add(CoreKeywordDescriptors.SurfaceTypeTransparent, 1);
 
                     // alpha premultiply in shader only needed when alpha is different for diffuse & specular
-                    if ((target.alphaMode == AlphaMode.Alpha || target.alphaMode == AlphaMode.Additive) && blendModePreserveSpecular)
+                    if ((target.alphaMode == AlphaMode.Alpha || target.alphaMode == AlphaMode.Additive) &&
+                        blendModePreserveSpecular)
                         pass.defines.Add(CoreKeywordDescriptors.AlphaPremultiplyOn, 1);
                     else if (target.alphaMode == AlphaMode.Multiply)
                         pass.defines.Add(CoreKeywordDescriptors.AlphaModulateOn, 1);
@@ -1539,7 +1542,8 @@ namespace FernShaderGraph
                 // Conditional State
                 renderStates = CoreRenderStates.SceneSelection(target),
                 pragmas = CorePragmas.Instanced,
-                defines = new DefineCollection { CoreDefines.SceneSelection, { CoreKeywordDescriptors.AlphaClipThreshold, 1 } },
+                defines = new DefineCollection
+                    { CoreDefines.SceneSelection, { CoreKeywordDescriptors.AlphaClipThreshold, 1 } },
                 keywords = new KeywordCollection(),
                 includes = CoreIncludes.SceneSelection,
 
@@ -1577,7 +1581,8 @@ namespace FernShaderGraph
                 // Conditional State
                 renderStates = CoreRenderStates.ScenePicking(target),
                 pragmas = CorePragmas.Instanced,
-                defines = new DefineCollection { CoreDefines.ScenePicking, { CoreKeywordDescriptors.AlphaClipThreshold, 1 } },
+                defines = new DefineCollection
+                    { CoreDefines.ScenePicking, { CoreKeywordDescriptors.AlphaClipThreshold, 1 } },
                 keywords = new KeywordCollection(),
                 includes = CoreIncludes.ScenePicking,
 
@@ -1615,7 +1620,8 @@ namespace FernShaderGraph
                 // Conditional State
                 renderStates = CoreRenderStates.SceneSelection(target),
                 pragmas = CorePragmas._2DDefault,
-                defines = new DefineCollection { CoreDefines.SceneSelection, { CoreKeywordDescriptors.AlphaClipThreshold, 0 } },
+                defines = new DefineCollection
+                    { CoreDefines.SceneSelection, { CoreKeywordDescriptors.AlphaClipThreshold, 0 } },
                 keywords = new KeywordCollection(),
                 includes = CoreIncludes.ScenePicking,
 
@@ -1653,7 +1659,8 @@ namespace FernShaderGraph
                 // Conditional State
                 renderStates = CoreRenderStates.ScenePicking(target),
                 pragmas = CorePragmas._2DDefault,
-                defines = new DefineCollection { CoreDefines.ScenePicking, { CoreKeywordDescriptors.AlphaClipThreshold, 0 } },
+                defines = new DefineCollection
+                    { CoreDefines.ScenePicking, { CoreKeywordDescriptors.AlphaClipThreshold, 0 } },
                 keywords = new KeywordCollection(),
                 includes = CoreIncludes.SceneSelection,
 
@@ -1666,9 +1673,11 @@ namespace FernShaderGraph
             return result;
         }
     }
+
     #endregion
 
     #region PortMasks
+
     class CoreBlockMasks
     {
         public static readonly BlockFieldDescriptor[] Vertex = new BlockFieldDescriptor[]
@@ -1700,9 +1709,11 @@ namespace FernShaderGraph
             BlockFields.SurfaceDescription.AlphaClipThreshold,
         };
     }
+
     #endregion
 
     #region StructCollections
+
     static class CoreStructCollections
     {
         public static readonly StructCollection Default = new StructCollection
@@ -1713,9 +1724,11 @@ namespace FernShaderGraph
             { Structs.VertexDescriptionInputs },
         };
     }
+
     #endregion
 
     #region RequiredFields
+
     static class CoreRequiredFields
     {
         public static readonly FieldCollection ShadowCaster = new FieldCollection()
@@ -1725,26 +1738,32 @@ namespace FernShaderGraph
 
         public static readonly FieldCollection DepthNormals = new FieldCollection()
         {
-            StructFields.Attributes.uv1,                            // needed for meta vertex position
+            StructFields.Attributes.uv1, // needed for meta vertex position
             StructFields.Varyings.normalWS,
-            StructFields.Varyings.tangentWS,                        // needed for vertex lighting
+            StructFields.Varyings.tangentWS, // needed for vertex lighting
         };
     }
+
     #endregion
 
     #region FieldDependencies
+
     static class CoreFieldDependencies
     {
         public static readonly DependencyCollection Default = new DependencyCollection()
         {
             { FieldDependencies.Default },
-            new FieldDependency(UniversalStructFields.Varyings.stereoTargetEyeIndexAsRTArrayIdx,    StructFields.Attributes.instanceID),
-            new FieldDependency(UniversalStructFields.Varyings.stereoTargetEyeIndexAsBlendIdx0,     StructFields.Attributes.instanceID),
+            new FieldDependency(UniversalStructFields.Varyings.stereoTargetEyeIndexAsRTArrayIdx,
+                StructFields.Attributes.instanceID),
+            new FieldDependency(UniversalStructFields.Varyings.stereoTargetEyeIndexAsBlendIdx0,
+                StructFields.Attributes.instanceID),
         };
     }
+
     #endregion
 
     #region RenderStates
+
     static class CoreRenderStates
     {
         public static class Uniforms
@@ -1765,9 +1784,18 @@ namespace FernShaderGraph
             { RenderState.Cull(Cull.Back), new FieldCondition(Fields.DoubleSided, false) },
             { RenderState.Cull(Cull.Off), new FieldCondition(Fields.DoubleSided, true) },
             { RenderState.Blend(Blend.One, Blend.Zero), new FieldCondition(UniversalFields.SurfaceOpaque, true) },
-            { RenderState.Blend(Blend.SrcAlpha, Blend.OneMinusSrcAlpha, Blend.One, Blend.OneMinusSrcAlpha), new FieldCondition(Fields.BlendAlpha, true) },
-            { RenderState.Blend(Blend.One, Blend.OneMinusSrcAlpha, Blend.One, Blend.OneMinusSrcAlpha), new FieldCondition(UniversalFields.BlendPremultiply, true) },
-            { RenderState.Blend(Blend.SrcAlpha, Blend.One, Blend.One, Blend.One), new FieldCondition(UniversalFields.BlendAdd, true) },
+            {
+                RenderState.Blend(Blend.SrcAlpha, Blend.OneMinusSrcAlpha, Blend.One, Blend.OneMinusSrcAlpha),
+                new FieldCondition(Fields.BlendAlpha, true)
+            },
+            {
+                RenderState.Blend(Blend.One, Blend.OneMinusSrcAlpha, Blend.One, Blend.OneMinusSrcAlpha),
+                new FieldCondition(UniversalFields.BlendPremultiply, true)
+            },
+            {
+                RenderState.Blend(Blend.SrcAlpha, Blend.One, Blend.One, Blend.One),
+                new FieldCondition(UniversalFields.BlendAdd, true)
+            },
             { RenderState.Blend(Blend.DstColor, Blend.Zero), new FieldCondition(UniversalFields.BlendMultiply, true) },
         };
 
@@ -1782,11 +1810,13 @@ namespace FernShaderGraph
                 case RenderFace.Both:
                     return Cull.Off;
             }
+
             return Cull.Back;
         }
 
         // used by lit/unlit subtargets
-        public static RenderStateCollection UberSwitchedRenderState(FernSG_UniversalTarget target, bool blendModePreserveSpecular = false)
+        public static RenderStateCollection UberSwitchedRenderState(FernSG_UniversalTarget target,
+            bool blendModePreserveSpecular = false)
         {
             if (target.allowMaterialOverride)
             {
@@ -1830,16 +1860,19 @@ namespace FernShaderGraph
                     switch (target.alphaMode)
                     {
                         case AlphaMode.Alpha:
-                            result.Add(RenderState.Blend(blendSrcRGB, Blend.OneMinusSrcAlpha, Blend.One, Blend.OneMinusSrcAlpha));
+                            result.Add(RenderState.Blend(blendSrcRGB, Blend.OneMinusSrcAlpha, Blend.One,
+                                Blend.OneMinusSrcAlpha));
                             break;
                         case AlphaMode.Premultiply:
-                            result.Add(RenderState.Blend(Blend.One, Blend.OneMinusSrcAlpha, Blend.One, Blend.OneMinusSrcAlpha));
+                            result.Add(RenderState.Blend(Blend.One, Blend.OneMinusSrcAlpha, Blend.One,
+                                Blend.OneMinusSrcAlpha));
                             break;
                         case AlphaMode.Additive:
                             result.Add(RenderState.Blend(blendSrcRGB, Blend.One, Blend.One, Blend.One));
                             break;
                         case AlphaMode.Multiply:
-                            result.Add(RenderState.Blend(Blend.DstColor, Blend.Zero, Blend.Zero, Blend.One)); // Multiply RGB only, keep A
+                            result.Add(RenderState.Blend(Blend.DstColor, Blend.Zero, Blend.Zero,
+                                Blend.One)); // Multiply RGB only, keep A
                             break;
                     }
                 }
@@ -1924,13 +1957,16 @@ namespace FernShaderGraph
             return result;
         }
     }
+
     #endregion
 
     #region Pragmas
+
     static class CorePragmas
     {
         // SM20 SubShaders need to use SM35 for DOTS_INSTANCING_ON variants
-        private static PragmaDescriptor DOTSInstancingSM35 => Pragma.TargetForKeyword(ShaderModel.Target35, "DOTS_INSTANCING_ON");
+        private static PragmaDescriptor DOTSInstancingSM35 =>
+            Pragma.TargetForKeyword(ShaderModel.Target35, "DOTS_INSTANCING_ON");
 
         public static readonly PragmaCollection Default = new PragmaCollection
         {
@@ -2014,9 +2050,11 @@ namespace FernShaderGraph
             { Pragma.Fragment("frag") },
         };
     }
+
     #endregion
 
     #region Includes
+
     static class CoreIncludes
     {
         const string kColor = "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl";
@@ -2024,15 +2062,31 @@ namespace FernShaderGraph
         const string kCore = "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl";
         const string kInput = "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Input.hlsl";
         const string kLighting = "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl";
-        const string kGraphFunctions = "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl";
-        const string kVaryings = "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/Varyings.hlsl";
-        const string kShaderPass = "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl";
-        const string kDepthOnlyPass = "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/DepthOnlyPass.hlsl";
-        const string kDepthNormalsOnlyPass = "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/DepthNormalsOnlyPass.hlsl";
-        const string kShadowCasterPass = "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShadowCasterPass.hlsl";
+
+        const string kGraphFunctions =
+            "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl";
+
+        const string kVaryings =
+            "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/Varyings.hlsl";
+
+        const string kShaderPass =
+            "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl";
+
+        const string kDepthOnlyPass =
+            "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/DepthOnlyPass.hlsl";
+
+        const string kDepthNormalsOnlyPass =
+            "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/DepthNormalsOnlyPass.hlsl";
+
+        const string kShadowCasterPass =
+            "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShadowCasterPass.hlsl";
+
         const string kTextureStack = "Packages/com.unity.render-pipelines.core/ShaderLibrary/TextureStack.hlsl";
         const string kDBuffer = "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DBuffer.hlsl";
-        const string kSelectionPickingPass = "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/SelectionPickingPass.hlsl";
+
+        const string kSelectionPickingPass =
+            "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/SelectionPickingPass.hlsl";
+
         const string kLODCrossFade = "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl";
 
         public static readonly IncludeCollection CorePregraph = new IncludeCollection
@@ -2042,7 +2096,7 @@ namespace FernShaderGraph
             { kCore, IncludeLocation.Pregraph },
             { FERNSG_Resources.KNPRLightingHLSL, IncludeLocation.Pregraph },
             { kInput, IncludeLocation.Pregraph },
-            { kTextureStack, IncludeLocation.Pregraph },        // TODO: put this on a conditional
+            { kTextureStack, IncludeLocation.Pregraph }, // TODO: put this on a conditional
         };
 
         public static readonly IncludeCollection ShaderGraphPregraph = new IncludeCollection
@@ -2121,19 +2175,24 @@ namespace FernShaderGraph
             { kLODCrossFade, IncludeLocation.Pregraph }
         };
     }
+
     #endregion
 
     #region Defines
+
     static class CoreDefines
     {
         public static readonly DefineCollection UseLegacySpriteBlocks = new DefineCollection
         {
-            { CoreKeywordDescriptors.UseLegacySpriteBlocks, 1, new FieldCondition(CoreFields.UseLegacySpriteBlocks, true) },
+            {
+                CoreKeywordDescriptors.UseLegacySpriteBlocks, 1,
+                new FieldCondition(CoreFields.UseLegacySpriteBlocks, true)
+            },
         };
 
         public static readonly DefineCollection UseFragmentFog = new DefineCollection()
         {
-            {CoreKeywordDescriptors.UseFragmentFog, 1},
+            { CoreKeywordDescriptors.UseFragmentFog, 1 },
         };
 
         public static readonly DefineCollection SceneSelection = new DefineCollection
@@ -2146,9 +2205,11 @@ namespace FernShaderGraph
             { CoreKeywordDescriptors.ScenePickingPass, 1 },
         };
     }
+
     #endregion
 
     #region KeywordDescriptors
+
     static class CoreKeywordDescriptors
     {
         public static readonly KeywordDescriptor StaticLightmap = new KeywordDescriptor()
@@ -2521,7 +2582,7 @@ namespace FernShaderGraph
             scope = KeywordScope.Global,
             stages = KeywordShaderStage.Fragment,
         };
-        
+
         public static readonly KeywordDescriptor UseUnityCrossFade = new KeywordDescriptor()
         {
             displayName = ShaderKeywordStrings.USE_UNITY_CROSSFADE,
@@ -2541,7 +2602,7 @@ namespace FernShaderGraph
             scope = KeywordScope.Global,
             stages = KeywordShaderStage.Fragment,
         };
-        
+
         // Fern Keyword
         public static readonly KeywordDescriptor DiffuseModel = new KeywordDescriptor()
         {
@@ -2557,7 +2618,7 @@ namespace FernShaderGraph
                 new KeywordEntry() { displayName = "Ramp Shading", referenceName = "RAMPSHADING 1" },
             }
         };
-        
+
         public static readonly KeywordDescriptor SpecularModel = new KeywordDescriptor()
         {
             displayName = "Specular Model",
@@ -2572,7 +2633,7 @@ namespace FernShaderGraph
                 new KeywordEntry() { displayName = "BLINNPHONG", referenceName = "BLINNPHONG 1" },
             }
         };
-        
+
         public static readonly KeywordDescriptor EnvReflectionMode = new KeywordDescriptor()
         {
             displayName = "Env Reflection Mode",
@@ -2586,7 +2647,7 @@ namespace FernShaderGraph
                 new KeywordEntry() { displayName = "CUSTOM", referenceName = "ENVCUSTOM 1" },
             }
         };
-        
+
         public static readonly KeywordDescriptor UseGeometryAA = new KeywordDescriptor()
         {
             displayName = "Geometry AA",
@@ -2595,7 +2656,7 @@ namespace FernShaderGraph
             definition = KeywordDefinition.Predefined,
             scope = KeywordScope.Local,
         };
-        
+
         public static readonly KeywordDescriptor UseEnvRotate = new KeywordDescriptor()
         {
             displayName = "Env Rotate",
@@ -2605,9 +2666,11 @@ namespace FernShaderGraph
             scope = KeywordScope.Local,
         };
     }
+
     #endregion
 
     #region Keywords
+
     static class CoreKeywords
     {
         public static readonly KeywordCollection ShadowCaster = new KeywordCollection
@@ -2620,16 +2683,21 @@ namespace FernShaderGraph
             { CoreKeywordDescriptors.WriteRenderingLayers },
         };
     }
+
     #endregion
 
     #region FieldDescriptors
+
     static class CoreFields
     {
-        public static readonly FieldDescriptor UseLegacySpriteBlocks = new FieldDescriptor("Universal", "UseLegacySpriteBlocks", "UNIVERSAL_USELEGACYSPRITEBLOCKS");
+        public static readonly FieldDescriptor UseLegacySpriteBlocks =
+            new FieldDescriptor("Universal", "UseLegacySpriteBlocks", "UNIVERSAL_USELEGACYSPRITEBLOCKS");
     }
+
     #endregion
 
     #region CustomInterpolators
+
     static class CoreCustomInterpDescriptors
     {
         public static readonly CustomInterpSubGen.Collection Common = new CustomInterpSubGen.Collection
@@ -2640,8 +2708,11 @@ namespace FernShaderGraph
 
             // sgci_PassThroughFunc is called from BuildVaryings in Varyings.hlsl to copy custom interpolators from vertex descriptions.
             // this entry point allows for the function to be defined before it is used.
-            CustomInterpSubGen.Descriptor.MakeFunc(CustomInterpSubGen.Splice.k_splicePreSurface, "CustomInterpolatorPassThroughFunc", "Varyings", "VertexDescription", "CUSTOMINTERPOLATOR_VARYPASSTHROUGH_FUNC", "FEATURES_GRAPH_VERTEX")
+            CustomInterpSubGen.Descriptor.MakeFunc(CustomInterpSubGen.Splice.k_splicePreSurface,
+                "CustomInterpolatorPassThroughFunc", "Varyings", "VertexDescription",
+                "CUSTOMINTERPOLATOR_VARYPASSTHROUGH_FUNC", "FEATURES_GRAPH_VERTEX")
         };
     }
+
     #endregion
 }

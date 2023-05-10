@@ -58,7 +58,11 @@ namespace FernShaderGraph
             set => m_BlendModePreserveSpecular = value;
         }
 
+        [SerializeField] private bool fernControlFoldout = false;
+
         public override bool IsActive() => true;
+
+        private TargetPropertyGUIFoldout foldoutFernControl;
 
         public override void Setup(ref TargetSetupContext context)
         {
@@ -79,7 +83,17 @@ namespace FernShaderGraph
             // Process SubShaders
             context.AddSubShader(PostProcessSubShader(SubShaders.LitComputeDotsSubShader(target, target.renderType, target.renderQueue, target.disableBatching, blendModePreserveSpecular)));
             context.AddSubShader(PostProcessSubShader(SubShaders.LitGLESSubShader(target, target.renderType, target.renderQueue, target.disableBatching, blendModePreserveSpecular)));
-            
+
+            // if (foldoutFernControl != null)
+            // {
+            //     foldoutFernControl.UnregisterCallback<ChangeEvent<bool>>(UnregisterFoldout);
+            //     foldoutFernControl.Clear();
+            // }
+            // else
+            // {
+            //     foldoutFernControl = new TargetPropertyGUIFoldout() { text = "Fern Control", value = fernControlFoldout, name = "foldout" };
+            // }
+            // foldoutFernControl.RegisterCallback<ChangeEvent<bool>>(UnregisterFoldout);
         }
 
         public override void ProcessPreviewMaterial(Material material)
@@ -227,90 +241,99 @@ namespace FernShaderGraph
             
             universalTarget.AddDefaultSurfacePropertiesGUI(ref context, onChange, registerUndo, showReceiveShadows: true);
             
-            var foldoutFernControl = new TargetPropertyGUIFoldout() { text = "Fern Control", name = "foldout" };
-
-            foldoutFernControl.AddProperty("Depth Normal", 1,new Toggle() { value = target.depthNormal }, (evt) =>
-            {
-                if (Equals(target.depthNormal, evt.newValue))
-                    return;
-
-                registerUndo("Change Depth Normal");
-                target.depthNormal = evt.newValue;
-                onChange();
-            });
-
-            foldoutFernControl.AddProperty("Universal 2D", 1,new Toggle() { value = target._2D }, (evt) =>
-            {
-                if (Equals(target._2D, evt.newValue))
-                    return;
-
-                registerUndo("Change Universal 2D");
-                target._2D = evt.newValue;
-                onChange();
-            });
-                        
-            foldoutFernControl.AddProperty("Geometry AA", 1, new Toggle() { value = target.geometryAA }, (evt) =>
-            {
-                if (Equals(target.geometryAA, evt.newValue))
-                    return;
-
-                registerUndo("Change Geometry AA");
-                target.geometryAA = evt.newValue;
-                onChange();
-            });
-
-            foldoutFernControl.AddProperty("Clear Coat", 1, new Toggle() { value = clearCoat }, (evt) =>
-            {
-                if (Equals(clearCoat, evt.newValue))
-                    return;
-
-                registerUndo("Change Clear Coat");
-                clearCoat = evt.newValue;
-                onChange();
-            });
-             
-            foldoutFernControl.AddProperty("Diffusion Model",1,  new EnumField(DiffusionModel.Lambert) { value = target.diffusionModel }, (evt) =>
-            {
-                if (Equals(target.diffusionModel, evt.newValue))
-                    return;
-
-                registerUndo("Change Diffusion Model");
-                target.diffusionModel = (DiffusionModel)evt.newValue;
-                onChange();
-            });
             
-            foldoutFernControl.AddProperty("Specular Model",1,  new EnumField(SpecularModel.GGX) { value = target.specularModel }, (evt) =>
+            foldoutFernControl = new TargetPropertyGUIFoldout() { text = "Fern Control", value = fernControlFoldout, name = "Fern foldout" };
+            foldoutFernControl.RegisterCallback<ChangeEvent<bool>>(evt =>
             {
-                if (Equals(target.specularModel, evt.newValue))
-                    return;
-
-                registerUndo("Change Specular Model");
-                target.specularModel = (SpecularModel)evt.newValue;
+                fernControlFoldout = !fernControlFoldout;
                 onChange();
             });
-            
-            foldoutFernControl.AddProperty("Env Reflection Mode",1,  new EnumField(EnvReflectionMode.Default) { value = target.envReflectionMode }, (evt) =>
-            {
-                if (Equals(target.envReflectionMode, evt.newValue))
-                    return;
-
-                registerUndo("Change Env Reflection Mode");
-                target.envReflectionMode = (EnvReflectionMode)evt.newValue;
-                onChange();
-            });
-            
-            foldoutFernControl.AddProperty("Env Rotate",1,  new Toggle(){ value = target.envRotate}, (evt) =>
-            {
-                if (Equals(target.envRotate, evt.newValue))
-                    return;
-
-                registerUndo("Change Env Rotate");
-                target.envRotate = evt.newValue;
-                onChange();
-            });
-            
+        
             context.Add(foldoutFernControl);
-            
+
+            if (fernControlFoldout)
+            {
+                context.AddProperty("Depth Normal", 1,new Toggle() { value = target.depthNormal }, (evt) =>
+                {
+                    if (Equals(target.depthNormal, evt.newValue))
+                        return;
+
+                    registerUndo("Change Depth Normal");
+                    target.depthNormal = evt.newValue;
+                    onChange();
+                });
+
+                context.AddProperty("Universal 2D", 1,new Toggle() { value = target._2D }, (evt) =>
+                {
+                    if (Equals(target._2D, evt.newValue))
+                        return;
+
+                    registerUndo("Change Universal 2D");
+                    target._2D = evt.newValue;
+                    onChange();
+                });
+                            
+                context.AddProperty("Geometry AA", 1, new Toggle() { value = target.geometryAA }, (evt) =>
+                {
+                    if (Equals(target.geometryAA, evt.newValue))
+                        return;
+
+                    registerUndo("Change Geometry AA");
+                    target.geometryAA = evt.newValue;
+                    onChange();
+                });
+
+                context.AddProperty("Clear Coat", 1, new Toggle() { value = clearCoat }, (evt) =>
+                {
+                    if (Equals(clearCoat, evt.newValue))
+                        return;
+
+                    registerUndo("Change Clear Coat");
+                    clearCoat = evt.newValue;
+                    onChange();
+                });
+                 
+                context.AddProperty("Diffusion Model",1,  new EnumField(DiffusionModel.Lambert) { value = target.diffusionModel }, (evt) =>
+                {
+                    if (Equals(target.diffusionModel, evt.newValue))
+                        return;
+
+                    registerUndo("Change Diffusion Model");
+                    target.diffusionModel = (DiffusionModel)evt.newValue;
+                    onChange();
+                });
+                
+                context.AddProperty("Specular Model",1,  new EnumField(SpecularModel.GGX) { value = target.specularModel }, (evt) =>
+                {
+                    if (Equals(target.specularModel, evt.newValue))
+                        return;
+
+                    registerUndo("Change Specular Model");
+                    target.specularModel = (SpecularModel)evt.newValue;
+                    onChange();
+                });
+                
+                context.AddProperty("Env Reflection Mode",1,  new EnumField(EnvReflectionMode.Default) { value = target.envReflectionMode }, (evt) =>
+                {
+                    if (Equals(target.envReflectionMode, evt.newValue))
+                        return;
+
+                    registerUndo("Change Env Reflection Mode");
+                    target.envReflectionMode = (EnvReflectionMode)evt.newValue;
+                    onChange();
+                });
+                
+                context.AddProperty("Env Rotate",1,  new Toggle(){ value = target.envRotate}, (evt) =>
+                {
+                    if (Equals(target.envRotate, evt.newValue))
+                        return;
+
+                    registerUndo("Change Env Rotate");
+                    target.envRotate = evt.newValue;
+                    onChange();
+                });
+            }
+
         }
 
         protected override int ComputeMaterialNeedsUpdateHash()
