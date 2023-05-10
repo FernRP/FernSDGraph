@@ -288,6 +288,7 @@ namespace FernShaderGraph
             collector.AddFloatProperty(Property.QueueControl, -1.0f);
         }
 
+        private Color fernFoldoutColor = new Color(0.55f, 0.6f, 1f);
         public override void GetPropertiesGUI(ref TargetPropertyGUIContext context, Action onChange, Action<String> registerUndo)
         {
             var universalTarget = (target as FernSG_UniversalTarget);
@@ -320,7 +321,7 @@ namespace FernShaderGraph
             universalTarget.AddDefaultSurfacePropertiesGUI(ref context, onChange, registerUndo, showReceiveShadows: true);
             
             
-            foldoutFernControl = new TargetPropertyGUIFoldout() { text = "Fern Control", value = fernControlFoldout, name = "Fern foldout" };
+            foldoutFernControl = new TargetPropertyGUIFoldout() { text = "Fern Control", value = fernControlFoldout, style = { color = fernFoldoutColor}, name = "Fern foldout" };
             foldoutFernControl.RegisterCallback<ChangeEvent<bool>>(evt =>
             {
                 fernControlFoldout = !fernControlFoldout;

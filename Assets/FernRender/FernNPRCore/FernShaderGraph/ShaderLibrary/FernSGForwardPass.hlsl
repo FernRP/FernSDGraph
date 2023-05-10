@@ -384,7 +384,7 @@ void frag(
     #if _ENVCUSTOM
         addSurfData.envCustomReflection = surfaceDescription.EnvReflection;
     #endif
-    #if _ENVROTATE && _ENDEFAULT
+    #if _ENVROTATE && _ENVDEFAULT
         addSurfData.envRotate = surfaceDescription.EnvRotate;
     #endif
 

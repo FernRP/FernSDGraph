@@ -655,6 +655,8 @@ namespace FernShaderGraph
             });
         }
 
+        private Color keywordFoldoutColor = new Color(0.9f, 0.7f, 0.6f);
+
         public void AddDefaultSurfacePropertiesGUI(ref TargetPropertyGUIContext context, Action onChange,
             Action<String> registerUndo, bool showReceiveShadows)
         {
@@ -753,7 +755,7 @@ namespace FernShaderGraph
             });
 
             foldout = new TargetPropertyGUIFoldout()
-                { text = "Keyword Check", value = keyworldFoldout, name = "Keyword Control" };
+                { text = "Keyword Check", value = keyworldFoldout, style = { color = keywordFoldoutColor}, name = "Keyword Control" };
             foldout.RegisterCallback<ChangeEvent<bool>>(evt =>
             {
                 keyworldFoldout = !keyworldFoldout;

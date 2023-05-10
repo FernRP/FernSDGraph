@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_FernSG_PBR2
+  m_Name: Shader Graphs_FernSG_PBR3
   m_Shader: {fileID: -6465566751694194690, guid: 20d61faecdb654f4289e444cc9789b61,
     type: 3}
   m_Parent: {fileID: 0}
@@ -150,16 +150,16 @@ Material:
     - _DissolveThreshold: 0
     - _DstBlend: 0
     - _EmissionColorAlbedoWeight: 0
-    - _EnvRotate: 0
+    - _EnvRotate: 327
     - _EnvironmentReflections: 1
-    - _GeometryAA_Strength: 1
+    - _GeometryAA_Strength: 0.386
     - _GlossMapScale: 1
     - _Glossiness: 0.140028
     - _GlossyReflections: 1
     - _Is_Filter_LightColor: 0
     - _Is_SDInPaint: 0
     - _LightIntensityClamp: 1
-    - _Metallic: 0
+    - _Metallic: 1
     - _Mode: 3
     - _OcclusionStrength: 1
     - _Outline: 0
@@ -177,13 +177,13 @@ Material:
     - _RimThreshold: 0.2
     - _RimThresold: 0.02
     - _Shininess: 1
-    - _Smoothness: 0.5
+    - _Smoothness: 0.836
     - _SmoothnessTextureChannel: 0
     - _SpaceScreenVariant: 1
     - _SpecularAA: 1
     - _SpecularAAThreshold: 1
     - _SpecularHighlights: 1
-    - _SpecularIntensity: 1
+    - _SpecularIntensity: 0.87
     - _SpecularMask: 0
     - _SrcBlend: 1
     - _StylizedSpecularAlbedoWeight: 0
@@ -221,9 +221,9 @@ Material:
     - _groupSpecular: 1
     - _groupSurface: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 0}
+    - _BaseColor: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 0}
     - _Color: {r: 0.79073066, g: 0.79073066, b: 0.79073066, a: 0}
-    - _DarkColor: {r: 0.052275013, g: 0.23242535, b: 0.425, a: 1}
+    - _DarkColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionChannel: {r: 0, g: 0, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
     - _HighColor: {r: 1, g: 1, b: 1, a: 1}

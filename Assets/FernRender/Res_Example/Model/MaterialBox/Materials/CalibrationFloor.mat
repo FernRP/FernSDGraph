@@ -20,9 +20,11 @@ Material:
   m_LightmapFlags: 6
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
+  m_CustomRenderQueue: 2000
+  stringTagMap:
+    RenderType: Opaque
+  disabledShaderPasses:
+  - SRPDEFAULTUNLIT
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -48,6 +50,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DiffuseRampMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DissolveNoiseTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -112,16 +118,19 @@ Material:
     - _BumpScale: 1
     - _CELLSmoothing: 0.001
     - _CELLThreshold: 0.5
+    - _CasterShadow: 1
     - _CellBandSoftness: 0.001
     - _CellBands: 1
     - _ClearCoat: 0
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _ClearCoatTexSource: 0
+    - _ClearShading: 0
     - _Cull: 0
     - _Cutoff: 0.5
     - _DepthOffsetRimReverseX: 0
     - _DepthOffsetShadowReverseX: 0
+    - _DepthPrePass: 0
     - _DepthRimLightCameraDistanceFadeoutEnd: 80
     - _DepthRimLightCameraDistanceStart: 20
     - _DepthRimOffset: 0.01
@@ -131,6 +140,7 @@ Material:
     - _DepthShadowThresoldOffset: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 0.3
+    - _DissolveThreshold: 0
     - _DstBlend: 0
     - _EmissionColorAlbedoWeight: 0
     - _EmissionScaleUI: 1
@@ -139,6 +149,7 @@ Material:
     - _Glossiness: 0.35
     - _GlossyReflections: 1
     - _Is_Filter_LightColor: 0
+    - _Is_SDInPaint: 0
     - _LightIntensityClamp: 1
     - _Lightmapping: 1
     - _Metallic: 0
@@ -170,19 +181,26 @@ Material:
     - _Surface: 0
     - _UVSec: 0
     - _UseDepthShadow: 0
+    - _UseDissolveEffect: 0
     - _UseEmissionTex: 0
     - _UseHalfLambert: 0
     - _UseRadianceOcclusion: 0
     - _WorkflowMode: 0
+    - _ZOffset: 0
     - _ZWrite: 1
     - _enum_diffuse: 3
     - _enum_env: 1
+    - _enum_outline_color: 0
+    - _enum_outline_smoothed: 0
+    - _enum_outline_width: 0
     - _enum_rim: 0
     - _enum_specular: 0
     - _group: 0
     - _group1: 1
+    - _groupAI: 1
     - _groupAdditionLight: 1
     - _groupClearCoat: 1
+    - _groupDissolveSetting: 0
     - _groupEmission: 0
     - _groupEnvironment: 1
     - _groupOutline: 1
@@ -190,6 +208,7 @@ Material:
     - _groupShadingMask: 0
     - _groupShadowSetting: 1
     - _groupSpecular: 1
+    - _groupSurface: 1
     m_Colors:
     - _BaseColor: {r: 0.87153983, g: 0.8768106, b: 0.9117647, a: 1}
     - _Color: {r: 0.87153983, g: 0.8768106, b: 0.9117647, a: 1}
