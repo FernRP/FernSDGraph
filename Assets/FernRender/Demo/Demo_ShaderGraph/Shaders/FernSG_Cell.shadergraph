@@ -1873,8 +1873,8 @@
     "m_AlphaMode": 0,
     "m_RenderFace": 2,
     "m_AlphaClip": false,
-    "m_CastShadows": false,
-    "m_ReceiveShadows": false,
+    "m_CastShadows": true,
+    "m_ReceiveShadows": true,
     "m_SupportsLODCrossFade": false,
     "m_ScreenSpaceAmbientOcclusion": true,
     "m_StaticLightmap": true,
@@ -3086,13 +3086,13 @@
     "m_NormalDropOffSpace": 0,
     "m_ClearCoat": false,
     "m_BlendModePreserveSpecular": true,
-    "m_DiffusionModel": 0,
-    "m_SpecularModel": 0,
+    "m_DiffusionModel": 2,
+    "m_SpecularModel": 1,
     "m_EnvReflection": 0,
     "m_GeometryAA": false,
     "m_depthNormal": true,
     "m_2D": false,
-    "m_EnvRotate": false,
+    "m_EnvRotate": true,
     "fernControlFoldout": true
 }
 

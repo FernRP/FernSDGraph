@@ -407,7 +407,7 @@ void frag(
     #if defined(_SCREEN_SPACE_OCCLUSION)
         AmbientOcclusionFactor aoFactor = GetScreenSpaceAmbientOcclusion(inputData.normalizedScreenSpaceUV);
         mainLight.color *= aoFactor.directAmbientOcclusion;
-        surfaceData.occlusion = min(surfaceData.occlusion, aoFactor.indirectAmbientOcclusion);
+        surfData.occlusion = min(surfData.occlusion, aoFactor.indirectAmbientOcclusion);
         #else
         AmbientOcclusionFactor aoFactor;
         aoFactor.indirectAmbientOcclusion = 1;
