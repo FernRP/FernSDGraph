@@ -182,7 +182,6 @@ void SubtractiveGI_float (float ShadowAtten, float3 normalWS, float3 bakedGI, ou
 //------------------------------------------------------------------------------------------------------
 // Mix Fog
 //------------------------------------------------------------------------------------------------------
-
 /*
 - Adds fog to the colour, based on the Fog settings in the Lighting tab.
 - Note : Not required for v12, can use Lerp instead. See "Mix Fog" SubGraph
@@ -193,6 +192,25 @@ void MixFog_float (float3 Colour, float Fog, out float3 Out){
 	#else
 		Out = MixFog(Colour, Fog);
 	#endif
+}
+
+//------------------------------------------------------------------------------------------------------
+// Screen Depth Rim
+//------------------------------------------------------------------------------------------------------
+
+
+//------------------------------------------------------------------------------------------------------
+// Position Extenstion
+//------------------------------------------------------------------------------------------------------
+
+void PositionWS2CS_float(float3 positionWS, out float4 positionCS)
+{
+	positionCS = TransformWorldToHClip(positionWS);
+}
+
+void PositionWS2CS_half(half3 positionWS, out half4 positionCS)
+{
+	positionCS = TransformWorldToHClip(positionWS);
 }
 
 #endif // CUSTOM_LIGHTING_INCLUDED
