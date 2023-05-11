@@ -27,6 +27,7 @@ namespace FernShaderGraph
         public bool depthNormal;
         public bool _2D;
         public bool envRotate;
+        public bool screenSpaceRim;
     }
     
     sealed class FernSG_UniversalLitSubTarget : FernSG_UniversalSubTarget, ILegacyTarget
@@ -70,6 +71,7 @@ namespace FernShaderGraph
         [SerializeField] private bool m_2D;
         
         [SerializeField] bool m_EnvRotate = false;
+        
         
         public DiffusionModel diffusionModel
         {
@@ -255,6 +257,7 @@ namespace FernShaderGraph
             
             context.AddBlock(FernSG_Field.SurfaceDescription.EnvReflection, envReflectionMode == EnvReflectionMode.Custom);
             context.AddBlock(FernSG_Field.SurfaceDescription.EnvRotate, envRotate && envReflectionMode == default);
+            context.AddBlock(FernSG_Field.SurfaceDescription.EnvSpeularcIntensity, envReflectionMode == default || envReflectionMode == EnvReflectionMode.Custom);
         }
 
         public override void CollectShaderProperties(PropertyCollector collector, GenerationMode generationMode)
@@ -1067,6 +1070,7 @@ namespace FernShaderGraph
                 FernSG_Field.SurfaceDescription.LightenColor,
                 FernSG_Field.SurfaceDescription.EnvReflection,
                 FernSG_Field.SurfaceDescription.EnvRotate,
+                FernSG_Field.SurfaceDescription.EnvSpeularcIntensity,
             };
 
             public static readonly BlockFieldDescriptor[] FragmentMeta = new BlockFieldDescriptor[]

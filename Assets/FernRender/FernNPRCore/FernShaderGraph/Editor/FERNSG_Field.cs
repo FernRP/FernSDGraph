@@ -59,6 +59,9 @@ namespace FernShaderGraph
             
             public static BlockFieldDescriptor EnvRotate = new BlockFieldDescriptor(FernSG_Field.SurfaceDescription.name, "EnvRotate", "Env Rotation", 
                 "SURFACEDESCRIPTION_ENVROTATION", new FloatControl(0), ShaderStage.Fragment);
+            
+            public static BlockFieldDescriptor EnvSpeularcIntensity = new BlockFieldDescriptor(FernSG_Field.SurfaceDescription.name, "EnvSpecularIntensity", "Env Specular Intensity", 
+                "SURFACEDESCRIPTION_ENVSPECULARINTENSITY", new FloatControl(1), ShaderStage.Fragment);
         }
     }
 }

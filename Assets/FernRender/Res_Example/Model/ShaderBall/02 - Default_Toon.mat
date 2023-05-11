@@ -15,6 +15,7 @@ Material:
   - _CELLSHADING
   - _CLEARCOAT
   - _OUTLINE
+  - _SCREENSPACERIM
   - _STYLIZED
   m_InvalidKeywords:
   - _DEPTHOFFSETRIMREVERSEX_ON
@@ -133,8 +134,8 @@ Material:
     - _DepthPrePass: 0
     - _DepthRimLightCameraDistanceFadeoutEnd: 80
     - _DepthRimLightCameraDistanceStart: 50
-    - _DepthRimOffset: -0.314
-    - _DepthRimThresoldOffset: 0.01
+    - _DepthRimOffset: -0.23
+    - _DepthRimThresoldOffset: 0.05
     - _DepthShadowOffset: 0.15
     - _DepthShadowSoftness: 0
     - _DepthShadowThresoldOffset: 0
@@ -161,7 +162,7 @@ Material:
     - _RampMapUOffset: 0
     - _RampMapVOffset: 0.5
     - _ReceiveShadows: 1
-    - _RimDirectionLightContribution: 1
+    - _RimDirectionLightContribution: 0
     - _RimSoftness: 0.01
     - _RimThreshold: 0.2
     - _Shininess: 1
@@ -191,7 +192,7 @@ Material:
     - _enum_outline_color: 0
     - _enum_outline_smoothed: 0
     - _enum_outline_width: 0
-    - _enum_rim: 0
+    - _enum_rim: 2
     - _enum_specular: 2
     - _group: 0
     - _group1: 1
@@ -218,7 +219,7 @@ Material:
     - _PBRMetallicChannel: {r: 1, g: 0, b: 0, a: 0}
     - _PBROcclusionChannel: {r: 0, g: 1, b: 0, a: 0}
     - _PBRSmothnessChannel: {r: 0, g: 0, b: 0, a: 1}
-    - _RimColor: {r: 0.58232325, g: 0.66551226, b: 1.3199327, a: 1}
+    - _RimColor: {r: 0.10294118, g: 0.11764706, b: 0.23333333, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpecularColor: {r: 11.984314, g: 11.984314, b: 11.984314, a: 1}
     - _SpecularIntensityChannel: {r: 1, g: 0, b: 0, a: 0}

@@ -39,6 +39,7 @@ struct FernSGAddSurfaceData
     half geometryAAVariant;
     half geometryAAStrength;
     half envRotate;
+    half envSpecularIntensity;
 };
 
 struct AnisoSpecularData

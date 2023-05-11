@@ -26,7 +26,8 @@ Material:
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -120,11 +121,14 @@ Material:
     m_Floats:
     - LightIntensityClamp: 0
     - _AlphaClip: 0
+    - _AlphaToMask: 0
     - _Blend: 0
+    - _BlendModePreserveSpecular: 1
     - _BumpMapKeyword: 0
     - _BumpScale: 1
     - _CELLSmoothing: 0.5
     - _CELLThreshold: 0.5
+    - _CastShadows: 1
     - _CasterShadow: 1
     - _CellBandSoftness: 0.001
     - _CellBands: 1
@@ -151,6 +155,7 @@ Material:
     - _DstBlend: 0
     - _EmissionColorAlbedoWeight: 0
     - _EnvRotate: 0
+    - _EnvSpecularIntensity: 1
     - _EnvironmentReflections: 1
     - _GeometryAA_Strength: 1
     - _GlossMapScale: 1
@@ -198,7 +203,9 @@ Material:
     - _UseRadianceOcclusion: 0
     - _WorkflowMode: 1
     - _ZOffset: 0
+    - _ZTest: 4
     - _ZWrite: 1
+    - _ZWriteControl: 0
     - _enum_diffuse: 3
     - _enum_env: 1
     - _enum_outline_color: 0

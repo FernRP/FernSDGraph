@@ -502,6 +502,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 427067113, guid: 12c4f88ae3f14a7448c155f0842f65a7, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 427067113, guid: 12c4f88ae3f14a7448c155f0842f65a7, type: 3}
       propertyPath: FernCamera
       value: 
       objectReference: {fileID: 273222270}
@@ -509,6 +513,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RenderPipelineSetting
+      objectReference: {fileID: 0}
+    - target: {fileID: 6841436103611662776, guid: 12c4f88ae3f14a7448c155f0842f65a7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6841436103611662782, guid: 12c4f88ae3f14a7448c155f0842f65a7,
         type: 3}

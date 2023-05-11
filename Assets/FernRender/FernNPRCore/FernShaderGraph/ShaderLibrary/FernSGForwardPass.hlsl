@@ -268,9 +268,9 @@ half3 NPRIndirectLighting(BRDFData brdfData, InputData inputData, Varyings input
     half fresnelTerm = Pow4(1.0 - NoV);
     half3 indirectSpecular = 0;
     #if _ENVDEFAULT
-        indirectSpecular = NPRGlossyEnvironmentReflection(reflectVector, inputData.positionWS, inputData.normalizedScreenSpaceUV, brdfData.perceptualRoughness, occlusion);
+        indirectSpecular = NPRGlossyEnvironmentReflection(reflectVector, inputData.positionWS, inputData.normalizedScreenSpaceUV, brdfData.perceptualRoughness, occlusion) * addSurfData.envSpecularIntensity;
     #elif _ENVCUSTOM
-        indirectSpecular = NPRGlossyEnvironmentReflection_Custom(addSurfData.envCustomReflection, occlusion);
+        indirectSpecular = NPRGlossyEnvironmentReflection_Custom(addSurfData.envCustomReflection, occlusion) * addSurfData.envSpecularIntensity;
     #else
         indirectSpecular = _GlossyEnvironmentColor.rgb * occlusion;
     #endif
@@ -383,9 +383,11 @@ void frag(
     #endif
     #if _ENVCUSTOM
         addSurfData.envCustomReflection = surfaceDescription.EnvReflection;
+        addSurfData.envSpecularIntensity = surfaceDescription.EnvSpecularIntensity;
     #endif
     #if _ENVROTATE && _ENVDEFAULT
         addSurfData.envRotate = surfaceDescription.EnvRotate;
+        addSurfData.envSpecularIntensity = surfaceDescription.EnvSpecularIntensity;
     #endif
 
     #if !_RAMPSHADING
