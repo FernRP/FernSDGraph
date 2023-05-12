@@ -167,6 +167,9 @@
         },
         {
             "m_Id": "b90ab103e9504863ba0d37bf94df6cb2"
+        },
+        {
+            "m_Id": "94da29584fef4087bf7ea9bc995607e1"
         }
     ],
     "m_GroupDatas": [],
@@ -322,6 +325,20 @@
             "m_InputSlot": {
                 "m_Node": {
                     "m_Id": "c2bf6f0117584a0a8e65d3e751328f5b"
+                },
+                "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "94da29584fef4087bf7ea9bc995607e1"
+                },
+                "m_SlotId": 1
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "b90ab103e9504863ba0d37bf94df6cb2"
                 },
                 "m_SlotId": 0
             }
@@ -1159,6 +1176,21 @@
     "m_Property": {
         "m_Id": "8c5de3ca1fc34a09ad919583ae395a19"
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "4ce8ad86005941c1b3061c8c4b518283",
+    "m_Id": 1,
+    "m_DisplayName": "Rim",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Rim",
+    "m_StageCapability": 2,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {
@@ -2072,6 +2104,44 @@
     "m_Value": 1.0,
     "m_DefaultValue": 1.0,
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SubGraphNode",
+    "m_ObjectId": "94da29584fef4087bf7ea9bc995607e1",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "ScreenDepthRimLight",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -97.33324432373047,
+            "y": 904.6665649414063,
+            "width": 209.33323669433595,
+            "height": 280.00006103515627
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "4ce8ad86005941c1b3061c8c4b518283"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"89f4cf5c907fe9f47a7bd594208465b7\",\n        \"type\": 3\n    }\n}",
+    "m_PropertyGuids": [],
+    "m_PropertyIds": [],
+    "m_Dropdowns": [],
+    "m_DropdownSelectedEntries": []
 }
 
 {

@@ -180,7 +180,7 @@
         },
         "preventRotation": false
     },
-    "m_Path": "Fern Render/Lighting",
+    "m_Path": "Fern Render/Surface",
     "m_GraphPrecision": 1,
     "m_PreviewMode": 2,
     "m_OutputNode": {

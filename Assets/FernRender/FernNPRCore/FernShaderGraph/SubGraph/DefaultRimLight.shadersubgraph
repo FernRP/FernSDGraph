@@ -413,7 +413,7 @@
         },
         "preventRotation": false
     },
-    "m_Path": "Sub Graphs",
+    "m_Path": "Fern Render/Lighting",
     "m_GraphPrecision": 1,
     "m_PreviewMode": 2,
     "m_OutputNode": {
@@ -1579,7 +1579,7 @@
     "m_Group": {
         "m_Id": ""
     },
-    "m_Name": "Fern Radiances",
+    "m_Name": "Radiances",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
