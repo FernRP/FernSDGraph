@@ -59,7 +59,7 @@ inline int2 GetDepthUVOffset(half offset, half reverseX, half2 positionCSXY, hal
     // 0.5625 is aspect, hard code for now
     // 0.333 is fov, hard code for now
     float2 UVOffset = _CameraAspect * (offset * _CameraFOV / (1 + addInputData.linearEyeDepth)); 
-    half2 mainLightDirVS = TransformWorldToView(mainLightDir).xy;
+    half2 mainLightDirVS = TransformWorldToViewDir(mainLightDir).xz;
     mainLightDirVS.x *= lerp(1, -1, reverseX);
     UVOffset = mainLightDirVS * UVOffset;
     half2 downSampleFix = _DepthTextureSourceSize.zw / depthTexWH.xy;
@@ -84,7 +84,6 @@ inline half DepthRim(half depthRimOffset, half reverseX, half rimDepthDiffThresh
     int2 loadPos = GetDepthUVOffset(depthRimOffset, reverseX, positionCSXY, mainLightDir,  _DepthTextureSourceSize.zw, addInputData);
     float depthTextureValue = LoadSceneDepth(loadPos);
     float depthTextureLinearDepth = DepthSamplerToLinearDepth(depthTextureValue);
-    
     float threshold = saturate(0.1 + rimDepthDiffThresholdOffset);
     half depthRim = saturate((depthTextureLinearDepth - (addInputData.linearEyeDepth + threshold)) * 5);
     depthRim = lerp(0, depthRim, addInputData.linearEyeDepth);
