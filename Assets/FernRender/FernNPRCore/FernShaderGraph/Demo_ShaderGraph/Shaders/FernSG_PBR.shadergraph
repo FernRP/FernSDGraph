@@ -176,6 +176,9 @@
         },
         {
             "m_Id": "18c2fca6b5d34fdb89fc722645afeca9"
+        },
+        {
+            "m_Id": "b3e39ed30cd8445988bec6a769ce9dbc"
         }
     ],
     "m_GroupDatas": [],
@@ -512,6 +515,9 @@
             },
             {
                 "m_Id": "18c2fca6b5d34fdb89fc722645afeca9"
+            },
+            {
+                "m_Id": "b3e39ed30cd8445988bec6a769ce9dbc"
             }
         ]
     },
@@ -1804,7 +1810,7 @@
     "m_DiffusionModel": 0,
     "m_SpecularModel": 0,
     "m_EnvReflection": 0,
-    "m_GeometryAA": false,
+    "m_GeometryAA": true,
     "m_depthNormal": true,
     "m_2D": false,
     "m_EnvRotate": false,
@@ -2676,6 +2682,21 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "9b164c5a3e4d464587ebe6f30b242d8b",
+    "m_Id": 0,
+    "m_DisplayName": "Geometry AA Variant",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "GeometryAAVariant",
+    "m_StageCapability": 2,
+    "m_Value": 1.0,
+    "m_DefaultValue": 1.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
     "m_ObjectId": "9c32fe445bcc4e5ca4243d1013a3027c",
     "m_Group": {
@@ -3041,6 +3062,40 @@
             "m_Id": "9e7d77dbecb6452b8bcf6157b349eed9"
         }
     ]
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.BlockNode",
+    "m_ObjectId": "b3e39ed30cd8445988bec6a769ce9dbc",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "SurfaceDescription.GeometryAAVariant",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 0.0,
+            "height": 0.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "9b164c5a3e4d464587ebe6f30b242d8b"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedDescriptor": "SurfaceDescription.GeometryAAVariant"
 }
 
 {

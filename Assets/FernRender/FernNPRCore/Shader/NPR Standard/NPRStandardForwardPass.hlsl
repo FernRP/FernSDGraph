@@ -114,6 +114,7 @@ void PreInitializeInputData(Varyings input, half facing, out InputData inputData
     #endif
     // interpolator will cause artifact
     float3 positionCS = ComputeNormalizedDeviceCoordinatesWithZ(input.positionWS, UNITY_MATRIX_VP);
+    //float3 positionCS = TransformWorldToHClip(input.positionWS);
     addInputData.linearEyeDepth = DepthSamplerToLinearDepth(positionCS.z);
 }
 

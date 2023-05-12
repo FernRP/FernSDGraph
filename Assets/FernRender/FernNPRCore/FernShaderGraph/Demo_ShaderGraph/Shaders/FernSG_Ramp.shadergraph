@@ -137,6 +137,9 @@
         },
         {
             "m_Id": "ccde93867feb4dcd9bd84174d067bf1a"
+        },
+        {
+            "m_Id": "c179e5667494480f9e765e2ae451c9e4"
         }
     ],
     "m_GroupDatas": [],
@@ -411,6 +414,9 @@
             },
             {
                 "m_Id": "aa8fcc800b4d4132b08e701da36d24a4"
+            },
+            {
+                "m_Id": "c179e5667494480f9e765e2ae451c9e4"
             }
         ]
     },
@@ -450,6 +456,21 @@
         "m_Guid": ""
     },
     "m_DefaultType": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "012d31211567426e9ef2a3230abe2f05",
+    "m_Id": 0,
+    "m_DisplayName": "Env Specular Intensity",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "EnvSpecularIntensity",
+    "m_StageCapability": 2,
+    "m_Value": 1.0,
+    "m_DefaultValue": 1.0,
+    "m_Labels": []
 }
 
 {
@@ -1876,7 +1897,7 @@
     "m_Group": {
         "m_Id": ""
     },
-    "m_Name": "Fern Radiances",
+    "m_Name": "Radiances",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
@@ -2406,6 +2427,40 @@
         "x": 0.0,
         "y": 360.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.BlockNode",
+    "m_ObjectId": "c179e5667494480f9e765e2ae451c9e4",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "SurfaceDescription.EnvSpecularIntensity",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 0.0,
+            "height": 0.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "012d31211567426e9ef2a3230abe2f05"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedDescriptor": "SurfaceDescription.EnvSpecularIntensity"
 }
 
 {
