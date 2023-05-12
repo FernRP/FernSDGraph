@@ -40,7 +40,7 @@ namespace FernNPRCore.StableDiffusionGraph
             get
             {
                 if (outputImage == null)
-                    outputImage = new Texture2D(width, height, DefaultFormat.HDR, TextureCreationFlags.None);
+                    outputImage = new Texture2D(width, height, DefaultFormat.LDR, TextureCreationFlags.None);
                 
                 return outputImage;
             }
