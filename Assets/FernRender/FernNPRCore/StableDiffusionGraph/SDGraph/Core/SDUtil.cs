@@ -146,6 +146,21 @@ namespace FernNPRCore.StableDiffusionGraph
             }
         }
     }
+
+    public static class SkinUnit
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Color SkinColor(this Color color)
+        {
+            if (EditorGUIUtility.isProSkin)
+            {
+                color.r *= 1.5f;
+                color.g *= 1.5f;
+                color.b *= 1.5f;
+            }
+            return color;
+        }
+    }
     public static class TimeUtil
     {
         
@@ -561,6 +576,7 @@ namespace FernNPRCore.StableDiffusionGraph
         public string[] module_list;
     }
 
+    [Serializable]
     public class Prompt
     {
         public string positive;
