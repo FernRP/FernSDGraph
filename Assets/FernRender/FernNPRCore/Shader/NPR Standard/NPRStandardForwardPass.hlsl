@@ -85,7 +85,7 @@ void PreInitializeInputData(Varyings input, half facing, out InputData inputData
     inputData.tangentToWorld = tangentToWorld;
     #endif
 
-    inputData.normalWS = input.normalWS;
+    inputData.normalWS = normalize(input.normalWS);
 
     inputData.viewDirectionWS = viewDirWS;
 
@@ -132,14 +132,14 @@ void InitializeInputData(Varyings input, half3 normalTS, inout NPRAddInputData a
         addInputData.irisNormalWS = NormalizeNormalPerPixel(TransformTangentToWorld(irisNormalTS, inputData.tangentToWorld));
         inputData.normalWS = addInputData.corneaNormalWS;
     #elif (defined(_NORMALMAP) || defined(_DETAIL))
-    inputData.normalWS = TransformTangentToWorld(normalTS, inputData.tangentToWorld);
-    inputData.normalWS = NormalizeNormalPerPixel(inputData.normalWS);
+        inputData.normalWS = TransformTangentToWorld(normalTS, inputData.tangentToWorld);
+        inputData.normalWS = NormalizeNormalPerPixel(inputData.normalWS);
     #endif
 
     #if defined(DYNAMICLIGHTMAP_ON)
         inputData.bakedGI = SAMPLE_GI(input.staticLightmapUV, input.dynamicLightmapUV, input.vertexSH, inputData.normalWS);
     #else
-    inputData.bakedGI = SAMPLE_GI(input.staticLightmapUV, input.vertexSH, inputData.normalWS);
+        inputData.bakedGI = SAMPLE_GI(input.staticLightmapUV, input.vertexSH, inputData.normalWS);
     #endif
 }
 
