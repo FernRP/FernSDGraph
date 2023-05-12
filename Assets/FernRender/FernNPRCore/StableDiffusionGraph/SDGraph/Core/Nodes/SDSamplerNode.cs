@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace FernNPRCore.StableDiffusionGraph
@@ -23,7 +24,7 @@ namespace FernNPRCore.StableDiffusionGraph
         [Input] public int CFG = 7;
         [Input("Width")] public int width = 512;
         [Input("Height")] public int height = 512;
-        [Output("Out Image")] public Texture2D OutputImage;
+        [Output("Out Image")] public Texture2D outputImage;
         [Output("Seed")] public long outSeed;
 
         public Action<long, long> OnUpdateSeedField;
@@ -34,8 +35,29 @@ namespace FernNPRCore.StableDiffusionGraph
         private float aspect;
 
 
+        public Texture2D OutputImage
+        {
+            get
+            {
+                if (outputImage == null)
+                    outputImage = new Texture2D(width, height, DefaultFormat.HDR, TextureCreationFlags.None);
+                
+                return outputImage;
+            }
+        }
+        public override void OnRemovedFromGraph()
+        {
+            base.OnRemovedFromGraph();
+            if (outputImage != null)
+            {
+                Object.DestroyImmediate(outputImage);
+                outputImage = null;
+            }
+        }
+
         public override IEnumerator Execute()
         {
+            Init();
             Prompt = GetInputValue("Prompt", this.Prompt);
             controlNetData = GetInputValue("ControlNet", controlNetData);
             if (Seed == 0)
@@ -66,6 +88,7 @@ namespace FernNPRCore.StableDiffusionGraph
                 httpWebRequest = (HttpWebRequest)WebRequest.Create(SDDataHandle.Instance.GetServerURL() + txt2ImgAPI);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
+                httpWebRequest.Timeout = 1000 * 60 * 5; 
 
                 // add auth-header to request
                 if (SDDataHandle.Instance.GetUseAuth() && !string.IsNullOrEmpty(SDDataHandle.Instance.GetUserName()) && !string.IsNullOrEmpty(SDDataHandle.Instance.GetPassword()))
@@ -135,13 +158,12 @@ namespace FernNPRCore.StableDiffusionGraph
 
                 while (!webResponse.IsCompleted)
                 {
-                    if (SDDataHandle.Instance.GetUseAuth() && !string.IsNullOrEmpty(SDDataHandle.Instance.GetUserName()) && !string.IsNullOrEmpty(SDDataHandle.Instance.GetPassword()))
-                        //UpdateGenerationProgressWithAuth();
-                   // else
-                       // UpdateGenerationProgress();
-
-                    yield return new WaitForSeconds(0.5f);
+#if UNITY_EDITOR
+                    EditorUtility.ClearProgressBar();
+#endif
+                    yield return UpdateGenerationProgress();
                 }
+
 
                 // Stream the result from the server
                 var httpResponse = webResponse.Result;
@@ -168,9 +190,8 @@ namespace FernNPRCore.StableDiffusionGraph
 
                     // Decode the image from Base64 string into an array of bytes
                     byte[] imageData = Convert.FromBase64String(json.images[0]);
-                    OutputImage = new Texture2D(width, height, DefaultFormat.LDR, TextureCreationFlags.None); // TODO: Add HDR/LDR Toggle
                     OutputImage.LoadImage(imageData);
-
+                    Complete();
                     try
                     {
                         // Read the generation info back (only seed should have changed, as the generation picked a particular seed)
@@ -194,7 +215,104 @@ namespace FernNPRCore.StableDiffusionGraph
             }
             yield return null;
         }
+        public float speed; // it/s
+        public float init_speed; // it/s
+        public float progress;
+        public int cur_step;
+        public bool isExecuting = false;
+        public DateTime startTime;
+        public void Init()
+        {
+            cur_step = -1;
+            startTime = DateTime.Now;
+            progress = 0;
+            speed = EditorPrefs.GetFloat("SD.GPU.it_speed", 0.0001f);
+            init_speed = EditorPrefs.GetFloat("SD.GPU.init_speed", 0.0001f);
+            isExecuting = true;
+        }
+        public void Complete()
+        {
+            isExecuting = false;
+            EditorPrefs.SetFloat("SD.GPU.it_speed", speed);
+            EditorPrefs.SetFloat("SD.GPU.init_speed", init_speed);
+        }
+        
+        private IEnumerator UpdateGenerationProgress()
+        {
+            // Generate the image
+            HttpWebRequest httpWebRequest = null;
+            try
+            {
+                // Make a HTTP POST request to the Stable Diffusion server
+                //var txt2ImgAPI = controlNet == defaultControlNet ? SDDataHandle.TextToImageAPI : SDDataHandle.ControlNetTex2Img;
+                var txt2ImgAPI = SDDataHandle.Instance.ProgressAPI;
+                httpWebRequest = (HttpWebRequest)WebRequest.Create(SDDataHandle.Instance.serverURL + txt2ImgAPI);
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "GET";
+                httpWebRequest.SetRequestAuthorization();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message + "\n\n" + e.StackTrace);
+            }
+            // Read the output of generation
+            if (httpWebRequest != null)
+            {
+                // Wait that the generation is complete before procedding
+                Task<WebResponse> webResponse = httpWebRequest.GetResponseAsync();
 
+                var currentTime = DateTime.Now;
+                TimeSpan oTime = currentTime.Subtract(startTime);
+                if (cur_step == -1)
+                {
+                    var pro = (float)oTime.TotalSeconds * init_speed;
+                    progress = Mathf.Min(1, pro);
+                    OnValidate();
+                }
+                while (!webResponse.IsCompleted)
+                {                
+                    yield return new WaitForSeconds(100);
+                }
+                
+                // Stream the result from the server
+                var httpResponse = webResponse.Result;
+
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    // Decode the response as a JSON string
+                    string result = streamReader.ReadToEnd();
+                    
+                    // Deserialize the JSON string into a data structure
+                    SDResponseProgress json = JsonConvert.DeserializeObject<SDResponseProgress>(result);
+                    // If no image, there was probably an error so abort
+                    if (json != null && !string.IsNullOrEmpty(json.current_image))
+                    {
+                        byte[] imageData = Convert.FromBase64String(json.current_image);
+                        OutputImage.LoadImage(imageData);
+                    
+                        if (json.state != null && json.state.sampling_step > cur_step) 
+                        {
+                            cur_step = json.state.sampling_step;
+                            if (cur_step == 0)
+                                init_speed = 1 / (float)oTime.TotalSeconds;
+                            else
+                                speed = cur_step/(float)(oTime.TotalSeconds - 1 / init_speed);
+                        }
+                    
+                        OnValidate();
+                        var allNodes = Graph.GetNodes<SDPreview>();
+                        foreach (var n in allNodes)
+                        {
+                            n.OnValidate();
+                        }
+                    }
+                    
+                    if (cur_step == -1) yield break;
+                    var pro = Mathf.Clamp((((float)oTime.TotalSeconds - 1f / init_speed) * speed) / (Step - 1f), cur_step/(Step - 1.0f), (cur_step + 1)/(Step - 1.0f) - 0.001f);
+                    progress = Mathf.Min(1, pro);
+                }
+            }
+        }
         public override object OnRequestValue(Port port)
         {
             if (port.Name == "Out Image")

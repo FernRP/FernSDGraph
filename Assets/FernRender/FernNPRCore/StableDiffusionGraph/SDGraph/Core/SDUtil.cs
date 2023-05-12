@@ -1,7 +1,12 @@
+using System;
 using System.IO;
 using UnityEngine;
 using RotaryHeart.Lib.SerializableDictionary;
 using System.Collections.Generic;
+using System.Net;
+using System.Runtime.CompilerServices;
+using System.Text;
+using UnityEngine.Networking;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -115,7 +120,53 @@ namespace FernNPRCore.StableDiffusionGraph
         }
     }
 
-
+    public static class NetAuthorizationUtil
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetRequestAuthorization(this HttpWebRequest request)
+        {
+            // add auth-header to request
+            if (SDDataHandle.Instance.UseAuth && !SDDataHandle.Instance.Username.Equals("") && !SDDataHandle.Instance.Password.Equals(""))
+            {
+                request.PreAuthenticate = true;
+                byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDDataHandle.Instance.Username + ":" + SDDataHandle.Instance.Password);
+                string encodedCredentials = Convert.ToBase64String(bytesToEncode);
+                request.Headers.Add("Authorization", "Basic " + encodedCredentials);
+            }
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetRequestAuthorization(this UnityWebRequest request)
+        {
+            if (SDDataHandle.Instance.UseAuth && !SDDataHandle.Instance.Username.Equals("") && !SDDataHandle.Instance.Password.Equals(""))
+            {
+                Debug.Log("Using API key to authenticate");
+                byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDDataHandle.Instance.Username + ":" + SDDataHandle.Instance.Password);
+                string encodedCredentials = Convert.ToBase64String(bytesToEncode);
+                request.SetRequestHeader("Authorization", "Basic " + encodedCredentials);
+            }
+        }
+    }
+    public static class TimeUtil
+    {
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static string Seconds_To_HMS(this long totalTime)
+        {            
+            string date = string.Empty;
+            var seconds = (int)(totalTime % 60);
+            var minutes = (int)(totalTime / 60) % 60;
+            var hours = (int)(totalTime / 3600) % 60;
+            if (hours > 0)
+            {
+                date += $"{hours:00}";
+                date += ":";
+            }
+            date += $"{minutes:00}";
+            date += ":";
+            date += $"{seconds:00}";
+            return date;
+        }
+    }
     /// <summary>
     /// Data structure to easily serialize the parameters to send
     /// to the Stable Diffusion server when generating an image via Txt2Img.
@@ -372,6 +423,31 @@ namespace FernNPRCore.StableDiffusionGraph
         public string sd_model_checkpoint = "";
     }
 
+
+    public class SDResponseState
+    {
+        public bool skipped;
+        public bool interrupted;
+        public string job;
+        public int job_count;
+        public string job_timestamp;
+        public int job_no;
+        public int sampling_step;
+        public int sampling_steps;
+    }
+    /// <summary>
+    /// SD image generate Progress data
+    /// </summary>
+    public class SDResponseProgress
+    {
+        public float progress;
+        public float eta_relative;
+        public string info;
+        public SDResponseState state;
+        public string current_image;
+        public string textinfo;
+    }
+
     /// <summary>
     /// Data structure to easily deserialize the JSON response returned
     /// by the Stable Diffusion server after generating an image via Txt2Img.
@@ -390,7 +466,6 @@ namespace FernNPRCore.StableDiffusionGraph
         public SDParamsOutTxt2Img parameters;
         public string info;
     }
-
     /// <summary>
     /// Data structure to easily deserialize the JSON response returned
     /// by the Stable Diffusion server after generating an image via Img2Img.

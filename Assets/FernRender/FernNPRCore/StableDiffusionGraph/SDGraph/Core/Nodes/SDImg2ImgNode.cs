@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace FernNPRCore.StableDiffusionGraph
@@ -26,7 +27,7 @@ namespace FernNPRCore.StableDiffusionGraph
         [Input] public float DenisoStrength = 0.75f;
         [Input] public int width = 512;
         [Input] public int height = 512;
-        [Output("Out Image")] public Texture2D OutputImage;
+        [Output("Out Image")] public Texture2D outputImage;
         [Output("Seed")] public long outSeed;
 
         public long Seed = -1;
@@ -41,6 +42,26 @@ namespace FernNPRCore.StableDiffusionGraph
 
         private float aspect;
         private Color whiteColor = new Color(1, 1, 1, 1);
+
+        public Texture2D OutputImage
+        {
+            get
+            {
+                if (outputImage == null)
+                    outputImage = new Texture2D(width, height, DefaultFormat.HDR, TextureCreationFlags.None);
+                
+                return outputImage;
+            }
+        }
+        public override void OnRemovedFromGraph()
+        {
+            base.OnRemovedFromGraph();
+            if (outputImage != null)
+            {
+                Object.DestroyImmediate(outputImage);
+                outputImage = null;
+            }
+        }
 
         public override IEnumerator Execute()
         {
@@ -259,7 +280,6 @@ namespace FernNPRCore.StableDiffusionGraph
 
                     // Decode the image from Base64 string into an array of bytes
                     byte[] imageData = Convert.FromBase64String(json.images[0]);
-                    OutputImage = new Texture2D(width, height, DefaultFormat.LDR, TextureCreationFlags.None); // TODO: Add HDR/LDR Toggle
                     OutputImage.LoadImage(imageData);
 
                     try

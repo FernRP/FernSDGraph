@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using FernGraph;
 using FernGraph.Editor;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -86,9 +88,26 @@ namespace FernNPRCore.StableDiffusionGraph
             containerLastSeed.Add(longLastField);
             extensionContainer.Add(containerLastSeed);
             
+            var container = new IMGUIContainer(OnGUI);
+            extensionContainer.Add(container);
+            
             RefreshExpandedState();
         }
 
+        void OnGUI()
+        {
+            if(Target is not SDSamplerNode { isExecuting: true } samplerNode) return;
+            var controlRect = EditorGUILayout.GetControlRect();
+            controlRect.height = 40;
+            var label = samplerNode.cur_step == -1 ? "init" : $"{samplerNode.speed:F3}it/s";
+
+            var total = (long)((samplerNode.Step - 1) / samplerNode.speed + 1 / samplerNode.init_speed);
+            total = Math.Max(total, 0);
+            var re = total - (long)DateTime.Now.Subtract(samplerNode.startTime).TotalSeconds;
+            re = Math.Max(re, 0);
+            EditorGUI.ProgressBar(controlRect, samplerNode.progress, $"{samplerNode.progress * 100:F1}% ({label})\n{re.Seconds_To_HMS()}/{total.Seconds_To_HMS()}");
+            GUILayout.Space(20);
+        }
         private void OnUpadteSeed(long seed, long outSeed)
         {
             var samplerNode = Target as SDSamplerNode;

@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using FernGraph;
 using Newtonsoft.Json;
 using Unity.EditorCoroutines.Editor;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
@@ -35,43 +37,65 @@ namespace FernNPRCore.StableDiffusionGraph
         /// <returns></returns>
         public IEnumerator ListModelsAsync(UnityAction unityAction=null)
         {
-            // Stable diffusion API url for getting the models list
-            string url = SDDataHandle.Instance.GetServerURL() + SDDataHandle.Instance.ModelsAPI;
-
-            UnityWebRequest request = new UnityWebRequest(url, "GET");
-            request.downloadHandler = (DownloadHandler) new DownloadHandlerBuffer();
-            request.SetRequestHeader("Content-Type", "application/json");
-
-            if (SDDataHandle.Instance.GetUseAuth() && !string.IsNullOrEmpty(SDDataHandle.Instance.GetUserName()) && !string.IsNullOrEmpty(SDDataHandle.Instance.GetPassword()))
-            {
-                SDUtil.Log("Using API key to authenticate");
-                byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDDataHandle.Instance.GetUserName() + ":" + SDDataHandle.Instance.GetPassword());
-                string encodedCredentials = Convert.ToBase64String(bytesToEncode);
-                request.SetRequestHeader("Authorization", "Basic " + encodedCredentials);
-            }
-        
-            yield return request.SendWebRequest();
-
+            HttpWebRequest httpWebRequest = null;
             try
             {
-                SDUtil.Log(request.downloadHandler.text);
-                // Deserialize the response to a class
-                SDModel[] ms = JsonConvert.DeserializeObject<SDModel[]>(request.downloadHandler.text);
+                // Stable diffusion API url for getting the models list
+                string url = SDDataHandle.Instance.GetServerURL() + SDDataHandle.Instance.ModelsAPI;
 
-                // Keep only the names of the models
-                List<string> modelsNames = new List<string>();
-
-                foreach (SDModel m in ms) 
-                    modelsNames.Add(m.model_name);
-
-                // Convert the list into an array and store it for futur use
-                modelNames = modelsNames.ToArray();
-                unityAction?.Invoke();
+                httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "GET";
+                httpWebRequest.SetRequestAuthorization();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                SDUtil.Log("Server needs and API key authentication. Please check your settings!");
+                Debug.LogError(e.Message + "\n\n" + e.StackTrace);
             }
+            if (httpWebRequest != null)
+            {
+                // Wait that the generation is complete before procedding
+                Task<WebResponse> webResponse = httpWebRequest.GetResponseAsync();
+                while (!webResponse.IsCompleted)
+                {           
+#if UNITY_EDITOR
+                    EditorUtility.ClearProgressBar();
+#endif
+                    yield return new WaitForSeconds(100);
+                }
+                // Stream the result from the server
+                var httpResponse = webResponse.Result;
+                
+
+                try
+                {
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+
+                        // SDUtil.Log(request.downloadHandler.text);
+                        // Decode the response as a JSON string
+                        string result = streamReader.ReadToEnd();
+                        // Deserialize the response to a class
+                        SDModel[] ms = JsonConvert.DeserializeObject<SDModel[]>(result);
+
+                        // Keep only the names of the models
+                        List<string> modelsNames = new List<string>();
+
+                        foreach (SDModel m in ms) 
+                            modelsNames.Add(m.model_name);
+
+                        // Convert the list into an array and store it for futur use
+                        modelNames = modelsNames.ToArray();
+                        unityAction?.Invoke();
+                    }
+                }
+                catch (Exception)
+                {
+                    SDUtil.Log("Server needs and API key authentication. Please check your settings!");
+                }
+            }
+            
+            
         }
 
         public override object OnRequestValue(Port port)
