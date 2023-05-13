@@ -1,8 +1,13 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using Codice.CM.Client.Differences;
 using FernGraph;
 using FernGraph.Editor;
 using FernNPRCore.StableDiffusionGraph;
+using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -19,9 +24,85 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
             _iconEdit = new GUIContent(EditorGUIUtility.IconContent("editicon.sml").image, "Edit"),
             _iconDiscard = new GUIContent(EditorGUIUtility.IconContent("d_TreeEditor.Refresh").image, "Discard"),
             _iconSave = new GUIContent(EditorGUIUtility.IconContent("SaveActive").image, "Save");
-        private List<List<string>> config_positive = new List<List<string>>();
-        private List<List<string>> config_negative = new List<List<string>>();
-        private Dictionary<string, string> CN2EN = new Dictionary<string, string>();
+        private List<List<string>> config_positive;
+        private List<List<string>> config_negative;
+        private Dictionary<string, string> CN2EN;
+        private List<TagData> tags;
+        
+        
+        public struct TagData
+        {
+            public string tag;
+            public int col;
+            public int priority;
+            public string other;
+        }
+
+        public PromptRegisterView()
+        {
+            config_positive = new List<List<string>>();
+            config_negative = new List<List<string>>();
+            searchwords = new List<TagData>();
+            CN2EN = new Dictionary<string, string>();
+            tags = new List<TagData>();
+        }
+        public void resolve_csv(TextAsset csv, ref List<List<string>> csv_temp)
+        {
+            var csv_lines = csv.text.Split("\n");
+            foreach (var line in csv_lines)
+            {
+                var words = line.Split(",");
+                List<string> lineItems = new List<string>();
+                var temp_str = "";
+                for (var i = 0; i < words.Length; i++)
+                {
+                    var word = words[i];
+                    word = word.Replace("\t", "").Replace("\n", "").Replace("\r", "");
+                    if (string.IsNullOrEmpty(word)) continue;
+                    if (word.StartsWith("\""))
+                    {
+                        temp_str = word.Replace("\"", "");
+                        continue;
+                    }
+
+                    if (string.IsNullOrEmpty(temp_str))
+                    {
+                        lineItems.Add(word);
+                        continue;
+                    }
+                    
+                    if (!word.EndsWith("\""))
+                    {
+                        temp_str += "," + word;
+                        continue;
+                    }
+                    
+                    temp_str += "," + word.Replace("\"", "");
+                    lineItems.Add(temp_str);
+                    temp_str = "";
+                }
+                if (lineItems.Count <= 0)continue;
+                csv_temp.Add(lineItems);
+            }
+        }
+
+        public void resolve_tag(List<List<string>> tag)
+        {
+            tags.Clear();
+            foreach (var list in tag)
+            {
+                if (list.Count < 3) continue;
+                var other = list.Count < 4 ? "" : list[3];
+                tags.Add(new TagData()
+                {
+                    tag = list[0],
+                    col = int.Parse(list[1]),
+                    priority = int.Parse(list[2]),
+                    other = other,
+                });
+            }
+            tags.Sort((a, b) => b.priority.CompareTo(a.priority));
+        }
         public void LoadConfigTxt()
         {
             TextAsset config_positive_Asset = Resources.Load<TextAsset>("SDTag/config_positive_novelai");
@@ -44,8 +125,12 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                     config_positive.Add(lineItems);
                 }
             }
-            
-            TextAsset danbooru_Asset_tag = Resources.Load<TextAsset>("SDTag/danbooru");
+            TextAsset danbooru_tag_Asset = Resources.Load<TextAsset>("SDTag/danbooru");
+            TextAsset e621_tag_Asset = Resources.Load<TextAsset>("SDTag/e621");
+            var tagList = new List<List<string>>();
+            resolve_csv(danbooru_tag_Asset, ref tagList);
+            resolve_csv(e621_tag_Asset, ref tagList);
+            resolve_tag(tagList);
             
             TextAsset config_negative_Asset = Resources.Load<TextAsset>("SDTag/config_negative_common");
             var config_negative_Text = config_negative_Asset.text.Split("\n");
@@ -122,11 +207,80 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
         Vector2 s2;
         Vector2 s3;
         List<bool> foldouts = new List<bool>();
-        public List<string> SearchWords(string searchingText, List<List<string>> config)
+        private int step = 0;
+        private int maxSearchWord = 100;
+        private EditorCoroutine search_coroutine;
+        public IEnumerator SearchWords(string searchingText, List<List<string>> config)
         {
-            var result = new List<string>();
-            foreach (var line in config)
+            searchwords.Clear();
+            if (menusIndex == 0 || menusIndex > config.Count)
             {
+                foreach (var line in config)
+                {
+                    for (var i = 1; i < line.Count; i++)
+                    {
+                        bool contains = true;
+                        // whole word match search
+                        var cn = line[i].ToLower();
+                        var en = cn;
+                        if (CN2EN.TryGetValue(cn, out var temp))
+                            en = temp;
+                    
+                        searchingText = searchingText.ToLower();
+                        var keywords = searchingText.Split(' ', ',', ';', '|', '*', '&');// Some possible separators
+                        foreach (var keyword in keywords)
+                        {
+                            var isMatch = false;
+                            isMatch |= cn.Contains(keyword);
+                            isMatch |= en.Contains(keyword);
+                            contains &= isMatch;
+                        }
+                        if (contains)
+                        {
+                            searchwords.Add(new TagData()
+                            {
+                                tag = line[i],
+                                col = -1,
+                            });
+                            if (searchwords.Count >= maxSearchWord) break;
+                            step++;
+                        }
+                        if (step > 20)
+                        {
+                            step = 0;
+                            yield return null;
+                        }
+                    }
+                }
+                foreach (var tagData in tags)
+                {
+                    bool contains = true;
+                    // whole word match search
+                    var en = tagData.tag.ToLower();
+                    searchingText = searchingText.ToLower();
+                    var keywords = searchingText.Split(' ', ',', ';', '|', '*', '&');// Some possible separators
+                    foreach (var keyword in keywords)
+                    {
+                        var isMatch = false;
+                        isMatch |= en.Contains(keyword);
+                        contains &= isMatch;
+                    }
+                    if (contains)
+                    {
+                        searchwords.Add(tagData);
+                        if (searchwords.Count >= maxSearchWord) break;
+                        step++;
+                    }
+                    if (step > 20)
+                    {
+                        step = 0;
+                        yield return null;
+                    }
+                }
+            }
+            else
+            {
+                var line = config[menusIndex - 1];
                 for (var i = 1; i < line.Count; i++)
                 {
                     bool contains = true;
@@ -147,11 +301,21 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                     }
                     if (contains)
                     {
-                        result.Add(line[i]);
+                        searchwords.Add(new TagData()
+                        {
+                            tag = line[i],
+                            col = -1,
+                        });
+                        if (searchwords.Count >= maxSearchWord) break;
+                        step++;
+                    }
+                    if (step > 20)
+                    {
+                        step = 0;
+                        yield return null;
                     }
                 }
             }
-            return result;
         }
         public string searchingText;
         public int menusIndex;
@@ -190,7 +354,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                     Rect position1 = toolbarSeachTextFieldPopup.padding.Remove(new Rect(rect.x, rect.y, rect.width, toolbarSeachTextFieldPopup.fixedHeight > 0.0 ? toolbarSeachTextFieldPopup.fixedHeight : rect.height));
                     int fontSize = EditorStyles.label.fontSize;
                     EditorStyles.label.fontSize = toolbarSeachTextFieldPopup.fontSize;
-                    EditorStyles.label.Draw(position1, $"{searchModeMenus[0]}" , false, false, false, false);
+                    EditorStyles.label.Draw(position1, $"{searchModeMenus[selectedMenusIndex]} (提示词仅支持英文输入)" , false, false, false, false);
                     EditorStyles.label.fontSize = fontSize;
                 }
             }
@@ -198,34 +362,51 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
             return isHasChanged;
         }
 
-        void DrawWord(List<string> Words, List<float> Weights, List<int> Colors, string word)
+        private bool refresh = true;
+    
+        void DrawWord(List<PromptData> promptDatas, TagData word)
         {
-            var index = Words.IndexOf(word);
-            var select = index != -1;
             EditorGUILayout.BeginHorizontal();
-            EditorGUI.BeginDisabledGroup(!select);
-            EditorGUI.EndDisabledGroup();
             var color = GUI.color;
-            GUI.color = select ? colorConfig[0].SkinColor() : color;
-            if (GUILayout.Button(TryGetENWord(word)))
+            var enWord = TryGetENWord(word.tag);
+            var showWord = enWord;
+            GetShowWord(ref showWord, 130);
+            if (word.col != -1)
             {
-                if (select)
+                GUI.color = (word.col < 7 ? colorConfigSearch[word.col] : colorConfigSearch[0]).SkinColor();
+            }
+            if (GUILayout.Button(new GUIContent(showWord, enWord)))
+            {
+                SetCurrentWord(promptDatas.Count);
+                promptDatas.Add(new PromptData()
                 {
-                    Words.RemoveAt(index);
-                    Weights.RemoveAt(index);
-                    Colors.RemoveAt(index);
-                }
-                else
-                {
-                    Words.Add(word);
-                    Weights.Add(0);
-                    Colors.Add(0);
-                    SetCurrentWord(word);
-                }
+                    word = word.tag,
+                });
+                refresh = true;
+
             }
             GUI.color = color;
-            EditorGUI.BeginDisabledGroup(!select);
-            EditorGUI.EndDisabledGroup();
+            EditorGUILayout.EndHorizontal();
+        }
+        void DrawWord(List<PromptData> promptDatas, string word)
+        {
+            EditorGUILayout.BeginHorizontal();
+            var color = GUI.color;
+            var enWord = TryGetENWord(word);
+            var showWord = enWord;
+            GetShowWord(ref showWord, 130);
+
+            if (GUILayout.Button(new GUIContent(showWord, enWord)))
+            {
+                SetCurrentWord(promptDatas.Count);
+                promptDatas.Add(new PromptData()
+                {
+                    word = word,
+                });
+                refresh = true;
+
+            }
+            GUI.color = color;
             EditorGUILayout.EndHorizontal();
         }
 
@@ -240,6 +421,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
 
         private bool showInEn = false;
         private int toolBarIndex = 0;
+        private List<TagData> searchwords;
         private string[] toolBarOptions = {"Positive Prompt", "Negative Prompt"};
         private string[] colorConfigStr = {"无","红","棕","橙","黄","緑","蓝","紫","粉","黑","灰","白","金","银","透明"};
         public static Color[] colorConfig =
@@ -260,13 +442,17 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
             new Color(0.74f, 0.78f, 0.8f),
             new Color(0.5f, 0.5f, 0.5f, 0.5f),
         };
-
-        void ClearWords(List<string> Words, List<float> Weights, List<int> Colors)
+        public static Color[] colorConfigSearch =
         {
-            Words.Clear();
-            Weights.Clear();
-            Colors.Clear();
-        }
+            new Color(0.3f, 0.7f, 1.0f),
+            new Color(1.0f, 0.3f, 0.3f),
+            new Color(0.5f, 0.5f, 0.5f, 0.5f),
+            new Color(1.0f, 0.3f, 1.0f),
+            new Color(0.3f, 1.0f, 0.3f),
+            new Color(1.0f, 0.5f, 0f),
+            new Color(0.65f, 0.49f, 0.24f),
+        };
+
         void OnGUI()
         {
             if(Target is not PromptRegister register) return;
@@ -283,35 +469,12 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                     modeMenus[i + 1] = new GUIContent(line[0]);
                 }
             }
-            var Words = toolBarIndex == 0 ? register.PositiveWords : register.NegativeWords;
-            var Weights = toolBarIndex == 0 ? register.PositiveWordsWeights : register.NegativeWordsWeights;
-            var Colors = toolBarIndex == 0 ? register.PositiveWordsColors : register.NegativeWordsColors;
-            
-            
-            if (Words.Count != Weights.Count)
-            {
-                Weights.Clear();
-                for (int i = 0; i < Words.Count; i++)
-                {
-                    Weights.Add(0);
-                }
-            }
-            if (Words.Count != Colors.Count)
-            {
-                Colors.Clear();
-                for (int i = 0; i < Words.Count; i++)
-                {
-                    Colors.Add(0);
-                }
-            }
+            var promptDatas = toolBarIndex == 0 ? register.positiveDatas : register.negativeDatas;
             EditorGUI.BeginChangeCheck();
-
             EditorGUILayout.BeginVertical();
-            
-            
             // ----------------------------------------------DrawSearchField---------------------------------------
             EditorGUILayout.BeginHorizontal();
-            DrawSearchField(ref searchingText, modeMenus, menusIndex, (o, strings, arg3) =>
+            var DoSearch = DrawSearchField(ref searchingText, modeMenus, menusIndex, (o, strings, arg3) =>
             {
                 menusIndex = arg3;
             });
@@ -331,10 +494,23 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
             s1 = EditorGUILayout.BeginScrollView(s1, GUILayout.Height(300));
             if (!string.IsNullOrEmpty(searchingText))
             {
-                var words = SearchWords(searchingText, config);
-                foreach (var word in words)
+                if (DoSearch)
                 {
-                    DrawWord(Words, Weights, Colors, word);
+                    step = 0;
+                    if (search_coroutine != null)
+                    {
+                        EditorCoroutineUtility.StopCoroutine(search_coroutine);
+                        search_coroutine = null;
+                    }
+                    search_coroutine = EditorCoroutineUtility.StartCoroutine(SearchWords(searchingText, config), this);
+                }
+                
+                if (searchwords is { Count: > 0 })
+                {
+                    foreach (var word in searchwords)
+                    {
+                        DrawWord(promptDatas, word);
+                    }
                 }
             }
             else
@@ -353,7 +529,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                     {
                         for (var j = 1; j < line.Count; j++)
                         {
-                            DrawWord(Words, Weights, Colors, line[j]);
+                            DrawWord(promptDatas, line[j]);
                         }
                     }
                     EditorGUILayout.EndVertical();
@@ -370,19 +546,23 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
             toolBarIndex = GUILayout.Toolbar(toolBarIndex, toolBarOptions);
             DrawSplitter();
             s2 = EditorGUILayout.BeginScrollView(s2, GUILayout.Height(250));
-            DrawPromptWords(0, Words, Weights, Colors);
+            if (refresh)
+                DrawPromptWords(0, promptDatas);
             EditorGUILayout.EndScrollView();
-            var currentWord = toolBarIndex == 0 ? currentPositiveWord : currentNegativeWord;
+            var current_idx = toolBarIndex == 0 ? cur_positive_idx : cur_negative_idx;
             
             EditorGUILayout.BeginHorizontal();
-            var index = Words.IndexOf(currentWord);
-            var select = index != -1;
-
-            var showCurrentWord = !string.IsNullOrEmpty(currentWord) && select;
-            EditorGUILayout.LabelField(showCurrentWord ? TryGetENWord(currentWord) : "no selected word");
+            var showCurrentWord = current_idx != -1 && current_idx < promptDatas.Count;
+            EditorGUILayout.LabelField(showCurrentWord ? TryGetENWord(promptDatas[current_idx].word) : "no selected word");
 
             if (GUILayout.Button(_iconDiscard, GUILayout.Width(26)))
-                ClearWords(Words, Weights, Colors);
+            {
+                promptDatas.Clear();
+                SetCurrentWord(-1);
+                current_idx = -1;
+                showCurrentWord = false;
+                refresh = true;
+            }
             
                     
             EditorGUILayout.EndHorizontal();
@@ -396,30 +576,33 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                 EditorGUILayout.BeginVertical("helpbox", GUILayout.Width(80));
                 EditorGUILayout.BeginHorizontal("helpbox");
                 var color = GUI.color;
-                GUI.color = Colors[index] > 0 ? colorConfig[Colors[index]].SkinColor() : color;
-                EditorGUILayout.LabelField(TryGetENWord(currentWord));
+                var color_index = promptDatas[current_idx].color;
+                GUI.color = color_index > 0 ? colorConfig[color_index].SkinColor() : color;
+                EditorGUILayout.LabelField(TryGetENWord(promptDatas[current_idx].word));
                 GUI.color = color;
 
                 if (GUILayout.Button(_iconDiscard, GUILayout.Width(26)))
                 {
-                    Words.RemoveAt(index);
-                    Weights.RemoveAt(index);
-                    Colors.RemoveAt(index);
-                    SetCurrentWord(null);
-                    index = -1;
+                    promptDatas.RemoveAt(current_idx);
+                    refresh = true;
+                    SetCurrentWord(-1);
+                    current_idx = -1;
                 }
                 EditorGUILayout.EndHorizontal();
-                if (index != -1)
+                if (current_idx != -1)
                 {
                     s3 = EditorGUILayout.BeginScrollView(s3, GUILayout.Height(268));
-                    DrawColorBar(0, index, Colors); 
+                    DrawColorBar(0, current_idx, promptDatas); 
                     EditorGUILayout.BeginHorizontal("helpbox");
                     EditorGUILayout.LabelField("Weight");
                     EditorGUILayout.EndHorizontal();
                     EditorGUI.BeginChangeCheck();
-                    var Weight = EditorGUILayout.Slider(Weights[index], -0.6f, 0.6f);
+                    var Weight = EditorGUILayout.Slider(promptDatas[current_idx].weight, -0.6f, 0.6f);
                     if (EditorGUI.EndChangeCheck())
-                        Weights[index] = Weight;
+                    {
+                        promptDatas[current_idx].SetData(Weight);
+                        refresh = true;
+                    }
                     EditorGUILayout.EndScrollView();
                 }
                 
@@ -458,11 +641,46 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
             EditorGUILayout.EndVertical();
             if (EditorGUI.EndChangeCheck())
             {
-                register.Prompt.positive = RegisterPrompt(register.PositiveWords, register.PositiveWordsWeights, register.PositiveWordsColors);
-                register.Prompt.negative = RegisterPrompt(register.NegativeWords, register.NegativeWordsWeights, register.NegativeWordsColors);
+                register.Prompt.positive = RegisterPrompt(register.positiveDatas);
+                register.Prompt.negative = RegisterPrompt(register.negativeDatas);
             }
         }
-        private void DrawColorBar(int startIndex, int wordIdx, List<int> colors)
+
+        void GetShowWord(ref string word, ref int width)
+        {
+            var real_width = 0;
+            var lastIndex = word.Length;
+            for (int i = 0; i < word.Length; i++)
+            {
+                if (word[i] > 127)
+                {
+                    width -= 14;
+                    if (width <= 0)
+                    {
+                        lastIndex = width < -7 ? i - 2 : i - 1;
+                        break;
+                    }
+                    real_width += 14;
+                }
+                else
+                {
+                    width -= 7;
+                    if (width <= 0)
+                    {
+                        lastIndex = i - 3;
+                        break;
+                    }
+                    real_width += 7;
+                }
+            }
+            width = real_width;
+            word = lastIndex < word.Length ? word.Substring(0, lastIndex) + "..." : word;
+        }
+        void GetShowWord(ref string word, int width)
+        {
+            GetShowWord(ref word, ref width);
+        }
+        private void DrawColorBar(int startIndex, int wordIdx, List<PromptData> promptDatas)
         {
             EditorGUILayout.BeginHorizontal();
             var color = GUI.color;
@@ -473,31 +691,36 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                 var col_s = colorConfigStr[i];
                 if (GUILayout.Button(new GUIContent("", col_s), GUILayout.Width(20)))
                 {
-                    colors[wordIdx] = i;
+                    promptDatas[wordIdx].SetData(i);
+                    refresh = true;
                 }
             }
             GUI.color = color;
             EditorGUILayout.EndHorizontal();
             if (nextIndex < colorConfigStr.Length)
             {
-                DrawColorBar(nextIndex, wordIdx, colors);
+                DrawColorBar(nextIndex, wordIdx, promptDatas);
             }
         }
-        public string RegisterPrompt(List<string> Words, List<float> Weights, List<int> Colors)
+        public string RegisterPrompt(List<PromptData> promptDatas)
         {
             var Positive = "";
-            var count = Words.Count;
+            var count = promptDatas.Count;
             for (var i = 0; i < count; i++)
             {
-                var word = Words[i];
-                if (!CN2EN.TryGetValue(word, out var en_word)) continue;
-                var weight = Weights[i];
+                var promptData = promptDatas[i];
+                if (!CN2EN.TryGetValue(promptData.word, out var en_word))
+                {
+                    if (promptData.word.Any(t => t > 127)) continue;
+                    en_word = promptData.word;
+                }
+                var weight = promptData.weight;
 
                 var useWeight = Math.Abs(weight) > 0.01f;
 
                 if (useWeight)
                     Positive += "(";
-                var col_idx = Colors[i];
+                var col_idx = promptData.color;
                 if (col_idx > 0 && CN2EN.TryGetValue(colorConfigStr[col_idx], out var col_str))
                     Positive += col_str + " ";
                 
@@ -515,48 +738,53 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
             return Positive;
         }
         
-        private string currentPositiveWord;
-        private string currentNegativeWord;
-        private void DrawPromptWords(int startIndex, List<string> Words, List<float> Weights, List<int> Colors)
+        private int cur_positive_idx;
+        private int cur_negative_idx;
+        private void DrawPromptWords(int startIndex, List<PromptData> promptDatas)
         {
-            var wordLength = 0;
+            var wordWidth = 0;
             var nextIndex = -1;
-            var len = Words.Count;
+            var len = promptDatas.Count;
             if (len <= startIndex) return;
             EditorGUILayout.BeginHorizontal();
             for (var i = startIndex; i < len; i++)
             {
-                var word = Words[i];
-                var weight = Weights[i];
-                var realWord = TryGetENWord(word) + (weight > 0 ? $"[{weight}]":"");
-                wordLength += realWord.Length + 1;
-                if (wordLength > (showInEn ? 44 : 22))
+                var promptData = promptDatas[i];
+                var weight = promptData.weight;
+                var realWord = TryGetENWord(promptData.word) + (weight > 0 ? $"[{weight}]":"");
+                var width = 80;
+                var showWord = realWord;
+                GetShowWord(ref showWord, ref width);
+                wordWidth += width + 4;
+                if (wordWidth > 250)
                 {
                     nextIndex = i;
                     break;
                 }
+                
                 var color = GUI.color;
-                var colorIndex = Colors[i];
+                var colorIndex = promptData.color;
                 GUI.color = colorIndex > 0 ? colorConfig[colorIndex].SkinColor() : color;
-                if (GUILayout.Button(realWord))
+                if (GUILayout.Button(new GUIContent(showWord, realWord)))
                 {
-                    SetCurrentWord(word);
+                    SetCurrentWord(i);
                 }
                 GUI.color = color;
             }
+
             EditorGUILayout.EndHorizontal();
             if (nextIndex != -1 && nextIndex < len)
             {
-                DrawPromptWords(nextIndex, Words, Weights, Colors);
+                DrawPromptWords(nextIndex, promptDatas);
             }
         }
 
-        public void SetCurrentWord(string word)
+        public void SetCurrentWord(int idx)
         {
             if (toolBarIndex == 0)
-                currentPositiveWord = word;
+                cur_positive_idx = idx;
             else
-                currentNegativeWord = word;
+                cur_negative_idx = idx;
         }
         public static void DrawSplitter(bool isBoxed = false, bool isFullWidth = false, float width = 1f, float height = 1f)
         {
