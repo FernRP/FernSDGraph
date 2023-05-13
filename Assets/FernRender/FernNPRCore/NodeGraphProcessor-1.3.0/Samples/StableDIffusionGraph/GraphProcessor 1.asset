@@ -1,0 +1,330 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31390c44c9f3a3d40b424bf6821999a2, type: 3}
+  m_Name: GraphProcessor 1
+  m_EditorClassIdentifier: 
+  serializedNodes: []
+  nodes:
+  - rid: 91303742549262336
+  - rid: 91303742549262344
+  - rid: 91303742549262346
+  - rid: 91303742549262349
+  - rid: 91303742549262350
+  - rid: 91303742549262351
+  - rid: 91303742549262352
+  - rid: 91303742549262357
+  - rid: 91303742549262426
+  - rid: 91303742549262427
+  - rid: 91303742549262428
+  edges:
+  - GUID: 8d605d97-fa1e-41e6-a784-aab45158d95c
+    owner: {fileID: 11400000}
+    inputNodeGUID: 2b612a66-651b-4439-be86-b8814ad67a38
+    outputNodeGUID: f92239f3-74af-4707-8b91-aae64e7bbc33
+    inputFieldName: Model
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 81ef29f9-0306-47c1-9350-e7ce7dda8011
+    owner: {fileID: 11400000}
+    inputNodeGUID: fc6afe18-c1e9-427a-959e-9d0df155ac46
+    outputNodeGUID: 39d14992-df2e-45ea-8da3-672ecf6a9614
+    inputFieldName: Model
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 0
+  - GUID: fb7b3273-5432-4580-a57e-bf39a5a8fe94
+    owner: {fileID: 11400000}
+    inputNodeGUID: e4093adc-b5ac-4ce5-bcb1-bbc43df1212e
+    outputNodeGUID: f92239f3-74af-4707-8b91-aae64e7bbc33
+    inputFieldName: input
+    outputFieldName: output
+    inputPortIdentifier: 0
+    outputPortIdentifier: 
+  - GUID: e112d148-20fb-4a51-98da-8fb69d5808ba
+    owner: {fileID: 11400000}
+    inputNodeGUID: 39d14992-df2e-45ea-8da3-672ecf6a9614
+    outputNodeGUID: e4093adc-b5ac-4ce5-bcb1-bbc43df1212e
+    inputFieldName: input
+    outputFieldName: output
+    inputPortIdentifier: 0
+    outputPortIdentifier: 0
+  - GUID: d8821238-d10d-4eb5-8dfb-b801bfd43a3a
+    owner: {fileID: 11400000}
+    inputNodeGUID: 743e49ff-98e9-420a-a80f-ad4ce562f10a
+    outputNodeGUID: bf1977b4-cd1e-48b7-bc0b-9575dea71f5c
+    inputFieldName: obj
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: a44d6ad1-7fbd-44e7-9e20-b6aa8cc5e774
+    owner: {fileID: 11400000}
+    inputNodeGUID: 2b612a66-651b-4439-be86-b8814ad67a38
+    outputNodeGUID: 0e5d6963-6d9e-4f73-960f-4838d939522c
+    inputFieldName: executed
+    outputFieldName: executes
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: d1929478-d7d5-4bb3-8294-488bc338eaab
+    owner: {fileID: 11400000}
+    inputNodeGUID: fc6afe18-c1e9-427a-959e-9d0df155ac46
+    outputNodeGUID: 2b612a66-651b-4439-be86-b8814ad67a38
+    inputFieldName: executed
+    outputFieldName: executeAfter
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 1b987203-ca65-4b97-a132-981637f7f8b4
+    owner: {fileID: 11400000}
+    inputNodeGUID: 743e49ff-98e9-420a-a80f-ad4ce562f10a
+    outputNodeGUID: fc6afe18-c1e9-427a-959e-9d0df155ac46
+    inputFieldName: executed
+    outputFieldName: executeAfter
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  groups: []
+  stackNodes: []
+  pinnedElements:
+  - position:
+      serializedVersion: 2
+      x: 1089
+      y: 610
+      width: 150
+      height: 200
+    opened: 0
+    editorType:
+      serializedType: GraphProcessor.ProcessorView, com.alelievr.NodeGraphProcessor.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  - position:
+      serializedVersion: 2
+      x: 1132
+      y: 39.999977
+      width: 150
+      height: 200
+    opened: 1
+    editorType:
+      serializedType: ConditionalProcessorView, Assembly-CSharp-Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  - position:
+      serializedVersion: 2
+      x: 0
+      y: 416
+      width: 150
+      height: 200
+    opened: 1
+    editorType:
+      serializedType: GraphProcessor.ExposedParameterView, com.alelievr.NodeGraphProcessor.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  exposedParameters: []
+  serializedParameterList: []
+  stickyNotes: []
+  nodeInspectorReference: {fileID: 0}
+  position: {x: 267.33334, y: 73.333336, z: 0}
+  scale: {x: 0.49717674, y: 0.49717674, z: 1}
+  references:
+    version: 2
+    RefIds:
+    - rid: 91303742549262336
+      type: {class: SDStartNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 2b612a66-651b-4439-be86-b8814ad67a38
+        computeOrder: 2
+        position:
+          serializedVersion: 2
+          x: 387.3333
+          y: 490
+          width: 292.66666
+          height: 182.66666
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        Model: girl
+        output: 0
+        overrideSettings: 1
+        serverURL: https://3108n063s1.imdo.co
+        useAuth: 0
+        user: 
+        pass: 
+    - rid: 91303742549262344
+      type: {class: WaitNode, ns: NodeGraphProcessor.Examples, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: bce975d9-06f5-4fe2-a1be-116b03851e43
+        computeOrder: 3
+        position:
+          serializedVersion: 2
+          x: 706.058
+          y: 261.44925
+          width: 195.33331
+          height: 101.33334
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        waitTime: 0
+    - rid: 91303742549262346
+      type: {class: SDStartNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: fc6afe18-c1e9-427a-959e-9d0df155ac46
+        computeOrder: 6
+        position:
+          serializedVersion: 2
+          x: 1152.6746
+          y: 501.33334
+          width: 292.66663
+          height: 182.66663
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        Model: girl
+        output: 0
+        overrideSettings: 1
+        serverURL: https://3108n063s1.imdo.co
+        useAuth: 0
+        user: 
+        pass: 
+    - rid: 91303742549262349
+      type: {class: StringNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: f92239f3-74af-4707-8b91-aae64e7bbc33
+        computeOrder: 0
+        position:
+          serializedVersion: 2
+          x: -93.41171
+          y: 528.6666
+          width: 216
+          height: 180
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        output: girl
+    - rid: 91303742549262350
+      type: {class: RelayNode, ns: , asm: com.alelievr.NodeGraphProcessor.Runtime}
+      data:
+        nodeCustomName: 
+        GUID: 39d14992-df2e-45ea-8da3-672ecf6a9614
+        computeOrder: 5
+        position:
+          serializedVersion: 2
+          x: 1040.5925
+          y: 873.674
+          width: 200
+          height: 200
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        unpackOutput: 0
+        packInput: 0
+        inputEdgeCount: 1
+    - rid: 91303742549262351
+      type: {class: RelayNode, ns: , asm: com.alelievr.NodeGraphProcessor.Runtime}
+      data:
+        nodeCustomName: 
+        GUID: e4093adc-b5ac-4ce5-bcb1-bbc43df1212e
+        computeOrder: 4
+        position:
+          serializedVersion: 2
+          x: 169.78792
+          y: 863.3334
+          width: 200
+          height: 200
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        unpackOutput: 0
+        packInput: 0
+        inputEdgeCount: 1
+    - rid: 91303742549262352
+      type: {class: ForLoopNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: a4f99ed7-d2a3-4719-9a23-fcde125b8c05
+        computeOrder: 7
+        position:
+          serializedVersion: 2
+          x: 395.8684
+          y: 213.80418
+          width: 100
+          height: 100
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        start: 0
+        end: 10
+        index: 7
+    - rid: 91303742549262357
+      type: {class: ForLoopNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 9258282b-27a0-420e-8109-a6c61caca612
+        computeOrder: 8
+        position:
+          serializedVersion: 2
+          x: 776.1172
+          y: 916.34534
+          width: 210.66669
+          height: 165.33337
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        start: 0
+        end: 10
+        index: 3
+    - rid: 91303742549262426
+      type: {class: ConditionalPrintNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 743e49ff-98e9-420a-a80f-ad4ce562f10a
+        computeOrder: 10
+        position:
+          serializedVersion: 2
+          x: 1599.6865
+          y: 672.6666
+          width: 172
+          height: 128
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+    - rid: 91303742549262427
+      type: {class: StringNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: bf1977b4-cd1e-48b7-bc0b-9575dea71f5c
+        computeOrder: 9
+        position:
+          serializedVersion: 2
+          x: 1229.3333
+          y: 826.00006
+          width: 216
+          height: 180.00006
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        output: '123
+
+'
+    - rid: 91303742549262428
+      type: {class: StartNode, ns: NodeGraphProcessor.Examples, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 0e5d6963-6d9e-4f73-960f-4838d939522c
+        computeOrder: 1
+        position:
+          serializedVersion: 2
+          x: 238.54341
+          y: 451.33334
+          width: 89.33334
+          height: 77.33334
+        expanded: 0
+        debug: 0
+        nodeLock: 0
