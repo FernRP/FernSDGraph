@@ -8,7 +8,9 @@ using FernGraph;
 using FernGraph.Editor;
 using FernNPRCore.StableDiffusionGraph;
 using Unity.EditorCoroutines.Editor;
+using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -178,22 +180,51 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                 }
             }
         }
-        
+
         protected override void OnInitialize()
         {
             // Setup a container to render IMGUI content in 
             var container = new IMGUIContainer(OnGUI);
             extensionContainer.Add(container);
             
-            var button = new Button(RefreshPrompt);
+            var button = new DraggableButton();
             button.style.backgroundImage = SDTextureHandle.RefreshIcon;
             button.style.width = 20;
             button.style.height = 20;
             button.style.alignSelf = Align.FlexEnd;
             button.style.bottom = 0;
             button.style.right = 0;
+            //button.AddManipulator(new LongPressManipulator());
+
             titleButtonContainer.Add(button);
+
+
+            var label = new Label("title");
+            label.style.fontSize = 20;
+            label.RegisterCallback<DragPerformEvent>(evt =>
+            {
+                Debug.Log("DragPerformEvent " + evt.mousePosition);
+            });
+            label.RegisterCallback<DragEnterEvent>(evt =>
+            {
+                Debug.Log("DragEnterEvent " + evt.mousePosition);
+            });
+            label.RegisterCallback<DragUpdatedEvent>(evt =>
+            {
+                Debug.Log("DragUpdatedEvent " + evt.mousePosition);
+            });
+            label.RegisterCallback<MouseDownEvent>(evt =>
+            {
+                if (evt.button == 0) // Left mouse button
+                {
+                    DragAndDrop.PrepareStartDrag();
+                    DragAndDrop.StartDrag("Dragging button");
+                    evt.StopPropagation();
+                }
+            });
             
+            extensionContainer.Add(label);
+           
             LoadConfigTxt();
             RefreshExpandedState();
         }
@@ -404,6 +435,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                     word = word,
                 });
                 refresh = true;
+                Debug.Log("Down!!!");
 
             }
             GUI.color = color;
