@@ -50,6 +50,7 @@ namespace FernNPRCore.StableDiffusionGraph
     };
 
         public StringStringDic loraBlockWeightPresets;
+        public Color[] areaColors = new Color[] { Color.red, Color.green, Color.blue, Color.cyan, Color.magenta, Color.yellow };
 
         public string modelUse;
         public string loraUse;
