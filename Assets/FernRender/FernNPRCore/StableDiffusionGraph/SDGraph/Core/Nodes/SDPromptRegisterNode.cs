@@ -33,15 +33,19 @@ namespace FernNPRCore.StableDiffusionGraph
     }
     [Node(Path = "SD Standard")]
     [Tags("SD Node")]
-    public class PromptRegister : Node
+    public class SDPromptRegisterNode : Node
     {
         public List<PromptData> positiveDatas = new List<PromptData>();
         public List<PromptData> negativeDatas = new List<PromptData>();
         
-        [Output] public Prompt Prompt = new Prompt();
+        public Prompt Prompt = new Prompt();
+        [Output] public string Positive;
+        [Output] public string Negative;
+
         public override object OnRequestValue(Port port) => port.Name switch
         {
-            "Prompt" => Prompt,
+            "Positive" => Prompt.positive,
+            "Negative" => Prompt.negative,
             _ => null
         };
     }
