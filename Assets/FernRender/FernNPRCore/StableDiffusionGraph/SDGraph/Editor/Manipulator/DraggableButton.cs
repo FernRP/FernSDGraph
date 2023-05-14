@@ -31,6 +31,18 @@ public class DraggableButton : TextElement, IManipulator
         this.tabIndex = 0;
     }
 
+    public DraggableButton(Action<MouseUpEvent> mOnClickAction)
+    {
+        this.RegisterCallback<MouseMoveEvent>(OnMouseMove);
+        this.RegisterCallback<MouseDownEvent>(OnMouseDown);
+        this.RegisterCallback<MouseUpEvent>(OnMouseUp);
+        this.RegisterCallback<MouseLeaveEvent>(OnMouseLeave);
+        m_OnClickAction = mOnClickAction;
+        this.AddToClassList(ussClassName);
+        this.focusable = true;
+        this.tabIndex = 0;
+    }
+    
     private void OnMouseLeave(MouseLeaveEvent evt)
     {
         m_Active = false;

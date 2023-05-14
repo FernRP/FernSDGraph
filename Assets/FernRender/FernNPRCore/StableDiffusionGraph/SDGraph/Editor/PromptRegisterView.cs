@@ -187,14 +187,13 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
             var container = new IMGUIContainer(OnGUI);
             extensionContainer.Add(container);
             
-            var button = new DraggableButton();
+            var button = new DraggableButton(RefreshPrompt); // TODO: DraggableButton For Test, Should use Button(RefreshPrompt).
             button.style.backgroundImage = SDTextureHandle.RefreshIcon;
             button.style.width = 20;
             button.style.height = 20;
             button.style.alignSelf = Align.FlexEnd;
             button.style.bottom = 0;
             button.style.right = 0;
-            //button.AddManipulator(new LongPressManipulator());
 
             titleButtonContainer.Add(button);
 
@@ -229,8 +228,9 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
             RefreshExpandedState();
         }
 
-        private void RefreshPrompt()
+        private void RefreshPrompt(MouseUpEvent evt)
         {
+            Debug.Log("Click");
             LoadConfigTxt();
         }
 
@@ -435,7 +435,6 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                     word = word,
                 });
                 refresh = true;
-                Debug.Log("Down!!!");
 
             }
             GUI.color = color;
