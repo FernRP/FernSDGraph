@@ -16,8 +16,8 @@ using UnityEngine.UIElements;
 
 namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
 {
-    [CustomNodeView(typeof(PromptRegister))]
-    public class PromptRegisterView : NodeView
+    [CustomNodeView(typeof(SDPromptRegisterNode))]
+    public class SDPromptRegisterNodeView : NodeView
     {
 
         public static readonly GUIContent
@@ -40,7 +40,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
             public string other;
         }
 
-        public PromptRegisterView()
+        public SDPromptRegisterNodeView()
         {
             config_positive = new List<List<string>>();
             config_negative = new List<List<string>>();
@@ -493,7 +493,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
 
         void OnGUI()
         {
-            if(Target is not PromptRegister register) return;
+            if(Target is not SDPromptRegisterNode register) return;
 
             var config = toolBarIndex == 0 ? config_positive : config_negative;
             var len = config.Count;
