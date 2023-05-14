@@ -9,14 +9,16 @@ using GraphProcessor;
 
 namespace FernNPRCore.SDNodeGraph
 {
-	[NodeCustomEditor(typeof(SDStartNode))]
-	public class SDStartNodeView : BaseNodeView
+	[NodeCustomEditor(typeof(SDUpdateModelNode))]
+	public class SDUpdateModelView : BaseNodeView
 	{
 		public override void Enable()
 		{
-			SDStartNode comparisonNode = nodeTarget as SDStartNode;
+			SDSetModelNode comparisonNode = nodeTarget as SDSetModelNode;
 			DrawDefaultInspector();
 			
+			extensionContainer.Add(new Button());
+			RefreshExpandedState();
 		}
 	}
 }

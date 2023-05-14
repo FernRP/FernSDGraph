@@ -25,6 +25,8 @@ MonoBehaviour:
   - rid: 91303742549262426
   - rid: 91303742549262427
   - rid: 91303742549262428
+  - rid: 91303776550912009
+  - rid: 91303776550912016
   edges:
   - GUID: 8d605d97-fa1e-41e6-a784-aab45158d95c
     owner: {fileID: 11400000}
@@ -74,18 +76,18 @@ MonoBehaviour:
     outputFieldName: executes
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: d1929478-d7d5-4bb3-8294-488bc338eaab
-    owner: {fileID: 11400000}
-    inputNodeGUID: fc6afe18-c1e9-427a-959e-9d0df155ac46
-    outputNodeGUID: 2b612a66-651b-4439-be86-b8814ad67a38
-    inputFieldName: executed
-    outputFieldName: executeAfter
-    inputPortIdentifier: 
-    outputPortIdentifier: 
   - GUID: 1b987203-ca65-4b97-a132-981637f7f8b4
     owner: {fileID: 11400000}
     inputNodeGUID: 743e49ff-98e9-420a-a80f-ad4ce562f10a
     outputNodeGUID: fc6afe18-c1e9-427a-959e-9d0df155ac46
+    inputFieldName: executed
+    outputFieldName: executeAfter
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 3fb3493f-4fcb-4705-9bf3-1b5d5a0cd6dd
+    owner: {fileID: 11400000}
+    inputNodeGUID: 2973ec57-6081-4e0b-9492-07a022277129
+    outputNodeGUID: 2b612a66-651b-4439-be86-b8814ad67a38
     inputFieldName: executed
     outputFieldName: executeAfter
     inputPortIdentifier: 
@@ -105,8 +107,8 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   - position:
       serializedVersion: 2
-      x: 1132
-      y: 39.999977
+      x: 1453
+      y: 160.99998
       width: 150
       height: 200
     opened: 1
@@ -115,20 +117,21 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
   - position:
       serializedVersion: 2
-      x: 0
-      y: 416
-      width: 150
-      height: 200
+      x: 4
+      y: 35.000008
+      width: 246
+      height: 314
     opened: 1
     editorType:
       serializedType: GraphProcessor.ExposedParameterView, com.alelievr.NodeGraphProcessor.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  exposedParameters: []
+  exposedParameters:
+  - rid: 91303776550912005
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: 267.33334, y: 73.333336, z: 0}
-  scale: {x: 0.49717674, y: 0.49717674, z: 1}
+  position: {x: 115.333336, y: -146.66667, z: 0}
+  scale: {x: 0.8695652, y: 0.8695652, z: 1}
   references:
     version: 2
     RefIds:
@@ -321,10 +324,63 @@ MonoBehaviour:
         computeOrder: 1
         position:
           serializedVersion: 2
-          x: 238.54341
-          y: 451.33334
+          x: 234.9754
+          y: 470.99307
           width: 89.33334
           height: 77.33334
         expanded: 0
         debug: 0
         nodeLock: 0
+    - rid: 91303776550912005
+      type: {class: StringParameter, ns: GraphProcessor, asm: com.alelievr.NodeGraphProcessor.Runtime}
+      data:
+        guid: 6edaa975-c138-4f7a-a474-26077e041226
+        name: ServerURL
+        type: 
+        serializedValue:
+          serializedType: 
+          serializedName: 
+          serializedValue: 
+        input: 1
+        settings:
+          rid: 91303776550912006
+        val: 
+    - rid: 91303776550912006
+      type: {class: ExposedParameter/Settings, ns: GraphProcessor, asm: com.alelievr.NodeGraphProcessor.Runtime}
+      data:
+        isHidden: 0
+        expanded: 1
+        guid: 6edaa975-c138-4f7a-a474-26077e041226
+    - rid: 91303776550912009
+      type: {class: ParameterNode, ns: GraphProcessor, asm: com.alelievr.NodeGraphProcessor.Runtime}
+      data:
+        nodeCustomName: 
+        GUID: d5835465-e760-4611-bbe6-269b0170526d
+        computeOrder: 11
+        position:
+          serializedVersion: 2
+          x: -33.6232
+          y: 331.88406
+          width: 100
+          height: 100
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        parameterGUID: 6edaa975-c138-4f7a-a474-26077e041226
+        accessor: 0
+    - rid: 91303776550912016
+      type: {class: SDCheckPointNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 2973ec57-6081-4e0b-9492-07a022277129
+        computeOrder: 12
+        position:
+          serializedVersion: 2
+          x: 776.0001
+          y: 490.00006
+          width: 195.33337
+          height: 101.33334
+        expanded: 1
+        debug: 0
+        nodeLock: 0
+        input: 0

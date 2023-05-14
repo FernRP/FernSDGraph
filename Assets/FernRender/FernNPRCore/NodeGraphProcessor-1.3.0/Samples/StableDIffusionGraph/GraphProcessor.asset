@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: GraphProcessor
   m_EditorClassIdentifier: 
   serializedNodes: []
-  nodes:
-  - rid: 91303741829414951
+  nodes: []
   edges: []
   groups: []
   stackNodes: []
@@ -23,26 +22,8 @@ MonoBehaviour:
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: 32, y: 30.666666, z: 0}
+  position: {x: 8, y: -84.666664, z: 0}
   scale: {x: 1.3225, y: 1.3225, z: 1}
   references:
     version: 2
-    RefIds:
-    - rid: 91303741829414951
-      type: {class: SDStart, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
-      data:
-        nodeCustomName: 
-        GUID: b65f9e8c-65be-400d-b04f-9e180b711ff0
-        computeOrder: 0
-        position:
-          serializedVersion: 2
-          x: 326.9351
-          y: 185.62447
-          width: 152
-          height: 96
-        expanded: 0
-        debug: 0
-        nodeLock: 0
-        Model: 
-        output: 0
-        overrideSettings: 0
+    RefIds: []
