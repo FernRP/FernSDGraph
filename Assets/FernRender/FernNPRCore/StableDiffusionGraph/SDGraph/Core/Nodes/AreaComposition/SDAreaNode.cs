@@ -13,7 +13,7 @@ namespace FernNPRCore.StableDiffusionGraph
         public string prompt;
     }
 
-    [Node(Path = "SD Standard")]
+    [Node(Path = "SD AreaComposition")]
     [Tags("SD Node")]
     public class SDAreaNode : Node
     {

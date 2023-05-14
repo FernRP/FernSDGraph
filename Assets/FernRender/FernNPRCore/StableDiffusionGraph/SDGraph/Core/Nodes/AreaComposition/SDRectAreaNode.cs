@@ -5,7 +5,19 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace FernNPRCore.StableDiffusionGraph
 {
-    [Node(Path = "SD Standard")]
+    public class RectRegion
+    {
+        public Rect rect;
+        public Color color;
+
+        public RectRegion(Rect rect, Color color)
+        {
+            this.rect = rect;
+            this.color = color;
+        }
+    }
+
+    [Node(Path = "SD AreaComposition")]
     [Tags("SD Node")]
     public class SDRectAreaNode : Node
     {
@@ -19,7 +31,7 @@ namespace FernNPRCore.StableDiffusionGraph
 
         [Output("Out AreaTexture")] public Texture2D areaTexture;
 
-        public List<Region> regions = new List<Region>();
+        public List<RectRegion> regions = new List<RectRegion>();
 
         public override object OnRequestValue(Port port)
         {

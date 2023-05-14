@@ -1,18 +1,20 @@
+using FernGraph;
+using FernGraph.Editor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
-public class SDDrawAreaNode : MonoBehaviour
+namespace FernNPRCore.StableDiffusionGraph
 {
-    // Start is called before the first frame update
-    void Start()
+    [Node(Path = "SD AreaComposition")]
+    [Tags("SD Node")]
+    public class SDDrawAreaNode : Node
     {
-        
-    }
+        public override object OnRequestValue(Port port)
+        {
+            return null;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

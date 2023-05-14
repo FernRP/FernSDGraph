@@ -5,11 +5,13 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace FernNPRCore.StableDiffusionGraph
 {
-    public class SDCombineAreaNode : SDFlowNode, ICanExecuteSDFlow
+    [Node(Path = "SD AreaComposition")]
+    [Tags("SD Node")]
+    public class SDCombineAreaNode : Node
     {
-        public override IEnumerator Execute()
+        public override object OnRequestValue(Port port)
         {
-            yield return null;
+            return null;
         }
     }
 }

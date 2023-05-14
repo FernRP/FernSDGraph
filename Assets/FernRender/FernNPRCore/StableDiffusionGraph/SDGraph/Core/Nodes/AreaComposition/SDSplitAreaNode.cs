@@ -7,7 +7,7 @@ using UnityEngine.Rendering;
 
 namespace FernNPRCore.StableDiffusionGraph
 {
-    [Node(Path = "SD Standard")]
+    [Node(Path = "SD AreaComposition")]
     [Tags("SD Node")]
 
     public class SDSplitAreaNode : Node

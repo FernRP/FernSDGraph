@@ -194,7 +194,7 @@ namespace FernNPRCore.StableDiffusionGraph
                 Rect actualRegion = new Rect(currentRegion.x - gridRect.xMin, currentRegion.y - gridRect.yMin, currentRegion.width, currentRegion.height);
                 actualRegion = new Rect(actualRegion.position, actualRegion.size);
 
-                rectAreaNode.regions.Add(new Region(actualRegion, SDDataHandle.Instance.areaColors[currentColorIndex]));
+                rectAreaNode.regions.Add(new RectRegion(actualRegion, SDDataHandle.Instance.areaColors[currentColorIndex]));
                 currentColorIndex = (currentColorIndex + 1) % SDDataHandle.Instance.areaColors.Length;
                 currentRegion = new Rect();
                 UpdateAreaTexture();
@@ -233,7 +233,7 @@ namespace FernNPRCore.StableDiffusionGraph
 
                     Rect actualRegion = new Rect((newPosition - gridRect.position) , rectAreaNode.regions[selectedIndex].rect.size);
 
-                    rectAreaNode.regions[selectedIndex] = new Region(actualRegion, rectAreaNode.regions[selectedIndex].color);
+                    rectAreaNode.regions[selectedIndex] = new RectRegion(actualRegion, rectAreaNode.regions[selectedIndex].color);
                     forceUpdateTexture = true;
                     if (rectAreaNode.alwaysUpdateTexture)
                     {
