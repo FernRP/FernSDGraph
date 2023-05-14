@@ -18,6 +18,20 @@ public class DraggableButton : TextElement, IManipulator
         remove => m_OnClickAction -= value;
     }
     
+    private Action<MouseMoveEvent> m_OnMoveAction;
+    public event Action<MouseMoveEvent> OnMoveAction
+    {
+        add => m_OnMoveAction += value;
+        remove => m_OnMoveAction -= value;
+    }
+    
+    private Action<MouseUpEvent> m_OnMoveUpAction;
+    public event Action<MouseUpEvent> OnMoveUpAction
+    {
+        add => m_OnMoveUpAction += value;
+        remove => m_OnMoveUpAction -= value;
+    }
+    
     public new static readonly string ussClassName = "unity-button";
 
     public DraggableButton()
@@ -65,10 +79,11 @@ public class DraggableButton : TextElement, IManipulator
     {
         if (m_Active && Time.realtimeSinceStartup - m_DownTime >= m_LongPressDuration)
         {
-            SDUtil.Log("DraggableButton: Move");
+            SDUtil.Log("DraggableButton: Move", false);
             var delta = evt.localMousePosition - m_StartPosition;
             m_TargetElement.style.left = m_TargetElement.layout.x + delta.x;
             m_TargetElement.style.top = m_TargetElement.layout.y + delta.y;
+            m_OnMoveAction?.Invoke(evt);
             evt.StopPropagation();
         }
     }
@@ -77,8 +92,13 @@ public class DraggableButton : TextElement, IManipulator
     {
         if (m_Active && Time.realtimeSinceStartup - m_DownTime < m_LongPressDuration)
         {
-            SDUtil.Log("DraggableButton: Click Action");
+            SDUtil.Log("DraggableButton: Click Action", false);
             m_OnClickAction?.Invoke(evt);
+        }
+        else
+        {
+            SDUtil.Log("DraggableButton: Move Up Action", false);
+            m_OnMoveUpAction?.Invoke(evt);
         }
         m_Active = false;
         m_DownTime = 0;

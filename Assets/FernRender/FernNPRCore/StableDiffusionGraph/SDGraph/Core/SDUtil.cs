@@ -78,20 +78,21 @@ namespace FernNPRCore.StableDiffusionGraph
 #endif
         }
 
-        public static void Log(string log)
+        public static void Log(string log, bool isDebug = true)
         {
+            if(!isDebug) return;
             Debug.Log($"{LOG}{log}");
         }
 
-        public static void LogWarning(string log)
+        public static void LogWarning(string log, bool isDebug = true)
         {
-            // TODO
+            if(!isDebug) return;
             Debug.LogWarning($"{LOG}{log}");
         }
 
-        public static void LogError(string log)
+        public static void LogError(string log, bool isDebug = true)
         {
-            // TODO
+            if(!isDebug) return;
             Debug.LogError($"{LOG}{log}");
         }
 

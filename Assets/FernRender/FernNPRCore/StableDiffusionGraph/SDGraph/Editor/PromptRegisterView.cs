@@ -194,7 +194,15 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
             button.style.alignSelf = Align.FlexEnd;
             button.style.bottom = 0;
             button.style.right = 0;
-
+            // button.OnMoveAction += (evt) =>
+            // {
+            //     Debug.Log("On Move ");
+            // };
+            // button.OnMoveUpAction += (evt) =>
+            // {
+            //     Debug.Log("On Move Up");
+            // };
+            
             titleButtonContainer.Add(button);
 
 
@@ -230,7 +238,6 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
 
         private void RefreshPrompt(MouseUpEvent evt)
         {
-            Debug.Log("Click");
             LoadConfigTxt();
         }
 
