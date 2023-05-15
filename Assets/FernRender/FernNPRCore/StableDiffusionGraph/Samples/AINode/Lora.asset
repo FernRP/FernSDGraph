@@ -144,26 +144,28 @@ MonoBehaviour:
             portName: Model
         Model: Girl_chilloutmix_NiCkpt
         modelNames:
-        - ChilloutMix_chilloutmix_NiPrunedFp32Fix
         - Dreamlike_cheeseDaddys_35
         - Dreamlike_dreamlikeDiffusion10_10
         - Dreamlike_dreamshaper_331BakedVae
         - Girl_aresMix_v01
+        - Girl_chilloutmix_NiCkpt
+        - Girl_chilloutmix_NiPrunedFp32
         - Girl_feiji_v2
         - Girl_kaelvinsmixhc_releaseV10
+        - Girl_uberRealisticPornMerge_urpmv12
         - Porn_uberRealisticPornMerge_urpmv13
         - unstableinkdream_v6
         - v1-5-pruned-emaonly
+        - xsarchitectural_v11
         - "\u4E2D\u56FD\u6A21\u7279_kaelvinsmixhc_releaseV10"
         - "\u52A8\u6F2B_UnstableInkDream_unstableinkdream_v6"
         - "\u52A8\u6F2B_\u539A\u6D82\u98CE\u683C_dalcefoPainting_v4"
         - "\u7EFC\u5408_anythingV3_fp16"
         - "\u7EFC\u5408_anythingV3Inpainting_1-inpainting"
         - "\u98CE\u683C\u5316\u4EBA\u50CF_portrait_10"
+        - Girl_luckyStrikeMix_V02Realistic
+        - ChilloutMix_chilloutmix_NiPrunedFp32Fix
         - "\u52A8\u6F2B_experience_70"
-        - Girl_uberRealisticPornMerge_urpmv12
-        - Girl_chilloutmix_NiPrunedFp32
-        - Girl_chilloutmix_NiCkpt
         currentIndex: 5
     - rid: 7516382605447528462
       type: {class: StringNode, ns: FernNPRCore.StableDiffusionGraph, asm: Assembly-CSharp}
@@ -241,6 +243,9 @@ MonoBehaviour:
           artifacts, signature, watermark, username, blurry, blurry background, multiple
           views, awkward_armpit, glow, reference inset, (mutated hands and fingers:1.5),
           (long body :1.3), long neck,"
+        Prompt:
+          positive: 
+          negative: 
     - rid: 7516382605447528465
       type: {class: StringNode, ns: FernNPRCore.StableDiffusionGraph, asm: Assembly-CSharp}
       data:
@@ -377,9 +382,19 @@ MonoBehaviour:
           connections:
           - nodeId: a0eb5498-a3de-4a59-8897-104c878ffa9c
             portName: SDFlowOut
+        Prompt:
+          positive: 
+          negative: 
         Step: 20
         CFG: 7
-        OutputImage: {fileID: 0}
+        width: 512
+        height: 512
+        outputImage: {fileID: 0}
         outSeed: 8382074018512780833
         Seed: -1
         SamplerMethod: DPM++ SDE Karras
+        speed: 0
+        init_speed: 0
+        progress: 0
+        cur_step: 0
+        isExecuting: 0
