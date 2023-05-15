@@ -213,6 +213,17 @@ namespace GraphProcessor
 			this.value = value;
 		}
 	}
+	
+	[AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
+	public class ChangeEvent : Attribute
+	{
+		public bool isAddChangeEvent;
+
+		public ChangeEvent(bool isAddChangeEvent)
+		{
+			this.isAddChangeEvent = isAddChangeEvent;
+		}
+	}
 
 	[AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
 	public class ShowInInspector : Attribute

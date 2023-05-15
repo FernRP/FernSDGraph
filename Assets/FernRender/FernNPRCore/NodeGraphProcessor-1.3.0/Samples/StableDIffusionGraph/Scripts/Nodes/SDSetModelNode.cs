@@ -45,10 +45,10 @@ namespace FernNPRCore.SDNodeGraph
 		}
         
 		
-		public void GetModelList()
+		public void GetModelList(UnityAction action = null)
         {
             GetPort(nameof(ServerURL), null).PushData();
-			EditorCoroutineUtility.StartCoroutine(ListModelsAsync(), this);
+			EditorCoroutineUtility.StartCoroutine(ListModelsAsync(action), this);
 		}
 		
 		/// <summary>
@@ -127,7 +127,7 @@ namespace FernNPRCore.SDNodeGraph
         public IEnumerator SetModelAsync(string modelName, Action callback)
         {
             // Stable diffusion API url for setting a model
-            string url = SDGraphDataHandle.Instance.GetServerURL()+SDGraphDataHandle.Instance.OptionAPI;
+            string url = SDGraphResource.SdGraphDataHandle.GetServerURL()+SDGraphResource.SdGraphDataHandle.OptionAPI;
 
             // Load the list of models if not filled already
             if (string.IsNullOrEmpty(Model))
@@ -142,10 +142,10 @@ namespace FernNPRCore.SDNodeGraph
                 HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
-                if (SDGraphDataHandle.Instance.GetUseAuth() && !string.IsNullOrEmpty(SDGraphDataHandle.Instance.GetUserName()) && !string.IsNullOrEmpty(SDGraphDataHandle.Instance.GetPassword()))
+                if (SDGraphResource.SdGraphDataHandle.GetUseAuth() && !string.IsNullOrEmpty(SDGraphResource.SdGraphDataHandle.GetUserName()) && !string.IsNullOrEmpty(SDGraphResource.SdGraphDataHandle.GetPassword()))
                 {
                     httpWebRequest.PreAuthenticate = true;
-                    byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDGraphDataHandle.Instance.GetUserName() + ":" + SDGraphDataHandle.Instance.GetPassword());
+                    byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDGraphResource.SdGraphDataHandle.GetUserName() + ":" + SDGraphResource.SdGraphDataHandle.GetPassword());
                     string encodedCredentials = Convert.ToBase64String(bytesToEncode);
                     httpWebRequest.Headers.Add("Authorization", "Basic " + encodedCredentials);
                 }

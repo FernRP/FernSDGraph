@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FernNPRCore.SDNodeGraph;
 using GraphProcessor;
 using Debug = UnityEngine.Debug;
 
@@ -8,7 +9,7 @@ namespace NodeGraphProcessor.Examples
     public class ConditionalProcessor : BaseGraphProcessor
     {
         List< BaseNode >		processList;
-        List< StartNode >		startNodeList;
+        List< SDStartNode >		startNodeList;
 
         Dictionary<BaseNode, List<BaseNode>>    nonConditionalDependenciesCache = new Dictionary<BaseNode, List<BaseNode>>();
 
@@ -27,7 +28,7 @@ namespace NodeGraphProcessor.Examples
         public override void UpdateComputeOrder()
         {
             // Gather start nodes:
-            startNodeList = graph.nodes.Where(n => n is StartNode).Select(n => n as StartNode).ToList();
+            startNodeList = graph.nodes.Where(n => n is SDStartNode).Select(n => n as SDStartNode).ToList();
 
             // In case there is no start node, we process the graph like usual
             if (startNodeList.Count == 0)

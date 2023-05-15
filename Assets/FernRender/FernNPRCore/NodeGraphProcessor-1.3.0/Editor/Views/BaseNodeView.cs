@@ -847,6 +847,11 @@ namespace GraphProcessor
 			int i = owner.graph.nodes.FindIndex(n => n == nodeTarget);
 			return owner.serializedGraph.FindProperty("nodes").GetArrayElementAtIndex(i).FindPropertyRelative(fieldName);
 		}
+		
+		protected virtual void OnFieldChanged(string fieldName, object value)
+		{
+			
+		}
 
 		protected VisualElement AddControlField(FieldInfo field, string label = null, bool showInputDrawer = false, Action valueChangedCallback = null)
 		{
@@ -864,10 +869,13 @@ namespace GraphProcessor
 			if (typeof(IList).IsAssignableFrom(field.FieldType))
 				EnableSyncSelectionBorderHeight();
 
+			var isAddChangeEvent = field.GetCustomAttribute(typeof(ChangeEvent)) as ChangeEvent;
+			
 			element.RegisterValueChangeCallback(e => {
 				UpdateFieldVisibility(field.Name, field.GetValue(nodeTarget));
 				valueChangedCallback?.Invoke();
 				NotifyNodeChanged();
+				if(isAddChangeEvent is { isAddChangeEvent: true }) OnFieldChanged(field.Name, field.GetValue(nodeTarget));
 			});
 
 			// Disallow picking scene objects when the graph is not linked to a scene

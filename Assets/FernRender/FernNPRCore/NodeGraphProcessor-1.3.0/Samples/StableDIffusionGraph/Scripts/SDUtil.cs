@@ -78,20 +78,21 @@ namespace FernNPRCore.SDNodeGraph
 #endif
         }
 
-        public static void Log(string log)
+        public static void Log(string log, bool isDebug = true)
         {
+            if(!isDebug) return;
             Debug.Log($"{LOG}{log}");
         }
 
-        public static void LogWarning(string log)
+        public static void LogWarning(string log, bool isDebug = true)
         {
-            // TODO
+            if(!isDebug) return;
             Debug.LogWarning($"{LOG}{log}");
         }
 
-        public static void LogError(string log)
+        public static void LogError(string log, bool isDebug = true)
         {
-            // TODO
+            if(!isDebug) return;
             Debug.LogError($"{LOG}{log}");
         }
 
@@ -126,10 +127,10 @@ namespace FernNPRCore.SDNodeGraph
         public static void SetRequestAuthorization(this HttpWebRequest request)
         {
             // add auth-header to request
-            if (SDGraphDataHandle.Instance.UseAuth && !SDGraphDataHandle.Instance.Username.Equals("") && !SDGraphDataHandle.Instance.Password.Equals(""))
+            if (SDGraphResource.SdGraphDataHandle.UseAuth && !SDGraphResource.SdGraphDataHandle.Username.Equals("") && !SDGraphResource.SdGraphDataHandle.Password.Equals(""))
             {
                 request.PreAuthenticate = true;
-                byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDGraphDataHandle.Instance.Username + ":" + SDGraphDataHandle.Instance.Password);
+                byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDGraphResource.SdGraphDataHandle.Username + ":" + SDGraphResource.SdGraphDataHandle.Password);
                 string encodedCredentials = Convert.ToBase64String(bytesToEncode);
                 request.Headers.Add("Authorization", "Basic " + encodedCredentials);
             }
@@ -137,13 +138,28 @@ namespace FernNPRCore.SDNodeGraph
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetRequestAuthorization(this UnityWebRequest request)
         {
-            if (SDGraphDataHandle.Instance.UseAuth && !SDGraphDataHandle.Instance.Username.Equals("") && !SDGraphDataHandle.Instance.Password.Equals(""))
+            if (SDGraphResource.SdGraphDataHandle.UseAuth && !SDGraphResource.SdGraphDataHandle.Username.Equals("") && !SDGraphResource.SdGraphDataHandle.Password.Equals(""))
             {
                 Debug.Log("Using API key to authenticate");
-                byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDGraphDataHandle.Instance.Username + ":" + SDGraphDataHandle.Instance.Password);
+                byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDGraphResource.SdGraphDataHandle.Username + ":" + SDGraphResource.SdGraphDataHandle.Password);
                 string encodedCredentials = Convert.ToBase64String(bytesToEncode);
                 request.SetRequestHeader("Authorization", "Basic " + encodedCredentials);
             }
+        }
+    }
+
+    public static class SkinUnit
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Color SkinColor(this Color color)
+        {
+            if (EditorGUIUtility.isProSkin)
+            {
+                color.r *= 1.5f;
+                color.g *= 1.5f;
+                color.b *= 1.5f;
+            }
+            return color;
         }
     }
     public static class TimeUtil
@@ -561,6 +577,7 @@ namespace FernNPRCore.SDNodeGraph
         public string[] module_list;
     }
 
+    [Serializable]
     public class Prompt
     {
         public string positive;

@@ -4,29 +4,11 @@ using UnityEditor;
 using UnityEngine;
 namespace FernNPRCore.SDNodeGraph
 {
-    [CreateAssetMenu(fileName = "SDDataHandle", menuName = "ScriptableObjects/SDDataHandle")]
+    [CreateAssetMenu(fileName = "SDGraphDataHandle", menuName = "ScriptableObjects/SDGraphDataHandle")]
     public class SDGraphDataHandle : ScriptableObject
     {
         private static SDGraphDataHandle instance = null;
-        public static SDGraphDataHandle Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = Resources.Load<SDGraphDataHandle>("SDGraphDataHandle");
-#if UNITY_EDITOR
-                    if (instance == null)
-                    {
-                        instance = ScriptableObject.CreateInstance<SDGraphDataHandle>();
-                        AssetDatabase.CreateAsset(instance, "Assets/Resources/SDGraphDataHandle.asset");
-                        AssetDatabase.SaveAssets();
-                    }
-#endif
-                }
-                return instance;
-            }
-        }
+        
         public string serverURL = "http://127.0.0.1:7860";
         public string ModelsAPI = "/sdapi/v1/sd-models";
         public string LorasAPI = "/sdapi/v1/loras";
