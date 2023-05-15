@@ -33,6 +33,7 @@ namespace FernNPRCore.SDNodeGraph
         [HideInInspector]
         public int currentIndex = 0;
 
+        [HideInInspector]
         public string Model;
         
 		public override string	name => "SD Set Model";
@@ -42,11 +43,11 @@ namespace FernNPRCore.SDNodeGraph
 		{
 			EditorCoroutineUtility.StartCoroutine(SetModelAsync(ServerURL, ProcessFinished), this);
 		}
-		
+        
 		
 		public void GetModelList()
-		{
-            Debug.Log(ServerURL);
+        {
+            GetPort(nameof(ServerURL), null).PushData();
 			EditorCoroutineUtility.StartCoroutine(ListModelsAsync(), this);
 		}
 		

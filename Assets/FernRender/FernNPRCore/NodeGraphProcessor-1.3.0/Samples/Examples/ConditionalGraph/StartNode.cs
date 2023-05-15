@@ -41,7 +41,7 @@ namespace NodeGraphProcessor.Examples
 
 		public override string		name => "Start";
 
-		public IEnumerable< ConditionalNode >	GetExecutedNodes()
+		protected override void Process()
 		{
 			if (overrideSettings&&!string.IsNullOrEmpty(serverURL))
 			{
@@ -59,7 +59,12 @@ namespace NodeGraphProcessor.Examples
 			}
 			
 			// Return all the nodes connected to the executes port
-			return GetOutputNodes().Where(n => n is ConditionalNode).Select(n => n as ConditionalNode);
+		}
+
+		public override IEnumerable< ConditionalNode >GetExecutedNodes()
+		{
+			base.GetExecutedNodes();
+			return GetOutputNodes().OfType<ConditionalNode>();
 		}
 		
 		public override FieldInfo[] GetNodeFields() => base.GetNodeFields();
