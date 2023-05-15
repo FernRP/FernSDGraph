@@ -11,6 +11,14 @@ namespace FernNPRCore.StableDiffusionGraph
     {
         public Color areaColor;
         public string prompt;
+        public float strength;
+
+        public AreaPrompt(Color areaColor, string prompt, float strength)
+        {
+            this.areaColor = areaColor;
+            this.prompt = prompt;
+            this.strength = strength;
+        }
     }
 
     [Node(Path = "SD AreaComposition")]
@@ -18,6 +26,7 @@ namespace FernNPRCore.StableDiffusionGraph
     public class SDAreaNode : Node
     {
         [Input] public string prompt;
+        [Input] public float strength=0.8f;
         [Input] public Color areaColor;
         [Editable]
         public Color previewColor;
@@ -31,9 +40,7 @@ namespace FernNPRCore.StableDiffusionGraph
         }
         public override object OnRequestValue(Port port)
         {
-            areaPrompt = new AreaPrompt();
-            areaPrompt.areaColor = areaColor;
-            areaPrompt.prompt = prompt;
+            areaPrompt = new AreaPrompt(areaColor,prompt,strength);
             return areaPrompt;
         }
     }
