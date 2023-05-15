@@ -1,0 +1,19 @@
+{
+  "name": "com.fernrender.stablediffusiongraph",
+  "version": "1.0.0",
+  "unity": "2022.2",
+  "displayName": "Stable Diffusion Graph",
+  "description": "Graph View For Stable Diffusion",
+  "keywords": [
+    "Stable Diffusion",
+    "Tool"
+  ],
+  "dependencies": {
+    "com.unity.render-pipelines.core": "14.0.6",
+    "com.unity.searcher": "4.9.2"
+  },
+  "author": {
+    "name": "Fern",
+    "url": "https://github.com/FernRender/FernNPR"
+  }
+}

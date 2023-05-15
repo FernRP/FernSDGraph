@@ -195,6 +195,25 @@ namespace FernGraph
         }
 
         /// <summary>
+        /// Remove all output port from this node.
+        /// </summary>
+        public void RemoveAllOutputs()
+        {
+            List<Port> ports = new List<Port>();
+            foreach (var item in portMap)
+            {
+                if(item.Value.Direction== PortDirection.Output)
+                {
+                    ports.Add(item.Value);
+                }
+            }
+            for (int i = 0; i < ports.Count; i++)
+            {
+                RemovePort(ports[i]);
+            }
+        }
+
+        /// <summary>
         /// Remove an existing port from this node.
         /// </summary>
         public void RemovePort(Port port)

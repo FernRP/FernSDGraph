@@ -30,9 +30,7 @@ struct Varyings
 {
     float4 uv : TEXCOORD0; // zw：MatCap
 
-    #if defined(REQUIRES_WORLD_SPACE_POS_INTERPOLATOR)
     float3 positionWS : TEXCOORD1;
-    #endif
 
     float3 normalWS : TEXCOORD2;
     #if defined(REQUIRES_WORLD_SPACE_TANGENT_INTERPOLATOR)
@@ -69,9 +67,7 @@ void PreInitializeInputData(Varyings input, half facing, out InputData inputData
     inputData = (InputData)0;
     addInputData = (NPRAddInputData)0;
     half3 viewDirWS = GetWorldSpaceNormalizeViewDir(input.positionWS);
-    #if defined(REQUIRES_WORLD_SPACE_POS_INTERPOLATOR)
     inputData.positionWS = input.positionWS;
-    #endif
 
     if(facing < 0)
     {
@@ -116,8 +112,10 @@ void PreInitializeInputData(Varyings input, half facing, out InputData inputData
     inputData.vertexSH = input.vertexSH;
     #endif
     #endif
-
-    addInputData.linearEyeDepth = DepthSamplerToLinearDepth(input.positionCS.z);
+    // interpolator will cause artifact
+    float3 positionCS = ComputeNormalizedDeviceCoordinatesWithZ(input.positionWS, UNITY_MATRIX_VP);
+    //float3 positionCS = TransformWorldToHClip(input.positionWS);
+    addInputData.linearEyeDepth = DepthSamplerToLinearDepth(positionCS.z);
 }
 
 void InitializeInputData(Varyings input, half3 normalTS, inout NPRAddInputData addInputData, inout InputData inputData)
@@ -458,9 +456,7 @@ Varyings LitPassVertex(Attributes input)
         output.fogFactor = fogFactor;
     #endif
 
-    #if defined(REQUIRES_WORLD_SPACE_POS_INTERPOLATOR)
-        output.positionWS = vertexInput.positionWS;
-    #endif
+    output.positionWS = vertexInput.positionWS;
     
     #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
         output.shadowCoord = GetShadowCoord(vertexInput);
@@ -482,7 +478,6 @@ Varyings LitPassVertex(Attributes input)
     #endif
 
     output.positionCS = CalculateClipPosition(output.positionCS, _ZOffset);
-
     output.positionCS = PerspectiveRemove(output.positionCS, output.positionWS, input.positionOS);
 
     return output;
