@@ -120,6 +120,9 @@ MonoBehaviour:
             portName: Prompt
         Positive: 4k, dog
         Negative: 
+        Prompt:
+          positive: 
+          negative: 
     - rid: 7516382605447528454
       type: {class: SDSamplerNode, ns: FernNPRCore.StableDiffusionGraph, asm: Assembly-CSharp}
       data:
@@ -181,12 +184,22 @@ MonoBehaviour:
           connections:
           - nodeId: b645c25b-8349-4c0b-80ee-0eb1b295f23c
             portName: SDFlowOut
+        Prompt:
+          positive: 
+          negative: 
         Step: 20
         CFG: 7
-        OutputImage: {fileID: 0}
+        width: 512
+        height: 512
+        outputImage: {fileID: 0}
         outSeed: 3305349678619192642
         Seed: 3305349678619192642
         SamplerMethod: Euler
+        speed: 0
+        init_speed: 0
+        progress: 0
+        cur_step: 0
+        isExecuting: 0
     - rid: 7516382605447528456
       type: {class: SDPreview, ns: FernNPRCore.StableDiffusionGraph, asm: Assembly-CSharp}
       data:

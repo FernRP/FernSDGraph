@@ -89,6 +89,9 @@ MonoBehaviour:
             portName: Prompt
         Positive: 4k, 1girl
         Negative: nsfw, nude
+        Prompt:
+          positive: 
+          negative: 
     - rid: 7516382605447528473
       type: {class: SDPreview, ns: FernNPRCore.StableDiffusionGraph, asm: Assembly-CSharp}
       data:
@@ -263,10 +266,15 @@ MonoBehaviour:
             portName: SDFlowOut
         InputImage: {fileID: 0}
         MaskImage: {fileID: 0}
+        Prompt:
+          positive: 
+          negative: 
         Step: 20
         CFG: 7
         DenisoStrength: 0.75
-        OutputImage: {fileID: 0}
+        width: 512
+        height: 512
+        outputImage: {fileID: 0}
         outSeed: 9080712402627708885
         Seed: -1
         SamplerMethod: Euler
@@ -292,6 +300,8 @@ MonoBehaviour:
           - nodeId: b78edc69-532a-409a-98b7-585464e8acdb
             portName: In Image
         Capture: {fileID: 0}
+        Width: 0
+        Height: 0
         currentCamere: {fileID: 0}
         cameraRT: {fileID: 0}
         enableUpdate: 1
@@ -399,10 +409,15 @@ MonoBehaviour:
             portName: SDFlowOut
         InputImage: {fileID: 0}
         MaskImage: {fileID: 0}
+        Prompt:
+          positive: 
+          negative: 
         Step: 20
         CFG: 7
         DenisoStrength: 0.75
-        OutputImage: {fileID: 0}
+        width: 512
+        height: 512
+        outputImage: {fileID: 0}
         outSeed: 4419751726569187673
         Seed: -1
         SamplerMethod: Euler
@@ -439,6 +454,9 @@ MonoBehaviour:
             portName: Prompt
         Positive: street
         Negative: 
+        Prompt:
+          positive: 
+          negative: 
     - rid: 7516382605447528491
       type: {class: SDPreview, ns: FernNPRCore.StableDiffusionGraph, asm: Assembly-CSharp}
       data:
@@ -533,4 +551,6 @@ MonoBehaviour:
         - chilloutmixss30_v30
         - "chilloutmixss_xss10(\u4E00\u6817\u6C99\u5B50)"
         currentIndex: 4
-        stableGraph: {fileID: 11400000}
+        useLoraBlockWeight: 0
+        loraBlockWeightPresetName: 
+        currentLoraBlockWeightPresetIndex: 0
