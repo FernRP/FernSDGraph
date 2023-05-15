@@ -381,13 +381,14 @@ void frag(
         addSurfData.geometryAAStrength = surfaceDescription.GeometryAAStrength;
         surfData.smoothness = GeometryAA(inputData.normalWS, surfData.smoothness, addSurfData);
     #endif
+    #if _ENVCUSTOM ||_ENVDEFAULT
+    addSurfData.envSpecularIntensity = surfaceDescription.EnvSpecularIntensity;
+    #endif
     #if _ENVCUSTOM
         addSurfData.envCustomReflection = surfaceDescription.EnvReflection;
-        addSurfData.envSpecularIntensity = surfaceDescription.EnvSpecularIntensity;
     #endif
     #if _ENVROTATE && _ENVDEFAULT
         addSurfData.envRotate = surfaceDescription.EnvRotate;
-        addSurfData.envSpecularIntensity = surfaceDescription.EnvSpecularIntensity;
     #endif
 
     #if !_RAMPSHADING

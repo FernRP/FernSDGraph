@@ -200,7 +200,7 @@ void MixFog_float (float3 Colour, float Fog, out float3 Out){
 
 
 //------------------------------------------------------------------------------------------------------
-// Position Extenstion
+// Extenstion
 //------------------------------------------------------------------------------------------------------
 
 void PositionWS2CS_float(float3 positionWS, out float4 positionCS)
@@ -212,5 +212,26 @@ void PositionWS2CS_half(half3 positionWS, out half4 positionCS)
 {
 	positionCS = TransformWorldToHClip(positionWS);
 }
+
+void VaryingInputLinearEyeDepth_half(half3 positionWS, out half linearEyeDepth)
+{
+	#ifdef SHADERGRAPH_PREVIEW
+		linearEyeDepth = 1;
+	#else
+		half3 positionCS = ComputeNormalizedDeviceCoordinatesWithZ(positionWS, UNITY_MATRIX_VP);
+		linearEyeDepth = DepthSamplerToLinearDepth(positionCS.z);
+	#endif
+}
+
+void VaryingInputLinearEyeDepth_float(float3 positionWS, out float linearEyeDepth)
+{
+	#ifdef SHADERGRAPH_PREVIEW
+		linearEyeDepth = 1;
+	#else
+		float3 positionCS = ComputeNormalizedDeviceCoordinatesWithZ(positionWS, UNITY_MATRIX_VP);
+		linearEyeDepth = DepthSamplerToLinearDepth(positionCS.z);
+	#endif
+}
+
 
 #endif // CUSTOM_LIGHTING_INCLUDED
