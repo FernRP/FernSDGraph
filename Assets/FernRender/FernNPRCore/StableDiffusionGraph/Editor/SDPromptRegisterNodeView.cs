@@ -508,7 +508,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
             new Color(0.3f, 0.7f, 1.0f),
             new Color(0.7f, 0.3f, 1.0f),
             new Color(1.0f, 0.4f, 0.7f),
-            new Color(0.3f, 0.3f, 0.3f),
+            new Color(0.1f, 0.1f, 0.1f),
             Color.gray, 
             new Color(1.0f, 1.0f, 1.0f),
             new Color(1.0f, 0.95f, 0.6f),
@@ -549,8 +549,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
             EditorGUILayout.BeginHorizontal();
             var DoSearch = DrawSearchField(ref searchingText, modeMenus, menusIndex, (o, strings, arg3) =>
             {
-                if (toolBarIndex == 0) positiveMenusIndex = arg3;
-                else negativeMenusIndex = arg3;
+                SetMenusIndex(arg3);
             });
             if (GUILayout.Button(showInEn ? "EN" : "CN", GUILayout.Width(30)))
                 showInEn = !showInEn;
@@ -615,15 +614,15 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
             
             
             // ----------------------------------------------2 ---------------------------------------
+            var current_idx = toolBarIndex == 0 ? cur_positive_idx : cur_negative_idx;
             EditorGUILayout.BeginVertical("helpbox", GUILayout.Width(300));
             toolBarIndex = GUILayout.Toolbar(toolBarIndex, toolBarOptions);
             DrawSplitter();
             s2 = EditorGUILayout.BeginScrollView(s2, GUILayout.Height(250));
             promptDataRects.Clear();
-            DrawPromptWords(0, promptDatas);
+            DrawPromptWords(current_idx, 0, promptDatas);
                 
             EditorGUILayout.EndScrollView();
-            var current_idx = toolBarIndex == 0 ? cur_positive_idx : cur_negative_idx;
             
             EditorGUILayout.BeginHorizontal();
             var showCurrentWord = current_idx != -1 && current_idx < promptDatas.Count;
@@ -770,10 +769,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                 var promptCol = 1 << i;
                 var contains_col = (prompt_col & promptCol) != 0;
                 var show_col = colorConfig[i];
-                show_col.r *= contains_col ? 1f : 0.5f;
-                show_col.g *= contains_col ? 1f : 0.5f;
-                show_col.b *= contains_col ? 1f : 0.5f;
-                show_col.a *= contains_col ? 1f : 0.5f;
+                show_col *= contains_col ? 1.5f : 0.35f;
                 GUI.color = show_col;
                 var controlRect = EditorGUILayout.GetControlRect(GUILayout.Width(20));
                 if (GUI.Button(controlRect, new GUIContent("", colorConfigStr[i])))
@@ -788,10 +784,10 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                 }
                 GUI.color = color;
                 controlRect.height = 2;
+                controlRect.x += controlRect.width - 4;
                 controlRect.width = 2;
-                controlRect.x += controlRect.width - 2;
                 controlRect.y += 2;
-                EditorGUI.DrawRect(controlRect, contains_col ? Color.green : Color.red);
+                EditorGUI.DrawRect(controlRect, contains_col ? show_col : Color.gray);
             }
             EditorGUILayout.EndHorizontal();
             if (nextIndex < colorConfigStr.Length)
@@ -892,6 +888,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
         private int insert_idx = -1;
         private Vector2 position;
         private List<Rect> promptDataRects;
+
         /// <summary>
         /// 提示词越前权重越高 :
         ///     画面质量 → 主要元素 → 细节 / 画面质量 → 风格 → 元素 → 细节 (综述 [图像质量+画风+镜头效果+光照效果+主题+构图], 主体 [人物/对象+姿势+服装+道具], 细节 [场景+环境+饰品+特征])
@@ -902,9 +899,10 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
         /// 起始进度 : [Prompt: float]/[Prompt: int]
         /// 结束进度 : [Prompt:: float]/[Prompt:: int]
         /// </summary>
+        /// <param name="currentIdx"></param>
         /// <param name="startIndex"></param>
         /// <param name="promptDatas"></param>
-        private void DrawPromptWords(int startIndex, List<PromptData> promptDatas)
+        private void DrawPromptWords(int currentIdx, int startIndex, List<PromptData> promptDatas)
         {
             var wordWidth = 0f;
             var nextIndex = -1;
@@ -986,7 +984,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
             EditorGUILayout.EndHorizontal();
             if (nextIndex != -1 && nextIndex < len)
             {
-                DrawPromptWords(nextIndex, promptDatas);
+                DrawPromptWords(currentIdx, nextIndex, promptDatas);
             }
             else
             {
@@ -1004,6 +1002,13 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                     if (idx != -1 && idx != insert_idx)
                     {
                         insert_idx = idx;
+                        if (currentIdx < selected_idx && currentIdx > insert_idx)
+                            SetCurrentWord(currentIdx + 1);
+                        if (currentIdx > selected_idx && currentIdx <= insert_idx)
+                            SetCurrentWord(currentIdx - 1);
+                        if (currentIdx == selected_idx)
+                            SetCurrentWord(insert_idx);
+                        
                         promptDatas.RemoveAt(selected_idx);
                         promptDatas.Insert(insert_idx, promptData);
                         selected_idx = insert_idx;
@@ -1022,6 +1027,11 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                 cur_positive_idx = idx;
             else
                 cur_negative_idx = idx;
+        }
+        public void SetMenusIndex(int idx)
+        {
+            if (toolBarIndex == 0) positiveMenusIndex = idx;
+            else negativeMenusIndex = idx;
         }
         public static void DrawSplitter(bool isBoxed = false, bool isFullWidth = false, float width = 1f, float height = 1f)
         {
