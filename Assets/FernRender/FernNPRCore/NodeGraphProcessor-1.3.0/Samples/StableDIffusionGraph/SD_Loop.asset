@@ -1,0 +1,320 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31390c44c9f3a3d40b424bf6821999a2, type: 3}
+  m_Name: SD_Loop
+  m_EditorClassIdentifier: 
+  serializedNodes: []
+  nodes:
+  - rid: 7516382800115925145
+  - rid: 7516382800115925150
+  - rid: 7516382800115925151
+  - rid: 7516382800115925152
+  - rid: 7516382800115925153
+  - rid: 7516382800115925154
+  - rid: 7516382800115925155
+  - rid: 7516382800115925159
+  edges:
+  - GUID: da8d77a2-b54c-4f31-a881-06b31dcc6b6c
+    owner: {fileID: 11400000}
+    inputNodeGUID: 24a4a3d5-0f42-4b7a-b73e-60fdd4a9ad56
+    outputNodeGUID: dfb0b1ab-7c0e-493f-827f-2fd46261f33a
+    inputFieldName: prompt
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 58739349-9313-43de-963f-914cf48c8799
+    owner: {fileID: 11400000}
+    inputNodeGUID: dfb0b1ab-7c0e-493f-827f-2fd46261f33a
+    outputNodeGUID: b86a65c7-0980-4599-9576-720008182f50
+    inputFieldName: positive
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 59174a8f-e8f8-4a28-96d9-32c6446c9643
+    owner: {fileID: 11400000}
+    inputNodeGUID: dfb0b1ab-7c0e-493f-827f-2fd46261f33a
+    outputNodeGUID: 28028414-14cc-4835-8890-bc82d13abc24
+    inputFieldName: negative
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: cc081bca-1df7-4f3c-8402-b906779e8412
+    owner: {fileID: 11400000}
+    inputNodeGUID: 24a4a3d5-0f42-4b7a-b73e-60fdd4a9ad56
+    outputNodeGUID: 7df64bb9-e3aa-4c57-9c63-1ee96f93d12b
+    inputFieldName: executed
+    outputFieldName: loopBody
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 1c95b661-a04f-40d9-8759-6c2b8742c92b
+    owner: {fileID: 11400000}
+    inputNodeGUID: 7df64bb9-e3aa-4c57-9c63-1ee96f93d12b
+    outputNodeGUID: 4aabeb15-2321-4e24-9e62-9354420aaaec
+    inputFieldName: executed
+    outputFieldName: executeAfter
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: d2b149af-1064-4636-b50d-3234956f9563
+    owner: {fileID: 11400000}
+    inputNodeGUID: 4aabeb15-2321-4e24-9e62-9354420aaaec
+    outputNodeGUID: bcf31aee-b3ef-49e8-9d2b-b6f5acb7e8c3
+    inputFieldName: executed
+    outputFieldName: executeAfter
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: f23b384e-1931-40ae-b9f2-98b3439abbb2
+    owner: {fileID: 11400000}
+    inputNodeGUID: 4840d411-1cdc-4bd0-ac96-3789bcda1adb
+    outputNodeGUID: 24a4a3d5-0f42-4b7a-b73e-60fdd4a9ad56
+    inputFieldName: input
+    outputFieldName: outputImage
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 7c5469d7-cf40-4382-8dbc-f4dbaaf7037b
+    owner: {fileID: 11400000}
+    inputNodeGUID: 4840d411-1cdc-4bd0-ac96-3789bcda1adb
+    outputNodeGUID: 24a4a3d5-0f42-4b7a-b73e-60fdd4a9ad56
+    inputFieldName: seed
+    outputFieldName: outSeed
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  groups:
+  - title: Set Model
+    color: {r: 0.5943396, g: 0.37315252, b: 0.1607333, a: 0.3}
+    position:
+      serializedVersion: 2
+      x: -46.415627
+      y: 181.49802
+      width: 530
+      height: 257.33334
+    size: {x: 400, y: 200}
+    innerNodeGUIDs:
+    - 4aabeb15-2321-4e24-9e62-9354420aaaec
+    - bcf31aee-b3ef-49e8-9d2b-b6f5acb7e8c3
+  - title: Loop Generator
+    color: {r: 0.063686274, g: 0.3250197, b: 0.54901963, a: 0.3}
+    position:
+      serializedVersion: 2
+      x: 557.1471
+      y: 203.3333
+      width: 833.3333
+      height: 705.3333
+    size: {x: 400, y: 200}
+    innerNodeGUIDs:
+    - dfb0b1ab-7c0e-493f-827f-2fd46261f33a
+    - b86a65c7-0980-4599-9576-720008182f50
+    - 24a4a3d5-0f42-4b7a-b73e-60fdd4a9ad56
+    - 7df64bb9-e3aa-4c57-9c63-1ee96f93d12b
+    - 28028414-14cc-4835-8890-bc82d13abc24
+  stackNodes: []
+  pinnedElements:
+  - position:
+      serializedVersion: 2
+      x: 0
+      y: 126
+      width: 150
+      height: 200
+    opened: 1
+    editorType:
+      serializedType: ConditionalProcessorView, Assembly-CSharp-Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  exposedParameters: []
+  serializedParameterList: []
+  stickyNotes: []
+  nodeInspectorReference: {fileID: 0}
+  position: {x: 446, y: 150.66667, z: 0}
+  scale: {x: 0.32690176, y: 0.32690176, z: 1}
+  references:
+    version: 2
+    RefIds:
+    - rid: 7516382800115925145
+      type: {class: SDStartNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: bcf31aee-b3ef-49e8-9d2b-b6f5acb7e8c3
+        computeOrder: 0
+        position:
+          serializedVersion: 2
+          x: -21.333324
+          y: 240
+          width: 195.33333
+          height: 144
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        outServerURL: http://127.0.0.1:7860
+        overrideSettings: 0
+        serverURL: http://127.0.0.1:7860
+        useAuth: 0
+        user: 
+        pass: 
+    - rid: 7516382800115925150
+      type: {class: SDSetModelNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 4aabeb15-2321-4e24-9e62-9354420aaaec
+        computeOrder: 1
+        position:
+          serializedVersion: 2
+          x: 255.34465
+          y: 240
+          width: 204.66667
+          height: 173.33331
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        ServerURL: 
+        output: 0
+        modelNames:
+        - Dreamlike_dreamshaper_331BakedVae
+        - Girl_aresMix_v01
+        - Girl_chilloutmix_NiCkpt
+        - Girl_chilloutmix_NiPrunedFp32
+        - Girl_feiji_v2
+        - Girl_kaelvinsmixhc_releaseV10
+        - Girl_uberRealisticPornMerge_urpmv12
+        - Porn_uberRealisticPornMerge_urpmv13
+        - unstableinkdream_v6
+        - v1-5-pruned-emaonly
+        - xsarchitectural_v11
+        - "\u4E2D\u56FD\u6A21\u7279_kaelvinsmixhc_releaseV10"
+        - "\u52A8\u6F2B_UnstableInkDream_unstableinkdream_v6"
+        - "\u52A8\u6F2B_\u539A\u6D82\u98CE\u683C_dalcefoPainting_v4"
+        - "\u7EFC\u5408_anythingV3_fp16"
+        - "\u7EFC\u5408_anythingV3Inpainting_1-inpainting"
+        - "\u98CE\u683C\u5316\u4EBA\u50CF_portrait_10"
+        - Girl_luckyStrikeMix_V02Realistic
+        - ChilloutMix_chilloutmix_NiPrunedFp32Fix
+        - "\u52A8\u6F2B_experience_70"
+        - Dreamlike_cheeseDaddys_35
+        - Dreamlike_dreamlikeDiffusion10_10
+        currentIndex: 2
+        Model: Girl_chilloutmix_NiCkpt
+    - rid: 7516382800115925151
+      type: {class: SDTxt2ImgNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 24a4a3d5-0f42-4b7a-b73e-60fdd4a9ad56
+        computeOrder: 6
+        position:
+          serializedVersion: 2
+          x: 1169.8137
+          y: 344.66663
+          width: 195.33337
+          height: 241.33331
+        expanded: 1
+        debug: 0
+        nodeLock: 0
+        prompt:
+          positive: 
+          negative: 
+        width: 512
+        height: 512
+        step: 20
+        cfg: 7
+        seed: -1
+        outputImage: {fileID: 0}
+        outSeed: 7192681198340694314
+        SamplerMethod: Euler
+        progress: NaN
+        speed: -0
+        init_speed: 0
+        cur_step: 19
+        isExecuting: 0
+    - rid: 7516382800115925152
+      type: {class: SDPromptNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: dfb0b1ab-7c0e-493f-827f-2fd46261f33a
+        computeOrder: 4
+        position:
+          serializedVersion: 2
+          x: 877.8137
+          y: 597.3333
+          width: 141.33331
+          height: 101.33331
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        positive: 4k
+        negative: 
+        output:
+          positive: 
+          negative: 
+    - rid: 7516382800115925153
+      type: {class: StringNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: b86a65c7-0980-4599-9576-720008182f50
+        computeOrder: 3
+        position:
+          serializedVersion: 2
+          x: 582.4804
+          y: 507.3333
+          width: 216
+          height: 180
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        output: 4k
+    - rid: 7516382800115925154
+      type: {class: StringNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 28028414-14cc-4835-8890-bc82d13abc24
+        computeOrder: 2
+        position:
+          serializedVersion: 2
+          x: 582.4804
+          y: 703.3333
+          width: 216
+          height: 180
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        output: 
+    - rid: 7516382800115925155
+      type: {class: ForLoopNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 7df64bb9-e3aa-4c57-9c63-1ee96f93d12b
+        computeOrder: 5
+        position:
+          serializedVersion: 2
+          x: 587.8137
+          y: 261.99994
+          width: 210.66669
+          height: 165.33331
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        start: 0
+        end: 100
+        index: 4
+    - rid: 7516382800115925159
+      type: {class: SDPreviewNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 4840d411-1cdc-4bd0-ac96-3789bcda1adb
+        computeOrder: 7
+        position:
+          serializedVersion: 2
+          x: 1456.2609
+          y: 392.92752
+          width: 138.66663
+          height: 101.33334
+        expanded: 1
+        debug: 0
+        nodeLock: 0
+        input: {fileID: 0}
+        seed: 0
+        outImage: {fileID: 0}

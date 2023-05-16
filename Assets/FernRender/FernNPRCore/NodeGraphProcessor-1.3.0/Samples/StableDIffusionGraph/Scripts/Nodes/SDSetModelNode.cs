@@ -41,16 +41,16 @@ namespace FernNPRCore.SDNodeGraph
 
 		protected override void Process()
 		{
-			EditorCoroutineUtility.StartCoroutine(SetModelAsync(ServerURL, ProcessFinished), this);
+			EditorCoroutineUtility.StartCoroutine(SetModelAsync(Model, null), this);
+            SDUtil.Log("Set Model");
 		}
-        
 		
 		public void GetModelList(UnityAction action = null)
         {
             GetPort(nameof(ServerURL), null).PushData();
 			EditorCoroutineUtility.StartCoroutine(ListModelsAsync(action), this);
 		}
-		
+		 
 		/// <summary>
         /// Get the list of available Stable Diffusion models.
         /// </summary>
@@ -135,7 +135,6 @@ namespace FernNPRCore.SDNodeGraph
                 SDUtil.Log("Model is null");
                 yield return null;
             }
-
             try
             {
                 // Tell Stable Diffusion to use the specified model using an HTTP POST request
@@ -171,7 +170,7 @@ namespace FernNPRCore.SDNodeGraph
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
                         string result = streamReader.ReadToEnd();
-                        SDUtil.Log(result);
+                        SDUtil.Log(result, false);
                     }
                 }
             }
@@ -182,5 +181,4 @@ namespace FernNPRCore.SDNodeGraph
             callback?.Invoke();
         }
 	}
-
 }

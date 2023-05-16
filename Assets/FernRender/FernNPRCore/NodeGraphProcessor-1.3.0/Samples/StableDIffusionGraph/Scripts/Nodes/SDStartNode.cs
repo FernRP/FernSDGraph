@@ -22,10 +22,8 @@ using SDUtil = FernNPRCore.SDNodeGraph.SDUtil;
 namespace FernNPRCore.SDNodeGraph
 {
 	[System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Start")]
-	public class SDStartNode : WaitableNode, IConditionalNode
+	public class SDStartNode : WaitableNode
 	{
-		[Output(name = "Executes")]
-		public ConditionalLink		executes;
 		[Output(name = "Server URL")] 
 		public string outServerURL = "http://127.0.0.1:7860";
 		
@@ -59,16 +57,7 @@ namespace FernNPRCore.SDNodeGraph
 				SDGraphResource.SdGraphDataHandle.OverrideSettings = false;
 				outServerURL = SDGraphResource.SdGraphDataHandle.serverURL;
 			}
-			
-			// Return all the nodes connected to the executes port
+			SDUtil.Log("SD Start");
 		}
-
-		public override IEnumerable< ConditionalNode >GetExecutedNodes()
-		{
-			base.GetExecutedNodes();
-			return GetOutputNodes().OfType<ConditionalNode>();
-		}
-		
-		public override FieldInfo[] GetNodeFields() => base.GetNodeFields();
 	}
 }
