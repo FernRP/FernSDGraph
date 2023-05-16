@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FernGraph;
 using UnityEngine;
 
@@ -8,27 +9,31 @@ namespace FernNPRCore.StableDiffusionGraph
     [Serializable]
     public struct PromptData
     {
-        public string word;
-        public float  weight;
-        public int    color;
+        public string       word;
+        public float        weight;
+        public bool         end;
+        public float        process;
 
-        public void SetData(string word, float weight, int color)
-        {
-            this.word = word;
-            this.weight = weight;
-            this.color = color;
-        }
-        public void SetData(string word)
-        {
-            this.word = word;
-        }
-        public void SetData(float weight)
+        public int          color;
+        public PromptData SetWeight(float weight)
         {
             this.weight = weight;
+            return this;
         }
-        public void SetData(int color)
+        public PromptData SetColor(int color)
         {
             this.color = color;
+            return this;
+        }
+        public PromptData SetProcess(float process)
+        {
+            this.process = process;
+            return this;
+        }
+        public PromptData SetProcessType(bool end)
+        {
+            this.end = end;
+            return this;
         }
     }
     [Node(Path = "SD Standard")]
