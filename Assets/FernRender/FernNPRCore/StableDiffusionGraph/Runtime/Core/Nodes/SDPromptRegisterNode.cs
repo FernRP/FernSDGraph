@@ -36,13 +36,19 @@ namespace FernNPRCore.StableDiffusionGraph
             return this;
         }
     }
+
+    [Serializable]
+    public class PromptRegisterData : ScriptableObject
+    {
+        public List<PromptData> positiveDatas = new List<PromptData>();
+        public List<PromptData> negativeDatas = new List<PromptData>();
+    }
+    
     [Node(Path = "SD Standard")]
     [Tags("SD Node")]
     public class SDPromptRegisterNode : Node
     {
-        public List<PromptData> positiveDatas = new List<PromptData>();
-        public List<PromptData> negativeDatas = new List<PromptData>();
-        
+        public PromptRegisterData RegisterData = ScriptableObject.CreateInstance<PromptRegisterData>();
         public Prompt Prompt = new Prompt();
         [Output] public string Positive;
         [Output] public string Negative;

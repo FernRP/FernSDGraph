@@ -2,15 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
-using Codice.CM.Client.Differences;
 using FernGraph;
 using FernGraph.Editor;
 using FernNPRCore.StableDiffusionGraph;
 using Unity.EditorCoroutines.Editor;
-using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -30,6 +26,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
         private List<List<string>> config_negative;
         private Dictionary<string, string> CN2EN;
         private List<TagData> tags;
+        private SDPromptRegisterNode cur_register;
         
         
         public struct TagData
@@ -186,18 +183,6 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
         {
             // Setup a container to render IMGUI content in 
             var container = new IMGUIContainer(OnGUI);
-            container.RegisterCallback<PointerMoveEvent>(evt =>
-            {
-                // if (evt.imguiEvent.type == EventType.MouseDrag)
-                // {
-                //     Debug.Log(evt.imguiEvent.type);
-                // }
-                // if (evt.imguiEvent.type == EventType.MouseMove)
-                // {
-                //     Debug.Log(evt.imguiEvent.type);
-                // }
-            });
-            
             extensionContainer.Add(container);
             
             var button = new Button(RefreshPrompt); // TODO: DraggableButton For Test, Should use Button(RefreshPrompt).
@@ -279,6 +264,71 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
             }
         }
 
+        #region DrawWord
+
+        
+        void DrawWord(List<PromptData> promptDatas, TagData word)
+        {
+            EditorGUILayout.BeginHorizontal();
+            var color = GUI.color;
+            var enWord = TryGetENWord(word.tag);
+            var showWord = enWord;
+            GetShowWord(ref showWord, 18);
+            if (word.col != -1)
+            {
+                GUI.color = (word.col < 7 ? colorConfigSearch[word.col] : colorConfigSearch[0]);
+            }
+            if (GUILayout.Button(new GUIContent(showWord, enWord)))
+            {
+                SetCurrentWord(promptDatas.Count);
+                RegisterUndo("prompt Add");
+                promptDatas.Add(new PromptData()
+                {
+                    word = word.tag,
+                });
+                refresh = true;
+
+            }
+            GUI.color = color;
+            EditorGUILayout.EndHorizontal();
+        }
+        void DrawWord(List<PromptData> promptDatas, string word)
+        {
+            EditorGUILayout.BeginHorizontal();
+            var color = GUI.color;
+            var enWord = TryGetENWord(word);
+            var showWord = enWord;
+            GetShowWord(ref showWord, 18);
+            if (GUILayout.Button(new GUIContent(showWord, enWord)))
+            {
+                SetCurrentWord(promptDatas.Count);
+                RegisterUndo("prompt Add");
+                promptDatas.Add(new PromptData()
+                {
+                    word = word,
+                });
+                refresh = true;
+
+            }
+            GUI.color = color;
+            EditorGUILayout.EndHorizontal();
+        }
+
+        private string TryGetENWord(string word)
+        {
+            if (CN2EN.ContainsKey(word))
+            {
+                return showInEn ? CN2EN[word] : word;
+            }
+            return word;
+        }
+
+
+        #endregion
+        
+        #region SearchWords
+
+        
         Vector2 s1;
         Vector2 s2;
         Vector2 s3;
@@ -439,60 +489,8 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
 
         private bool refresh = true;
     
-        void DrawWord(List<PromptData> promptDatas, TagData word)
-        {
-            EditorGUILayout.BeginHorizontal();
-            var color = GUI.color;
-            var enWord = TryGetENWord(word.tag);
-            var showWord = enWord;
-            GetShowWord(ref showWord, 18);
-            if (word.col != -1)
-            {
-                GUI.color = (word.col < 7 ? colorConfigSearch[word.col] : colorConfigSearch[0]);
-            }
-            if (GUILayout.Button(new GUIContent(showWord, enWord)))
-            {
-                SetCurrentWord(promptDatas.Count);
-                promptDatas.Add(new PromptData()
-                {
-                    word = word.tag,
-                });
-                refresh = true;
 
-            }
-            GUI.color = color;
-            EditorGUILayout.EndHorizontal();
-        }
-        void DrawWord(List<PromptData> promptDatas, string word)
-        {
-            EditorGUILayout.BeginHorizontal();
-            var color = GUI.color;
-            var enWord = TryGetENWord(word);
-            var showWord = enWord;
-            GetShowWord(ref showWord, 18);
-            if (GUILayout.Button(new GUIContent(showWord, enWord)))
-            {
-                SetCurrentWord(promptDatas.Count);
-                promptDatas.Add(new PromptData()
-                {
-                    word = word,
-                });
-                refresh = true;
-
-            }
-            GUI.color = color;
-            EditorGUILayout.EndHorizontal();
-        }
-
-        private string TryGetENWord(string word)
-        {
-            if (CN2EN.ContainsKey(word))
-            {
-                return showInEn ? CN2EN[word] : word;
-            }
-            return word;
-        }
-
+        #endregion
         private bool showInEn = false;
         private int toolBarIndex = 0;
         private List<TagData> searchwords;
@@ -529,6 +527,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
         void OnGUI()
         {
             if(Target is not SDPromptRegisterNode register) return;
+            cur_register = register;
             var config = toolBarIndex == 0 ? config_positive : config_negative;
             var len = config.Count;
             var modeMenus = new GUIContent[len + 1];
@@ -541,7 +540,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                     modeMenus[i + 1] = new GUIContent(line[0]);
                 }
             }
-            var promptDatas = toolBarIndex == 0 ? register.positiveDatas : register.negativeDatas;
+            var promptDatas = toolBarIndex == 0 ? register.RegisterData.positiveDatas : register.RegisterData.negativeDatas;
             var menusIndex = toolBarIndex == 0 ? positiveMenusIndex : negativeMenusIndex;
             EditorGUI.BeginChangeCheck();
             EditorGUILayout.BeginVertical();
@@ -630,6 +629,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
 
             if (GUILayout.Button(_iconDiscard, GUILayout.Width(26)))
             {
+                RegisterUndo("prompt Discard");
                 promptDatas.Clear();
                 SetCurrentWord(-1);
                 current_idx = -1;
@@ -656,6 +656,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
 
                 if (GUILayout.Button(_iconMinus, GUILayout.Width(20)))
                 {
+                    RegisterUndo("prompt Remove");
                     promptDatas.RemoveAt(current_idx);
                     refresh = true;
                     SetCurrentWord(-1);
@@ -676,6 +677,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                     var Weight = EditorGUILayout.Slider(promptDatas[current_idx].weight, -0.6f, 0.6f, GUILayout.Width(160));
                     if (EditorGUI.EndChangeCheck())
                     {
+                        RegisterUndo("prompt SetWeight");
                         promptDatas[current_idx] = promptDatas[current_idx].SetWeight(Weight);
                         refresh = true;
                     }
@@ -684,14 +686,18 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                     GUILayout.Space(4);
                     EditorGUILayout.BeginHorizontal(GUILayout.Width(160));
                     EditorGUILayout.LabelField("Process", new GUIStyle("helpbox"), GUILayout.Width(136));
-                    if (GUILayout.Button(promptDatas[current_idx].end ? "E":"S", GUILayout.Width(20)))
+                    if (GUILayout.Button(promptDatas[current_idx].end ? "E" : "S", GUILayout.Width(20)))
+                    {
+                        RegisterUndo("prompt SetProcessType");
                         promptDatas[current_idx] = promptDatas[current_idx].SetProcessType(!promptDatas[current_idx].end);
+                    }
                         
                     EditorGUILayout.EndHorizontal();
                     EditorGUI.BeginChangeCheck();
                     var Process = EditorGUILayout.Slider(promptDatas[current_idx].process, 0, 1, GUILayout.Width(160));
                     if (EditorGUI.EndChangeCheck())
                     {
+                        RegisterUndo("prompt SetProcess");
                         promptDatas[current_idx] = promptDatas[current_idx].SetProcess(Process);
                         refresh = true;
                     }
@@ -733,8 +739,9 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
             EditorGUILayout.EndVertical();
             if (EditorGUI.EndChangeCheck())
             {
-                register.Prompt.positive = RegisterPrompt(register.positiveDatas);
-                register.Prompt.negative = RegisterPrompt(register.negativeDatas);
+                
+                register.Prompt.positive = RegisterPrompt(register.RegisterData.positiveDatas);
+                register.Prompt.negative = RegisterPrompt(register.RegisterData.negativeDatas);
             }
         }
 
@@ -779,6 +786,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                     else
                         prompt_col |= promptCol;
                     
+                    RegisterUndo("prompt SetColor");
                     promptDatas[wordIdx] = promptDatas[wordIdx].SetColor(prompt_col);
                     refresh = true;
                 }
@@ -1009,6 +1017,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                         if (currentIdx == selected_idx)
                             SetCurrentWord(insert_idx);
                         
+                        RegisterUndo("prompt sort");
                         promptDatas.RemoveAt(selected_idx);
                         promptDatas.Insert(insert_idx, promptData);
                         selected_idx = insert_idx;
@@ -1021,6 +1030,11 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
             }
         }
 
+        public void RegisterUndo(string tag)
+        {
+            // undo is to slow
+            // Undo.RecordObject(cur_register.RegisterData, tag);
+        }
         public void SetCurrentWord(int idx)
         {
             if (toolBarIndex == 0)
