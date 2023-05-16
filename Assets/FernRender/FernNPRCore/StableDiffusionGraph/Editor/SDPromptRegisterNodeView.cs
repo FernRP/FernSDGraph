@@ -770,13 +770,13 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                 var promptCol = 1 << i;
                 var contains_col = (prompt_col & promptCol) != 0;
                 var show_col = colorConfig[i];
-                show_col.r *= contains_col ? 2f : 0.5f;
-                show_col.g *= contains_col ? 2f : 0.5f;
-                show_col.b *= contains_col ? 2f : 0.5f;
-                show_col.a *= contains_col ? 2f : 0.5f;
+                show_col.r *= contains_col ? 1f : 0.5f;
+                show_col.g *= contains_col ? 1f : 0.5f;
+                show_col.b *= contains_col ? 1f : 0.5f;
+                show_col.a *= contains_col ? 1f : 0.5f;
                 GUI.color = show_col;
-
-                if (GUILayout.Button(new GUIContent("", colorConfigStr[i]), GUILayout.Width(20)))
+                var controlRect = EditorGUILayout.GetControlRect(GUILayout.Width(20));
+                if (GUI.Button(controlRect, new GUIContent("", colorConfigStr[i])))
                 {
                     if (contains_col)
                         prompt_col &= ~promptCol;
@@ -786,8 +786,13 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                     promptDatas[wordIdx] = promptDatas[wordIdx].SetColor(prompt_col);
                     refresh = true;
                 }
+                GUI.color = color;
+                controlRect.height = 2;
+                controlRect.width = 2;
+                controlRect.x += controlRect.width - 2;
+                controlRect.y += 2;
+                EditorGUI.DrawRect(controlRect, contains_col ? Color.green : Color.red);
             }
-            GUI.color = color;
             EditorGUILayout.EndHorizontal();
             if (nextIndex < colorConfigStr.Length)
             {
