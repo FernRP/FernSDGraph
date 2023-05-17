@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using NodeGraphProcessor.Examples;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEngine.Experimental.Rendering;
@@ -18,28 +19,39 @@ using Object = UnityEngine.Object;
 namespace FernNPRCore.SDNodeGraph
 {
 	[System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Img2Img")]
-	public class SDImg2ImgNode : BaseNode
+	public class SDImg2ImgNode : LinearSDProcessorNode
 	{
-		public override string		name => "SD Img2Img";
+		public override string		name => "SD Img2Img"; 
 		
 		[Input("Image")] public Texture2D InputImage;
 		[Input("Mask")] public Texture2D MaskImage;
 		[Input("ControlNet")] public ControlNetData controlNetData;
 		[Input("Prompt")] public Prompt prompt;
-		[Input("Step")] public int step = 20;
-		[Input("CFG")] public int cfg = 7;
-		[Input("Denoising Strength")] public float denisoStrength = 0.75f;
-		[Input("Width")] public int width = 512;
-		[Input("Height")] public int height = 512;
+		[Input("Step"), ShowAsDrawer] public int step = 20;
+		[Input("CFG"), ShowAsDrawer] public int cfg = 7;
+		[Input("Denoising Strength"), ShowAsDrawer] public float denisoStrength = 0.75f;
+		[Input("Width"), ShowAsDrawer] public int width = 512;
+		[Input("Height"), ShowAsDrawer] public int height = 512;
+		[Input("Seed")] public long seed = -1;
+		
 		[Output("Image")] public Texture2D outputImage;
 		[Output("Seed")] public long outSeed;
 		
-		public long Seed = -1;
-		public string SamplerMethod = "Euler";
+		[HideInInspector]
+		public string samplerMethod = "Euler";
+		
+		[ChangeEvent(true)]
+		public bool Inpaint = false;
+		
+		[VisibleIf(nameof(Inpaint), true)]
 		public int inpainting_fill = 0;
+		[VisibleIf(nameof(Inpaint), true)]
 		public bool inpaint_full_res = true;
+		[VisibleIf(nameof(Inpaint), true)]
 		public int inpaint_full_res_padding = 32;
+		[VisibleIf(nameof(Inpaint), true)]
 		public int inpainting_mask_invert = 0;
+		[VisibleIf(nameof(Inpaint), true)]
 		public int mask_blur = 0;
 		
 		public Action<long, long> OnUpdateSeedField;
@@ -75,7 +87,7 @@ namespace FernNPRCore.SDNodeGraph
 		
 		IEnumerator GenerateAsync()
         {
-            long seed = Seed;
+            long seed = this.seed;
             if (seed == -1)
                 seed = SDUtil.GenerateRandomLong(-1, Int64.MaxValue);
             // Generate the image
@@ -121,7 +133,7 @@ namespace FernNPRCore.SDNodeGraph
                         sd.height = Screen.height;
                         sd.seed = seed;
                         sd.tiling = false;
-                        sd.sampler_name = SamplerMethod;
+                        sd.sampler_name = samplerMethod;
                         sd.alwayson_scripts = new ALWAYSONSCRIPTS();
                         sd.alwayson_scripts.controlnet = new ControlNetDataArgs();
                         sd.alwayson_scripts.controlnet.args = new[] { controlNetData };
@@ -141,7 +153,7 @@ namespace FernNPRCore.SDNodeGraph
                         sd.height = Screen.height;
                         sd.seed = seed;
                         sd.tiling = false;
-                        sd.sampler_name = SamplerMethod;
+                        sd.sampler_name = samplerMethod;
                         byte[] maskImgBytes = MaskImage.EncodeToPNG();
                         maskImgString = Convert.ToBase64String(maskImgBytes);
                         sd.mask = maskImgString;
@@ -168,7 +180,7 @@ namespace FernNPRCore.SDNodeGraph
                         sd.height = Screen.height;
                         sd.seed = seed;
                         sd.tiling = false;
-                        sd.sampler_name = SamplerMethod;
+                        sd.sampler_name = samplerMethod;
 
                         json = JsonConvert.SerializeObject(sd);
                     }
@@ -238,7 +250,7 @@ namespace FernNPRCore.SDNodeGraph
                             if (!Directory.Exists(SDGraphResource.SdGraphDataHandle.SavePath))
                                 Directory.CreateDirectory(SDGraphResource.SdGraphDataHandle.SavePath);
                             File.WriteAllBytes($"{SDGraphResource.SdGraphDataHandle.SavePath}/img_{DateTime.Now.ToString("yyyyMMddHHmmss")}_{outSeed}.png", imageData);
-                            OnUpdateSeedField?.Invoke(Seed, outSeed);
+                            OnUpdateSeedField?.Invoke(this.seed, outSeed);
                         }
                     }
                     catch (Exception e)

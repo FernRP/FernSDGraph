@@ -29,6 +29,7 @@ namespace FernNPRCore.SDNodeGraph
 			previewContainer.AddToClassList("Preview");
 			controlsContainer.Add(previewContainer);
 			UpdateTexturePreview();
+			DrawDefaultInspector();
 		}
 		
 		void UpdateTexturePreview()

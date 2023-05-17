@@ -20,10 +20,9 @@ public class SDTxt2ImgNodeView : SDGraphNodeView
 	public override void Enable()
 	{
 		base.Enable();
-		DrawDefaultInspector();
 		node = nodeTarget as SDTxt2ImgNode;
 		
-		if (node != null) return;
+		if (node == null) return;
 		
 		List<string> samplerMethodList = new List<string>();
 		samplerMethodList.AddRange(SDGraphResource.SdGraphDataHandle.samplers);

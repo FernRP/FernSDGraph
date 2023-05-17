@@ -23,6 +23,7 @@ namespace FernNPRCore.SDNodeGraph
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Txt2Img")]
     public class SDTxt2ImgNode : LinearSDProcessorNode
     {
+        [Input(name = "ControlNet")] private ControlNetData controlNetData = null;
         [Input(name = "Prompt")] public Prompt prompt;
 
         [Input(name = "Width"), ShowAsDrawer] public int width = 512;
@@ -30,8 +31,6 @@ namespace FernNPRCore.SDNodeGraph
         [Input(name = "Step"), ShowAsDrawer] public int step = 20;
         [Input(name = "CFG"), ShowAsDrawer] public int cfg = 7;
         [Input(name = "Seed"), ShowAsDrawer] public long seed = -1;
-
-       
 
         [Output("Image")] public Texture2D outputImage;
         [Output("Seed")] public long outSeed;
@@ -47,7 +46,7 @@ namespace FernNPRCore.SDNodeGraph
         [HideInInspector] public bool isExecuting = false;
         [HideInInspector] public string samplerMethod = "Euler";
 
-        private ControlNetData controlNetData = null;
+       
 
         public override string name => "SD Txt2Img";
 

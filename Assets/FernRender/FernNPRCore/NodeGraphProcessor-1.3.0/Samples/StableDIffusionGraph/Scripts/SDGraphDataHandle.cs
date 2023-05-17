@@ -7,8 +7,6 @@ namespace FernNPRCore.SDNodeGraph
     [CreateAssetMenu(fileName = "SDGraphDataHandle", menuName = "ScriptableObjects/SDGraphDataHandle")]
     public class SDGraphDataHandle : ScriptableObject
     {
-        private static SDGraphDataHandle instance = null;
-        
         public string serverURL = "http://127.0.0.1:7860";
         public string ModelsAPI = "/sdapi/v1/sd-models";
         public string LorasAPI = "/sdapi/v1/loras";
