@@ -1,0 +1,238 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ce807aa272d442a8be212a8f48fbfe9, type: 3}
+  m_Name: favorite
+  m_EditorClassIdentifier: 
+  FavoriteData:
+  - title:
+      m_Text: "\u521D\u97F3(\u7EA2\u84DD\u53D1)"
+      m_Image: {fileID: 0}
+      m_Tooltip: "\u521D\u97F3(\u7EA2\u84DD\u53D1)"
+    positiveDatas:
+    - word: "\u6770\u4F5C"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u6700\u9AD8\u8D28\u91CF"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u5361\u901A"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u5355\u4E2A\u5973\u6027"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u521D\u97F3\u672A\u6765"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: hair
+      weight: 0
+      end: 0
+      process: 0
+      color: 33
+    - word: "\u989C\u8272\u80CC\u666Fs\uFF08\u9700\u8981\u586B\u5E95\u8272\uFF09"
+      weight: 0
+      end: 0
+      process: 0
+      color: 4
+    negativeDatas:
+    - word: "\u957F\u7ED3\u6784"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u4F4E\u5206\u8FA8\u7387"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u9519\u8BEF\u7ED3\u6784"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u9519\u8BEF\u624B\u90E8"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u88C1\u5207\u4E0D\u6B63"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u4F4E\u8D28\u91CF"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u6700\u5DEE\u8D28\u91CF"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+  - title:
+      m_Text: "\u521D\u97F3(\u7EA2\u84DD\u53D1)"
+      m_Image: {fileID: 0}
+      m_Tooltip: "\u521D\u97F3(\u7EA2\u84DD\u53D1)"
+    positiveDatas:
+    - word: "\u6770\u4F5C"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u6700\u9AD8\u8D28\u91CF"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u5361\u901A"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u5355\u4E2A\u5973\u6027"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u521D\u97F3\u672A\u6765"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: hair
+      weight: 0
+      end: 0
+      process: 0
+      color: 33
+    - word: "\u989C\u8272\u80CC\u666Fs\uFF08\u9700\u8981\u586B\u5E95\u8272\uFF09"
+      weight: 0
+      end: 0
+      process: 0
+      color: 4
+    negativeDatas:
+    - word: "\u957F\u7ED3\u6784"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u4F4E\u5206\u8FA8\u7387"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u9519\u8BEF\u7ED3\u6784"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u9519\u8BEF\u624B\u90E8"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u88C1\u5207\u4E0D\u6B63"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u4F4E\u8D28\u91CF"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u6700\u5DEE\u8D28\u91CF"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+  - title:
+      m_Text: "\u521D\u97F3"
+      m_Image: {fileID: 0}
+      m_Tooltip: "\u521D\u97F3"
+    positiveDatas:
+    - word: "\u6770\u4F5C"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u6700\u9AD8\u8D28\u91CF"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u5361\u901A"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u5355\u4E2A\u5973\u6027"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u521D\u97F3\u672A\u6765"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u989C\u8272\u80CC\u666Fs\uFF08\u9700\u8981\u586B\u5E95\u8272\uFF09"
+      weight: 0
+      end: 0
+      process: 0
+      color: 4
+    negativeDatas:
+    - word: "\u957F\u7ED3\u6784"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u4F4E\u5206\u8FA8\u7387"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u9519\u8BEF\u7ED3\u6784"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u9519\u8BEF\u624B\u90E8"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u88C1\u5207\u4E0D\u6B63"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u4F4E\u8D28\u91CF"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: "\u6700\u5DEE\u8D28\u91CF"
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
