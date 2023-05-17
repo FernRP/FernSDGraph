@@ -23,19 +23,35 @@ public class SDPreviewNodeView : BaseNodeView
 		node = nodeTarget as SDPreviewNode;
 		previewImage = new Image();
 		node.onProcessed += UpdateImageView;
+		OnExpandAction += OnExpandChange;
 		NotifyNodeChanged();
+	}
+
+	private void OnExpandChange(bool isExpand)
+	{
+		if (!expanded)
+		{
+			bottomPortContainer.Clear();
+			return;
+		}
+
+		UpdateImageView();
 	}
 
 	public override void Disable()
 	{
 		base.Disable();
 		node.onProcessed -= UpdateImageView;
+		OnExpandAction -= OnExpandChange;
 	}
 
 	void UpdateImageView()
 	{
-		var portView = node.GetPort(nameof(node.inputImage), null);
-		portView.PushData();
+		if(node.inputImage == null)
+		{
+			var portView = node.GetPort(nameof(node.inputImage), null);
+			portView.PushData();
+		}
 		if(node.inputImage == null) return;
 		if(bottomPortContainer.Contains(previewImage))
 			bottomPortContainer.Remove(previewImage);
@@ -50,11 +66,5 @@ public class SDPreviewNodeView : BaseNodeView
 		bool result = base.RefreshPorts();
 		UpdateImageView();
 		return result;
-	}
-
-	protected override void OnFieldChanged(string fieldName, object value)
-	{
-		base.OnFieldChanged(fieldName, value);
-		Debug.Log("1");
 	}
 }

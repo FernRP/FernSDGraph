@@ -16,11 +16,10 @@ MonoBehaviour:
   nodes:
   - rid: 7516382821651054596
   - rid: 7516382821651054597
-  - rid: 7516382821651054598
   - rid: 7516382821651054599
   - rid: 7516382821651054600
   - rid: 7516382821651054601
-  - rid: 7516382821651054602
+  - rid: 7516382823981514756
   edges:
   - GUID: 02cec8a9-ef29-4ebb-8ff6-ed211c474b7b
     owner: {fileID: 11400000}
@@ -28,22 +27,6 @@ MonoBehaviour:
     outputNodeGUID: 0ea403ad-d4d3-4770-8e12-6e0778794ef0
     inputFieldName: executed
     outputFieldName: executes
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: 728a0d6f-175a-4c24-bd57-a78ab1f80a56
-    owner: {fileID: 11400000}
-    inputNodeGUID: 6dfd848e-9359-469b-b277-0d0fed4c7831
-    outputNodeGUID: 93191640-d04c-43c8-a9ad-e4c2b031ceac
-    inputFieldName: executed
-    outputFieldName: executes
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: feece15a-2e5d-4dbd-adab-256fa94bcfc5
-    owner: {fileID: 11400000}
-    inputNodeGUID: 6dfd848e-9359-469b-b277-0d0fed4c7831
-    outputNodeGUID: e1a98d9e-f93e-422b-a597-5642cd831642
-    inputFieldName: prompt
-    outputFieldName: output
     inputPortIdentifier: 
     outputPortIdentifier: 
   - GUID: dc2ef112-b898-4021-800e-d2bd702956cb
@@ -62,31 +45,61 @@ MonoBehaviour:
     outputFieldName: output
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: 896229d2-035c-4e1f-bdf8-8ef3b5e90aa3
+  - GUID: f60e69a7-feba-4c34-85a2-616ebe005736
     owner: {fileID: 11400000}
-    inputNodeGUID: 3121b9ab-580a-4b01-b122-d436713c0d5a
-    outputNodeGUID: 6dfd848e-9359-469b-b277-0d0fed4c7831
+    inputNodeGUID: 51a36dd0-ea10-4c24-af44-4b3a7e43cd01
+    outputNodeGUID: 93191640-d04c-43c8-a9ad-e4c2b031ceac
     inputFieldName: executed
     outputFieldName: executes
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: c5fb28a6-171b-4351-b90e-2c04ff9ba004
+  - GUID: 80e3a201-7a7f-491b-9b77-3db3aecfda81
     owner: {fileID: 11400000}
-    inputNodeGUID: 3121b9ab-580a-4b01-b122-d436713c0d5a
-    outputNodeGUID: 6dfd848e-9359-469b-b277-0d0fed4c7831
-    inputFieldName: inputImage
-    outputFieldName: outputImage
+    inputNodeGUID: 51a36dd0-ea10-4c24-af44-4b3a7e43cd01
+    outputNodeGUID: e1a98d9e-f93e-422b-a597-5642cd831642
+    inputFieldName: prompt
+    outputFieldName: output
     inputPortIdentifier: 
     outputPortIdentifier: 
   groups: []
   stackNodes: []
-  pinnedElements: []
+  pinnedElements:
+  - position:
+      serializedVersion: 2
+      x: 1059
+      y: 121.000015
+      width: 150
+      height: 200
+    opened: 1
+    editorType:
+      serializedType: ConditionalProcessorView, Assembly-CSharp-Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  - position:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 150
+      height: 200
+    opened: 0
+    editorType:
+      serializedType: GraphProcessor.ExposedParameterView, com.alelievr.NodeGraphProcessor.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  - position:
+      serializedVersion: 2
+      x: 1065
+      y: 361
+      width: 150
+      height: 200
+    opened: 1
+    editorType:
+      serializedType: GraphProcessor.ProcessorView, com.alelievr.NodeGraphProcessor.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   exposedParameters: []
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: 220, y: 226, z: 0}
-  scale: {x: 0.65751624, y: 0.65751624, z: 1}
+  position: {x: 349.33334, y: 151.33333, z: 0}
+  scale: {x: 0.8430939, y: 0.8430939, z: 1}
   references:
     version: 2
     RefIds:
@@ -96,6 +109,10 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: 0ea403ad-d4d3-4770-8e12-6e0778794ef0
         computeOrder: 0
+        isPreviewCollapsed: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
         position:
           serializedVersion: 2
           x: -579.1782
@@ -105,6 +122,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        hasPreview: 0
         outServerURL: http://127.0.0.1:7860
         overrideSettings: 1
         serverURL: http://127.0.0.1:7860
@@ -117,15 +135,20 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: 93191640-d04c-43c8-a9ad-e4c2b031ceac
         computeOrder: 1
+        isPreviewCollapsed: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
         position:
           serializedVersion: 2
-          x: -278.51147
-          y: -223.83434
-          width: 181.33331
-          height: 146.66667
+          x: -147.33336
+          y: -224.00003
+          width: 181.33333
+          height: 149.33334
         expanded: 0
         debug: 0
         nodeLock: 0
+        hasPreview: 0
         ServerURL: 
         output: 0
         modelNames:
@@ -153,72 +176,51 @@ MonoBehaviour:
         - Girl_chilloutmix_NiCkpt
         currentIndex: 21
         Model: Girl_chilloutmix_NiCkpt
-    - rid: 7516382821651054598
-      type: {class: SDTxt2ImgNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
-      data:
-        nodeCustomName: 
-        GUID: 6dfd848e-9359-469b-b277-0d0fed4c7831
-        computeOrder: 5
-        position:
-          serializedVersion: 2
-          x: 496.11414
-          y: -74.666695
-          width: 195.33334
-          height: 241.33333
-        expanded: 0
-        debug: 0
-        nodeLock: 0
-        prompt:
-          positive: 
-          negative: 
-        width: 512
-        height: 512
-        step: 20
-        cfg: 7
-        seed: -1
-        outputImage: {fileID: 0}
-        outSeed: 0
-        SamplerMethod: Euler
-        progress: 0
-        speed: 0
-        init_speed: 0
-        cur_step: 0
-        isExecuting: 0
     - rid: 7516382821651054599
       type: {class: SDPromptNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
       data:
         nodeCustomName: 
         GUID: e1a98d9e-f93e-422b-a597-5642cd831642
         computeOrder: 4
+        isPreviewCollapsed: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
         position:
           serializedVersion: 2
-          x: 168.66666
-          y: 76.66669
-          width: 100
-          height: 100
+          x: -131.48344
+          y: 27.216648
+          width: 141.33333
+          height: 101.33334
         expanded: 0
         debug: 0
         nodeLock: 0
-        positive: 
-        negative: 
+        hasPreview: 0
+        positive: dog
+        negative: girl
         output:
-          positive: 
-          negative: 
+          positive: dog
+          negative: girl
     - rid: 7516382821651054600
       type: {class: StringNode, ns: , asm: Assembly-CSharp}
       data:
         nodeCustomName: 
         GUID: 95b4c31e-6e31-47b1-9c4e-bc3471de24b3
         computeOrder: 3
+        isPreviewCollapsed: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
         position:
           serializedVersion: 2
-          x: -153.33334
-          y: -2
-          width: 216
+          x: -560.6667
+          y: -7.344179
+          width: 216.00003
           height: 180
         expanded: 0
         debug: 0
         nodeLock: 0
+        hasPreview: 0
         output: dog
     - rid: 7516382821651054601
       type: {class: StringNode, ns: , asm: Assembly-CSharp}
@@ -226,31 +228,54 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: 72fcb63a-d036-4535-a3cd-14abb2afd6d8
         computeOrder: 2
+        isPreviewCollapsed: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
         position:
           serializedVersion: 2
-          x: -153.33331
-          y: 206.33331
-          width: 216
+          x: -560.6666
+          y: 199.96587
+          width: 216.00003
           height: 179.99998
         expanded: 0
         debug: 0
         nodeLock: 0
+        hasPreview: 0
         output: girl
-    - rid: 7516382821651054602
-      type: {class: SDPreviewNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+    - rid: 7516382823981514756
+      type: {class: SDTxt2ImgNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
       data:
         nodeCustomName: 
-        GUID: 3121b9ab-580a-4b01-b122-d436713c0d5a
-        computeOrder: 6
+        GUID: 51a36dd0-ea10-4c24-af44-4b3a7e43cd01
+        computeOrder: 5
+        isPreviewCollapsed: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
         position:
           serializedVersion: 2
-          x: 856.21674
-          y: -48.6667
-          width: 195.33337
-          height: 125.333336
-        expanded: 0
+          x: 254.9596
+          y: -87.33327
+          width: 265.33337
+          height: 517.3334
+        expanded: 1
         debug: 0
         nodeLock: 0
-        inputImage: {fileID: 0}
-        seed: 0
-        outImage: {fileID: 0}
+        hasPreview: 1
+        prompt:
+          positive: dog
+          negative: girl
+        width: 1024
+        height: 512
+        step: 20
+        cfg: 7
+        seed: -1
+        SamplerMethod: Euler
+        outputImage: {fileID: 0}
+        outSeed: 8588161468686605773
+        progress: NaN
+        speed: -0
+        init_speed: 0
+        cur_step: 19
+        isExecuting: 0

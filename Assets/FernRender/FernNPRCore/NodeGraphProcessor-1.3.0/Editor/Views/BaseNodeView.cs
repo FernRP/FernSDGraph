@@ -650,7 +650,10 @@ namespace GraphProcessor
 		}
 
 		public virtual void Enable(bool fromInspector = false) => DrawDefaultInspector(fromInspector);
-		public virtual void Enable() => DrawDefaultInspector(false);
+		public virtual void Enable()
+		{
+			DrawDefaultInspector(false);
+		}
 
 		public virtual void Disable() {}
 
@@ -1007,6 +1010,7 @@ namespace GraphProcessor
             }
 		}
 
+		public Action<bool> OnExpandAction;
 		public override bool	expanded
 		{
 			get { return base.expanded; }
@@ -1014,6 +1018,7 @@ namespace GraphProcessor
 			{
 				base.expanded = value;
 				nodeTarget.expanded = value;
+				OnExpandAction?.Invoke(value);
 			}
 		}
 

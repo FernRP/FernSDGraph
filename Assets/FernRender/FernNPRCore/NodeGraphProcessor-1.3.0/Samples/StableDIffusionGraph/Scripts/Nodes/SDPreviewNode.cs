@@ -31,7 +31,6 @@ namespace FernNPRCore.SDNodeGraph
 		{
 			base.Process();
 			GetPort(nameof(inputImage), null).PushData();
-			if(inputImage != null) Debug.Log(inputImage.width);
 		}
 	}
 }

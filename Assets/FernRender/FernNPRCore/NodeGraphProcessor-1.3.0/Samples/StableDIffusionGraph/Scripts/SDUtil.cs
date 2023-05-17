@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
+using GraphProcessor;
 using UnityEngine.Networking;
+using UnityEngine.UIElements;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -102,6 +104,13 @@ namespace FernNPRCore.SDNodeGraph
         {
             if(!isDebug) return;
             Debug.LogError($"{LOG}{log}");
+        }
+        
+        public static void ScheduleAutoHide(VisualElement target, BaseGraphView view)
+        {
+            target.schedule.Execute(() => {
+                target.visible = float.IsNaN(target.worldBound.x) || target.worldBound.Overlaps(view.worldBound);
+            }).Every(16); // refresh the visible for 60hz screens (should not cause problems for higher refresh rates)
         }
 
         public static string GetAssetPath(string absolutePath)

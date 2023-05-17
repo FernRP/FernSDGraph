@@ -56,7 +56,22 @@ namespace GraphProcessor
 
 		/// <summary>True if the node can be deleted, false otherwise</summary>
 		public virtual bool			deletable => true;
+		
+		public virtual Texture2D				previewTexture => null;
+		
+		public virtual bool					showPreviewExposure => false;
+		
+		[SerializeField, HideInInspector]
+		public bool							isPreviewCollapsed = false;
 
+		[SerializeField, HideInInspector]
+		public bool previewVisible = true;
+		
+		[SerializeField, HideInInspector]
+		public float previewEV100 = 0.0f;
+		[HideInInspector]
+		public float previewSlice = 0;
+		
 		/// <summary>
 		/// Container of input ports
 		/// </summary>
@@ -82,6 +97,9 @@ namespace GraphProcessor
 		/// Node locked state
 		/// </summary>
         public bool                 nodeLock;
+
+		[HideInInspector]
+		public bool hasPreview = false;
 
         public delegate void		ProcessDelegate();
 
