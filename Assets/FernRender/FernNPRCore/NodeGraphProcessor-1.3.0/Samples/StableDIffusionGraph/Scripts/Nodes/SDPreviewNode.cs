@@ -13,9 +13,8 @@ namespace FernNPRCore.SDNodeGraph
 	[System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Preview")]
 	public class SDPreviewNode : WaitableNode
 	{
-		[ChangeEvent(true)]
-		[Input(name = "Image")]
-		public Texture2D input;
+		[Input(name = "Image"), ShowAsDrawer]
+		public Texture2D inputImage;
 		[Input(name = "Seed")]
 		public long seed;
 		[Output(name = "Image")]
@@ -26,17 +25,14 @@ namespace FernNPRCore.SDNodeGraph
 		protected override void Enable()
 		{
 			base.Enable();
-			onAfterEdgeConnected += (e) =>
-			{
-				
-			};
 		}
+		
 
 		protected override void Process()
 		{
 			base.Process();
-			GetPort(nameof(input), null).PushData();
-			if(input != null) Debug.Log(input.width);
+			GetPort(nameof(inputImage), null).PushData();
+			if(inputImage != null) Debug.Log(inputImage.width);
 		}
 	}
 }

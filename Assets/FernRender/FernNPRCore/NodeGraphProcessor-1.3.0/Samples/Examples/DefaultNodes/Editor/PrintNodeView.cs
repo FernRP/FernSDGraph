@@ -37,15 +37,15 @@ public class PrintNodeView : BaseNodeView
 	}
 }
 
-[NodeCustomEditor(typeof(ConditionalPrintNode))]
+[NodeCustomEditor(typeof(SDProcessorPrintNode))]
 public class ConditionalPrintNodeView : BaseNodeView
 {
 	Label		printLabel;
-	ConditionalPrintNode	printNode;
+	SDProcessorPrintNode	printNode;
 
 	public override void Enable()
 	{
-		printNode = nodeTarget as ConditionalPrintNode;
+		printNode = nodeTarget as SDProcessorPrintNode;
 
 		printLabel = new Label();
 		controlsContainer.Add(printLabel);

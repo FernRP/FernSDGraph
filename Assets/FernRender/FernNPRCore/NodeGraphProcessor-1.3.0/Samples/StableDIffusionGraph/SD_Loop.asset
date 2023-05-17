@@ -71,14 +71,6 @@ MonoBehaviour:
     outputFieldName: executeAfter
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: f23b384e-1931-40ae-b9f2-98b3439abbb2
-    owner: {fileID: 11400000}
-    inputNodeGUID: 4840d411-1cdc-4bd0-ac96-3789bcda1adb
-    outputNodeGUID: 24a4a3d5-0f42-4b7a-b73e-60fdd4a9ad56
-    inputFieldName: input
-    outputFieldName: outputImage
-    inputPortIdentifier: 
-    outputPortIdentifier: 
   - GUID: 7c5469d7-cf40-4382-8dbc-f4dbaaf7037b
     owner: {fileID: 11400000}
     inputNodeGUID: 4840d411-1cdc-4bd0-ac96-3789bcda1adb
@@ -315,6 +307,6 @@ MonoBehaviour:
         expanded: 1
         debug: 0
         nodeLock: 0
-        input: {fileID: 0}
+        inputImage: {fileID: 0}
         seed: 0
         outImage: {fileID: 0}

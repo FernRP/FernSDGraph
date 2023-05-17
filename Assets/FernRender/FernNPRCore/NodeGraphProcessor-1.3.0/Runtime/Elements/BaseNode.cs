@@ -89,6 +89,7 @@ namespace GraphProcessor
 		/// Triggered when the node is processes
 		/// </summary>
 		public event ProcessDelegate	onProcessed;
+		public event ProcessDelegate	onExecute;
 		public event Action< string, NodeMessageType >	onMessageAdded;
 		public event Action< string >					onMessageRemoved;
 		/// <summary>
@@ -636,8 +637,21 @@ namespace GraphProcessor
 
 			outputPorts.PushDatas();
 		}
+		
+		public void OnExecute()
+		{
+			inputPorts.PullDatas();
+
+			ExceptionToLog.Call(() => Execute());
+
+			InvokeOnProcessed(); // TODO: remove
+			InvokeOnExecute();
+
+			outputPorts.PushDatas();
+		}
 
 		public void InvokeOnProcessed() => onProcessed?.Invoke();
+		public void InvokeOnExecute() => onExecute?.Invoke();
 
 		/// <summary>
 		/// Called when the node is enabled
@@ -656,6 +670,9 @@ namespace GraphProcessor
 		/// Override this method to implement custom processing
 		/// </summary>
 		protected virtual void Process() {}
+		
+		// Execute is for Order Process
+		protected virtual void Execute() {}
 
 		#endregion
 

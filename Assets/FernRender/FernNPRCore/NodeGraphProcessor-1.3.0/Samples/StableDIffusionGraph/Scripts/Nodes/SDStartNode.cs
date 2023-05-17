@@ -22,7 +22,7 @@ using SDUtil = FernNPRCore.SDNodeGraph.SDUtil;
 namespace FernNPRCore.SDNodeGraph
 {
 	[System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Start")]
-	public class SDStartNode : WaitableNode
+	public class SDStartNode : LinearSDProcessorNode
 	{
 		[Output(name = "Server URL")] 
 		public string outServerURL = "http://127.0.0.1:7860";
@@ -41,7 +41,7 @@ namespace FernNPRCore.SDNodeGraph
 		
 		public override string		name => "SD Start";
 
-		protected override void Process()
+		protected override void Execute()
 		{
 			if (overrideSettings&&!string.IsNullOrEmpty(serverURL))
 			{
@@ -57,7 +57,6 @@ namespace FernNPRCore.SDNodeGraph
 				SDGraphResource.SdGraphDataHandle.OverrideSettings = false;
 				outServerURL = SDGraphResource.SdGraphDataHandle.serverURL;
 			}
-			SDUtil.Log("SD Start");
 		}
 	}
 }

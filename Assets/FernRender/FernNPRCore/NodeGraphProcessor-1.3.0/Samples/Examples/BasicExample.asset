@@ -39,22 +39,6 @@ MonoBehaviour:
   - rid: 22
   - rid: 23
   edges:
-  - GUID: 04cee6c7-b233-40e1-b41a-31f6093f1482
-    owner: {fileID: 11400000}
-    inputNodeGUID: 6398414c-0e45-44d7-a62f-3267016dbca1
-    outputNodeGUID: c2542e31-668d-4816-b7e9-f41dcdec423d
-    inputFieldName: obj
-    outputFieldName: color
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: 19132af0-9315-42ec-bc71-fafdacb3538e
-    owner: {fileID: 11400000}
-    inputNodeGUID: e277d5c6-386e-4f6b-bd63-af2353f3e4d8
-    outputNodeGUID: ab7c80f0-51fd-401a-9d67-0b6543025f87
-    inputFieldName: obj
-    outputFieldName: output
-    inputPortIdentifier: 
-    outputPortIdentifier: 
   - GUID: 7658160d-36a7-43aa-8fda-fd2de9cbdda3
     owner: {fileID: 11400000}
     inputNodeGUID: 95bce55f-47d9-4c5d-bdcd-1f5bbbf57d1b
@@ -143,6 +127,22 @@ MonoBehaviour:
     outputFieldName: output
     inputPortIdentifier: 
     outputPortIdentifier: 
+  - GUID: c9f20051-969e-486f-896d-a5d9b9811ff1
+    owner: {fileID: 11400000}
+    inputNodeGUID: 6398414c-0e45-44d7-a62f-3267016dbca1
+    outputNodeGUID: c2542e31-668d-4816-b7e9-f41dcdec423d
+    inputFieldName: obj
+    outputFieldName: color
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: db52ae77-dcb2-4a17-bbae-57f2be414904
+    owner: {fileID: 11400000}
+    inputNodeGUID: e277d5c6-386e-4f6b-bd63-af2353f3e4d8
+    outputNodeGUID: ab7c80f0-51fd-401a-9d67-0b6543025f87
+    inputFieldName: obj
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 
   groups:
   - title: New Comment Block
     color: {r: 0, g: 0, b: 0, a: 0}
@@ -189,8 +189,8 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   - position:
       serializedVersion: 2
-      x: 0
-      y: 35
+      x: 29
+      y: 476.99997
       width: 294
       height: 345
     opened: 1
@@ -199,8 +199,8 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   - position:
       serializedVersion: 2
-      x: 0
-      y: 380
+      x: 16
+      y: 246
       width: 150
       height: 200
     opened: 1
@@ -318,8 +318,8 @@ MonoBehaviour:
     title: New Sticky Note
     content: Write your text here
   nodeInspectorReference: {fileID: 0}
-  position: {x: 222.66667, y: 206.66667, z: 0}
-  scale: {x: 0.49717674, y: 0.49717674, z: 1}
+  position: {x: 109.333336, y: -1132.6666, z: 0}
+  scale: {x: 1.7490063, y: 1.7490063, z: 1}
   references:
     version: 2
     RefIds:
@@ -340,7 +340,7 @@ MonoBehaviour:
         expanded: 1
         debug: 0
         nodeLock: 0
-        color: {r: 1, g: 0, b: 0.25098038, a: 1}
+        color: {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 1}
     - rid: 1
       type: {class: FloatNode, ns: , asm: Assembly-CSharp}
       data:
@@ -415,10 +415,10 @@ MonoBehaviour:
         computeOrder: 6
         position:
           serializedVersion: 2
-          x: 337.5
-          y: -129
-          width: 74
-          height: 90
+          x: 265.2925
+          y: -130.00002
+          width: 188.66669
+          height: 90.666664
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -430,10 +430,10 @@ MonoBehaviour:
         computeOrder: 7
         position:
           serializedVersion: 2
-          x: 935.768
-          y: 0.11590576
+          x: 918.75616
+          y: 10.089468
           width: 137.33331
-          height: 226.66667
+          height: 226.66666
         expanded: 1
         debug: 0
         nodeLock: 0
@@ -447,9 +447,9 @@ MonoBehaviour:
         computeOrder: 8
         position:
           serializedVersion: 2
-          x: 931.3334
-          y: 399.66663
-          width: 103.99994
+          x: 920.26843
+          y: 297.07623
+          width: 104.00006
           height: 101.33331
         expanded: 1
         debug: 0
@@ -765,8 +765,8 @@ MonoBehaviour:
         acceptDrop: 1
         acceptNewNode: 1
         nodeGUIDs:
-        - ffd2cf4b-87c3-42a6-9822-04bae7a5700b
         - 42eb43b8-ac7e-4f38-b49b-26ba1bc42732
+        - ffd2cf4b-87c3-42a6-9822-04bae7a5700b
         - e99da4fb-6a11-4b19-8594-f37f55d96114
     - rid: 25
       type: {class: FloatParameter, ns: GraphProcessor, asm: com.alelievr.NodeGraphProcessor.Runtime}

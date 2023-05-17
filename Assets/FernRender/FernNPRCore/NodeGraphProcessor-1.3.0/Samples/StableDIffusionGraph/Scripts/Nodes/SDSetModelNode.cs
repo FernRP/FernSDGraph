@@ -20,7 +20,7 @@ namespace FernNPRCore.SDNodeGraph
 {
 	
 	[System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Set Model")]
-	public class SDSetModelNode : WaitableNode
+	public class SDSetModelNode : LinearSDProcessorNode
 	{
 		[Input("Server URL")] public string ServerURL;
 
@@ -39,10 +39,9 @@ namespace FernNPRCore.SDNodeGraph
 		public override string	name => "SD Set Model";
 
 
-		protected override void Process()
+		protected override void Execute()
 		{
 			EditorCoroutineUtility.StartCoroutine(SetModelAsync(Model, null), this);
-            SDUtil.Log("Set Model");
 		}
 		
 		public void GetModelList(UnityAction action = null)
@@ -61,8 +60,8 @@ namespace FernNPRCore.SDNodeGraph
             try
             {
                 string serverUrl = "http://127.0.0.1:7860";
-                serverUrl = string.IsNullOrEmpty(ServerURL) ?  SDDataHandle.Instance.GetServerURL() : ServerURL;
-                string url = serverUrl + SDDataHandle.Instance.ModelsAPI;
+                serverUrl = string.IsNullOrEmpty(ServerURL) ?  SDGraphResource.SdGraphDataHandle.GetServerURL() : ServerURL;
+                string url = serverUrl + SDGraphResource.SdGraphDataHandle.ModelsAPI;
 
                 httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
                 httpWebRequest.ContentType = "application/json";
@@ -170,7 +169,7 @@ namespace FernNPRCore.SDNodeGraph
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
                         string result = streamReader.ReadToEnd();
-                        SDUtil.Log(result, false);
+                        SDUtil.Log("Set Model");
                     }
                 }
             }

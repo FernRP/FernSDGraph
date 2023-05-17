@@ -43,14 +43,6 @@ MonoBehaviour:
     outputFieldName: output
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: eb0eba4c-a6ff-42a9-bb43-baf123624e93
-    owner: {fileID: 11400000}
-    inputNodeGUID: a0a977d7-c1bd-45b5-8c08-e459ebf1f01f
-    outputNodeGUID: a4146b00-d209-4dcf-bd8c-4fa0543b6639
-    inputFieldName: obj
-    outputFieldName: output
-    inputPortIdentifier: 
-    outputPortIdentifier: 
   - GUID: 668c47f3-1292-465b-8e5c-7a4709191a78
     owner: {fileID: 11400000}
     inputNodeGUID: 868ea8cb-9ddb-4cd2-a63a-56bef7bd3461
@@ -82,6 +74,14 @@ MonoBehaviour:
     inputFieldName: inputs
     outputFieldName: output
     inputPortIdentifier: 0
+    outputPortIdentifier: 
+  - GUID: 47be998b-6d08-425e-b04d-16895e92421f
+    owner: {fileID: 11400000}
+    inputNodeGUID: a0a977d7-c1bd-45b5-8c08-e459ebf1f01f
+    outputNodeGUID: a4146b00-d209-4dcf-bd8c-4fa0543b6639
+    inputFieldName: obj
+    outputFieldName: output
+    inputPortIdentifier: 
     outputPortIdentifier: 
   groups: []
   stackNodes: []
@@ -130,8 +130,8 @@ MonoBehaviour:
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: -10, y: 262.66666, z: 0}
-  scale: {x: 0.7561437, y: 0.7561437, z: 1}
+  position: {x: -230, y: 230.66667, z: 0}
+  scale: {x: 0.8695652, y: 0.8695652, z: 1}
   references:
     version: 2
     RefIds:
@@ -150,7 +150,7 @@ MonoBehaviour:
         expanded: 1
         debug: 0
         nodeLock: 0
-        output: 1
+        output: 0
         input: 0
     - rid: 91303740759080987
       type: {class: VectorNode, ns: , asm: Assembly-CSharp}
@@ -167,8 +167,8 @@ MonoBehaviour:
         expanded: 0
         debug: 1
         nodeLock: 0
-        output: {x: 1, y: 1, z: 1, w: 1}
-        input: {x: 1, y: 1, z: 1, w: 1}
+        output: {x: 0, y: 0, z: 0, w: 0}
+        input: {x: 0, y: 0, z: 0, w: 0}
     - rid: 91303740759080988
       type: {class: VectorNode, ns: , asm: Assembly-CSharp}
       data:
@@ -202,7 +202,7 @@ MonoBehaviour:
         debug: 0
         nodeLock: 0
         output: 21
-        input: 0
+        input: 21
     - rid: 91303740759080990
       type: {class: PrintNode, ns: , asm: Assembly-CSharp}
       data:
@@ -312,8 +312,8 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
-        input: 1
-        output: 42
+        input: 0
+        output: 0
     - rid: 91303740759080997
       type: {class: CustomPortsNode, ns: , asm: Assembly-CSharp}
       data:

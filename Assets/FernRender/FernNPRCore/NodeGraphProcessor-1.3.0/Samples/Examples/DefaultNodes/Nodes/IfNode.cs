@@ -7,7 +7,7 @@ using NodeGraphProcessor.Examples;
 using UnityEngine.Rendering;
 
 [System.Serializable, NodeMenuItem("Conditional/If"), NodeMenuItem("Conditional/Branch")]
-public class IfNode : ConditionalNode
+public class IfNode : SDProcessorNode
 {
 	[Input(name = "Condition")]
     public bool				condition;
@@ -22,12 +22,12 @@ public class IfNode : ConditionalNode
 
 	public override string		name => "If";
 
-	public override IEnumerable< ConditionalNode >	GetExecutedNodes()
+	public override IEnumerable< SDProcessorNode >	GetExecutedNodes()
 	{
 		string fieldName = condition ? nameof(@true) : nameof(@false);
 
 		// Return all the nodes connected to either the true or false node
 		return outputPorts.FirstOrDefault(n => n.fieldName == fieldName)
-			.GetEdges().Select(e => e.inputNode as ConditionalNode);
+			.GetEdges().Select(e => e.inputNode as SDProcessorNode);
 	}
 }

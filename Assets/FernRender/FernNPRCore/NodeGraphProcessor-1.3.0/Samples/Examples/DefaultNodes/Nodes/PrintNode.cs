@@ -14,7 +14,7 @@ public class PrintNode : BaseNode
 }
 
 [NodeMenuItem("Conditional/Print")]
-public class ConditionalPrintNode : LinearConditionalNode
+public class SDProcessorPrintNode : LinearSDProcessorNode
 {
 	[Input]
 	public object	obj;

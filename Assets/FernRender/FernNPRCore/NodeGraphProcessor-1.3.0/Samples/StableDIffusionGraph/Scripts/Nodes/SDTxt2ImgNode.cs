@@ -178,18 +178,18 @@ namespace FernNPRCore.SDNodeGraph
             try
             {
                 // Make a HTTP POST request to the Stable Diffusion server
-                //var txt2ImgAPI = controlNet == defaultControlNet ? SDDataHandle.Instance.TextToImageAPI : SDDataHandle.Instance.ControlNetTex2Img;
-                var txt2ImgAPI = SDDataHandle.Instance.TextToImageAPI;
-                httpWebRequest = (HttpWebRequest)WebRequest.Create(SDDataHandle.Instance.GetServerURL() + txt2ImgAPI);
+                //var txt2ImgAPI = controlNet == defaultControlNet ? SDGraphResource.SdGraphDataHandle.TextToImageAPI : SDGraphResource.SdGraphDataHandle.ControlNetTex2Img;
+                var txt2ImgAPI = SDGraphResource.SdGraphDataHandle.TextToImageAPI;
+                httpWebRequest = (HttpWebRequest)WebRequest.Create(SDGraphResource.SdGraphDataHandle.GetServerURL() + txt2ImgAPI);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
                 httpWebRequest.Timeout = 1000 * 60 * 5; 
 
                 // add auth-header to request
-                if (SDDataHandle.Instance.GetUseAuth() && !string.IsNullOrEmpty(SDDataHandle.Instance.GetUserName()) && !string.IsNullOrEmpty(SDDataHandle.Instance.GetPassword()))
+                if (SDGraphResource.SdGraphDataHandle.GetUseAuth() && !string.IsNullOrEmpty(SDGraphResource.SdGraphDataHandle.GetUserName()) && !string.IsNullOrEmpty(SDGraphResource.SdGraphDataHandle.GetPassword()))
                 {
                     httpWebRequest.PreAuthenticate = true;
-                    byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDDataHandle.Instance.GetUserName() + ":" + SDDataHandle.Instance.GetPassword());
+                    byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDGraphResource.SdGraphDataHandle.GetUserName() + ":" + SDGraphResource.SdGraphDataHandle.GetPassword());
                     string encodedCredentials = Convert.ToBase64String(bytesToEncode);
                     httpWebRequest.Headers.Add("Authorization", "Basic " + encodedCredentials);
                 }
@@ -296,10 +296,11 @@ namespace FernNPRCore.SDNodeGraph
 
                             // Read the seed that was used by Stable Diffusion to generate this result
                             outSeed = info.seed;
-                            if (!Directory.Exists(SDDataHandle.Instance.SavePath))
-                                Directory.CreateDirectory(SDDataHandle.Instance.SavePath);
-                            File.WriteAllBytes($"{SDDataHandle.Instance.SavePath}/img_{DateTime.Now.ToString("yyyyMMddHHmmss")}_{outSeed}.png", imageData);
+                            if (!Directory.Exists(SDGraphResource.SdGraphDataHandle.SavePath))
+                                Directory.CreateDirectory(SDGraphResource.SdGraphDataHandle.SavePath);
+                            File.WriteAllBytes($"{SDGraphResource.SdGraphDataHandle.SavePath}/img_{DateTime.Now.ToString("yyyyMMddHHmmss")}_{outSeed}.png", imageData);
                             OnUpdateSeedField?.Invoke(this.seed,outSeed);
+                            SDUtil.Log("Txt 2 Img");
                         }
                     }
                     catch (Exception e)
@@ -315,7 +316,6 @@ namespace FernNPRCore.SDNodeGraph
         {
             GetPort(nameof(prompt), null).PushData();
             EditorCoroutineUtility.StartCoroutine(GenerateAsync(null), this);
-            SDUtil.Log("Txt 2 Img");
         }
     }
 }

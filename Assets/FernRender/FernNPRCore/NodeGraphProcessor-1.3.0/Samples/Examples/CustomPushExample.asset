@@ -26,14 +26,6 @@ MonoBehaviour:
   - rid: 9
   - rid: 10
   edges:
-  - GUID: 035ee169-e916-40b5-aecc-831d072ea9ab
-    owner: {fileID: 11400000}
-    inputNodeGUID: e2203ce1-49be-41ea-814a-465faf267adb
-    outputNodeGUID: 7078860c-f7cb-4534-befd-da3c678d17ee
-    inputFieldName: obj
-    outputFieldName: outputRadians
-    inputPortIdentifier: 
-    outputPortIdentifier: 
   - GUID: af82447c-1ab3-423d-ab51-cd257c874ceb
     owner: {fileID: 11400000}
     inputNodeGUID: 0d8cd048-486b-4cce-9bd3-616bd2255d45
@@ -106,6 +98,14 @@ MonoBehaviour:
     outputFieldName: output
     inputPortIdentifier: 2
     outputPortIdentifier: 
+  - GUID: 82042ffe-2118-45d3-b967-97845bfe9c4a
+    owner: {fileID: 11400000}
+    inputNodeGUID: e2203ce1-49be-41ea-814a-465faf267adb
+    outputNodeGUID: 7078860c-f7cb-4534-befd-da3c678d17ee
+    inputFieldName: obj
+    outputFieldName: outputRadians
+    inputPortIdentifier: 
+    outputPortIdentifier: 
   groups: []
   stackNodes: []
   pinnedElements:
@@ -153,8 +153,8 @@ MonoBehaviour:
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: 152, y: 292, z: 0}
-  scale: {x: 1.15, y: 1.15, z: 1}
+  position: {x: 74, y: 207.33333, z: 0}
+  scale: {x: 1.520875, y: 1.520875, z: 1}
   references:
     version: 2
     RefIds:

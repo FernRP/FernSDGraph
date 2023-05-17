@@ -118,7 +118,7 @@ namespace NodeGraphProcessor.Examples
 					if(nodeDependenciesGathered.Contains(node))
 					{
 						// Execute the conditional node:
-						node.OnProcess();
+						node.OnExecute();
 						yield return node;
 	
 						// And select the next nodes to execute:

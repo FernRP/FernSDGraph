@@ -40,7 +40,7 @@ namespace FernNPRCore.SDNodeGraph
 		}
 
 		protected override void OnFieldChanged(string fieldName, object value)
-		{
+		{			
 			var node = nodeTarget as SDStartNode;
 			if(node == null) return;
 			if (fieldName == nameof(node.overrideSettings))

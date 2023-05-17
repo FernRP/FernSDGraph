@@ -111,7 +111,7 @@ MonoBehaviour:
     outputFieldName: output
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: 18b8bbdf-0695-4d94-b779-f7ba9a9b2179
+  - GUID: b9e552fe-5f46-4d6d-afe4-ab6f6a784317
     owner: {fileID: 11400000}
     inputNodeGUID: 084540bb-6cce-4ea9-b961-9df1d90a2925
     outputNodeGUID: 137117b3-67a0-4712-aad8-3342cad45c70
@@ -155,7 +155,7 @@ MonoBehaviour:
   - position:
       serializedVersion: 2
       x: 0
-      y: 41
+      y: 29
       width: 441
       height: 566
     opened: 1
@@ -164,11 +164,11 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   - position:
       serializedVersion: 2
-      x: 32
-      y: 434
+      x: 71
+      y: 559
       width: 150
       height: 200
-    opened: 0
+    opened: 1
     editorType:
       serializedType: GraphProcessor.ProcessorView, com.alelievr.NodeGraphProcessor.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -230,8 +230,8 @@ MonoBehaviour:
       rid: 27
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: 357.33334, y: 48.666668, z: 0}
-  scale: {x: 1, y: 1, z: 1}
+  position: {x: 74.666664, y: -170.66667, z: 0}
+  scale: {x: 1.15, y: 1.15, z: 1}
   references:
     version: 2
     RefIds:
@@ -284,7 +284,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
-        output: 534
+        output: 43.08
     - rid: 3
       type: {class: ParameterNode, ns: GraphProcessor, asm: com.alelievr.NodeGraphProcessor.Runtime}
       data:
@@ -317,7 +317,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
-        output: 0
+        output: 42
         input: 42
     - rid: 5
       type: {class: IfNode, ns: , asm: Assembly-CSharp}
