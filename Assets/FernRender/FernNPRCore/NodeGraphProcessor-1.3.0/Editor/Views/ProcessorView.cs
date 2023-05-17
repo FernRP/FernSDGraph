@@ -21,7 +21,7 @@ namespace GraphProcessor
 			processor = new ProcessGraphProcessor(graphView.graph);
 
 			graphView.computeOrderUpdated += processor.UpdateComputeOrder;
-
+	
 			Button	b = new Button(OnPlay) { name = "ActionButton", text = "Play !" };
 
 			content.Add(b);

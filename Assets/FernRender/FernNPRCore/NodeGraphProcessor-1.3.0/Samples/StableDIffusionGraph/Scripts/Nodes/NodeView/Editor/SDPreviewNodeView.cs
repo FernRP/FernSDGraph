@@ -14,60 +14,34 @@ using Unity.VisualScripting;
 public class SDPreviewNodeView : BaseNodeView
 {
 
-	private SDPreviewNode previewNode;
+	private SDPreviewNode node;
+	private Image previewImage;
 	
 	public override void Enable()
 	{
 		DrawDefaultInspector();
-		previewNode = nodeTarget as SDPreviewNode;
-		previewNode.onProcessed += UpdateImageView;
-	}
-
-	private void UpdateImageView(WaitableNode obj)
-	{
-		Debug.Log("1");
-		var portView = previewNode.GetPort(nameof(previewNode.inputImage), null);
-		portView.PushData();
-		if(previewNode.inputImage == null) return;
-		extensionContainer.Clear();
-		var previewImage = new Image();
-		previewImage.scaleMode = ScaleMode.ScaleAndCrop;
-		previewImage.image =previewNode.inputImage;
-		int scaleWidth = (int)((float)previewImage.image.width);
-		int scaleHeight = (int)((float)previewImage.image.height);
-		style.maxWidth = scaleWidth;
-		style.maxHeight = scaleHeight;
-		previewImage.style.maxWidth = scaleWidth;
-		var asptio = (float)previewImage.image.width / (float)scaleWidth;
-		previewImage.style.maxHeight = previewImage.image.height / asptio;
-		extensionContainer.Add(previewImage);
-		RefreshExpandedState();
+		node = nodeTarget as SDPreviewNode;
+		previewImage = new Image();
+		node.onProcessed += UpdateImageView;
+		NotifyNodeChanged();
 	}
 
 	public override void Disable()
 	{
 		base.Disable();
-		previewNode.onProcessed -= UpdateImageView;
+		node.onProcessed -= UpdateImageView;
 	}
 
-	
 	void UpdateImageView()
 	{
-		var portView = previewNode.GetPort(nameof(previewNode.inputImage), null);
+		var portView = node.GetPort(nameof(node.inputImage), null);
 		portView.PushData();
-		if(previewNode.inputImage == null) return;
-		extensionContainer.Clear();
-		var previewImage = new Image();
+		if(node.inputImage == null) return;
+		if(bottomPortContainer.Contains(previewImage))
+			bottomPortContainer.Remove(previewImage);
 		previewImage.scaleMode = ScaleMode.ScaleAndCrop;
-		previewImage.image =previewNode.inputImage;
-		int scaleWidth = (int)((float)previewImage.image.width);
-		int scaleHeight = (int)((float)previewImage.image.height);
-		style.maxWidth = scaleWidth;
-		style.maxHeight = scaleHeight;
-		previewImage.style.maxWidth = scaleWidth;
-		var asptio = (float)previewImage.image.width / (float)scaleWidth;
-		previewImage.style.maxHeight = previewImage.image.height / asptio;
-		extensionContainer.Add(previewImage);
+		previewImage.image = node.inputImage;
+		bottomPortContainer.Add(previewImage);
 		RefreshExpandedState();
 	}
 

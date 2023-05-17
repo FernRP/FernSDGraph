@@ -19,6 +19,8 @@ namespace FernNPRCore.SDNodeGraph
 
         protected override void Process()
         {
+            output.positive = positive;
+            output.negative = negative;
             GetPort(nameof(output), null).PushData();
         }
     }

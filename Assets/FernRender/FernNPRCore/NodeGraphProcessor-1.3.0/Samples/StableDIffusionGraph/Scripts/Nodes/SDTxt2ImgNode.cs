@@ -168,7 +168,7 @@ namespace FernNPRCore.SDNodeGraph
             }
         }
         
-        IEnumerator GenerateAsync(UnityAction action = null)
+        IEnumerator GenerateAsync()
         {
             long seed = this.seed;
             if (seed == -1)
@@ -301,6 +301,7 @@ namespace FernNPRCore.SDNodeGraph
                             File.WriteAllBytes($"{SDGraphResource.SdGraphDataHandle.SavePath}/img_{DateTime.Now.ToString("yyyyMMddHHmmss")}_{outSeed}.png", imageData);
                             OnUpdateSeedField?.Invoke(this.seed,outSeed);
                             SDUtil.Log("Txt 2 Img");
+                            InvokeOnExecuteFinsih();
                         }
                     }
                     catch (Exception e)
@@ -312,10 +313,10 @@ namespace FernNPRCore.SDNodeGraph
             yield return null;
         }
 
-        protected override void Process()
+        protected override void Execute()
         {
-            GetPort(nameof(prompt), null).PushData();
-            EditorCoroutineUtility.StartCoroutine(GenerateAsync(null), this);
+            GetPort(nameof(prompt), null).PullData();
+            EditorCoroutineUtility.StartCoroutine(GenerateAsync(), this);
         }
     }
 }

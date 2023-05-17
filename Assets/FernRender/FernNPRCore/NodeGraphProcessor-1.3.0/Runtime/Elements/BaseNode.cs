@@ -90,6 +90,7 @@ namespace GraphProcessor
 		/// </summary>
 		public event ProcessDelegate	onProcessed;
 		public event ProcessDelegate	onExecute;
+		public event ProcessDelegate	onExecuteFinish;
 		public event Action< string, NodeMessageType >	onMessageAdded;
 		public event Action< string >					onMessageRemoved;
 		/// <summary>
@@ -652,6 +653,7 @@ namespace GraphProcessor
 
 		public void InvokeOnProcessed() => onProcessed?.Invoke();
 		public void InvokeOnExecute() => onExecute?.Invoke();
+		public void InvokeOnExecuteFinsih() => onExecuteFinish?.Invoke();
 
 		/// <summary>
 		/// Called when the node is enabled
