@@ -12,7 +12,7 @@ public class ConditionalProcessorView : PinnedElementView
     ConditionalProcessor	processor;
     BaseGraphView           graphView;
 
-    public ConditionalProcessorView() => title = "Conditional Processor";
+    public ConditionalProcessorView() => title = "SD Graph Processor";
 
     protected override void Initialize(BaseGraphView graphView)
     {

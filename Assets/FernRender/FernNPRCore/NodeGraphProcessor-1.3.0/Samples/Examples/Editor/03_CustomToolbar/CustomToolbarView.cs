@@ -18,6 +18,6 @@ public class CustomToolbarView : ToolbarView
 		base.AddButtons();
 
 		bool conditionalProcessorVisible = graphView.GetPinnedElementStatus< ConditionalProcessorView >() != Status.Hidden;
-		AddToggle("Show Conditional Processor", conditionalProcessorVisible, (v) => graphView.ToggleView< ConditionalProcessorView>());
+		AddToggle("Show SD Graph Processor", conditionalProcessorVisible, (v) => graphView.ToggleView< ConditionalProcessorView>());
 	}
 }
