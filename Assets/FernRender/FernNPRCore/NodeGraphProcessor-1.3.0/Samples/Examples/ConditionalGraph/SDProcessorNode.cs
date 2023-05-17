@@ -47,7 +47,6 @@ namespace NodeGraphProcessor.Examples
 			return outputPorts.FirstOrDefault(n => n.fieldName == nameof(executes))
 				.GetEdges().Select(e => e.inputNode as SDProcessorNode);
 		}
-
 	}
 	
 	[System.Serializable]

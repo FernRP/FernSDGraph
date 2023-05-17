@@ -31,8 +31,7 @@ namespace FernNPRCore.SDNodeGraph
         [Input(name = "CFG"), ShowAsDrawer] public int cfg = 7;
         [Input(name = "Seed"), ShowAsDrawer] public long seed = -1;
 
-        [Input(name = "Sampler Method"), ShowAsDrawer]
-        public string SamplerMethod = "Euler";
+       
 
         [Output("Image")] public Texture2D outputImage;
         [Output("Seed")] public long outSeed;
@@ -46,6 +45,7 @@ namespace FernNPRCore.SDNodeGraph
         [HideInInspector] public float init_speed; // it/s
         [HideInInspector] public int cur_step;
         [HideInInspector] public bool isExecuting = false;
+        [HideInInspector] public string samplerMethod = "Euler";
 
         private ControlNetData controlNetData = null;
 
@@ -220,7 +220,7 @@ namespace FernNPRCore.SDNodeGraph
                         sd.height = height;
                         sd.seed = seed;
                         sd.tiling = false;
-                        sd.sampler_name = SamplerMethod;
+                        sd.sampler_name = samplerMethod;
                         // Serialize the input parameters
                         json = JsonConvert.SerializeObject(sd);
                     }
@@ -235,7 +235,7 @@ namespace FernNPRCore.SDNodeGraph
                         sd.height = height;
                         sd.seed = seed;
                         sd.tiling = false;
-                        sd.sampler_name = SamplerMethod;
+                        sd.sampler_name = samplerMethod;
                         if (controlNetData != null)
                         {
                             SDUtil.Log("use controlnet");

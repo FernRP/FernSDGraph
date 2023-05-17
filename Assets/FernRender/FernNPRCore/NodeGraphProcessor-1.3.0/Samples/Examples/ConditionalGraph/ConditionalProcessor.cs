@@ -110,7 +110,9 @@ namespace NodeGraphProcessor.Examples
 			{
 				var node = nodeToExecute.Pop();
 				// TODO: maxExecutionTimeMS
-	
+
+				if (node == null) continue;
+				
 				// In case the node is conditional, then we need to execute it's non-conditional dependencies first
 				if(node is IConditionalNode && !skipConditionalHandling.Contains(node))
 				{
