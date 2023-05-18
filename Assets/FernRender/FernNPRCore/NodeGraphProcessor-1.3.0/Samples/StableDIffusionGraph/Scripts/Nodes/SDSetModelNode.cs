@@ -103,7 +103,7 @@ namespace FernNPRCore.SDNodeGraph
 
                         // Convert the list into an array and store it for futur use
                         modelNames = modelsNames.ToArray();
-                        SDUtil.Log(modelsNames.Count.ToString());
+                        SDUtil.Log($"models load success, Count: {modelsNames.Count}");
                     }
                 }
                 catch (Exception)

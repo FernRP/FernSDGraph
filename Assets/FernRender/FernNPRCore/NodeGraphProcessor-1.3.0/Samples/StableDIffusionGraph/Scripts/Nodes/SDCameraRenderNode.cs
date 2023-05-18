@@ -9,6 +9,7 @@ using Unity.VisualScripting;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEditor.Rendering;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using Object = UnityEngine.Object;
 
 namespace FernNPRCore.SDNodeGraph
@@ -41,7 +42,8 @@ namespace FernNPRCore.SDNodeGraph
 
         private RenderTexture originRT;
 
-        private CommandBuffer cmd;
+        private UniversalAdditionalCameraData cameraUniversalData;
+
 
         protected override void Enable()
         {
@@ -67,9 +69,10 @@ namespace FernNPRCore.SDNodeGraph
             
             InitRenderTarget();
             SetPreviewType();
-            RenderCamera(colorTarget);
-            RenderCamera(normalTarget);
-            RenderCamera(depthTarget);
+            RenderColor();
+            RenderNormal();
+            RenderDepth();
+            RenderInpaint();
         }
 
         private void SetPreviewType()
@@ -98,6 +101,11 @@ namespace FernNPRCore.SDNodeGraph
                 camera = Camera.main;
             }
 
+            if (camera != null)
+            {
+                cameraUniversalData = camera.GetComponent<UniversalAdditionalCameraData>();
+            }
+
             return camera != null;
         }
 
@@ -106,26 +114,26 @@ namespace FernNPRCore.SDNodeGraph
             if(!IsValidate()) return;
             if (colorTarget == null)
             {
-                colorTarget = RenderTexture.GetTemporary(width, height, 24,
-                    camera.allowHDR ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default);
+                colorTarget = RenderTexture.GetTemporary(width, height, 16,
+                    camera.allowHDR ? RenderTextureFormat.RGB111110Float : RenderTextureFormat.RGB111110Float);
             }
 
             if (normalTarget == null)
             {
-                normalTarget = RenderTexture.GetTemporary(width, height, 24,
-                    camera.allowHDR ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default);
+                normalTarget = RenderTexture.GetTemporary(width, height, 16,
+                    camera.allowHDR ? RenderTextureFormat.RGB111110Float : RenderTextureFormat.RGB111110Float);
             }
 
             if (depthTarget == null)
             {
-                depthTarget = RenderTexture.GetTemporary(width, height, 24,
-                    camera.allowHDR ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default);
+                depthTarget = RenderTexture.GetTemporary(width, height, 16,
+                    camera.allowHDR ? RenderTextureFormat.RGB111110Float : RenderTextureFormat.RGB111110Float);
             }
 
             if (inpaintTarget == null)
             {
-                inpaintTarget = RenderTexture.GetTemporary(width, height, 24,
-                    camera.allowHDR ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default);
+                inpaintTarget = RenderTexture.GetTemporary(width, height, 16,
+                    camera.allowHDR ? RenderTextureFormat.RGB111110Float : RenderTextureFormat.RGB111110Float);
             }
         }
 
@@ -141,11 +149,11 @@ namespace FernNPRCore.SDNodeGraph
             }
             if (normalTarget != null)
             {
-                RenderTexture.ReleaseTemporary(colorTarget);
+                RenderTexture.ReleaseTemporary(normalTarget);
             }
             if (depthTarget != null)
             {
-                RenderTexture.ReleaseTemporary(colorTarget);
+                RenderTexture.ReleaseTemporary(depthTarget);
             }
             if (inpaintTarget != null)
             {
@@ -158,6 +166,7 @@ namespace FernNPRCore.SDNodeGraph
         protected override void Disable()
         {
             base.Disable();
+            isUpdate = false;
             if (colorTarget != null)
                 RenderTexture.ReleaseTemporary(colorTarget);
             if (normalTarget != null)
@@ -168,11 +177,92 @@ namespace FernNPRCore.SDNodeGraph
                 RenderTexture.ReleaseTemporary(inpaintTarget);
         }
 
-        protected void RenderCamera(RenderTexture rtTarget)
+        private void RenderColor()
         {
             originRT = camera.targetTexture;
-            camera.targetTexture = rtTarget;
+            camera.targetTexture = colorTarget;
             camera.Render();
+            camera.targetTexture = originRT;
+        }
+        
+        private void RenderNormal()
+        {
+            if(cameraUniversalData == null) return;
+            if(SDGraphResource.sdUniversal == null) return;
+            
+            // temp car param
+            originRT = camera.targetTexture;
+            var normalBackGround = camera.backgroundColor;
+            var normalClearFlags = camera.clearFlags;
+            var normalRenderPipelineAsset = GraphicsSettings.renderPipelineAsset;
+            var normalLayer = camera.cullingMask;
+            camera.clearFlags = CameraClearFlags.Color;
+            camera.backgroundColor = Color.black;
+            GraphicsSettings.renderPipelineAsset = SDGraphResource.sdUniversal;
+            cameraUniversalData.SetRenderer(1);
+            camera.targetTexture = normalTarget;
+
+            camera.Render();
+            
+            // restore
+            camera.backgroundColor = normalBackGround;
+            camera.clearFlags = normalClearFlags;
+            GraphicsSettings.renderPipelineAsset = normalRenderPipelineAsset;
+            cameraUniversalData.SetRenderer(0); // TODO: may be no 0
+            camera.targetTexture = originRT;
+        }
+        
+        private void RenderInpaint()
+        {
+            if(cameraUniversalData == null) return;
+            if(SDGraphResource.sdUniversal == null) return;
+            
+            // temp car param
+            originRT = camera.targetTexture;
+            var normalBackGround = camera.backgroundColor;
+            var normalClearFlags = camera.clearFlags;
+            var normalRenderPipelineAsset = GraphicsSettings.renderPipelineAsset;
+            var normalLayer = camera.cullingMask;
+            camera.clearFlags = CameraClearFlags.Color;
+            camera.backgroundColor = Color.clear;
+            GraphicsSettings.renderPipelineAsset = SDGraphResource.sdUniversal;
+            cameraUniversalData.SetRenderer(2);
+            camera.targetTexture = depthTarget;
+            
+            camera.Render();
+            
+            // restore
+            camera.backgroundColor = normalBackGround;
+            camera.clearFlags = normalClearFlags;
+            GraphicsSettings.renderPipelineAsset = normalRenderPipelineAsset;
+            cameraUniversalData.SetRenderer(0); // TODO: may be no 0
+            camera.targetTexture = originRT;
+        }
+        
+        private void RenderDepth()
+        {
+            if(cameraUniversalData == null) return;
+            if(SDGraphResource.sdUniversal == null) return;
+            
+            // temp car param
+            originRT = camera.targetTexture;
+            var normalBackGround = camera.backgroundColor;
+            var normalClearFlags = camera.clearFlags;
+            var normalRenderPipelineAsset = GraphicsSettings.renderPipelineAsset;
+            var normalLayer = camera.cullingMask;
+            camera.clearFlags = CameraClearFlags.Color;
+            camera.backgroundColor = Color.black;
+            GraphicsSettings.renderPipelineAsset = SDGraphResource.sdUniversal;
+            cameraUniversalData.SetRenderer(1);
+            camera.targetTexture = depthTarget;
+
+            camera.Render();
+            
+            // restore
+            camera.backgroundColor = normalBackGround;
+            camera.clearFlags = normalClearFlags;
+            GraphicsSettings.renderPipelineAsset = normalRenderPipelineAsset;
+            cameraUniversalData.SetRenderer(0); // TODO: may be no 0
             camera.targetTexture = originRT;
         }
     }

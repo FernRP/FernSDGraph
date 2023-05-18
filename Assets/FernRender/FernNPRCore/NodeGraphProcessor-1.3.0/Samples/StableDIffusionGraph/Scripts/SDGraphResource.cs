@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace FernNPRCore.SDNodeGraph
 {
@@ -33,6 +34,22 @@ namespace FernNPRCore.SDNodeGraph
                 }
 
                 return _texture2DPreviewMaterial;
+            }
+        }
+
+        private static RenderPipelineAsset m_sdUniversal =
+            Resources.Load<RenderPipelineAsset>("SDGraphUniversalData/SDUniversalRenderPipeline");
+
+        public static RenderPipelineAsset sdUniversal
+        {
+            get
+            {
+                if (m_sdUniversal == null)
+                {
+                    m_sdUniversal = Resources.Load<RenderPipelineAsset>("SDGraphUniversalData/SDUniversalRenderPipeline");
+                }
+
+                return m_sdUniversal;
             }
         }
     }
