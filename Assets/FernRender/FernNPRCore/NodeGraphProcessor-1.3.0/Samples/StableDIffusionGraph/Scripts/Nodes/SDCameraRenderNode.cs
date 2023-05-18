@@ -27,9 +27,10 @@ namespace FernNPRCore.SDNodeGraph
         
         public override string name => "SD Camera Render";
 
-        [Output("Color")] public Texture2D cameraColor;
-        [Output("Normal")] public Texture2D cameranormal;
-        [Output("Depth")] public Texture2D cameraDepth;
+        [Output("Color")] public RenderTexture colorTarget;
+        [Output("Normal")] public RenderTexture normalTarget;
+        [Output("Depth")] public RenderTexture depthTarget;
+        [Output("InPaint")] public RenderTexture inpaintTarget;
         public PreviewType previewType = PreviewType.Color;
         public Camera camera;
 
@@ -37,11 +38,6 @@ namespace FernNPRCore.SDNodeGraph
         public int width = 512;
         [ChangeEvent(true)]
         public int height = 512; 
-
-        private RenderTexture colorTarget;
-        private RenderTexture normalTarget;
-        private RenderTexture depthTarget;
-        private RenderTexture inpaintTarget;
 
         private RenderTexture originRT;
 

@@ -57,7 +57,7 @@ namespace GraphProcessor
 		/// <summary>True if the node can be deleted, false otherwise</summary>
 		public virtual bool			deletable => true;
 		
-		public virtual Texture2D				previewTexture => null;
+		public Texture				previewTexture;
 		
 		public virtual bool					showPreviewExposure => false;
 		

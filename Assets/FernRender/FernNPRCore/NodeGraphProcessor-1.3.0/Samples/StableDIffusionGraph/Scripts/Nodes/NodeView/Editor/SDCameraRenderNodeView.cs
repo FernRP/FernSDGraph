@@ -46,7 +46,7 @@ namespace FernNPRCore.SDNodeGraph
 		protected override void OnFieldChanged(string fieldName, object value)
 		{
 			base.OnFieldChanged(fieldName, value);
-			if (fieldName == nameof(node.width) || fieldName == nameof(node.height))
+			if (fieldName is nameof(node.width) or nameof(node.height))
 			{
 				node.ResetRTResolution();
 			}
