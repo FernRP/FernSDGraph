@@ -35,16 +35,8 @@ public class SDRelayNode : SDProcessorNode
 
 	const int		k_MaxPortSize = 14;
 
-	protected override void Process()
-	{
-		Debug.Log("Process");
-		outputIndex = 0;
-		output = input;
-	}
-	
 	protected override void Execute()
 	{
-		Debug.Log("Execute");
 		outputIndex = 0;
 		output = input;
 	}
@@ -203,12 +195,6 @@ public class SDRelayNode : SDProcessorNode
 			inputEdges = inputEdges.First().outputNode.inputPorts[0]?.GetEdges();
 
 		return inputEdges;
-	}
-
-	public IEnumerable<BaseNode> GetSDConditionalNodes()
-	{
-		return outputPorts.FirstOrDefault(n => n.fieldName == nameof(output))
-			.GetEdges().Select(e => e.inputNode as BaseNode);
 	}
 
 	public override IEnumerable<SDProcessorNode> GetExecutedNodes()

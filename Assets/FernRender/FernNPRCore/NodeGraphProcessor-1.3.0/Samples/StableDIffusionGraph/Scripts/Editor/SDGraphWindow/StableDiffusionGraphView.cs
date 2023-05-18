@@ -37,8 +37,9 @@ namespace FernNPRCore.SDNodeGraph
 
 		public override BaseNodeView AddRelayNode(PortView inputPort, PortView outputPort, Vector2 position)
 		{
-			Debug.Log(inputPort.portData.displayName);
-			if (inputPort.portData.displayName.Equals("Executed"))
+			var displayName = inputPort.portData.displayName;
+			if (displayName.Equals("Executed") 
+			    || displayName.Equals("Executes"))
 			{
 				var relayNode = BaseNode.CreateFromType<SDRelayNode>(position);
 				var view = AddNode(relayNode) as SDRelayNodeView;

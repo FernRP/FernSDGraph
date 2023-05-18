@@ -23,9 +23,6 @@ namespace FernNPRCore.SDNodeGraph
 	public class SDSetModelNode : LinearSDProcessorNode
 	{
 		[Input("Server URL")] public string ServerURL;
-
-		[Output(name = "Out")]
-		public float output;
 		
         [HideInInspector]
         public string[] modelNames;
