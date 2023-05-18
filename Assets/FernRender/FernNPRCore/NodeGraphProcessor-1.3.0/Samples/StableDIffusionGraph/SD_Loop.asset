@@ -20,7 +20,6 @@ MonoBehaviour:
   - rid: 7516382800115925152
   - rid: 7516382800115925153
   - rid: 7516382800115925154
-  - rid: 7516382800115925155
   - rid: 7516382800115925159
   - rid: 91303842062794778
   - rid: 91303842062794782
@@ -47,14 +46,6 @@ MonoBehaviour:
     outputNodeGUID: 28028414-14cc-4835-8890-bc82d13abc24
     inputFieldName: negative
     outputFieldName: output
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: cc081bca-1df7-4f3c-8402-b906779e8412
-    owner: {fileID: 11400000}
-    inputNodeGUID: 24a4a3d5-0f42-4b7a-b73e-60fdd4a9ad56
-    outputNodeGUID: 7df64bb9-e3aa-4c57-9c63-1ee96f93d12b
-    inputFieldName: executed
-    outputFieldName: loopBody
     inputPortIdentifier: 
     outputPortIdentifier: 
   - GUID: 7c5469d7-cf40-4382-8dbc-f4dbaaf7037b
@@ -132,7 +123,7 @@ MonoBehaviour:
       data:
         nodeCustomName: 
         GUID: 3fdaf2e2-eafa-4ce0-b198-eb55b34648da
-        computeOrder: 8
+        computeOrder: 7
         previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
@@ -155,7 +146,7 @@ MonoBehaviour:
       data:
         nodeCustomName: 
         GUID: 3154f419-d3bd-4181-9eea-6559ee0867d2
-        computeOrder: 9
+        computeOrder: 8
         previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
@@ -255,7 +246,7 @@ MonoBehaviour:
       data:
         nodeCustomName: 
         GUID: 24a4a3d5-0f42-4b7a-b73e-60fdd4a9ad56
-        computeOrder: 6
+        computeOrder: 5
         previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
@@ -362,37 +353,12 @@ MonoBehaviour:
         isUpdate: 0
         hasPreview: 0
         output: 
-    - rid: 7516382800115925155
-      type: {class: ForLoopNode, ns: , asm: Assembly-CSharp}
-      data:
-        nodeCustomName: 
-        GUID: 7df64bb9-e3aa-4c57-9c63-1ee96f93d12b
-        computeOrder: 5
-        previewTexture: {fileID: 0}
-        isPreviewCollapsed: 0
-        previewVisible: 1
-        previewEV100: 0
-        previewSlice: 0
-        position:
-          serializedVersion: 2
-          x: 587.8137
-          y: 261.99994
-          width: 210.66669
-          height: 165.33331
-        expanded: 0
-        debug: 0
-        nodeLock: 0
-        isUpdate: 0
-        hasPreview: 0
-        start: 0
-        end: 100
-        index: 51
     - rid: 7516382800115925159
       type: {class: SDPreviewNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
       data:
         nodeCustomName: 
         GUID: 4840d411-1cdc-4bd0-ac96-3789bcda1adb
-        computeOrder: 7
+        computeOrder: 6
         previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1

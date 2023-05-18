@@ -22,9 +22,9 @@ namespace FernNPRCore.SDNodeGraph
         {
             var asset = EditorUtility.InstanceIDToObject(instanceID) as BaseGraph;
 
-            if (asset != null && AssetDatabase.GetAssetPath(asset).Contains("StableDIffusionGraph"))
+            if (asset != null && AssetDatabase.GetAssetPath(asset).Contains("StableDiffusionGraph"))
             {
-                EditorWindow.GetWindow<AllGraphWindow>().InitializeGraph(asset as BaseGraph);
+                EditorWindow.GetWindow<StableDiffusionGraphWindow>().InitializeGraph(asset as BaseGraph);
                 return true;
             }
             return false;

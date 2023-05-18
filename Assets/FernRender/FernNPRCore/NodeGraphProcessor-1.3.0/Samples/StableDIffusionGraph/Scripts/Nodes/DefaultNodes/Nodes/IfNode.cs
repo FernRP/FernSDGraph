@@ -23,7 +23,7 @@ public class IfNode : SDProcessorNode
 
 	public override string		name => "If";
 
-	public override IEnumerable< SDProcessorNode >	GetExecutedNodes()
+	public override IEnumerable<SDProcessorNode >	GetExecutedNodes()
 	{
 		string fieldName = condition ? nameof(@true) : nameof(@false);
 

@@ -20,7 +20,7 @@ MonoBehaviour:
   - rid: 7516382844387852305
   - rid: 7516382844387852306
   - rid: 7516382844387852308
-  - rid: 7516382844387852414
+  - rid: 7516382844387852446
   edges:
   - GUID: aeffdb56-54c8-431b-b601-98b5582ebce4
     owner: {fileID: 11400000}
@@ -36,14 +36,6 @@ MonoBehaviour:
     outputNodeGUID: de0eef99-2a95-44ab-81a8-8339f49ff79c
     inputFieldName: negative
     outputFieldName: output
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: 2426e25f-72d0-4d56-97c5-530e53e255f3
-    owner: {fileID: 11400000}
-    inputNodeGUID: 4c7da56f-fd10-4f7b-9def-c6de9e6f10b7
-    outputNodeGUID: 270ac7e0-72e2-4125-9caf-a8e7f4647229
-    inputFieldName: executed
-    outputFieldName: executes
     inputPortIdentifier: 
     outputPortIdentifier: 
   - GUID: d90a0326-d92e-43bb-86d6-ff33ca7085bc
@@ -62,18 +54,18 @@ MonoBehaviour:
     outputFieldName: output
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: 507c0117-75d6-4157-9889-b3531c534053
+  - GUID: f56e62c8-8633-4805-9b0b-03cf92c8d175
     owner: {fileID: 11400000}
-    inputNodeGUID: 331fe861-243f-42e6-a59d-de924e6f5bbe
+    inputNodeGUID: bfbcfd44-4805-4161-b620-1c130dfd4666
     outputNodeGUID: 270ac7e0-72e2-4125-9caf-a8e7f4647229
     inputFieldName: input
     outputFieldName: executes
     inputPortIdentifier: 0
     outputPortIdentifier: 
-  - GUID: 349f2ea9-67c0-42a3-a1f7-0d4b2ba213c8
+  - GUID: 4d4ea96b-3f68-4bb8-a92c-f4b0ddbe79be
     owner: {fileID: 11400000}
     inputNodeGUID: 4c7da56f-fd10-4f7b-9def-c6de9e6f10b7
-    outputNodeGUID: 331fe861-243f-42e6-a59d-de924e6f5bbe
+    outputNodeGUID: bfbcfd44-4805-4161-b620-1c130dfd4666
     inputFieldName: executed
     outputFieldName: output
     inputPortIdentifier: 
@@ -83,11 +75,11 @@ MonoBehaviour:
   pinnedElements:
   - position:
       serializedVersion: 2
-      x: 7
-      y: 187.00002
+      x: 0
+      y: 69.00001
       width: 150
       height: 200
-    opened: 0
+    opened: 1
     editorType:
       serializedType: ConditionalProcessorView, Assembly-CSharp-Editor, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -111,12 +103,22 @@ MonoBehaviour:
     editorType:
       serializedType: GraphProcessor.ProcessorView, com.alelievr.NodeGraphProcessor.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  - position:
+      serializedVersion: 2
+      x: 1
+      y: 104
+      width: 150
+      height: 200
+    opened: 1
+    editorType:
+      serializedType: ConditionalProcessorView, com.alelievr.NodeGraphProcessor.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   exposedParameters: []
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: -374.66666, y: -74, z: 0}
-  scale: {x: 1, y: 1, z: 1}
+  position: {x: 20.666666, y: -38, z: 0}
+  scale: {x: 0.65751624, y: 0.65751624, z: 1}
   references:
     version: 2
     RefIds:
@@ -283,10 +285,10 @@ MonoBehaviour:
         previewSlice: 0
         position:
           serializedVersion: 2
-          x: 1030.5962
-          y: 319.3333
-          width: 265.33337
-          height: 560
+          x: 1081.5775
+          y: 319.33334
+          width: 265.33325
+          height: 584
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -302,18 +304,18 @@ MonoBehaviour:
         seed: -1
         isTiling: 0
         outputImage: {fileID: 0}
-        outSeed: 3431058103075810832
+        outSeed: 523949641568274351
         progress: NaN
         speed: -0
         init_speed: 0
         cur_step: 19
         isExecuting: 0
         samplerMethod: Euler
-    - rid: 7516382844387852414
+    - rid: 7516382844387852446
       type: {class: RelayNode, ns: , asm: com.alelievr.NodeGraphProcessor.Runtime}
       data:
         nodeCustomName: 
-        GUID: 331fe861-243f-42e6-a59d-de924e6f5bbe
+        GUID: bfbcfd44-4805-4161-b620-1c130dfd4666
         computeOrder: 5
         previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
@@ -322,8 +324,8 @@ MonoBehaviour:
         previewSlice: 0
         position:
           serializedVersion: 2
-          x: 935.3334
-          y: 264.66666
+          x: 956.1739
+          y: 249.27534
           width: 200
           height: 200
         expanded: 0

@@ -1375,8 +1375,9 @@ namespace GraphProcessor
 			// TODO: add exposed properties to this list
 		}
 
-		public RelayNodeView AddRelayNode(PortView inputPort, PortView outputPort, Vector2 position)
+		public virtual BaseNodeView AddRelayNode(PortView inputPort, PortView outputPort, Vector2 position)
 		{
+		
 			var relayNode = BaseNode.CreateFromType<RelayNode>(position);
 			var view = AddNode(relayNode) as RelayNodeView;
 

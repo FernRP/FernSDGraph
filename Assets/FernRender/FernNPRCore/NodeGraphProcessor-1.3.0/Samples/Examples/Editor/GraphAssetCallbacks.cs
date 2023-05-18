@@ -24,7 +24,7 @@ namespace FernNPRCore.SDNodeGraph
 
 			if (asset != null && AssetDatabase.GetAssetPath(asset).Contains("StableDIffusionGraph"))
 			{
-				EditorWindow.GetWindow<AllSDGraphWindow>().InitializeGraph(asset as BaseGraph);
+				EditorWindow.GetWindow<StableDiffusionGraphWindow>().InitializeGraph(asset as BaseGraph);
 				return true;
 			}
 			return false;
