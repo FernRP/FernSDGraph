@@ -19,7 +19,8 @@ namespace FernNPRCore.SDNodeGraph
 			base.Enable();
 			node = nodeTarget as SDCameraRenderNode;
 			OnExpandAction = null;
-			OnExpandAction += OnExpandChange;
+			//OnExpandAction += OnExpandChange;
+			NotifyNodeChanged();
 		}
 
 		public override void Disable()

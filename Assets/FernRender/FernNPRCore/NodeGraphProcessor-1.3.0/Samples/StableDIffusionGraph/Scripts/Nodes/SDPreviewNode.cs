@@ -14,11 +14,11 @@ namespace FernNPRCore.SDNodeGraph
 	public class SDPreviewNode : BaseNode
 	{
 		[Input(name = "Image"), ShowAsDrawer]
-		public Texture2D inputImage;
+		public Texture inputImage;
 		[Input(name = "Seed")]
 		public long seed;
 		[Output(name = "Image")]
-		public Texture2D outImage;
+		public Texture outImage;
 
 		public override string name => "SD Preview";
 

@@ -44,10 +44,10 @@ namespace FernNPRCore.SDNodeGraph
 		protected void CreateTexturePreview(VisualElement previewContainer, BaseNode node)
 		{
 			previewContainer.Clear();
-
+			
 			if (node.previewTexture == null)
 				return;
-
+			
 			VisualElement texturePreview = new VisualElement();
 			previewContainer.Add(texturePreview);
 

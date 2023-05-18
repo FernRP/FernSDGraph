@@ -48,11 +48,14 @@ namespace FernNPRCore.SDNodeGraph
             base.Enable();
             isUpdate = true;
             hasPreview = true;
+            InitRenderTarget();
+            SetPreviewType();
         }
 
         public override void OnNodeCreated()
         {
             base.OnNodeCreated();
+            IsValidate();
             isUpdate = true;
             hasPreview = true;
         }
@@ -61,12 +64,12 @@ namespace FernNPRCore.SDNodeGraph
         {
             base.Update();
             if (!IsValidate()) return;
-
+            
             InitRenderTarget();
+            SetPreviewType();
             RenderCamera(colorTarget);
             RenderCamera(normalTarget);
             RenderCamera(depthTarget);
-            SetPreviewType();
         }
 
         private void SetPreviewType()
@@ -100,6 +103,7 @@ namespace FernNPRCore.SDNodeGraph
 
         private void InitRenderTarget()
         {
+            if(!IsValidate()) return;
             if (colorTarget == null)
             {
                 colorTarget = RenderTexture.GetTemporary(width, height, 24,

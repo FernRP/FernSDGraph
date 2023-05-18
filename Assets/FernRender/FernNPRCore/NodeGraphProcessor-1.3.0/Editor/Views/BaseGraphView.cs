@@ -1394,7 +1394,9 @@ namespace GraphProcessor
 		public void SyncSerializedPropertyPathes()
 		{
 			foreach (var nodeView in nodeViews)
+			{
 				nodeView.SyncSerializedPropertyPathes();
+			}
 			nodeInspector.RefreshNodes();
 		}
 
