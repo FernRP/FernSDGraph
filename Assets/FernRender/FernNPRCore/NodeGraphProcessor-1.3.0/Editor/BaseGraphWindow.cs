@@ -52,6 +52,7 @@ namespace GraphProcessor
 				LoadGraph();
 				reloadWorkaround = false;
 			}
+			graph.OnUpdate();
 		}
 
 		void LoadGraph()

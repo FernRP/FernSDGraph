@@ -98,8 +98,8 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   - position:
       serializedVersion: 2
-      x: 0
-      y: 37
+      x: 34
+      y: 46.000015
       width: 150
       height: 200
     opened: 1
@@ -112,8 +112,8 @@ MonoBehaviour:
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: 475.33334, y: 116.666664, z: 0}
-  scale: {x: 0.2842624, y: 0.2842624, z: 1}
+  position: {x: 58, y: 172, z: 0}
+  scale: {x: 0.49717674, y: 0.49717674, z: 1}
   references:
     version: 2
     RefIds:
@@ -143,6 +143,10 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: cb05b757-59fc-46f7-8a86-75852f7a1c3e
         computeOrder: 6
+        isPreviewCollapsed: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
         position:
           serializedVersion: 2
           x: 120.66669
@@ -152,6 +156,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        hasPreview: 0
         parameterGUID: 3b3ad6ce-dd3f-402f-a2e9-d076692729cd
         accessor: 0
     - rid: 91303818085531824
@@ -180,6 +185,10 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: 7d095e1a-b2fa-4cb1-b59c-fc975c911137
         computeOrder: 7
+        isPreviewCollapsed: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
         position:
           serializedVersion: 2
           x: 2492.9343
@@ -189,6 +198,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        hasPreview: 0
         input: 0
     - rid: 91303818085532213
       type: {class: SDPreviewNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
@@ -196,6 +206,10 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: d1f332a8-bb8e-45da-8422-c8140aacd9d1
         computeOrder: 8
+        isPreviewCollapsed: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
         position:
           serializedVersion: 2
           x: 1565.707
@@ -205,6 +219,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        hasPreview: 0
         inputImage: {fileID: 0}
         seed: 0
         outImage: {fileID: 0}
@@ -214,6 +229,10 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: 353ce5a8-7c9d-46c9-9733-c24d84f4e9a1
         computeOrder: 9
+        isPreviewCollapsed: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
         position:
           serializedVersion: 2
           x: 1553.3339
@@ -223,6 +242,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        hasPreview: 0
         inputImage: {fileID: 0}
         seed: 0
         outImage: {fileID: 0}
@@ -232,6 +252,10 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: 33b78316-6af4-44d8-b451-acc3761d3f05
         computeOrder: 1
+        isPreviewCollapsed: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
         position:
           serializedVersion: 2
           x: 276.26086
@@ -241,6 +265,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        hasPreview: 0
         ServerURL: https://3108n063s1.imdo.co
         output: 0
         modelNames:
@@ -274,6 +299,10 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: 54c1a62e-9e01-414e-8704-868a1faba870
         computeOrder: 0
+        isPreviewCollapsed: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
         position:
           serializedVersion: 2
           x: -76.19156
@@ -283,6 +312,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        hasPreview: 0
         outServerURL: https://3108n063s1.imdo.co
         overrideSettings: 1
         serverURL: https://3108n063s1.imdo.co
@@ -295,6 +325,10 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: df67a707-a129-4360-8ab4-d65bc18d63b9
         computeOrder: 2
+        isPreviewCollapsed: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
         position:
           serializedVersion: 2
           x: 602.4804
@@ -304,6 +338,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        hasPreview: 0
         output: dog
     - rid: 7516382800115925172
       type: {class: SDTxt2ImgNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
@@ -311,6 +346,10 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: 09433589-9c52-4b1a-953e-fe3055268cf4
         computeOrder: 3
+        isPreviewCollapsed: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
         position:
           serializedVersion: 2
           x: 1172.0216
@@ -320,6 +359,7 @@ MonoBehaviour:
         expanded: 1
         debug: 0
         nodeLock: 0
+        hasPreview: 1
         prompt:
           positive: 
           negative: 
@@ -330,18 +370,22 @@ MonoBehaviour:
         seed: -1
         outputImage: {fileID: 0}
         outSeed: 1929685749683774155
-        SamplerMethod: Euler
         progress: NaN
         speed: 0
         init_speed: 0
         cur_step: 19
         isExecuting: 0
+        samplerMethod: Euler
     - rid: 7516382800115925174
       type: {class: StringNode, ns: , asm: Assembly-CSharp}
       data:
         nodeCustomName: 
         GUID: 683c95a2-3b5c-4b6d-bc0e-99e687ecd142
         computeOrder: 4
+        isPreviewCollapsed: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
         position:
           serializedVersion: 2
           x: 602.4804
@@ -351,6 +395,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        hasPreview: 0
         output: nsfw
     - rid: 7516382800115925179
       type: {class: SDPreviewNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
@@ -358,6 +403,10 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: fa9e3abb-3818-4e23-97bc-8a0b140440f1
         computeOrder: 5
+        isPreviewCollapsed: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
         position:
           serializedVersion: 2
           x: 1553.8842
@@ -367,6 +416,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        hasPreview: 0
         inputImage: {fileID: 0}
         seed: 8315324638013720371
         outImage: {fileID: 0}

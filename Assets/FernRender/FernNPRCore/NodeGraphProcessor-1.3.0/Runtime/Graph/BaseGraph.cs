@@ -151,6 +151,8 @@ namespace GraphProcessor
 		/// Triggered when the graph is enabled
 		/// </summary>
 		public event Action				onEnabled;
+		
+		public event Action				onGraphUpdate;
 
 		/// <summary>
 		/// Triggered when the graph is changed
@@ -174,6 +176,20 @@ namespace GraphProcessor
 			UpdateComputeOrder();
 			isEnabled = true;
 			onEnabled?.Invoke();
+        }
+
+        public virtual void OnUpdate()
+        {
+	        if (!isEnabled) return;
+
+	        foreach (var node in nodes)
+	        {
+		        if (node.isUpdate)
+		        {
+			        node.Update();
+		        }
+	        }
+			onGraphUpdate?.Invoke();
         }
 
 		void InitializeGraphElements()

@@ -18,9 +18,9 @@ MonoBehaviour:
   - rid: 7516382821651054597
   - rid: 7516382821651054599
   - rid: 7516382823981514756
-  - rid: 7516382823981514766
   - rid: 7516382823981514769
   - rid: 7516382823981514770
+  - rid: 91303842062794760
   edges:
   - GUID: 02cec8a9-ef29-4ebb-8ff6-ed211c474b7b
     owner: {fileID: 11400000}
@@ -38,31 +38,15 @@ MonoBehaviour:
     outputFieldName: output
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: d0c85ee6-6cd7-479a-a33a-1dd29bf461d5
+  - GUID: 7570c26f-dae1-48ea-9378-019127f7fb23
     owner: {fileID: 11400000}
     inputNodeGUID: 51a36dd0-ea10-4c24-af44-4b3a7e43cd01
-    outputNodeGUID: 8a0c1385-2f66-4929-81bc-245c185f4bcd
-    inputFieldName: executed
-    outputFieldName: loopBody
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: 14515bd7-be30-4ff4-977c-17ce05e6b078
-    owner: {fileID: 11400000}
-    inputNodeGUID: 8862653b-659e-4a30-b800-689bd1fa5274
-    outputNodeGUID: 51a36dd0-ea10-4c24-af44-4b3a7e43cd01
-    inputFieldName: inputImage
-    outputFieldName: outputImage
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: bc8aa68b-149e-424f-a551-470094008762
-    owner: {fileID: 11400000}
-    inputNodeGUID: 8a0c1385-2f66-4929-81bc-245c185f4bcd
     outputNodeGUID: 93191640-d04c-43c8-a9ad-e4c2b031ceac
     inputFieldName: executed
     outputFieldName: executes
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: 657257bd-c93e-441d-bf7b-a6495068f58d
+  - GUID: d944d259-a50f-4749-8db4-f105715f810c
     owner: {fileID: 11400000}
     inputNodeGUID: e1a98d9e-f93e-422b-a597-5642cd831642
     outputNodeGUID: 2056d1e9-dc70-4711-869b-e7808d2e8fcd
@@ -70,7 +54,7 @@ MonoBehaviour:
     outputFieldName: output
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: 6aadcdd6-d0f7-406a-84ff-0e881db999df
+  - GUID: 1643850f-bf75-48b3-8def-11045b76264b
     owner: {fileID: 11400000}
     inputNodeGUID: e1a98d9e-f93e-422b-a597-5642cd831642
     outputNodeGUID: 8898557e-6651-4511-8ffc-61bf6ea78723
@@ -78,39 +62,21 @@ MonoBehaviour:
     outputFieldName: output
     inputPortIdentifier: 
     outputPortIdentifier: 
-  groups:
-  - title: Set Model
-    color: {r: 0.8301887, g: 0.57433206, b: 0.22451636, a: 0.3}
-    position:
-      serializedVersion: 2
-      x: -745.4356
-      y: -362.09726
-      width: 621.3333
-      height: 269.33334
-    size: {x: 400, y: 200}
-    innerNodeGUIDs:
-    - 93191640-d04c-43c8-a9ad-e4c2b031ceac
-    - 0ea403ad-d4d3-4770-8e12-6e0778794ef0
-  - title: Generator
-    color: {r: 0, g: 0, b: 0, a: 0.3}
-    position:
-      serializedVersion: 2
-      x: 686.97906
-      y: 309.17917
-      width: 400
-      height: 200
-    size: {x: 400, y: 200}
-    innerNodeGUIDs:
-    - 2056d1e9-dc70-4711-869b-e7808d2e8fcd
-    - 8898557e-6651-4511-8ffc-61bf6ea78723
-    - e1a98d9e-f93e-422b-a597-5642cd831642
-    - 51a36dd0-ea10-4c24-af44-4b3a7e43cd01
+  - GUID: 27c66a42-bcfe-489a-ba9b-89863539a90d
+    owner: {fileID: 11400000}
+    inputNodeGUID: 123fa0cd-6cc0-43cb-9d34-b270f28eff60
+    outputNodeGUID: 51a36dd0-ea10-4c24-af44-4b3a7e43cd01
+    inputFieldName: executed
+    outputFieldName: executes
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  groups: []
   stackNodes: []
   pinnedElements:
   - position:
       serializedVersion: 2
-      x: 1076
-      y: 163.00002
+      x: 1535
+      y: 40.999977
       width: 150
       height: 200
     opened: 1
@@ -120,7 +86,7 @@ MonoBehaviour:
   - position:
       serializedVersion: 2
       x: 0
-      y: 0
+      y: 185
       width: 150
       height: 200
     opened: 0
@@ -129,11 +95,11 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   - position:
       serializedVersion: 2
-      x: 1065
-      y: 361
+      x: 1537
+      y: 259.99997
       width: 150
       height: 200
-    opened: 0
+    opened: 1
     editorType:
       serializedType: GraphProcessor.ProcessorView, com.alelievr.NodeGraphProcessor.Editor,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -141,11 +107,51 @@ MonoBehaviour:
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: 492.66666, y: 126, z: 0}
-  scale: {x: 0.43232757, y: 0.43232757, z: 1}
+  position: {x: 381.33334, y: 410, z: 0}
+  scale: {x: 0.2471847, y: 0.2471847, z: 1}
   references:
     version: 2
     RefIds:
+    - rid: 91303842062794760
+      type: {class: SDImg2ImgNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 123fa0cd-6cc0-43cb-9d34-b270f28eff60
+        computeOrder: 6
+        isPreviewCollapsed: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        position:
+          serializedVersion: 2
+          x: 665.83875
+          y: 54.420902
+          width: 0
+          height: 0
+        expanded: 1
+        debug: 0
+        nodeLock: 0
+        hasPreview: 0
+        InputImage: {fileID: 0}
+        MaskImage: {fileID: 0}
+        prompt:
+          positive: 
+          negative: 
+        step: 20
+        cfg: 7
+        denisoStrength: 0.75
+        width: 512
+        height: 512
+        seed: 0
+        outputImage: {fileID: 0}
+        outSeed: 0
+        samplerMethod: Euler
+        Inpaint: 0
+        inpainting_fill: 0
+        inpaint_full_res: 1
+        inpaint_full_res_padding: 32
+        inpainting_mask_invert: 0
+        mask_blur: 0
     - rid: 7516382821651054596
       type: {class: SDStartNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
       data:
@@ -158,10 +164,10 @@ MonoBehaviour:
         previewSlice: 0
         position:
           serializedVersion: 2
-          x: -720.1023
-          y: -303.4306
+          x: -342.88138
+          y: -317.99203
           width: 254.66666
-          height: 185.33331
+          height: 185.33334
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -184,10 +190,10 @@ MonoBehaviour:
         previewSlice: 0
         position:
           serializedVersion: 2
-          x: -362.1023
-          y: -303.4306
-          width: 212.66667
-          height: 150.66666
+          x: 72.451965
+          y: -225.32535
+          width: 181.33334
+          height: 149.33334
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -217,8 +223,8 @@ MonoBehaviour:
         - "\u4E2D\u56FD\u6A21\u7279_kaelvinsmixhc_releaseV10"
         - "\u52A8\u6F2B_UnstableInkDream_unstableinkdream_v6"
         - Girl_chilloutmix_NiCkpt
-        currentIndex: 0
-        Model: "\u52A8\u6F2B_\u539A\u6D82\u98CE\u683C_dalcefoPainting_v4"
+        currentIndex: 21
+        Model: Girl_chilloutmix_NiCkpt
     - rid: 7516382821651054599
       type: {class: SDPromptNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
       data:
@@ -231,8 +237,8 @@ MonoBehaviour:
         previewSlice: 0
         position:
           serializedVersion: 2
-          x: 249.99997
-          y: 352.30225
+          x: 30.010834
+          y: 166.67752
           width: 141.33334
           height: 101.33334
         expanded: 0
@@ -240,7 +246,7 @@ MonoBehaviour:
         nodeLock: 0
         hasPreview: 0
         positive: girl
-        negative: nsfw
+        negative: 
         output:
           positive: girl
           negative: nsfw
@@ -249,17 +255,17 @@ MonoBehaviour:
       data:
         nodeCustomName: 
         GUID: 51a36dd0-ea10-4c24-af44-4b3a7e43cd01
-        computeOrder: 6
+        computeOrder: 5
         isPreviewCollapsed: 0
         previewVisible: 1
         previewEV100: 0
         previewSlice: 0
         position:
           serializedVersion: 2
-          x: 523.06555
-          y: 272.09436
-          width: 265.33337
-          height: 517.3334
+          x: 288.72968
+          y: 54.420902
+          width: 0
+          height: 0
         expanded: 1
         debug: 0
         nodeLock: 0
@@ -271,8 +277,7 @@ MonoBehaviour:
         height: 256
         step: 20
         cfg: 7
-        seed: -1
-        SamplerMethod: Euler
+        seed: 5021612517190000655
         outputImage: {fileID: 0}
         outSeed: 5021612517190000655
         progress: NaN
@@ -280,29 +285,7 @@ MonoBehaviour:
         init_speed: 0
         cur_step: 19
         isExecuting: 0
-    - rid: 7516382823981514766
-      type: {class: ForLoopNode, ns: , asm: Assembly-CSharp}
-      data:
-        nodeCustomName: 
-        GUID: 8a0c1385-2f66-4929-81bc-245c185f4bcd
-        computeOrder: 5
-        isPreviewCollapsed: 0
-        previewVisible: 1
-        previewEV100: 0
-        previewSlice: 0
-        position:
-          serializedVersion: 2
-          x: 144.66664
-          y: -256.24402
-          width: 210.66667
-          height: 165.33333
-        expanded: 0
-        debug: 0
-        nodeLock: 0
-        hasPreview: 0
-        start: 0
-        end: 10
-        index: 9
+        samplerMethod: Euler a
     - rid: 7516382823981514769
       type: {class: StringNode, ns: , asm: Assembly-CSharp}
       data:
@@ -315,8 +298,8 @@ MonoBehaviour:
         previewSlice: 0
         position:
           serializedVersion: 2
-          x: -131.33328
-          y: 234.66664
+          x: -351.3225
+          y: 49.344173
           width: 216
           height: 180
         expanded: 0
@@ -336,10 +319,10 @@ MonoBehaviour:
         previewSlice: 0
         position:
           serializedVersion: 2
-          x: -131.33328
-          y: 453.33322
+          x: -351.3225
+          y: 268.01083
           width: 216
-          height: 180.00003
+          height: 180
         expanded: 0
         debug: 0
         nodeLock: 0

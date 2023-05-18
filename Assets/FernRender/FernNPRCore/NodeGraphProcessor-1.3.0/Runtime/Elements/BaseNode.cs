@@ -98,6 +98,8 @@ namespace GraphProcessor
 		/// </summary>
         public bool                 nodeLock;
 
+		public bool isUpdate = false;
+
 		[HideInInspector]
 		public bool hasPreview = false;
 
@@ -241,6 +243,11 @@ namespace GraphProcessor
 			ExceptionToLog.Call(() => Enable());
 
 			InitializePorts();
+		}
+
+		public virtual void Update()
+		{
+			
 		}
 
 		void InitializeCustomPortTypeMethods()
