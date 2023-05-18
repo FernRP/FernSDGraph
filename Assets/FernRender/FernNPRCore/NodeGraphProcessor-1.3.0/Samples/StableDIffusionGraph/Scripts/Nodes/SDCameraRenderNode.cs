@@ -48,9 +48,13 @@ namespace FernNPRCore.SDNodeGraph
             base.Enable();
             isUpdate = true;
             hasPreview = true;
+        }
 
-            cmd = new CommandBuffer();
-            cmd.name = "SD Camera Capture";
+        public override void OnNodeCreated()
+        {
+            base.OnNodeCreated();
+            isUpdate = true;
+            hasPreview = true;
         }
 
         public override void Update()
