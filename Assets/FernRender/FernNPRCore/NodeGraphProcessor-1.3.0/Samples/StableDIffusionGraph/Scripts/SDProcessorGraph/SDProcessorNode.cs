@@ -6,7 +6,7 @@ using System.Reflection;
 using GraphProcessor;
 using UnityEngine;
 
-namespace NodeGraphProcessor.Examples
+namespace FernNPRCore.SDNodeGraph
 {
 	[System.Serializable]
 	/// <summary>

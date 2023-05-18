@@ -47,11 +47,6 @@ public class SDPreviewNodeView : BaseNodeView
 
 	void UpdateImageView()
 	{
-		if(node.inputImage == null)
-		{
-			var portView = node.GetPort(nameof(node.inputImage), null);
-			portView.PushData();
-		}
 		if(node.inputImage == null) return;
 		if(bottomPortContainer.Contains(previewImage))
 			bottomPortContainer.Remove(previewImage);

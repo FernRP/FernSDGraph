@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace NodeGraphProcessor.Examples
+namespace FernNPRCore.SDNodeGraph
 {
 	interface IConditionalNode
 	{

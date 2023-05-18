@@ -20,7 +20,7 @@ MonoBehaviour:
   - rid: 7516382844387852305
   - rid: 7516382844387852306
   - rid: 7516382844387852308
-  - rid: 7516382844387852318
+  - rid: 7516382844387852414
   edges:
   - GUID: aeffdb56-54c8-431b-b601-98b5582ebce4
     owner: {fileID: 11400000}
@@ -54,16 +54,40 @@ MonoBehaviour:
     outputFieldName: output
     inputPortIdentifier: 
     outputPortIdentifier: 
+  - GUID: d60f4769-d97c-4af9-ade5-69d508dd43b3
+    owner: {fileID: 11400000}
+    inputNodeGUID: 5aeb4307-f7da-41f1-a6a9-fb9cf7c3e51a
+    outputNodeGUID: 7fbddc2b-8e0e-4c1d-9748-370d3e8da14d
+    inputFieldName: positive
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 507c0117-75d6-4157-9889-b3531c534053
+    owner: {fileID: 11400000}
+    inputNodeGUID: 331fe861-243f-42e6-a59d-de924e6f5bbe
+    outputNodeGUID: 270ac7e0-72e2-4125-9caf-a8e7f4647229
+    inputFieldName: input
+    outputFieldName: executes
+    inputPortIdentifier: 0
+    outputPortIdentifier: 
+  - GUID: 349f2ea9-67c0-42a3-a1f7-0d4b2ba213c8
+    owner: {fileID: 11400000}
+    inputNodeGUID: 4c7da56f-fd10-4f7b-9def-c6de9e6f10b7
+    outputNodeGUID: 331fe861-243f-42e6-a59d-de924e6f5bbe
+    inputFieldName: executed
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 0
   groups: []
   stackNodes: []
   pinnedElements:
   - position:
       serializedVersion: 2
-      x: 0
-      y: 188.00002
+      x: 7
+      y: 187.00002
       width: 150
       height: 200
-    opened: 1
+    opened: 0
     editorType:
       serializedType: ConditionalProcessorView, Assembly-CSharp-Editor, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -91,8 +115,8 @@ MonoBehaviour:
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: -16, y: 13.333333, z: 0}
-  scale: {x: 0.57175326, y: 0.57175326, z: 1}
+  position: {x: -374.66666, y: -74, z: 0}
+  scale: {x: 1, y: 1, z: 1}
   references:
     version: 2
     RefIds:
@@ -171,14 +195,14 @@ MonoBehaviour:
         - "\u98CE\u683C\u5316\u4EBA\u50CF_portrait_10"
         - "\u52A8\u6F2B_\u539A\u6D82\u98CE\u683C_dalcefoPainting_v4"
         - Girl_chilloutmix_NiCkpt
-        currentIndex: 5
-        Model: Girl_chilloutmix_NiCkpt
+        currentIndex: 15
+        Model: "\u52A8\u6F2B_experience_70"
     - rid: 7516382844387852304
       type: {class: SDPromptNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
       data:
         nodeCustomName: 
         GUID: 5aeb4307-f7da-41f1-a6a9-fb9cf7c3e51a
-        computeOrder: 3
+        computeOrder: 4
         previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
@@ -195,17 +219,17 @@ MonoBehaviour:
         nodeLock: 0
         isUpdate: 0
         hasPreview: 0
-        positive: girl
+        positive: rock normal
         negative: nsfw
         output:
-          positive: girl
+          positive: rock normal
           negative: nsfw
     - rid: 7516382844387852305
       type: {class: StringNode, ns: , asm: Assembly-CSharp}
       data:
         nodeCustomName: 
         GUID: 7fbddc2b-8e0e-4c1d-9748-370d3e8da14d
-        computeOrder: 4
+        computeOrder: 3
         previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
@@ -222,7 +246,7 @@ MonoBehaviour:
         nodeLock: 0
         isUpdate: 0
         hasPreview: 0
-        output: girl
+        output: rock normal
     - rid: 7516382844387852306
       type: {class: StringNode, ns: , asm: Assembly-CSharp}
       data:
@@ -251,7 +275,7 @@ MonoBehaviour:
       data:
         nodeCustomName: 
         GUID: 4c7da56f-fd10-4f7b-9def-c6de9e6f10b7
-        computeOrder: 5
+        computeOrder: 6
         previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
@@ -269,27 +293,28 @@ MonoBehaviour:
         isUpdate: 0
         hasPreview: 1
         prompt:
-          positive: girl
+          positive: rock normal
           negative: nsfw
         width: 512
         height: 512
         step: 20
         cfg: 7
         seed: -1
+        isTiling: 0
         outputImage: {fileID: 0}
-        outSeed: 8093780366440414336
+        outSeed: 3431058103075810832
         progress: NaN
         speed: -0
         init_speed: 0
         cur_step: 19
         isExecuting: 0
         samplerMethod: Euler
-    - rid: 7516382844387852318
-      type: {class: SDCameraRenderNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+    - rid: 7516382844387852414
+      type: {class: RelayNode, ns: , asm: com.alelievr.NodeGraphProcessor.Runtime}
       data:
         nodeCustomName: 
-        GUID: 8c4c0d2b-2fda-432e-9e17-6109b811c9a2
-        computeOrder: 6
+        GUID: 331fe861-243f-42e6-a59d-de924e6f5bbe
+        computeOrder: 5
         previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
@@ -297,20 +322,15 @@ MonoBehaviour:
         previewSlice: 0
         position:
           serializedVersion: 2
-          x: 1430.9733
-          y: 476
-          width: 244.66663
-          height: 231.99997
+          x: 935.3334
+          y: 264.66666
+          width: 200
+          height: 200
         expanded: 0
         debug: 0
         nodeLock: 0
-        isUpdate: 1
-        hasPreview: 1
-        colorTarget: {fileID: 0}
-        normalTarget: {fileID: 0}
-        depthTarget: {fileID: 0}
-        inpaintTarget: {fileID: 0}
-        previewType: 0
-        camera: {fileID: 0}
-        width: 512
-        height: 512
+        isUpdate: 0
+        hasPreview: 0
+        unpackOutput: 0
+        packInput: 0
+        inputEdgeCount: 0

@@ -23,8 +23,8 @@ namespace FernNPRCore.SDNodeGraph
 	{
 		public override string		name => "SD Img2Img"; 
 		
-		[Input("Image")] public Texture2D InputImage;
-		[Input("Mask")] public Texture2D MaskImage;
+		[Input("Image")] public Texture InputImage;
+		[Input("Mask")] public Texture MaskImage;
 		[Input("ControlNet")] public ControlNetData controlNetData;
 		[Input("Prompt")] public Prompt prompt;
 		[Input("Step"), ShowAsDrawer] public int step = 20;
@@ -32,7 +32,7 @@ namespace FernNPRCore.SDNodeGraph
 		[Input("Denoising Strength"), ShowAsDrawer] public float denisoStrength = 0.75f;
 		[Input("Width"), ShowAsDrawer] public int width = 512;
 		[Input("Height"), ShowAsDrawer] public int height = 512;
-		[Input("Seed")] public long seed = -1;
+		[Input("Seed"), ShowAsDrawer] public long seed = -1;
 		
 		[Output("Image")] public Texture2D outputImage;
 		[Output("Seed")] public long outSeed;
@@ -68,6 +68,19 @@ namespace FernNPRCore.SDNodeGraph
                 
 				return outputImage;
 			}
+		}
+
+		public override void OnNodeCreated()
+		{
+			base.OnNodeCreated();
+			hasPreview = true;
+		}
+
+		protected override void Enable()
+		{
+			hasPreview = true;
+			previewTexture = OutputImage;
+			base.Enable();
 		}
 
 		protected override void Disable()
@@ -112,7 +125,7 @@ namespace FernNPRCore.SDNodeGraph
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
 
-                    byte[] inputImgBytes = InputImage.EncodeToPNG();
+                    byte[] inputImgBytes = SDUtil.TextureToTexture2D(InputImage).EncodeToPNG();
                     string inputImgString = Convert.ToBase64String(inputImgBytes);
                     string maskImgString = "";
 
@@ -129,8 +142,8 @@ namespace FernNPRCore.SDNodeGraph
                         sd.steps = step;
                         sd.cfg_scale = cfg;
                         sd.denoising_strength = denisoStrength;
-                        sd.width = Screen.width;
-                        sd.height = Screen.height;
+                        sd.width = width;
+                        sd.height = height;
                         sd.seed = seed;
                         sd.tiling = false;
                         sd.sampler_name = samplerMethod;
@@ -149,12 +162,12 @@ namespace FernNPRCore.SDNodeGraph
                         sd.steps = step;
                         sd.cfg_scale = cfg;
                         sd.denoising_strength = denisoStrength;
-                        sd.width = Screen.width;
-                        sd.height = Screen.height;
+                        sd.width = width;
+                        sd.height = height;
                         sd.seed = seed;
                         sd.tiling = false;
                         sd.sampler_name = samplerMethod;
-                        byte[] maskImgBytes = MaskImage.EncodeToPNG();
+                        byte[] maskImgBytes = SDUtil.TextureToTexture2D(MaskImage).EncodeToPNG();
                         maskImgString = Convert.ToBase64String(maskImgBytes);
                         sd.mask = maskImgString;
                         sd.inpainting_fill = inpainting_fill;
@@ -176,8 +189,8 @@ namespace FernNPRCore.SDNodeGraph
                         sd.steps = step;
                         sd.cfg_scale = cfg;
                         sd.denoising_strength = denisoStrength;
-                        sd.width = Screen.width;
-                        sd.height = Screen.height;
+                        sd.width = width;
+                        sd.height = height;
                         sd.seed = seed;
                         sd.tiling = false;
                         sd.sampler_name = samplerMethod;

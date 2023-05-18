@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GraphProcessor;
 using System.Linq;
+using FernNPRCore.SDNodeGraph;
 using NodeGraphProcessor.Examples;
 
 [System.Serializable, NodeMenuItem("Conditional/ForLoop")]

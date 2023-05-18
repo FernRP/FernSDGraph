@@ -69,6 +69,29 @@ namespace FernNPRCore.SDNodeGraph
             long longRand = BitConverter.ToInt64(buf, 0);
             return (Math.Abs(longRand % (max - min)) + min);
         }
+        
+        public static Texture2D TextureToTexture2D(Texture inputTexture)
+        {
+            // 创建一个新的Texture2D对象
+            Texture2D outputTexture = new Texture2D(inputTexture.width, inputTexture.height, TextureFormat.RGBA32, false);
+
+            // 创建一个临时的RenderTexture对象
+            RenderTexture tempRenderTexture = RenderTexture.GetTemporary(inputTexture.width, inputTexture.height, 0, RenderTextureFormat.Default);
+
+            // 将原始Texture对象渲染到临时的RenderTexture中
+            Graphics.Blit(inputTexture, tempRenderTexture);
+
+            // 将临时的RenderTexture对象读取到新的Texture2D对象中
+            RenderTexture.active = tempRenderTexture;
+            outputTexture.ReadPixels(new Rect(0, 0, inputTexture.width, inputTexture.height), 0, 0);
+            outputTexture.Apply();
+
+            // 释放临时的RenderTexture对象
+            RenderTexture.ReleaseTemporary(tempRenderTexture);
+
+            // 返回新的Texture2D对象
+            return outputTexture;
+        }
 
         public static void SetToNone(string assetPath)
         {

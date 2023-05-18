@@ -31,6 +31,7 @@ namespace FernNPRCore.SDNodeGraph
         [Input(name = "Step"), ShowAsDrawer] public int step = 20;
         [Input(name = "CFG"), ShowAsDrawer] public int cfg = 7;
         [Input(name = "Seed"), ShowAsDrawer] public long seed = -1;
+        [Input(name = "Tiling"), ShowAsDrawer] public bool isTiling = false;
 
         [Output("Image")] public Texture2D outputImage;
         [Output("Seed")] public long outSeed;
@@ -64,14 +65,16 @@ namespace FernNPRCore.SDNodeGraph
 
         protected override void Enable()
         {
-            base.Enable();
             hasPreview = true;
+            previewTexture = OutputImage;
+            base.Enable();
         }
 
         public override void OnNodeCreated()
         {
-            base.OnNodeCreated();
             hasPreview = true;
+            previewTexture = OutputImage;
+            base.OnNodeCreated();
         }
 
         public void Complete()
@@ -223,8 +226,8 @@ namespace FernNPRCore.SDNodeGraph
                         sd.cfg_scale = cfg;
                         sd.width = width;
                         sd.height = height;
-                        sd.seed = seed;
-                        sd.tiling = false;
+                        sd.tiling = isTiling;
+                        sd.seed = seed; 
                         sd.sampler_name = samplerMethod;
                         // Serialize the input parameters
                         json = JsonConvert.SerializeObject(sd);
@@ -238,8 +241,8 @@ namespace FernNPRCore.SDNodeGraph
                         sd.cfg_scale = cfg;
                         sd.width = width;
                         sd.height = height;
+                        sd.tiling = isTiling;
                         sd.seed = seed;
-                        sd.tiling = false;
                         sd.sampler_name = samplerMethod;
                         if (controlNetData != null)
                         {

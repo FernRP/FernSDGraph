@@ -22,7 +22,6 @@ MonoBehaviour:
   - rid: 7516382800115925154
   - rid: 7516382800115925155
   - rid: 7516382800115925159
-  - rid: 91303842062794777
   - rid: 91303842062794778
   - rid: 91303842062794782
   edges:
@@ -64,14 +63,6 @@ MonoBehaviour:
     outputNodeGUID: 24a4a3d5-0f42-4b7a-b73e-60fdd4a9ad56
     inputFieldName: seed
     outputFieldName: outSeed
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: 4ba844d2-1e86-496a-a3c6-67f324a2650f
-    owner: {fileID: 11400000}
-    inputNodeGUID: a996b8f0-3b19-44b6-8658-86a2cb107081
-    outputNodeGUID: 3154f419-d3bd-4181-9eea-6559ee0867d2
-    inputFieldName: cameraObj
-    outputFieldName: output
     inputPortIdentifier: 
     outputPortIdentifier: 
   groups:
@@ -136,42 +127,13 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 91303842062794777
-      type: {class: SDCameraRenderNode, ns: , asm: Assembly-CSharp}
-      data:
-        nodeCustomName: 
-        GUID: a996b8f0-3b19-44b6-8658-86a2cb107081
-        computeOrder: 9
-        isPreviewCollapsed: 0
-        previewVisible: 1
-        previewEV100: 0
-        previewSlice: 0
-        position:
-          serializedVersion: 2
-          x: 23.865133
-          y: 901.4142
-          width: 244.66667
-          height: 250.66669
-        expanded: 1
-        debug: 0
-        nodeLock: 0
-        hasPreview: 0
-        color: {fileID: 0}
-        normal: {fileID: 0}
-        depth: {fileID: 0}
-        cameraObj: {fileID: 0}
-        width: 512
-        height: 512
-        colorTarget: {fileID: 0}
-        normalTarget: {fileID: 0}
-        depthTarget: {fileID: 0}
-        inpaintTarget: {fileID: 0}
     - rid: 91303842062794778
       type: {class: GameObjectNode, ns: , asm: Assembly-CSharp}
       data:
         nodeCustomName: 
         GUID: 3fdaf2e2-eafa-4ce0-b198-eb55b34648da
-        computeOrder: 10
+        computeOrder: 8
+        previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
         previewEV100: 0
@@ -185,6 +147,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        isUpdate: 0
         hasPreview: 0
         output: {fileID: 0}
     - rid: 91303842062794782
@@ -192,7 +155,8 @@ MonoBehaviour:
       data:
         nodeCustomName: 
         GUID: 3154f419-d3bd-4181-9eea-6559ee0867d2
-        computeOrder: 8
+        computeOrder: 9
+        previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
         previewEV100: 0
@@ -206,6 +170,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        isUpdate: 0
         hasPreview: 0
         output: {fileID: 0}
     - rid: 7516382800115925145
@@ -214,6 +179,7 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: bcf31aee-b3ef-49e8-9d2b-b6f5acb7e8c3
         computeOrder: 0
+        previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
         previewEV100: 0
@@ -227,6 +193,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        isUpdate: 0
         hasPreview: 0
         outServerURL: http://127.0.0.1:7860
         overrideSettings: 0
@@ -240,6 +207,7 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: 4aabeb15-2321-4e24-9e62-9354420aaaec
         computeOrder: 1
+        previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
         previewEV100: 0
@@ -253,6 +221,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        isUpdate: 0
         hasPreview: 0
         ServerURL: 
         output: 0
@@ -287,6 +256,7 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: 24a4a3d5-0f42-4b7a-b73e-60fdd4a9ad56
         computeOrder: 6
+        previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
         previewEV100: 0
@@ -300,6 +270,7 @@ MonoBehaviour:
         expanded: 1
         debug: 0
         nodeLock: 0
+        isUpdate: 0
         hasPreview: 1
         prompt:
           positive: 4k
@@ -309,6 +280,7 @@ MonoBehaviour:
         step: 20
         cfg: 7
         seed: -1
+        isTiling: 0
         outputImage: {fileID: 0}
         outSeed: 7192681198340694314
         progress: NaN
@@ -323,6 +295,7 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: dfb0b1ab-7c0e-493f-827f-2fd46261f33a
         computeOrder: 4
+        previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
         previewEV100: 0
@@ -336,6 +309,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        isUpdate: 0
         hasPreview: 0
         positive: 4k
         negative: 
@@ -348,6 +322,7 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: b86a65c7-0980-4599-9576-720008182f50
         computeOrder: 3
+        previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
         previewEV100: 0
@@ -361,6 +336,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        isUpdate: 0
         hasPreview: 0
         output: 4k
     - rid: 7516382800115925154
@@ -369,6 +345,7 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: 28028414-14cc-4835-8890-bc82d13abc24
         computeOrder: 2
+        previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
         previewEV100: 0
@@ -382,6 +359,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        isUpdate: 0
         hasPreview: 0
         output: 
     - rid: 7516382800115925155
@@ -390,6 +368,7 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: 7df64bb9-e3aa-4c57-9c63-1ee96f93d12b
         computeOrder: 5
+        previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
         previewEV100: 0
@@ -403,6 +382,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        isUpdate: 0
         hasPreview: 0
         start: 0
         end: 100
@@ -413,6 +393,7 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: 4840d411-1cdc-4bd0-ac96-3789bcda1adb
         computeOrder: 7
+        previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
         previewEV100: 0
@@ -426,6 +407,7 @@ MonoBehaviour:
         expanded: 1
         debug: 0
         nodeLock: 0
+        isUpdate: 0
         hasPreview: 0
         inputImage: {fileID: 0}
         seed: 7192681198340694314
