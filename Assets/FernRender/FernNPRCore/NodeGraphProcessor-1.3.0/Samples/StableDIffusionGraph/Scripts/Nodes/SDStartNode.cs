@@ -41,6 +41,12 @@ namespace FernNPRCore.SDNodeGraph
 		
 		public override string		name => "SD Start";
 
+		protected override void Enable()
+		{
+			base.Enable();
+			
+		}
+
 		protected override void Execute()
 		{
 			if (overrideSettings&&!string.IsNullOrEmpty(serverURL))

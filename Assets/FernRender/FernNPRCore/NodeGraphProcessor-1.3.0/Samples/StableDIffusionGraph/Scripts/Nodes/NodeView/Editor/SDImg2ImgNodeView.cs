@@ -14,7 +14,6 @@ namespace FernNPRCore.SDNodeGraph
     public class SDImg2ImgNodeView : SDGraphNodeView
     {
         private SDImg2ImgNode node;
-        private bool isDebug = true;
 
         private DropdownField samplerMethodDropdown;
         private LongField longLastField;

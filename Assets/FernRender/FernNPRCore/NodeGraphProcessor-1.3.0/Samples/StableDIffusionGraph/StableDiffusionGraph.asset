@@ -17,12 +17,22 @@ MonoBehaviour:
   edges: []
   groups: []
   stackNodes: []
-  pinnedElements: []
+  pinnedElements:
+  - position:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 150
+      height: 200
+    opened: 0
+    editorType:
+      serializedType: ConditionalProcessorView, Assembly-CSharp-Editor, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
   exposedParameters: []
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: 0, y: 0, z: 0}
+  position: {x: 154.66667, y: 48.666668, z: 0}
   scale: {x: 1, y: 1, z: 1}
   references:
     version: 2

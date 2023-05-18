@@ -14,15 +14,15 @@ namespace FernNPRCore.SDNodeGraph
 	public class SDStartNodeView : BaseNodeView
 	{
 		private Button setOverrideServerBtn;
-		private bool isDebug = true;
+		private bool isDebug = false;
+		private SDStartNode node;
 		public override void Enable()
 		{
 			DrawDefaultInspector();
-			if (nodeTarget is not SDStartNode node) return;
-			if (!node.overrideSettings) return;
+			node = nodeTarget as SDStartNode;
+			if (node == null) return;
 			setOverrideServerBtn = new Button(SetServerURL);
 			setOverrideServerBtn.text = "Override ServerURL";
-			extensionContainer.Add(setOverrideServerBtn);
 			RefreshExpandedState();
 		}
 		
@@ -41,8 +41,8 @@ namespace FernNPRCore.SDNodeGraph
 
 		protected override void OnFieldChanged(string fieldName, object value)
 		{			
-			var node = nodeTarget as SDStartNode;
 			if(node == null) return;
+			SDUtil.Log($"{fieldName} has changed", isDebug);
 			if (fieldName == nameof(node.overrideSettings))
 			{
 				bool fileValue = (bool)value;

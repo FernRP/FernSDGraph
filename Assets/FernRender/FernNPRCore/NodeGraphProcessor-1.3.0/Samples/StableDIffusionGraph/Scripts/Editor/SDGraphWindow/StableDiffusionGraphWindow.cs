@@ -11,7 +11,7 @@ namespace FernNPRCore.SDNodeGraph
         StableDiffusionGraph tmpGraph;
 
         [MenuItem("Window/Stable Diffusion Graph Menu")]
-        public static BaseGraphWindow OpenWithTmpGraph()
+        public static StableDiffusionGraphWindow OpenWithTmpGraph()
         {
             var graphWindow = CreateWindow<StableDiffusionGraphWindow>();
 
@@ -39,7 +39,7 @@ namespace FernNPRCore.SDNodeGraph
             {
                 graphView = new StableDiffusionGraphView(this);
                 graphView.Add(new MiniMapView(graphView));
-                graphView.Add(new CustomToolbarView(graphView));
+                graphView.Add(new StableDiffusionToolbarView(graphView));
             }
 
             rootView.Add(graphView);

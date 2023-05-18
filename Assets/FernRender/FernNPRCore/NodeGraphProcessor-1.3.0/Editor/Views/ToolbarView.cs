@@ -14,7 +14,7 @@ namespace GraphProcessor
 {
 	public class ToolbarView : VisualElement
 	{
-		protected enum ElementType
+		public enum ElementType
 		{
 			Button,
 			Toggle,
@@ -24,7 +24,7 @@ namespace GraphProcessor
 			FlexibleSpace,
 		}
 
-		protected class ToolbarButtonData
+		public class ToolbarButtonData
 		{
 			public GUIContent		content;
 			public ElementType		type;
@@ -40,8 +40,8 @@ namespace GraphProcessor
 		List< ToolbarButtonData >	rightButtonDatas = new List< ToolbarButtonData >();
 		protected BaseGraphView		graphView;
 		
-		ToolbarButtonData showProcessor;
-		ToolbarButtonData showParameters;
+		public ToolbarButtonData showProcessor;
+		public ToolbarButtonData showParameters;
 
 		public ToolbarView(BaseGraphView graphView)
 		{

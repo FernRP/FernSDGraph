@@ -12,7 +12,6 @@ using GraphProcessor;
 public class SDTxt2ImgNodeView : SDGraphNodeView
 {
 	private SDTxt2ImgNode node;
-	private bool isDebug = true;
 
 	private DropdownField samplerMethodDropdown;
 	private LongField longLastField;
