@@ -21,6 +21,8 @@ MonoBehaviour:
   - rid: 7516382823981514769
   - rid: 7516382823981514770
   - rid: 91303842062794760
+  - rid: 91303853711687681
+  - rid: 91303853711687685
   edges:
   - GUID: 02cec8a9-ef29-4ebb-8ff6-ed211c474b7b
     owner: {fileID: 11400000}
@@ -107,8 +109,8 @@ MonoBehaviour:
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: 381.33334, y: 410, z: 0}
-  scale: {x: 0.2471847, y: 0.2471847, z: 1}
+  position: {x: -349.33334, y: 573.3333, z: 0}
+  scale: {x: 1, y: 1, z: 1}
   references:
     version: 2
     RefIds:
@@ -118,6 +120,7 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: 123fa0cd-6cc0-43cb-9d34-b270f28eff60
         computeOrder: 6
+        previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
         previewEV100: 0
@@ -131,6 +134,7 @@ MonoBehaviour:
         expanded: 1
         debug: 0
         nodeLock: 0
+        isUpdate: 0
         hasPreview: 0
         InputImage: {fileID: 0}
         MaskImage: {fileID: 0}
@@ -152,12 +156,68 @@ MonoBehaviour:
         inpaint_full_res_padding: 32
         inpainting_mask_invert: 0
         mask_blur: 0
+    - rid: 91303853711687681
+      type: {class: GameObjectNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: de926e30-f1ba-4a49-a557-9156f459bedc
+        computeOrder: 7
+        previewTexture: {fileID: 0}
+        isPreviewCollapsed: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        position:
+          serializedVersion: 2
+          x: 416
+          y: -315.6667
+          width: 283.33334
+          height: 98.66666
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        hasPreview: 0
+        output: {fileID: 0}
+    - rid: 91303853711687685
+      type: {class: SDCameraRenderNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 32416813-2320-4654-bc69-3f03315a1be5
+        computeOrder: 8
+        previewTexture: {fileID: 0}
+        isPreviewCollapsed: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        position:
+          serializedVersion: 2
+          x: 1144.3333
+          y: -244.33328
+          width: 100
+          height: 100
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 1
+        hasPreview: 1
+        cameraColor: {fileID: 0}
+        cameranormal: {fileID: 0}
+        cameraDepth: {fileID: 0}
+        camera: {fileID: 0}
+        width: 512
+        height: 512
+        colorTarget: {fileID: 0}
+        normalTarget: {fileID: 0}
+        depthTarget: {fileID: 0}
+        inpaintTarget: {fileID: 0}
     - rid: 7516382821651054596
       type: {class: SDStartNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
       data:
         nodeCustomName: 
         GUID: 0ea403ad-d4d3-4770-8e12-6e0778794ef0
         computeOrder: 0
+        previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
         previewEV100: 0
@@ -171,6 +231,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        isUpdate: 0
         hasPreview: 0
         outServerURL: http://127.0.0.1:7860
         overrideSettings: 1
@@ -184,6 +245,7 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: 93191640-d04c-43c8-a9ad-e4c2b031ceac
         computeOrder: 1
+        previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
         previewEV100: 0
@@ -197,6 +259,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        isUpdate: 0
         hasPreview: 0
         ServerURL: 
         output: 0
@@ -231,6 +294,7 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: e1a98d9e-f93e-422b-a597-5642cd831642
         computeOrder: 4
+        previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
         previewEV100: 0
@@ -244,9 +308,10 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        isUpdate: 0
         hasPreview: 0
         positive: girl
-        negative: 
+        negative: nsfw
         output:
           positive: girl
           negative: nsfw
@@ -256,6 +321,7 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: 51a36dd0-ea10-4c24-af44-4b3a7e43cd01
         computeOrder: 5
+        previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
         previewEV100: 0
@@ -269,6 +335,7 @@ MonoBehaviour:
         expanded: 1
         debug: 0
         nodeLock: 0
+        isUpdate: 0
         hasPreview: 1
         prompt:
           positive: girl
@@ -292,6 +359,7 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: 2056d1e9-dc70-4711-869b-e7808d2e8fcd
         computeOrder: 3
+        previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
         previewEV100: 0
@@ -305,6 +373,7 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        isUpdate: 0
         hasPreview: 0
         output: girl
     - rid: 7516382823981514770
@@ -313,6 +382,7 @@ MonoBehaviour:
         nodeCustomName: 
         GUID: 8898557e-6651-4511-8ffc-61bf6ea78723
         computeOrder: 2
+        previewTexture: {fileID: 0}
         isPreviewCollapsed: 0
         previewVisible: 1
         previewEV100: 0
@@ -326,5 +396,6 @@ MonoBehaviour:
         expanded: 0
         debug: 0
         nodeLock: 0
+        isUpdate: 0
         hasPreview: 0
         output: nsfw

@@ -35,7 +35,7 @@ namespace FernNPRCore.SDNodeGraph
         [Output("Image")] public Texture2D outputImage;
         [Output("Seed")] public long outSeed;
 
-        public override Texture2D previewTexture => outputImage;
+        public  Texture2D previewTexture => outputImage;
         private float aspect;
 
         [HideInInspector] public float progress;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,99 +9,167 @@ using Unity.VisualScripting;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEditor.Rendering;
 using UnityEngine.Rendering;
+using Object = UnityEngine.Object;
 
-[System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Camera Render")]
-public class SDCameraRenderNode : BaseNode
+namespace FernNPRCore.SDNodeGraph
 {
-	public override string name => "SD Camera Render";
+    [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Camera Render")]
+    public class SDCameraRenderNode : BaseNode
+    {
+        [Serializable]
+        public enum PreviewType
+        {
+            Color = 0,
+            Normal,
+            Depth,
+            InPaint
+        }
+        
+        public override string name => "SD Camera Render";
 
-	[Output("Color")] public Texture2D cameraColor;
-	[Output("Normal")] public Texture2D cameranormal;
-	[Output("Depth")] public Texture2D cameraDepth;
-	public Camera camera;
-	public int width = 512;
-	public int height = 512;
+        [Output("Color")] public Texture2D cameraColor;
+        [Output("Normal")] public Texture2D cameranormal;
+        [Output("Depth")] public Texture2D cameraDepth;
+        public PreviewType previewType = PreviewType.Color;
+        public Camera camera;
 
-	public RenderTexture colorTarget;
-	public RenderTexture normalTarget;
-	public RenderTexture depthTarget;
-	public RenderTexture inpaintTarget;
+        [ChangeEvent(true)]
+        public int width = 512;
+        [ChangeEvent(true)]
+        public int height = 512; 
 
-	private RenderTexture originRT;
+        private RenderTexture colorTarget;
+        private RenderTexture normalTarget;
+        private RenderTexture depthTarget;
+        private RenderTexture inpaintTarget;
 
-	private CommandBuffer cmd;
+        private RenderTexture originRT;
 
-	protected override void Enable()
-	{
-		base.Enable();
-		isUpdate = true;
-		
-		cmd = new CommandBuffer();
-		cmd.name = "SD Camera Capture";
-	}
+        private CommandBuffer cmd;
 
+        protected override void Enable()
+        {
+            base.Enable();
+            isUpdate = true;
+            hasPreview = true;
 
-	public override void Update()
-	{
-		base.Update();
-		if(!IsValidate()) return;
+            cmd = new CommandBuffer();
+            cmd.name = "SD Camera Capture";
+        }
 
-		InitRenderTarget();
-		RenderColor();
-	}
+        public override void Update()
+        {
+            base.Update();
+            if (!IsValidate()) return;
 
-	private bool IsValidate()
-	{
-		if (camera == null)
-		{
-			camera = Camera.main;
-		}
-		return camera != null;
-	}
+            InitRenderTarget();
+            RenderCamera(colorTarget);
+            RenderCamera(normalTarget);
+            RenderCamera(depthTarget);
+            SetPreviewType();
+        }
 
-	private void InitRenderTarget()
-	{
-		if (colorTarget == null)
-		{
-			colorTarget = RenderTexture.GetTemporary(width, height, 24,
-				camera.allowHDR ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default);
-		}
-		if (normalTarget == null)
-		{
-			normalTarget = RenderTexture.GetTemporary(width, height, 24,
-				camera.allowHDR ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default);
-		}
-		if (depthTarget == null)
-		{
-			depthTarget = RenderTexture.GetTemporary(width, height, 24,
-				camera.allowHDR ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default);
-		}
-		if (inpaintTarget == null)
-		{
-			inpaintTarget = RenderTexture.GetTemporary(width, height, 24,
-				camera.allowHDR ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default);
-		}
-	}
+        private void SetPreviewType()
+        {
+            switch (previewType)
+            {
+                case PreviewType.Color:
+                    previewTexture = colorTarget;
+                    break;
+                case PreviewType.Normal:
+                    previewTexture = normalTarget;
+                    break;
+                case PreviewType.Depth:
+                    previewTexture = depthTarget;
+                    break;
+                case PreviewType.InPaint:
+                    previewTexture = inpaintTarget;
+                    break;
+            }
+        }
 
-	protected override void Process()
-	{
-		
-	}
+        private bool IsValidate()
+        {
+            if (camera == null)
+            {
+                camera = Camera.main;
+            }
 
-	protected override void Disable()
-	{
-		base.Disable();
-		RenderTexture.ReleaseTemporary(colorTarget);
-		RenderTexture.ReleaseTemporary(normalTarget);
-		RenderTexture.ReleaseTemporary(depthTarget);
-		RenderTexture.ReleaseTemporary(inpaintTarget);
-	}
+            return camera != null;
+        }
 
-	protected void RenderColor()
-	{
-		originRT = camera.targetTexture;
-		camera.targetTexture = colorTarget;
-	    camera.Render();
-	    camera.targetTexture = originRT;
-	}
+        private void InitRenderTarget()
+        {
+            if (colorTarget == null)
+            {
+                colorTarget = RenderTexture.GetTemporary(width, height, 24,
+                    camera.allowHDR ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default);
+            }
+
+            if (normalTarget == null)
+            {
+                normalTarget = RenderTexture.GetTemporary(width, height, 24,
+                    camera.allowHDR ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default);
+            }
+
+            if (depthTarget == null)
+            {
+                depthTarget = RenderTexture.GetTemporary(width, height, 24,
+                    camera.allowHDR ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default);
+            }
+
+            if (inpaintTarget == null)
+            {
+                inpaintTarget = RenderTexture.GetTemporary(width, height, 24,
+                    camera.allowHDR ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default);
+            }
+        }
+
+        protected override void Process()
+        {
+        }
+
+        public void ResetRTResolution()
+        {
+            if (colorTarget != null)
+            {
+                RenderTexture.ReleaseTemporary(colorTarget);
+            }
+            if (normalTarget != null)
+            {
+                RenderTexture.ReleaseTemporary(colorTarget);
+            }
+            if (depthTarget != null)
+            {
+                RenderTexture.ReleaseTemporary(colorTarget);
+            }
+            if (inpaintTarget != null)
+            {
+                RenderTexture.ReleaseTemporary(inpaintTarget);
+            }
+            
+            InitRenderTarget();
+        }
+
+        protected override void Disable()
+        {
+            base.Disable();
+            if (colorTarget != null)
+                RenderTexture.ReleaseTemporary(colorTarget);
+            if (normalTarget != null)
+                RenderTexture.ReleaseTemporary(normalTarget);
+            if (depthTarget != null)
+                RenderTexture.ReleaseTemporary(depthTarget);
+            if (inpaintTarget != null)
+                RenderTexture.ReleaseTemporary(inpaintTarget);
+        }
+
+        protected void RenderCamera(RenderTexture rtTarget)
+        {
+            originRT = camera.targetTexture;
+            camera.targetTexture = rtTarget;
+            camera.Render();
+            camera.targetTexture = originRT;
+        }
+    }
 }
