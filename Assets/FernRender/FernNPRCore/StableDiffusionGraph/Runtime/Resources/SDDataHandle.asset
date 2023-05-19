@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebb3a8820d8ef634086130ca41c54727, type: 3}
   m_Name: SDDataHandle
   m_EditorClassIdentifier: 
-  serverURL: http://127.0.0.1:7860
+  serverURL: http://192.168.3.188:7860
   ModelsAPI: /sdapi/v1/sd-models
+  UpscalersAPI: /sdapi/v1/upscalers
   LorasAPI: /sdapi/v1/loras
   ControlNetTex2Img: /controlnet/txt2img
   ControlNetModelList: /controlnet/model_list
@@ -24,6 +25,7 @@ MonoBehaviour:
   OptionAPI: /sdapi/v1/options
   DataDirAPI: /sdapi/v1/cmd-flags
   ProgressAPI: /sdapi/v1/progress
+  SavePath: TmpPhotos
   UseAuth: 0
   Username: 
   Password: 
@@ -121,9 +123,16 @@ MonoBehaviour:
     - 1,0,0,0,0,0,0,0,0,0,0,0.8,1,1,1,1,1
     - 1,1,1,1,1,1,1,1,0.2,0,0,0.8,1,1,1,0,0
     - 1,1,1,1,1,1,0.2,1,0.2,0,0,0.8,1,1,1,0,0
+  areaColors:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 0, g: 0, b: 1, a: 1}
+  - {r: 0, g: 1, b: 1, a: 1}
+  - {r: 1, g: 0, b: 1, a: 1}
+  - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   modelUse: 
   loraUse: 
-  OverrideSettings: 1
+  OverrideSettings: 0
   OverrideServerURL: http://127.0.0.1:7860
   OverrideUseAuth: 0
   OverrideUsername: 

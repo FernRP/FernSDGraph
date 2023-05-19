@@ -20,6 +20,7 @@ namespace FernNPRCore.StableDiffusionGraph
     {
         [Input] public Prompt Prompt;
         [Input("ControlNet")] public ControlNetData controlNetData;
+        [Input("Upscaler")] public HiresUpscaler upscaler;
         [Input] public int Step = 20;
         [Input] public int CFG = 7;
         [Input("Width")] public int width = 512;
@@ -60,6 +61,7 @@ namespace FernNPRCore.StableDiffusionGraph
             Init();
             Prompt = GetInputValue("Prompt", this.Prompt);
             controlNetData = GetInputValue("ControlNet", controlNetData);
+            upscaler = GetInputValue<HiresUpscaler>("Upscaler");
             if (Seed == 0)
                 Seed = -1;
             yield return (GenerateAsync());
@@ -115,6 +117,17 @@ namespace FernNPRCore.StableDiffusionGraph
                         sd.seed = seed;
                         sd.tiling = false;
                         sd.sampler_name = SamplerMethod;
+                        sd.enable_hr = false;
+                        if (upscaler != null && !string.IsNullOrEmpty(upscaler.hr_upscaler) && !upscaler.hr_upscaler.ToLower().Equals("none"))
+                        {
+                            sd.enable_hr = true;
+                            sd.hr_second_pass_steps = upscaler.hr_second_pass_steps;
+                            sd.hr_upscaler = upscaler.hr_upscaler;
+                            sd.hr_resize_x = upscaler.hr_resize_x;
+                            sd.hr_resize_y = upscaler.hr_resize_y;
+                            sd.denoising_strength = upscaler.denoising_strength;
+                            sd.hr_scale = upscaler.hr_scale;
+                        }
                         // Serialize the input parameters
                         json = JsonConvert.SerializeObject(sd);
                     }
@@ -130,12 +143,20 @@ namespace FernNPRCore.StableDiffusionGraph
                         sd.seed = seed;
                         sd.tiling = false;
                         sd.sampler_name = SamplerMethod;
-                        if (controlNetData != null)
+                        SDUtil.Log("use controlnet");
+                        sd.alwayson_scripts = new ALWAYSONSCRIPTS();
+                        sd.alwayson_scripts.controlnet = new ControlNetDataArgs();
+                        sd.alwayson_scripts.controlnet.args = new[] { controlNetData };
+                        sd.enable_hr = false;
+                        if (upscaler != null && !string.IsNullOrEmpty(upscaler.hr_upscaler) && !upscaler.hr_upscaler.ToLower().Equals("none"))
                         {
-                            SDUtil.Log("use controlnet");
-                            sd.alwayson_scripts = new ALWAYSONSCRIPTS();
-                            sd.alwayson_scripts.controlnet = new ControlNetDataArgs();
-                            sd.alwayson_scripts.controlnet.args = new[] { controlNetData };
+                            sd.enable_hr = true;
+                            sd.hr_second_pass_steps = upscaler.hr_second_pass_steps;
+                            sd.hr_upscaler = upscaler.hr_upscaler;
+                            sd.hr_resize_x = upscaler.hr_resize_x;
+                            sd.hr_resize_y = upscaler.hr_resize_y;
+                            sd.denoising_strength = upscaler.denoising_strength;
+                            sd.hr_scale = upscaler.hr_scale;
                         }
                         // Serialize the input parameters
                         json = JsonConvert.SerializeObject(sd);
