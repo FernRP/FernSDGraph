@@ -168,66 +168,6 @@ namespace FernNPRCore.StableDiffusionGraph
                 string inputImgString = Convert.ToBase64String(inputImgBytes);
                 controlNet.input_image = inputImgString;
             }
-            
-            // // Stable diffusion API url for getting the models list
-            // HttpWebRequest httpWebRequest = null;
-            // try
-            // {
-            //     string url = SDDataHandle.Instance.serverURL + SDDataHandle.Instance.ControlNetDetect;
-            //     httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-            //     httpWebRequest.ContentType = "application/json";
-            //     httpWebRequest.Method = "POST";
-            //     if (SDDataHandle.Instance.UseAuth && !SDDataHandle.Instance.Username.Equals("") && !SDDataHandle.Instance.Password.Equals(""))
-            //     {
-            //         SDUtil.Log("Using API key to authenticate");
-            //         byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDDataHandle.Instance.Username + ":" + SDDataHandle.Instance.Password);
-            //         string encodedCredentials = Convert.ToBase64String(bytesToEncode);
-            //         httpWebRequest.Headers.Add("Authorization", "Basic " + encodedCredentials);
-            //     }
-            //     
-            //     using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            //     {
-            //         ControlNetDetect detect = new ControlNetDetect();
-            //         
-            //         byte[] inputImgBytes = controlNetImg.EncodeToPNG();
-            //         string inputImgString = Convert.ToBase64String(inputImgBytes);
-            //         detect.controlnet_input_images = new []{inputImgString};
-            //         detect.controlnet_module = module;
-            //         string json = JsonConvert.SerializeObject(detect);
-            //         SDUtil.Log(json);
-            //         streamWriter.Write(json);
-            //     }
-            // }            
-            // catch (Exception e)
-            // {
-            //     SDUtil.LogError(e.Message + "\n\n" + e.StackTrace);
-            // }
-            //
-            // // Read the output of generation
-            // if (httpWebRequest != null)
-            // {
-            //     // Wait that the generation is complete before procedding
-            //     Task<WebResponse> webResponse = httpWebRequest.GetResponseAsync();
-            //     while (!webResponse.IsCompleted)
-            //     {
-            //         if (SDDataHandle.Instance.UseAuth && !SDDataHandle.Instance.Username.Equals("") && !SDDataHandle.Instance.Password.Equals(""))
-            //             //UpdateGenerationProgressWithAuth();
-            //             // else
-            //             // UpdateGenerationProgress();
-            //
-            //             yield return new WaitForSeconds(0.5f);
-            //     }
-            //     // Stream the result from the server
-            //     var httpResponse = webResponse.Result;
-            //     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            //     {
-            //         // Decode the response as a JSON string
-            //         string result = streamReader.ReadToEnd();
-            //         SDUtil.Log(result);
-            //     }
-            //     yield return null;
-            // }
-
             yield return null;
         }
 

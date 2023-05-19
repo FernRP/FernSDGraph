@@ -19,6 +19,7 @@ MonoBehaviour:
   m_RendererDataList:
   - {fileID: 11400000, guid: 7ce31336a70e81a409d3e79482f68b1d, type: 2}
   - {fileID: 11400000, guid: 8055daa8b8d4d7342ab626b12584344c, type: 2}
+  - {fileID: 11400000, guid: fd519f6a0e140824493856ab8465463a, type: 2}
   m_DefaultRendererIndex: 0
   m_RequireDepthTexture: 0
   m_RequireOpaqueTexture: 0
@@ -57,6 +58,7 @@ MonoBehaviour:
   m_SoftShadowsSupported: 0
   m_ConservativeEnclosingSphere: 1
   m_NumIterationsEnclosingSphere: 64
+  m_SoftShadowQuality: 2
   m_AdditionalLightsCookieResolution: 2048
   m_AdditionalLightsCookieFormat: 3
   m_UseSRPBatcher: 1
