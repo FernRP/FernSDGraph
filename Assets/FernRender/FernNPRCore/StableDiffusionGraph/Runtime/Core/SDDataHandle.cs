@@ -29,6 +29,7 @@ namespace FernNPRCore.StableDiffusionGraph
         }
         public string serverURL = "http://127.0.0.1:7860";
         public string ModelsAPI = "/sdapi/v1/sd-models";
+        public string UpscalersAPI = "/sdapi/v1/upscalers";
         public string LorasAPI = "/sdapi/v1/loras";
         public string ControlNetTex2Img = "/controlnet/txt2img";
         public string ControlNetModelList = "/controlnet/model_list";

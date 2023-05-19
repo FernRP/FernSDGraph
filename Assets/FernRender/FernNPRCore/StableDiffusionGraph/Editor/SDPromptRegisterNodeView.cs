@@ -742,7 +742,6 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
 
                 var guiContent = new GUIContent((favoriteIndex == -1 ? registerRegisterData.title : register_temp.title));
                 guiContent.text += "*";
-                // guiContent.image = favoriteIndex == -1 ? _forward.image : null;
                 var old = GUI.color;
                 var select_col = new Color(0.45f, 0.65f, 1.0f);
                 select_col *= 1.5f;
@@ -758,18 +757,13 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                     for (var i = 0; i < favorite_Asset.FavoriteData.Count; i++)
                     {
                         guiContent = new GUIContent(favorite_Asset.FavoriteData[i].title);
-                        // guiContent.image = favoriteIndex == i ? _forward.image : null;
                         GUI.color = favoriteIndex == i ? select_col : old;
-                        // width = GUI.skin.button.CalcSize(guiContent);
-                        // btn_rect = GUILayoutUtility.GetRect(width.x, width.y);
-                        if (GUILayout.Button(guiContent))
-                        {
-                            if (favoriteIndex == -1)
-                                register.RegisterData.CopyTo(register_temp);
+                        if (!GUILayout.Button(guiContent)) continue;
+                        if (favoriteIndex == -1)
+                            register.RegisterData.CopyTo(register_temp);
                             
-                            favoriteIndex = i;
-                            favorite_Asset.FavoriteData[i].CopyTo(register.RegisterData);
-                        }
+                        favoriteIndex = i;
+                        favorite_Asset.FavoriteData[i].CopyTo(register.RegisterData);
                     }
                 }
 
