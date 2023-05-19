@@ -5,6 +5,7 @@ using System;
 using System.Reflection;
 using Unity.Jobs;
 using System.Linq;
+using Unity.EditorCoroutines.Editor;
 
 namespace GraphProcessor
 {
@@ -664,16 +665,18 @@ namespace GraphProcessor
 			outputPorts.PushDatas();
 		}
 		
-		public void OnExecute()
+		public IEnumerator OnExecute()
 		{
 			inputPorts.PullDatas();
-
-			ExceptionToLog.Call(() => Execute());
+			
+			yield return EditorCoroutineUtility.StartCoroutine(Execute(), this);
 
 			InvokeOnProcessed(); // TODO: remove
 			InvokeOnExecute();
 
 			outputPorts.PushDatas();
+
+			yield return null;
 		}
 
 		public void InvokeOnProcessed() => onProcessed?.Invoke();
@@ -699,7 +702,10 @@ namespace GraphProcessor
 		protected virtual void Process() {}
 		
 		// Execute is for Order Process
-		protected virtual void Execute() {}
+		protected virtual IEnumerator Execute()
+		{
+			yield return null;
+		}
 
 		#endregion
 

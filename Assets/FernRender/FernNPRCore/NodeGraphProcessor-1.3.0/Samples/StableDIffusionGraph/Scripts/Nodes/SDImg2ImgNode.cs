@@ -93,9 +93,10 @@ namespace FernNPRCore.SDNodeGraph
 			}
 		}
 
-		protected override void Execute()
+		protected override IEnumerator Execute()
 		{
-			EditorCoroutineUtility.StartCoroutine(GenerateAsync(), this);
+			GetPort(nameof(InputImage), null).PullData();
+			yield return EditorCoroutineUtility.StartCoroutine(GenerateAsync(), this);
 		}
 		
 		IEnumerator GenerateAsync()
@@ -124,7 +125,6 @@ namespace FernNPRCore.SDNodeGraph
                 // Send the generation parameters along with the POST request
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
-
                     byte[] inputImgBytes = SDUtil.TextureToTexture2D(InputImage).EncodeToPNG();
                     string inputImgString = Convert.ToBase64String(inputImgBytes);
                     string maskImgString = "";

@@ -35,10 +35,11 @@ public class SDRelayNode : SDProcessorNode
 
 	const int		k_MaxPortSize = 14;
 
-	protected override void Execute()
+	protected override IEnumerator Execute()
 	{
 		outputIndex = 0;
 		output = input;
+		yield return null;
 	}
 
 	public override string layoutStyle => "GraphProcessorStyles/RelayNode";

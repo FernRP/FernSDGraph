@@ -47,7 +47,7 @@ namespace FernNPRCore.SDNodeGraph
 			
 		}
 
-		protected override void Execute()
+		protected override IEnumerator Execute()
 		{
 			if (overrideSettings&&!string.IsNullOrEmpty(serverURL))
 			{
@@ -63,6 +63,8 @@ namespace FernNPRCore.SDNodeGraph
 				SDGraphResource.SdGraphDataHandle.OverrideSettings = false;
 				outServerURL = SDGraphResource.SdGraphDataHandle.serverURL;
 			}
+
+			yield return null;
 		}
 	}
 }

@@ -33,5 +33,6 @@ namespace GraphProcessor
 		/// Schedule the graph into the job system
 		/// </summary>
 		public abstract void Run();
+		public abstract IEnumerator RunAsync();
 	}
 }

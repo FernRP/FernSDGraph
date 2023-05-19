@@ -336,10 +336,10 @@ namespace FernNPRCore.SDNodeGraph
             yield return null;
         }
 
-        protected override void Execute()
+        protected override IEnumerator Execute()
         {
             GetPort(nameof(prompt), null).PullData();
-            EditorCoroutineUtility.StartCoroutine(GenerateAsync(), this);
+            yield return EditorCoroutineUtility.StartCoroutine(GenerateAsync(), this);
         }
     }
 }

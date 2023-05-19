@@ -6,6 +6,7 @@ using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 using GraphProcessor;
 using NodeGraphProcessor.Examples;
+using Unity.EditorCoroutines.Editor;
 
 public class ConditionalProcessorView : PinnedElementView
 {
@@ -28,7 +29,10 @@ public class ConditionalProcessorView : PinnedElementView
         content.Add(stepButton);
     }
 
-    void OnPlay() => processor.Run();
+    void OnPlay()
+    {
+        EditorCoroutineUtility.StartCoroutine(processor.RunAsync(), this);
+    }
 
     void OnStep()
     {
@@ -41,7 +45,7 @@ public class ConditionalProcessorView : PinnedElementView
             view.UnHighlight();
         }
 
-        processor.Step();
+        EditorCoroutineUtility.StartCoroutine(processor.Step(), this);
 
         // Display debug infos, currentGraphExecution is modified in the Step() function above
         if (processor.currentGraphExecution != null)

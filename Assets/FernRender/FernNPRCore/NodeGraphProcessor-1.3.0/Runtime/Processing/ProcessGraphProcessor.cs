@@ -37,5 +37,10 @@ namespace GraphProcessor
 			for (int i = 0; i < count; i++)
 				processList[i].OnProcess();
 		}
+
+		public override IEnumerator RunAsync()
+		{
+			yield break;
+		}
 	}
 }

@@ -66,5 +66,10 @@ namespace GraphProcessor
 
 			JobHandle.ScheduleBatchedJobs();
 		}
+
+		public override IEnumerator RunAsync()
+		{
+			yield break;
+		}
 	}
 }

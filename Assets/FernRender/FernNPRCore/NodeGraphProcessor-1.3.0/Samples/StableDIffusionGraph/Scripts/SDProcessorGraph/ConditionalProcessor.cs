@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using FernNPRCore.SDNodeGraph;
 using GraphProcessor;
+using Unity.EditorCoroutines.Editor;
 using Debug = UnityEngine.Debug;
 
 namespace NodeGraphProcessor.Examples
@@ -47,11 +49,16 @@ namespace NodeGraphProcessor.Examples
 
         public override void Run()
         {
+            
+        }
+
+        public override IEnumerator RunAsync()
+        {
             IEnumerator<BaseNode> enumerator;
 
             if (startNodeList.Count == 0)
             {
-                enumerator = RunTheGraph();
+                RunTheGraph();
             }
             else
             {
@@ -59,11 +66,8 @@ namespace NodeGraphProcessor.Examples
                 // Add all the start nodes to the execution stack
                 startNodeList.ForEach(s => nodeToExecute.Push(s));
                 // Execute the whole graph:
-                enumerator = RunTheGraph(nodeToExecute);
+                yield return RunTheGraph(nodeToExecute);
             }
-
-            while (enumerator.MoveNext())
-                ;
         }
 
         private void WaitedRun(Stack<BaseNode> nodesToRun)
@@ -93,18 +97,17 @@ namespace NodeGraphProcessor.Examples
             }
         }
 
-        private IEnumerator<BaseNode> RunTheGraph()
+        private void RunTheGraph()
         {
             int count = processList.Count;
 
             for (int i = 0; i < count; i++)
             {
                 processList[i].OnProcess();
-                yield return processList[i];
             }
         }
 
-        private IEnumerator<BaseNode> RunTheGraph(Stack<BaseNode> nodeToExecute)
+        private IEnumerator RunTheGraph(Stack<BaseNode> nodeToExecute)
         {
             HashSet<BaseNode> nodeDependenciesGathered = new HashSet<BaseNode>();
             HashSet<BaseNode> skipConditionalHandling = new HashSet<BaseNode>();
@@ -123,7 +126,7 @@ namespace NodeGraphProcessor.Examples
                     if (nodeDependenciesGathered.Contains(node))
                     {
                         // Execute the conditional node:
-                        node.OnExecute();
+                        yield return node.OnExecute();
                         
                         yield return node;
 
@@ -191,19 +194,21 @@ namespace NodeGraphProcessor.Examples
         }
 
         // Advance the execution of the graph of one node, mostly for debug. Doesn't work for WaitableNode's executeAfter port.
-        public void Step()
+        public IEnumerator Step()
         {
-            if (currentGraphExecution == null)
-            {
-                Stack<BaseNode> nodeToExecute = new Stack<BaseNode>();
-                if (startNodeList.Count > 0)
-                    startNodeList.ForEach(s => nodeToExecute.Push(s));
+            Stack<BaseNode> nodeToExecute = new Stack<BaseNode>();
+            if (startNodeList.Count > 0)
+                startNodeList.ForEach(s => nodeToExecute.Push(s));
 
-                currentGraphExecution = startNodeList.Count == 0 ? RunTheGraph() : RunTheGraph(nodeToExecute);
-                currentGraphExecution.MoveNext(); // Advance to the first node
+            if (startNodeList.Count == 0)
+            {
+                RunTheGraph();
+                yield return null;
             }
-            else if (!currentGraphExecution.MoveNext())
-                currentGraphExecution = null;
+            else
+            {
+                yield return EditorCoroutineUtility.StartCoroutine(RunTheGraph(nodeToExecute), this);
+            }
         }
     }
 }
