@@ -23,35 +23,12 @@ public class ConditionalProcessorView : PinnedElementView
         graphView.computeOrderUpdated += processor.UpdateComputeOrder;
 
         Button runButton = new Button(OnPlay) { name = "ActionButton", text = "Run" };
-        Button stepButton = new Button(OnStep) { name = "ActionButton", text = "Step" };
 
         content.Add(runButton);
-        content.Add(stepButton);
     }
 
     void OnPlay()
     {
         EditorCoroutineUtility.StartCoroutine(processor.RunAsync(), this);
-    }
-
-    void OnStep()
-    {
-        BaseNodeView view;
-
-        if (processor.currentGraphExecution != null)
-        {
-            // Unhighlight the last executed node
-            view = graphView.nodeViews.Find(v => v.nodeTarget == processor.currentGraphExecution.Current);
-            view.UnHighlight();
-        }
-
-        EditorCoroutineUtility.StartCoroutine(processor.Step(), this);
-
-        // Display debug infos, currentGraphExecution is modified in the Step() function above
-        if (processor.currentGraphExecution != null)
-        {
-            view = graphView.nodeViews.Find(v => v.nodeTarget == processor.currentGraphExecution.Current);
-            view.Highlight();
-        }
     }
 }

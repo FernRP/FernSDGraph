@@ -85,6 +85,9 @@ namespace GraphProcessor
 			node.onMessageRemoved += RemoveMessageView;
 			node.onPortsUpdated += a => schedule.Execute(_ => UpdatePortsForField(a)).ExecuteLater(0);
 
+			node.onExecute += ExecuteHighLight;
+			node.onExecuteFinish += ExecuteFinishHighLight;
+			
             styleSheets.Add(Resources.Load<StyleSheet>(baseNodeStyle));
 
             if (!string.IsNullOrEmpty(node.layoutStyle))
@@ -109,6 +112,16 @@ namespace GraphProcessor
 			RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
 			RegisterCallback<DetachFromPanelEvent>(e => ExceptionToLog.Call(Disable));
 			OnGeometryChanged(null);
+		}
+
+		private void ExecuteFinishHighLight()
+		{
+			UnHighlight();
+		}
+
+		private void ExecuteHighLight()
+		{
+			Highlight();
 		}
 
 		void InitializePorts()

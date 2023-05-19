@@ -44,7 +44,6 @@ namespace FernNPRCore.SDNodeGraph
 		protected override void Enable()
 		{
 			base.Enable();
-			
 		}
 
 		protected override IEnumerator Execute()

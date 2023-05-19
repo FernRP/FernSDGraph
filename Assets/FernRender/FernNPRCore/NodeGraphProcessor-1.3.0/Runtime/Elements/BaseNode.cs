@@ -668,14 +668,11 @@ namespace GraphProcessor
 		public IEnumerator OnExecute()
 		{
 			inputPorts.PullDatas();
-			
-			yield return EditorCoroutineUtility.StartCoroutine(Execute(), this);
-
 			InvokeOnProcessed(); // TODO: remove
 			InvokeOnExecute();
-
+			yield return EditorCoroutineUtility.StartCoroutine(Execute(), this);
+			InvokeOnExecuteFinsih();
 			outputPorts.PushDatas();
-
 			yield return null;
 		}
 
