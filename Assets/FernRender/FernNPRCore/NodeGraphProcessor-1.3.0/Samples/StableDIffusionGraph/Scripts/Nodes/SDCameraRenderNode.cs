@@ -31,9 +31,15 @@ namespace FernNPRCore.SDNodeGraph
         [Output("Color")] public RenderTexture colorTarget;
         [Output("Normal")] public RenderTexture normalTarget;
         [Output("Depth")] public RenderTexture depthTarget;
-        [Output("InPaint")] public RenderTexture inpaintTarget;
+        [Output("InPaint")] public RenderTexture inpaintTarget; 
+        [Input("Color"), ShowAsDrawer] public bool isRenderColor;
+        [Input("Normal"), ShowAsDrawer] public bool isRenderNormal;
+        [Input("Depth"), ShowAsDrawer] public bool isRenderDepth;
+        [Input("InPaint"), ShowAsDrawer] public bool isRenderInPaint;
+        
         public PreviewType previewType = PreviewType.Color;
-        public Camera camera;
+        
+        private Camera camera;
 
         [ChangeEvent(true)]
         public int width = 512;
@@ -127,18 +133,22 @@ namespace FernNPRCore.SDNodeGraph
             if (depthTarget == null)
             {
                 depthTarget = RenderTexture.GetTemporary(width, height, 16,
-                    camera.allowHDR ? RenderTextureFormat.RGB111110Float : RenderTextureFormat.RGB111110Float);
+                    camera.allowHDR ? RenderTextureFormat.Depth : RenderTextureFormat.Depth);
             }
 
             if (inpaintTarget == null)
             {
                 inpaintTarget = RenderTexture.GetTemporary(width, height, 16,
-                    camera.allowHDR ? RenderTextureFormat.RGB111110Float : RenderTextureFormat.RGB111110Float);
+                    camera.allowHDR ? RenderTextureFormat.R16 : RenderTextureFormat.R16);
             }
         }
 
         protected override void Process()
         {
+            GetPort(nameof(colorTarget), null).PushData();
+            GetPort(nameof(normalTarget), null).PushData();
+            GetPort(nameof(depthTarget), null).PushData();
+            GetPort(nameof(inpaintTarget), null).PushData();
         }
 
         public void ResetRTResolution()
@@ -179,6 +189,7 @@ namespace FernNPRCore.SDNodeGraph
 
         private void RenderColor()
         {
+            if(!isRenderColor) return;
             originRT = camera.targetTexture;
             camera.targetTexture = colorTarget;
             camera.Render();
@@ -187,6 +198,7 @@ namespace FernNPRCore.SDNodeGraph
         
         private void RenderNormal()
         {
+            if(!isRenderNormal) return;
             if(cameraUniversalData == null) return;
             if(SDGraphResource.sdUniversal == null) return;
             
@@ -214,6 +226,7 @@ namespace FernNPRCore.SDNodeGraph
         
         private void RenderInpaint()
         {
+            if(!isRenderInPaint) return;
             if(cameraUniversalData == null) return;
             if(SDGraphResource.sdUniversal == null) return;
             
@@ -226,7 +239,7 @@ namespace FernNPRCore.SDNodeGraph
             camera.clearFlags = CameraClearFlags.Color;
             camera.backgroundColor = Color.clear;
             GraphicsSettings.renderPipelineAsset = SDGraphResource.sdUniversal;
-            cameraUniversalData.SetRenderer(2);
+            cameraUniversalData.SetRenderer(0);
             camera.targetTexture = depthTarget;
             
             camera.Render();
@@ -241,6 +254,7 @@ namespace FernNPRCore.SDNodeGraph
         
         private void RenderDepth()
         {
+            if(!isRenderDepth) return;
             if(cameraUniversalData == null) return;
             if(SDGraphResource.sdUniversal == null) return;
             
@@ -253,7 +267,7 @@ namespace FernNPRCore.SDNodeGraph
             camera.clearFlags = CameraClearFlags.Color;
             camera.backgroundColor = Color.black;
             GraphicsSettings.renderPipelineAsset = SDGraphResource.sdUniversal;
-            cameraUniversalData.SetRenderer(1);
+            cameraUniversalData.SetRenderer(2);
             camera.targetTexture = depthTarget;
 
             camera.Render();

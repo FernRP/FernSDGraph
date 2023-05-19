@@ -558,7 +558,7 @@ namespace FernNPRCore.SDNodeGraph
     public class ControlNetData
     {
         public string input_image = "";
-        public string mask = "";
+        public string mask = null;
         public string module = "none";
         public string model;
         public float weight = 1;
@@ -598,7 +598,7 @@ namespace FernNPRCore.SDNodeGraph
     {
         public string name;
         public string path;
-        public string prompt;
+        //public string prompt;
     }
 
     public class SDDataDir

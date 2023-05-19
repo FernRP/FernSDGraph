@@ -23,7 +23,7 @@ namespace FernNPRCore.SDNodeGraph
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Txt2Img")]
     public class SDTxt2ImgNode : LinearSDProcessorNode
     {
-        [Input(name = "ControlNet")] private ControlNetData controlNetData = null;
+        [Input(name = "ControlNet")] private ControlNetData controlNetData;
         [Input(name = "Prompt")] public Prompt prompt;
 
         [Input(name = "Width"), ShowAsDrawer] public int width = 512;
@@ -246,7 +246,7 @@ namespace FernNPRCore.SDNodeGraph
                         sd.sampler_name = samplerMethod;
                         if (controlNetData != null)
                         {
-                            SDUtil.Log("use controlnet");
+                            SDUtil.Log($"use controlNet: {controlNetData.model}");
                             sd.alwayson_scripts = new ALWAYSONSCRIPTS();
                             sd.alwayson_scripts.controlnet = new ControlNetDataArgs();
                             sd.alwayson_scripts.controlnet.args = new[] { controlNetData };

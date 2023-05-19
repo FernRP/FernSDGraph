@@ -7,7 +7,7 @@ using FernNPRCore.SDNodeGraph;
 using NodeGraphProcessor.Examples;
 
 [System.Serializable, NodeMenuItem("Conditional/ForLoop")]
-public class ForLoopNode : SDProcessorNode
+public class ForLoopNode : LinearSDProcessorNode
 {
 	[Output(name = "Loop Body")]
 	public ConditionalLink		loopBody;
