@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using FernNPRCore.SDNodeGraph;
@@ -12,7 +13,6 @@ using GraphProcessor;
 public class SDTxt2ImgNodeView : SDGraphNodeView
 {
 	private SDTxt2ImgNode node;
-
 	private DropdownField samplerMethodDropdown;
 	private LongField longLastField;
 
@@ -62,8 +62,26 @@ public class SDTxt2ImgNodeView : SDGraphNodeView
 		containerLastSeed.Add(longLastField);
 		extensionContainer.Add(containerLastSeed);
 		
+		var container = new IMGUIContainer(OnGUI);
+		extensionContainer.Add(container);
+		
 		RefreshExpandedState();
 		
 		NotifyNodeChanged();
+	}
+	
+	void OnGUI()
+	{
+		if(node == null) return;
+		if(node.isExecuting == false) return;
+		var controlRect = EditorGUILayout.GetControlRect();
+		controlRect.height = 30;
+		var label = node.cur_step == -1 ? "init" : $"{node.speed:F3}it/s";
+		var total = (long)((node.step - 1) / node.speed + 1 / node.init_speed);
+		total = Math.Max(total, 0);
+		var re = total - (long)DateTime.Now.Subtract(node.startTime).TotalSeconds;
+		re = Math.Max(re, 0);
+		EditorGUI.ProgressBar(controlRect, node.progress, $"{node.progress * 100:F1}% ({label})\n{re.Seconds_To_HMS()}/{total.Seconds_To_HMS()}");
+		GUILayout.Space(20);
 	}
 }

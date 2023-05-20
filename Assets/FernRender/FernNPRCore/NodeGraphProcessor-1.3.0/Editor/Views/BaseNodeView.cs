@@ -668,7 +668,11 @@ namespace GraphProcessor
 			DrawDefaultInspector(false);
 		}
 
-		public virtual void Disable() {}
+		public virtual void Disable()
+		{
+			nodeTarget.onExecute -= Highlight;
+			nodeTarget.onExecuteFinish -= UnHighlight;
+		}
 
 		Dictionary<string, List<(object value, VisualElement target)>> visibleConditions = new Dictionary<string, List<(object value, VisualElement target)>>();
 		Dictionary<string, VisualElement>  hideElementIfConnected = new Dictionary<string, VisualElement>();

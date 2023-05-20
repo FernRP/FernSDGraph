@@ -664,13 +664,15 @@ namespace GraphProcessor
 
 			outputPorts.PushDatas();
 		}
-		
+
+		private WaitForSecondsRealtime waitOnExecute = new WaitForSecondsRealtime(0.3333f);
 		public IEnumerator OnExecute()
 		{
 			inputPorts.PullDatas();
 			InvokeOnProcessed(); // TODO: remove
 			InvokeOnExecute();
-			yield return EditorCoroutineUtility.StartCoroutine(Execute(), this);
+			yield return waitOnExecute;
+			yield return Execute();
 			InvokeOnExecuteFinsih();
 			outputPorts.PushDatas();
 			yield return null;

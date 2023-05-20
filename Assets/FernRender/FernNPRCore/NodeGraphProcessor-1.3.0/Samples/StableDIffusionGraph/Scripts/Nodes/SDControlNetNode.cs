@@ -176,19 +176,7 @@ namespace FernNPRCore.SDNodeGraph
 		protected override IEnumerator Execute()
 		{
 			if (controlNet == null) controlNet = new ControlNetData();
-			// if (modelList == null || modelList.Count <= 0)
-			// {
-			// 	EditorCoroutineUtility.StartCoroutine(ControlNetModelListAsync(), this);
-			// }
-			//
-			// if (moudleList == null || moudleList.Count <= 0)
-			// {
-			// 	EditorCoroutineUtility.StartCoroutine(ControlNetMoudleList(), this);
-			// }
-			
-			//GetPort(nameof(controlNet), null).PushData();
-
-			yield return EditorCoroutineUtility.StartCoroutine(ControlNetDetect(), this);
+			yield return ControlNetDetect();
 			GetPort(nameof(controlNet), null).PushData();
 			yield return null;
 		}

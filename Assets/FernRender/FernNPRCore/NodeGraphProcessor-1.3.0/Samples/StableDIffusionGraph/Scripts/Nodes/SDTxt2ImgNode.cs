@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using FernNPRCore.StableDiffusionGraph;
 using Newtonsoft.Json;
 using NodeGraphProcessor.Examples;
-using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEngine.Events;
 using UnityEngine.Experimental.Rendering;
@@ -41,7 +40,7 @@ namespace FernNPRCore.SDNodeGraph
         [HideInInspector] public float progress;
         [HideInInspector] public DateTime startTime;
         [HideInInspector] public float speed; // it/s
-        [HideInInspector] public float init_speed; // it/s
+        [HideInInspector] public float init_speed = 0.0001f; // it/s
         [HideInInspector] public int cur_step;
         [HideInInspector] public bool isExecuting = false;
         [HideInInspector] public string samplerMethod = "Euler";
@@ -104,7 +103,6 @@ namespace FernNPRCore.SDNodeGraph
             isExecuting = true;
         }
 
-
         private IEnumerator UpdateGenerationProgress()
         {
             // Generate the image
@@ -136,6 +134,7 @@ namespace FernNPRCore.SDNodeGraph
                 if (cur_step == -1)
                 {
                     var pro = (float)oTime.TotalSeconds * init_speed;
+                    
                     progress = Mathf.Min(1, pro);
                     //TODO: Update View
                 }
@@ -169,8 +168,8 @@ namespace FernNPRCore.SDNodeGraph
                                 init_speed = 1 / (float)oTime.TotalSeconds;
                             else
                                 speed = cur_step / (float)(oTime.TotalSeconds - 1 / init_speed);
-                        }
 
+                        }
                         //TODO: Update All View
                     }
 
@@ -338,8 +337,9 @@ namespace FernNPRCore.SDNodeGraph
 
         protected override IEnumerator Execute()
         {
+            Init();
             GetPort(nameof(prompt), null).PullData();
-            yield return EditorCoroutineUtility.StartCoroutine(GenerateAsync(), this);
+            yield return GenerateAsync();
         }
     }
 }

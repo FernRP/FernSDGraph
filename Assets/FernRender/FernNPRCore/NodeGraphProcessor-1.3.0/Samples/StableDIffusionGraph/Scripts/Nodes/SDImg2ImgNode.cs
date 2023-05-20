@@ -96,7 +96,7 @@ namespace FernNPRCore.SDNodeGraph
 		protected override IEnumerator Execute()
 		{
 			GetPort(nameof(InputImage), null).PullData();
-			yield return EditorCoroutineUtility.StartCoroutine(GenerateAsync(), this);
+			yield return GenerateAsync();
 		}
 		
 		IEnumerator GenerateAsync()

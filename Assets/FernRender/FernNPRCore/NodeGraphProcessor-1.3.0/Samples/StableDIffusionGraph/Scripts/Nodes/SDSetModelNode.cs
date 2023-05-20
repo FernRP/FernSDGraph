@@ -38,7 +38,7 @@ namespace FernNPRCore.SDNodeGraph
 
 		protected override IEnumerator Execute()
 		{
-			yield return EditorCoroutineUtility.StartCoroutine(SetModelAsync(Model, null), this);
+			yield return SetModelAsync(Model, null);
 		}
 		
 		public void GetModelList(UnityAction action = null)

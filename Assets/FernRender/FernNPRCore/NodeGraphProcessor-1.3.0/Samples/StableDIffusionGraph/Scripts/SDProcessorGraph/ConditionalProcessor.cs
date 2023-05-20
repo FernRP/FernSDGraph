@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FernNPRCore.SDNodeGraph;
 using GraphProcessor;
-using Unity.EditorCoroutines.Editor;
 using Debug = UnityEngine.Debug;
 
 namespace NodeGraphProcessor.Examples
@@ -190,24 +189,6 @@ namespace NodeGraphProcessor.Examples
                     node.OnProcess();
                     yield return node;
                 }
-            }
-        }
-
-        // Advance the execution of the graph of one node, mostly for debug. Doesn't work for WaitableNode's executeAfter port.
-        public IEnumerator Step()
-        {
-            Stack<BaseNode> nodeToExecute = new Stack<BaseNode>();
-            if (startNodeList.Count > 0)
-                startNodeList.ForEach(s => nodeToExecute.Push(s));
-
-            if (startNodeList.Count == 0)
-            {
-                RunTheGraph();
-                yield return null;
-            }
-            else
-            {
-                yield return EditorCoroutineUtility.StartCoroutine(RunTheGraph(nodeToExecute), this);
             }
         }
     }
