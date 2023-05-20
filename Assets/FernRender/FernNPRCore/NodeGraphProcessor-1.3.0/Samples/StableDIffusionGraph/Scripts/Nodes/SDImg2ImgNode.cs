@@ -144,7 +144,6 @@ namespace FernNPRCore.SDNodeGraph
             // Read the output of generation
             if (httpWebRequest != null)
             {
-                onProgressStart?.Invoke();
 
                 // Wait that the generation is complete before procedding
                 Task<WebResponse> webResponse = httpWebRequest.GetResponseAsync();
@@ -311,6 +310,7 @@ namespace FernNPRCore.SDNodeGraph
                 // Wait that the generation is complete before procedding
                 Task<WebResponse> webResponse = httpWebRequest.GetResponseAsync();
 
+                onProgressStart?.Invoke();
                 while (!webResponse.IsCompleted)
                 {
 	                yield return UpdateGenerationProgress();
