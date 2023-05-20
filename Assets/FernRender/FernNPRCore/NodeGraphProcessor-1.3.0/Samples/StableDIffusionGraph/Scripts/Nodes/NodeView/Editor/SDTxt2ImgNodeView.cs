@@ -90,6 +90,7 @@ public class SDTxt2ImgNodeView : SDGraphNodeView
 	{
 		progressBar.value = 0;
 		node.progress = 0;
+		progressBar.title = $"{node.progress * 100:F1}%";
 		progressBar.focusable = true;
 		if (!extensionContainer.Contains(progressBar))
 		{

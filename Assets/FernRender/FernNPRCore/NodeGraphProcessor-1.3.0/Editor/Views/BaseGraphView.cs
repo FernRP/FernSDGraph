@@ -1133,7 +1133,8 @@ namespace GraphProcessor
 			var outputNodeView = outputPortView.node as BaseNodeView;
 
 			//If the input port does not support multi-connection, we remove them
-			if (autoDisconnectInputs && !(e.input as PortView).portData.acceptMultipleEdges)
+			
+			if (autoDisconnectInputs && !((PortView)e.input).portData.acceptMultipleEdges)
 			{
 				foreach (var edge in edgeViews.Where(ev => ev.input == e.input).ToList())
 				{
@@ -1142,7 +1143,7 @@ namespace GraphProcessor
 				}
 			}
 			// same for the output port:
-			if (autoDisconnectInputs && !(e.output as PortView).portData.acceptMultipleEdges)
+			if (autoDisconnectInputs && !((PortView)e.output).portData.acceptMultipleEdges)
 			{
 				foreach (var edge in edgeViews.Where(ev => ev.output == e.output).ToList())
 				{
@@ -1195,7 +1196,7 @@ namespace GraphProcessor
 			edgeView.output = outputPortView;
 
 
-			return Connect(edgeView);
+			return Connect(edgeView, autoDisconnectInputs);
 		}
 
 		public bool Connect(EdgeView e, bool autoDisconnectInputs = true)
