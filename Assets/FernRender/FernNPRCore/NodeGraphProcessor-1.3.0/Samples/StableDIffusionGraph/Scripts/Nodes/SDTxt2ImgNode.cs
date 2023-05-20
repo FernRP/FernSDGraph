@@ -35,8 +35,6 @@ namespace FernNPRCore.SDNodeGraph
         [Output("Image")] public Texture2D outputImage;
         [Output("Seed")] public long outSeed;
 
-        private float aspect;
-
         [HideInInspector] public float progress;
         [HideInInspector] public DateTime startTime;
         [HideInInspector] public float speed; // it/s
@@ -44,7 +42,6 @@ namespace FernNPRCore.SDNodeGraph
         [HideInInspector] public int cur_step;
         [HideInInspector] public bool isExecuting = false;
         [HideInInspector] public string samplerMethod = "Euler";
-
 
         public override string name => "SD Txt2Img";
 
@@ -288,10 +285,6 @@ namespace FernNPRCore.SDNodeGraph
                     {
                         SDUtil.LogError(
                             "No image was return by the server. This should not happen. Verify that the server is correctly setup.");
-
-#if UNITY_EDITOR
-                        EditorUtility.ClearProgressBar();
-#endif
                         yield break;
                     }
 

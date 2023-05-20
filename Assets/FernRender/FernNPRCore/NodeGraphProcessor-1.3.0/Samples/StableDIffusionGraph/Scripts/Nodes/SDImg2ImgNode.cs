@@ -56,8 +56,13 @@ namespace FernNPRCore.SDNodeGraph
 		
 		public Action<long, long> OnUpdateSeedField;
 		
-		private float aspect;
-		private Color whiteColor = new Color(1, 1, 1, 1);
+		[HideInInspector] public float progress;
+		[HideInInspector] public DateTime startTime;
+		[HideInInspector] public float speed; // it/s
+		[HideInInspector] public float init_speed = 0.0001f; // it/s
+		[HideInInspector] public int cur_step;
+		[HideInInspector] public bool isExecuting = false;
+
 
 		public Texture2D OutputImage
 		{
@@ -72,8 +77,9 @@ namespace FernNPRCore.SDNodeGraph
 
 		public override void OnNodeCreated()
 		{
-			base.OnNodeCreated();
 			hasPreview = true;
+			previewTexture = OutputImage;
+			base.OnNodeCreated();
 		}
 
 		protected override void Enable()
@@ -95,9 +101,101 @@ namespace FernNPRCore.SDNodeGraph
 
 		protected override IEnumerator Execute()
 		{
+			Init();
 			GetPort(nameof(InputImage), null).PullData();
 			yield return GenerateAsync();
 		}
+		
+		public void Init()
+		{
+			cur_step = -1;
+			startTime = DateTime.Now;
+			progress = 0;
+			speed = EditorPrefs.GetFloat("SD.GPU.it_speed", 0.0001f);
+			init_speed = EditorPrefs.GetFloat("SD.GPU.init_speed", 0.0001f);
+			isExecuting = true;
+		}
+		
+		public void Complete()
+		{
+			isExecuting = false;
+			EditorPrefs.SetFloat("SD.GPU.it_speed", speed);
+			EditorPrefs.SetFloat("SD.GPU.init_speed", init_speed);
+		}
+		
+		private IEnumerator UpdateGenerationProgress()
+        {
+            // Generate the image
+            HttpWebRequest httpWebRequest = null;
+            try
+            {
+                // Make a HTTP POST request to the Stable Diffusion server
+                //var txt2ImgAPI = controlNet == defaultControlNet ? SDDataHandle.TextToImageAPI : SDDataHandle.ControlNetTex2Img;
+                var txt2ImgAPI = SDGraphResource.SdGraphDataHandle.ProgressAPI;
+                httpWebRequest = (HttpWebRequest)WebRequest.Create(SDGraphResource.SdGraphDataHandle.serverURL + txt2ImgAPI);
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "GET";
+                httpWebRequest.SetRequestAuthorization();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message + "\n\n" + e.StackTrace);
+            }
+            // Read the output of generation
+            if (httpWebRequest != null)
+            {
+                onProgressStart?.Invoke();
+
+                // Wait that the generation is complete before procedding
+                Task<WebResponse> webResponse = httpWebRequest.GetResponseAsync();
+
+                var currentTime = DateTime.Now;
+                TimeSpan oTime = currentTime.Subtract(startTime);
+                if (cur_step == -1)
+                {
+                    var pro = (float)oTime.TotalSeconds * init_speed;
+                    progress = Mathf.Min(1, pro);
+                }
+                while (!webResponse.IsCompleted)
+                {                
+                    yield return new WaitForSeconds(100);
+                }
+                
+                // Stream the result from the server
+                var httpResponse = webResponse.Result;
+
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    // Decode the response as a JSON string
+                    string result = streamReader.ReadToEnd();
+                    
+                    // Deserialize the JSON string into a data structure
+                    SDResponseProgress json = JsonConvert.DeserializeObject<SDResponseProgress>(result);
+                    // If no image, there was probably an error so abort
+                    if (json != null && !string.IsNullOrEmpty(json.current_image))
+                    {
+                        byte[] imageData = Convert.FromBase64String(json.current_image);
+                        OutputImage.LoadImage(imageData);
+                    
+                        if (json.state != null && json.state.sampling_step > cur_step) 
+                        {
+                            cur_step = json.state.sampling_step;
+                            if (cur_step == 0)
+                                init_speed = 1 / (float)oTime.TotalSeconds;
+                            else
+                                speed = cur_step/(float)(oTime.TotalSeconds - 1 / init_speed);
+                        }
+                        progress = json.progress;
+                        onProgressUpdate?.Invoke(progress);
+                    }
+                    
+                    if (cur_step == -1) yield break;
+                    // TODO:?
+                    // var pro = Mathf.Clamp((((float)oTime.TotalSeconds - 1f / init_speed) * speed) / (step - 1f), cur_step/(step - 1.0f), (cur_step + 1)/(step - 1.0f) - 0.001f);
+                    // progress = Mathf.Min(1, pro);
+                }
+            }
+        }
 		
 		IEnumerator GenerateAsync()
         {
@@ -215,13 +313,9 @@ namespace FernNPRCore.SDNodeGraph
 
                 while (!webResponse.IsCompleted)
                 {
-                    //if (SDGraphResource.SdGraphDataHandle.UseAuth && !SDGraphResource.SdGraphDataHandle.Username.Equals("") && !SDGraphResource.SdGraphDataHandle.Password.Equals(""))
-                        //UpdateGenerationProgressWithAuth();
-                        // else
-                        // UpdateGenerationProgress();
-
-                        yield return new WaitForSeconds(0.5f);
+	                yield return UpdateGenerationProgress();
                 }
+                onProgressFinish?.Invoke();
 
                 // Stream the result from the server
                 var httpResponse = webResponse.Result;

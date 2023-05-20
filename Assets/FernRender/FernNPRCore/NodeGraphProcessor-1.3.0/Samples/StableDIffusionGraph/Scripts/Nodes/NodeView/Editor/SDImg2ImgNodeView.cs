@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using FernNPRCore.SDNodeGraph;
@@ -17,6 +18,8 @@ namespace FernNPRCore.SDNodeGraph
 
         private DropdownField samplerMethodDropdown;
         private LongField longLastField;
+        
+        private ProgressBar progressBar;
 
         public override void Enable()
         {
@@ -61,9 +64,51 @@ namespace FernNPRCore.SDNodeGraph
             containerLastSeed.Add(longLastField);
             extensionContainer.Add(containerLastSeed);
 
+            progressBar = new ProgressBar();
+            progressBar.highValue = 1;
+            node.onProgressStart = null;
+            node.onProgressUpdate = null;
+            node.onProgressFinish = null;
+            node.onProgressStart += OnProgressBarStart;
+            node.onProgressUpdate += OnUpdateProgressBar;
+            node.onProgressFinish += OnProgressBarFinish;
+            
             RefreshExpandedState();
-
-            NotifyNodeChanged();
+        }
+        
+        	
+        private void OnUpdateProgressBar(float progress)
+        {
+            var label = node.cur_step == -1 ? "init" : $"{node.speed:F3}it/s";
+            var total = (long)((node.step - 1) / node.speed + 1 / node.init_speed);
+            total = Math.Max(total, 0);
+            var re = total - (long)DateTime.Now.Subtract(node.startTime).TotalSeconds;
+            re = Math.Max(re, 0);
+            progressBar.title = $"{node.progress * 100:F1}% ({label})";
+            progressBar.value = progress;
+        }
+	
+        private void OnProgressBarStart()
+        {
+            progressBar.value = 0;
+            node.progress = 0;
+            progressBar.focusable = true;
+            if (!extensionContainer.Contains(progressBar))
+            {
+                extensionContainer.Add(progressBar);
+            }
+            RefreshExpandedState();
+        }
+	
+        private void OnProgressBarFinish()
+        {
+            progressBar.value = 1;
+            progressBar.focusable = false;
+            if (extensionContainer.Contains(progressBar))
+            {
+                extensionContainer.Remove(progressBar);
+            }
+            RefreshExpandedState();
         }
     }
 }

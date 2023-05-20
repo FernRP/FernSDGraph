@@ -15,8 +15,7 @@ public class SDTxt2ImgNodeView : SDGraphNodeView
 	private SDTxt2ImgNode node;
 	private DropdownField samplerMethodDropdown;
 	private LongField longLastField;
-	ProgressBar progressBar;
-
+	private ProgressBar progressBar;
 
 	public override void Enable()
 	{
