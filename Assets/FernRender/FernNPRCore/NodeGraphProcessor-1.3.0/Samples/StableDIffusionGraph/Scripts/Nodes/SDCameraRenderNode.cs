@@ -15,7 +15,7 @@ using Object = UnityEngine.Object;
 namespace FernNPRCore.SDNodeGraph
 {
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Camera Render")]
-    public class SDCameraRenderNode : BaseNode
+    public class SDCameraRenderNode : SDNode
     {
         [Serializable]
         public enum PreviewType

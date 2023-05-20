@@ -12,7 +12,7 @@ namespace FernNPRCore.SDNodeGraph
     /// <summary>
     /// This is the base class for every node that is executed by the conditional processor, it takes an executed bool as input to 
     /// </summary>
-    public abstract class SDProcessorNode : BaseNode, IConditionalNode
+    public abstract class SDProcessorNode : SDNode, IConditionalNode
     {
         /// <summary>
         /// Triggered when the node is processes

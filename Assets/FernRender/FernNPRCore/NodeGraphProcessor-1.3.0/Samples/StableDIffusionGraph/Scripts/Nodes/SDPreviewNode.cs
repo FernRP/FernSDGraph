@@ -11,7 +11,7 @@ using Debug = UnityEngine.Debug;
 namespace FernNPRCore.SDNodeGraph
 {
 	[System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Preview")]
-	public class SDPreviewNode : BaseNode
+	public class SDPreviewNode : SDNode
 	{
 		[Input(name = "Image"), ShowAsDrawer]
 		public Texture inputImage;

@@ -16,7 +16,7 @@ using UnityEngine.Networking;
 namespace FernNPRCore.SDNodeGraph
 {
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Lora")]
-    public class SDLoraNode : BaseNode
+    public class SDLoraNode : SDNode
     {
         [Input("Prompt")] public string prompt;
         [Input("Strength"), ShowAsDrawer] public float strength = 1;

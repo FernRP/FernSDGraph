@@ -8,7 +8,7 @@ using Unity.EditorCoroutines.Editor;
 namespace FernNPRCore.SDNodeGraph
 {
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Prompt")]
-    public class SDPromptNode : BaseNode
+    public class SDPromptNode : SDNode
     {
         [Input(name = "Positive")] public string positive;
         [Input(name = "Negative")] public string negative;
