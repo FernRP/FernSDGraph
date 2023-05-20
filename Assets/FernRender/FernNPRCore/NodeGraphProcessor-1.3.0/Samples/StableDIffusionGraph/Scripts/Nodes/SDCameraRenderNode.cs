@@ -53,11 +53,11 @@ namespace FernNPRCore.SDNodeGraph
 
         protected override void Enable()
         {
-            base.Enable();
             isUpdate = true;
             hasPreview = true;
             InitRenderTarget();
             SetPreviewType();
+            base.Enable();
         }
 
         public override void OnNodeCreated()

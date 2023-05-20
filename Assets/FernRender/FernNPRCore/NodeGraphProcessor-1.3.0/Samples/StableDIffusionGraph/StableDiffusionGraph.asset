@@ -111,22 +111,6 @@ MonoBehaviour:
     outputFieldName: outLoraString
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: da16cfb0-bcc8-470c-a99a-182bff49ad28
-    owner: {fileID: 11400000}
-    inputNodeGUID: 366782f3-b0b7-439d-9de1-a1dd83ca9f21
-    outputNodeGUID: 65d8f053-deed-4de8-8acd-c9c27274e197
-    inputFieldName: controlNetData
-    outputFieldName: output
-    inputPortIdentifier: 
-    outputPortIdentifier: 0
-  - GUID: dd82b045-96f2-4707-9727-e1091bff1111
-    owner: {fileID: 11400000}
-    inputNodeGUID: 366782f3-b0b7-439d-9de1-a1dd83ca9f21
-    outputNodeGUID: 5be4e0eb-4756-4610-a0cf-63026fe618fd
-    inputFieldName: executed
-    outputFieldName: loopBody
-    inputPortIdentifier: 
-    outputPortIdentifier: 
   - GUID: a8186d76-7597-4f2b-84c2-ee90816fd02a
     owner: {fileID: 11400000}
     inputNodeGUID: 366782f3-b0b7-439d-9de1-a1dd83ca9f21
@@ -191,6 +175,14 @@ MonoBehaviour:
     outputFieldName: controlNet
     inputPortIdentifier: 
     outputPortIdentifier: 
+  - GUID: 416f6c9a-fb23-43a6-82c9-4348a32a8f65
+    owner: {fileID: 11400000}
+    inputNodeGUID: a1f80506-a5bb-4f57-952b-2d30268f3a2e
+    outputNodeGUID: 299816ee-8687-4c05-b2cb-9c0030d1d4ca
+    inputFieldName: controlNetImg
+    outputFieldName: depthTarget
+    inputPortIdentifier: 
+    outputPortIdentifier: 
   groups:
   - title: Set Model
     color: {r: 0.2736711, g: 0.100272894, b: 0.49056602, a: 0.3}
@@ -222,8 +214,8 @@ MonoBehaviour:
   pinnedElements:
   - position:
       serializedVersion: 2
-      x: 313
-      y: 596
+      x: 18
+      y: 591
       width: 150
       height: 200
     opened: 1
@@ -254,7 +246,7 @@ MonoBehaviour:
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: 74, y: 171.33333, z: 0}
+  position: {x: 58.666668, y: 97.333336, z: 0}
   scale: {x: 0.49717674, y: 0.49717674, z: 1}
   references:
     version: 2
@@ -281,9 +273,9 @@ MonoBehaviour:
         nodeLock: 0
         isUpdate: 0
         hasPreview: 0
-        outServerURL: http://192.168.101.12:7860
+        outServerURL: http://127.0.0.1:7860
         overrideSettings: 1
-        serverURL: http://192.168.101.12:7860
+        serverURL: http://127.0.0.1:7860
         useAuth: 0
         user: 
         pass: 
@@ -516,60 +508,9 @@ MonoBehaviour:
         control_mode: 2
         module: none
         model: control_v11f1p_sd15_depth [cfd03158]
-        modelList:
-        - control_v11e_sd15_ip2p [c4bb465c]
-        - control_v11e_sd15_shuffle [526bfdae]
-        - control_v11f1p_sd15_depth [cfd03158]
-        - control_v11p_sd15_canny [d14c016b]
-        - control_v11p_sd15_inpaint [ebff9138]
-        - control_v11p_sd15_lineart [43d4be0d]
-        - control_v11p_sd15_mlsd [aca30ff0]
-        - control_v11p_sd15_normalbae [316696f1]
-        - control_v11p_sd15_openpose [cab727d4]
-        - control_v11p_sd15_scribble [d4ba51ff]
-        - control_v11p_sd15_seg [e1f51eb9]
-        - control_v11p_sd15_softedge [a8575a2a]
-        - control_v11p_sd15s2_lineart_anime [3825e83e]
-        - control_v11u_sd15_tile [1f041471]
+        modelList: []
         currentModelListIndex: 2
-        moudleList:
-        - none
-        - canny
-        - depth
-        - depth_leres
-        - hed
-        - hed_safe
-        - mediapipe_face
-        - mlsd
-        - normal_map
-        - openpose
-        - openpose_hand
-        - openpose_face
-        - openpose_faceonly
-        - openpose_full
-        - clip_vision
-        - color
-        - pidinet
-        - pidinet_safe
-        - pidinet_sketch
-        - pidinet_scribble
-        - scribble_xdog
-        - scribble_hed
-        - segmentation
-        - threshold
-        - depth_zoe
-        - normal_bae
-        - oneformer_coco
-        - oneformer_ade20k
-        - lineart
-        - lineart_coarse
-        - lineart_anime
-        - lineart_standard
-        - shuffle
-        - tile_resample
-        - inpaint
-        - invert
-        - lineart_anime_denoise
+        moudleList: []
         currentMoudleListIndex: 0
     - rid: 91303885830619137
       type: {class: RelayNode, ns: , asm: com.alelievr.NodeGraphProcessor.Runtime}
@@ -584,8 +525,8 @@ MonoBehaviour:
         previewSlice: 0
         position:
           serializedVersion: 2
-          x: 1652.6667
-          y: 801.9999
+          x: 1652.6669
+          y: 782.0001
           width: 200
           height: 200
         expanded: 0
@@ -704,10 +645,10 @@ MonoBehaviour:
         previewSlice: 0
         position:
           serializedVersion: 2
-          x: 1062
-          y: 84.66669
-          width: 265.33325
-          height: 482.6667
+          x: 1000.93774
+          y: 11.185532
+          width: 265.33337
+          height: 482.66666
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -828,8 +769,8 @@ MonoBehaviour:
         previewSlice: 0
         position:
           serializedVersion: 2
-          x: 1627.6663
-          y: -170.08798
+          x: 1652.6669
+          y: -154.0001
           width: 200
           height: 200
         expanded: 0

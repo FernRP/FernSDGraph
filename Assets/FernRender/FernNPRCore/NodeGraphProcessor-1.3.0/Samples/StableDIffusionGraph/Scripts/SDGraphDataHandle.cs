@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 namespace FernNPRCore.SDNodeGraph
 {
-    [CreateAssetMenu(fileName = "SDGraphDataHandle", menuName = "ScriptableObjects/SDGraphDataHandle")]
+    [CreateAssetMenu(fileName = "SDGraphDataHandle", menuName = "FernGraph/SDGraphDataHandle")]
     public class SDGraphDataHandle : ScriptableObject
     {
         public string serverURL = "http://127.0.0.1:7860";
