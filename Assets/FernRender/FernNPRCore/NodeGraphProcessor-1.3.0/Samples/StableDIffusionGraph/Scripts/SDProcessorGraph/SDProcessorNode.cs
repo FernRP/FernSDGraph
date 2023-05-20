@@ -33,6 +33,10 @@ namespace FernNPRCore.SDNodeGraph
         public ConditionalLink executed;
         
         [Output(name = "Executes")] public ConditionalLink executes;
+        
+        public Action<float> onProgressUpdate;
+        public Action onProgressFinish;
+        public Action onProgressStart;
 
         public override IEnumerable<SDProcessorNode> GetExecutedNodes()
         {

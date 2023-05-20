@@ -45,7 +45,6 @@ namespace FernNPRCore.SDNodeGraph
         [HideInInspector] public bool isExecuting = false;
         [HideInInspector] public string samplerMethod = "Euler";
 
-       
 
         public override string name => "SD Txt2Img";
 
@@ -111,9 +110,9 @@ namespace FernNPRCore.SDNodeGraph
             {
                 // Make a HTTP POST request to the Stable Diffusion server
                 //var txt2ImgAPI = controlNet == defaultControlNet ? SDDataHandle.TextToImageAPI : SDDataHandle.ControlNetTex2Img;
-                var txt2ImgAPI = SDGraphResource.SdGraphDataHandle.ProgressAPI;
-                httpWebRequest =
-                    (HttpWebRequest)WebRequest.Create(SDGraphResource.SdGraphDataHandle.serverURL + txt2ImgAPI);
+                var txt2ImgAPI = SDDataHandle.Instance.ProgressAPI;
+                
+                httpWebRequest = (HttpWebRequest)WebRequest.Create(SDGraphResource.SdGraphDataHandle.serverURL + txt2ImgAPI);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "GET";
                 httpWebRequest.SetRequestAuthorization();
@@ -122,10 +121,11 @@ namespace FernNPRCore.SDNodeGraph
             {
                 Debug.LogError(e.Message + "\n\n" + e.StackTrace);
             }
-
             // Read the output of generation
             if (httpWebRequest != null)
             {
+                onProgressStart?.Invoke();
+
                 // Wait that the generation is complete before procedding
                 Task<WebResponse> webResponse = httpWebRequest.GetResponseAsync();
 
@@ -134,16 +134,13 @@ namespace FernNPRCore.SDNodeGraph
                 if (cur_step == -1)
                 {
                     var pro = (float)oTime.TotalSeconds * init_speed;
-                    
                     progress = Mathf.Min(1, pro);
-                    //TODO: Update View
                 }
-
                 while (!webResponse.IsCompleted)
-                {
+                {                
                     yield return new WaitForSeconds(100);
                 }
-
+                
                 // Stream the result from the server
                 var httpResponse = webResponse.Result;
 
@@ -151,7 +148,7 @@ namespace FernNPRCore.SDNodeGraph
                 {
                     // Decode the response as a JSON string
                     string result = streamReader.ReadToEnd();
-
+                    
                     // Deserialize the JSON string into a data structure
                     SDResponseProgress json = JsonConvert.DeserializeObject<SDResponseProgress>(result);
                     // If no image, there was probably an error so abort
@@ -159,24 +156,23 @@ namespace FernNPRCore.SDNodeGraph
                     {
                         byte[] imageData = Convert.FromBase64String(json.current_image);
                         OutputImage.LoadImage(imageData);
-                        previewTexture = outputImage;
-
-                        if (json.state != null && json.state.sampling_step > cur_step)
+                    
+                        if (json.state != null && json.state.sampling_step > cur_step) 
                         {
                             cur_step = json.state.sampling_step;
                             if (cur_step == 0)
                                 init_speed = 1 / (float)oTime.TotalSeconds;
                             else
-                                speed = cur_step / (float)(oTime.TotalSeconds - 1 / init_speed);
-
+                                speed = cur_step/(float)(oTime.TotalSeconds - 1 / init_speed);
                         }
-                        //TODO: Update All View
+                        progress = json.progress;
+                        onProgressUpdate?.Invoke(progress);
                     }
-
+                    
                     if (cur_step == -1) yield break;
-                    var pro = Mathf.Clamp((((float)oTime.TotalSeconds - 1f / init_speed) * speed) / (step - 1f),
-                        cur_step / (step - 1.0f), (cur_step + 1) / (step - 1.0f) - 0.001f);
-                    progress = Mathf.Min(1, pro);
+                    // TODO:?
+                    // var pro = Mathf.Clamp((((float)oTime.TotalSeconds - 1f / init_speed) * speed) / (step - 1f), cur_step/(step - 1.0f), (cur_step + 1)/(step - 1.0f) - 0.001f);
+                    // progress = Mathf.Min(1, pro);
                 }
             }
         }
@@ -272,12 +268,9 @@ namespace FernNPRCore.SDNodeGraph
 
                 while (!webResponse.IsCompleted)
                 {
-#if UNITY_EDITOR
-                    EditorUtility.ClearProgressBar();
-#endif
                     yield return UpdateGenerationProgress();
                 }
-
+                onProgressFinish?.Invoke();
 
                 // Stream the result from the server
                 var httpResponse = webResponse.Result;

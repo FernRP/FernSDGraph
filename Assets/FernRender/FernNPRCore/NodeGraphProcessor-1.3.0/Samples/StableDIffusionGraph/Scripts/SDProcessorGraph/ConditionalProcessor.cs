@@ -53,8 +53,6 @@ namespace NodeGraphProcessor.Examples
 
         public override IEnumerator RunAsync()
         {
-            IEnumerator<BaseNode> enumerator;
-
             if (startNodeList.Count == 0)
             {
                 RunTheGraph();
