@@ -42,6 +42,8 @@ namespace FernNPRCore.SDNodeGraph
             return graphWindow;
         }
 
+        public StableDiffusionToolbarView toolBarView;
+        
         protected override void InitializeWindow(BaseGraph graph)
         {
             titleContent = new GUIContent("Stable Diffusion Graph");
@@ -49,11 +51,21 @@ namespace FernNPRCore.SDNodeGraph
             if (graphView == null)
             {
                 graphView = new StableDiffusionGraphView(this);
+                toolBarView = new StableDiffusionToolbarView(graphView);
                 graphView.Add(new MiniMapView(graphView));
-                graphView.Add(new StableDiffusionToolbarView(graphView));
+                graphView.Add(toolBarView);
             }
 
             rootView.Add(graphView);
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+            if (toolBarView is { isAlwaysUpdate: true })
+            {
+                toolBarView.RunProcessor();
+            }
         }
     }
 }

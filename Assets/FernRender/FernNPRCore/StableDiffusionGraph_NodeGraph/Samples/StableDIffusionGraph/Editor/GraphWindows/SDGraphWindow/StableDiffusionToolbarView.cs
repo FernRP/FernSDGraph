@@ -14,11 +14,12 @@ namespace FernNPRCore.SDNodeGraph
         ConditionalProcessor executor;
         BaseGraphProcessor processor;
 
+        public bool isAlwaysUpdate = false;
+
         public StableDiffusionToolbarView(BaseGraphView graphView) : base(graphView)
         {
             
         }
-        
 
         protected override void AddButtons()
         {
@@ -32,19 +33,25 @@ namespace FernNPRCore.SDNodeGraph
             AddButton("Save", graphView.SaveGraphToDisk);
             AddButton("Stable Diffusion Execute", RunExecute);
             AddButton("Processor", RunProcessor);
+            AddToggle("Always Update", false, OnAlwaysUpdate);
 
             bool exposedParamsVisible = graphView.GetPinnedElementStatus< ExposedParameterView >() != Status.Hidden;
             showParameters = AddToggle("Show Parameters", exposedParamsVisible, (v) => graphView.ToggleView< ExposedParameterView>());
             AddButton("Show In Project", () => EditorGUIUtility.PingObject(graphView.graph), false);
             AddButton("Center", graphView.ResetPositionAndZoom);
         }
-        
+
+        private void OnAlwaysUpdate(bool obj)
+        {
+            isAlwaysUpdate = obj;
+        }
+
         void RunExecute()
         {
             EditorCoroutineUtility.StartCoroutine(executor.RunAsync(), this);
         }
         
-        void RunProcessor()
+        public void RunProcessor()
         {
             processor.Run();
         }
