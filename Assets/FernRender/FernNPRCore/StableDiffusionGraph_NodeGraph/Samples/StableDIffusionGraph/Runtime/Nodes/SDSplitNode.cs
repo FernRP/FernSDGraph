@@ -82,11 +82,6 @@ namespace FernNPRCore.SDNodeGraph
 			outputG.Update();
 			outputB.Update();
 			outputA.Update();
-			
-			GetPort(nameof(outputR), null).PushData();
-			GetPort(nameof(outputG), null).PushData();
-			GetPort(nameof(outputB), null).PushData();
-			GetPort(nameof(outputA), null).PushData();
 		}
 	}
 }

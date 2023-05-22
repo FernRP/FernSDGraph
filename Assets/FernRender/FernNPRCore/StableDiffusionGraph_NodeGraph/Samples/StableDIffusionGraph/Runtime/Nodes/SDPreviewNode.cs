@@ -14,7 +14,7 @@ namespace FernNPRCore.SDNodeGraph
 	public class SDPreviewNode : SDNode
 	{
 		[Input(name = "Image")]
-		public CustomRenderTexture inputImage;
+		public Texture inputImage;
 		[Input(name = "Seed")]
 		public long seed;
 		[Output(name = "Image")]
@@ -38,8 +38,6 @@ namespace FernNPRCore.SDNodeGraph
 			base.Disable();
 			if(outImage != null)
 				outImage.Release();
-			if(inputImage != null)
-				inputImage.Release();
 		}
 
 		protected override void Process()

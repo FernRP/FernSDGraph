@@ -13,8 +13,109 @@ MonoBehaviour:
   m_Name: StableDiffusionGraph
   m_EditorClassIdentifier: 
   serializedNodes: []
-  nodes: []
-  edges: []
+  nodes:
+  - rid: 7516382939679031333
+  - rid: 7516382939679031334
+  - rid: 7516382939679031335
+  - rid: 7516382939679031336
+  - rid: 7516382939679031337
+  - rid: 7516382939679031338
+  - rid: 7516382939679031339
+  - rid: 7516382939679031340
+  - rid: 7516382939679031341
+  - rid: 7516382939679031342
+  - rid: 7516382939679031344
+  - rid: 7516382939679031345
+  - rid: 7516382939679031346
+  edges:
+  - GUID: f859a77d-9899-4406-990c-a1ea8a4194f8
+    owner: {fileID: 11400000}
+    inputNodeGUID: dfe01011-798d-4788-a158-941095bd669e
+    outputNodeGUID: 32491c93-d8fb-4b68-b114-503912a7890d
+    inputFieldName: executed
+    outputFieldName: executes
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: d7f720f2-ba3e-4fb5-a403-5467924f3734
+    owner: {fileID: 11400000}
+    inputNodeGUID: dfe01011-798d-4788-a158-941095bd669e
+    outputNodeGUID: 32491c93-d8fb-4b68-b114-503912a7890d
+    inputFieldName: ServerURL
+    outputFieldName: outServerURL
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 0f41a286-c64e-4408-bd34-4de48a9fca1b
+    owner: {fileID: 11400000}
+    inputNodeGUID: 205f3326-a915-47da-b248-7099733b3cd7
+    outputNodeGUID: dfe01011-798d-4788-a158-941095bd669e
+    inputFieldName: executed
+    outputFieldName: executes
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: f7885953-d861-41b1-8583-b53054969e56
+    owner: {fileID: 11400000}
+    inputNodeGUID: 205f3326-a915-47da-b248-7099733b3cd7
+    outputNodeGUID: 8427f6e1-a18d-4338-a527-4ef1c7435fe6
+    inputFieldName: prompt
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 18f07ff6-9d08-4f1e-8a8f-8385c68327fd
+    owner: {fileID: 11400000}
+    inputNodeGUID: 8427f6e1-a18d-4338-a527-4ef1c7435fe6
+    outputNodeGUID: 309dc255-501a-4e2c-9b39-4666032aa24b
+    inputFieldName: positive
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 629f82c3-52dc-4494-b29c-c99ebc68b359
+    owner: {fileID: 11400000}
+    inputNodeGUID: 8427f6e1-a18d-4338-a527-4ef1c7435fe6
+    outputNodeGUID: 8d9cc994-4188-4646-bdaf-2e6e5243e9ce
+    inputFieldName: negative
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 077ab4da-6dca-40d2-b968-988f050cc455
+    owner: {fileID: 11400000}
+    inputNodeGUID: 008ecd85-79a0-4b69-a50c-153541f8c69d
+    outputNodeGUID: f1a28d11-0248-4419-8a4e-732a24f3aa3c
+    inputFieldName: inputImage
+    outputFieldName: outputR
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: e7c90b1c-26bb-4549-8e06-05dea0d2605c
+    owner: {fileID: 11400000}
+    inputNodeGUID: 25dbf84c-38cc-40f6-8cfe-1bb73207570c
+    outputNodeGUID: f1a28d11-0248-4419-8a4e-732a24f3aa3c
+    inputFieldName: inputImage
+    outputFieldName: outputG
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: cdeb7afa-e1ca-48eb-8128-cc057d9bb5af
+    owner: {fileID: 11400000}
+    inputNodeGUID: a8329116-18fb-4492-98b9-29944b1002a1
+    outputNodeGUID: f1a28d11-0248-4419-8a4e-732a24f3aa3c
+    inputFieldName: inputImage
+    outputFieldName: outputB
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 07eb4b5e-aec7-48ee-a6f0-92e35e612619
+    owner: {fileID: 11400000}
+    inputNodeGUID: f1a28d11-0248-4419-8a4e-732a24f3aa3c
+    outputNodeGUID: 205f3326-a915-47da-b248-7099733b3cd7
+    inputFieldName: inputImage
+    outputFieldName: outputImage
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 90d4f0b1-a7ee-4333-b310-316a77e07ef0
+    owner: {fileID: 11400000}
+    inputNodeGUID: 5976fecf-ac72-4a63-b18e-65ee8f10f156
+    outputNodeGUID: 852dcae3-9f47-4019-a925-483e6ac4a474
+    inputFieldName: inputImage
+    outputFieldName: colorTarget
+    inputPortIdentifier: 
+    outputPortIdentifier: 
   groups: []
   stackNodes: []
   pinnedElements: []
@@ -22,7 +123,7 @@ MonoBehaviour:
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: 0, y: 81.333336, z: 0}
+  position: {x: -3879.3333, y: 1641.3334, z: 0}
   scale: {x: 1, y: 1, z: 1}
   settings:
     widthScale: 1
@@ -46,4 +147,675 @@ MonoBehaviour:
   defaultNodeInheritanceMode: -2
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 7516382939679031333
+      type: {class: SDStartNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 32491c93-d8fb-4b68-b114-503912a7890d
+        computeOrder: 0
+        position:
+          serializedVersion: 2
+          x: 2429.1008
+          y: -1320.2338
+          width: 200
+          height: 190.66663
+        expanded: 0
+        debug: 0
+        nodeLock: 1
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 0
+        hasPreview: 0
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 1
+        outServerURL: http://127.0.0.1:7860
+        overrideSettings: 1
+        serverURL: http://127.0.0.1:7860
+        useAuth: 0
+        user: 
+        pass: 
+    - rid: 7516382939679031334
+      type: {class: SDSetModelNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: dfe01011-798d-4788-a158-941095bd669e
+        computeOrder: 1
+        position:
+          serializedVersion: 2
+          x: 2732.434
+          y: -1320.2338
+          width: 200
+          height: 133.33337
+        expanded: 0
+        debug: 0
+        nodeLock: 1
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 0
+        hasPreview: 0
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 1
+        ServerURL: http://127.0.0.1:7860
+        modelNames:
+        - Dreamlike_cheeseDaddys_35
+        - Dreamlike_dreamlikeDiffusion10_10
+        - Dreamlike_dreamshaper_331BakedVae
+        - Girl_aresMix_v01
+        - Girl_chilloutmix_NiCkpt
+        - Girl_chilloutmix_NiPrunedFp32
+        - Girl_feiji_v2
+        - Girl_kaelvinsmixhc_releaseV10
+        - Girl_luckyStrikeMix_V02Realistic
+        - Girl_uberRealisticPornMerge_urpmv12
+        - Logo_graphicArt_graphicArtBeta11
+        - Porn_uberRealisticPornMerge_urpmv13
+        - Room_xsarchitectural_v11
+        - Textures_TextureDiffusion_10
+        - unstableinkdream_v6
+        - v1-5-pruned-emaonly
+        - "\u4E2D\u56FD\u6A21\u7279_kaelvinsmixhc_releaseV10"
+        - "\u52A8\u6F2B_experience_70"
+        - "\u52A8\u6F2B_UnstableInkDream_unstableinkdream_v6"
+        - "\u52A8\u6F2B_\u539A\u6D82\u98CE\u683C_dalcefoPainting_v4"
+        - "\u7EFC\u5408_anythingV3_fp16"
+        - "\u7EFC\u5408_anythingV3Inpainting_1-inpainting"
+        - "\u98CE\u683C\u5316\u4EBA\u50CF_portrait_10"
+        - ChilloutMix_chilloutmix_NiPrunedFp32Fix
+        currentIndex: 13
+        Model: Textures_TextureDiffusion_10
+    - rid: 7516382939679031335
+      type: {class: SDTxt2ImgNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 205f3326-a915-47da-b248-7099733b3cd7
+        computeOrder: 5
+        position:
+          serializedVersion: 2
+          x: 3097.1008
+          y: -1166.0002
+          width: 256
+          height: 616.6666
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 0
+        hasPreview: 1
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        prompt:
+          positive: pbr uneven stone wall
+          negative: 
+        width: 512
+        height: 512
+        step: 20
+        cfg: 7
+        seed: -1
+        isTiling: 0
+        outputImage: {fileID: 0}
+        outSeed: 4423913877737321903
+        progress: 0.96
+        speed: -0
+        init_speed: 0
+        cur_step: 19
+        isExecuting: 0
+        samplerMethod: Euler
+    - rid: 7516382939679031336
+      type: {class: SDPromptNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 8427f6e1-a18d-4338-a527-4ef1c7435fe6
+        computeOrder: 4
+        position:
+          serializedVersion: 2
+          x: 2686.6833
+          y: -999.3295
+          width: 200
+          height: 106.66669
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 0
+        hasPreview: 0
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        positive: pbr uneven stone wall
+        negative: 
+        output:
+          positive: pbr uneven stone wall
+          negative: 
+    - rid: 7516382939679031337
+      type: {class: StringNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 309dc255-501a-4e2c-9b39-4666032aa24b
+        computeOrder: 3
+        position:
+          serializedVersion: 2
+          x: 2367.0667
+          y: -1020.6668
+          width: 200
+          height: 118.666626
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 0
+        hasPreview: 0
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        output: pbr uneven stone wall
+        isShowString: 1
+    - rid: 7516382939679031338
+      type: {class: StringNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 8d9cc994-4188-4646-bdaf-2e6e5243e9ce
+        computeOrder: 2
+        position:
+          serializedVersion: 2
+          x: 2367.3333
+          y: -892.6666
+          width: 200
+          height: 118.666626
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 0
+        hasPreview: 0
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        output: 
+        isShowString: 1
+    - rid: 7516382939679031339
+      type: {class: SDSplitNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: f1a28d11-0248-4419-8a4e-732a24f3aa3c
+        computeOrder: 6
+        position:
+          serializedVersion: 2
+          x: 3457.4314
+          y: -1076.6667
+          width: 200
+          height: 154.66669
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 1
+        hasPreview: 0
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        inputImage: {fileID: 0}
+        outputR: {fileID: 0}
+        outputG: {fileID: 0}
+        outputB: {fileID: 0}
+        outputA: {fileID: 0}
+    - rid: 7516382939679031340
+      type: {class: SDPreviewNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 008ecd85-79a0-4b69-a50c-153541f8c69d
+        computeOrder: 7
+        position:
+          serializedVersion: 2
+          x: 3748.0051
+          y: -1132.645
+          width: 256
+          height: 406.00006
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 1
+        hasPreview: 1
+        isPreviewCollapsed: 0
+        previewMode: 7
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        inputImage: {fileID: 0}
+        seed: 0
+        outImage: {fileID: 0}
+    - rid: 7516382939679031341
+      type: {class: SDPreviewNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 25dbf84c-38cc-40f6-8cfe-1bb73207570c
+        computeOrder: 8
+        position:
+          serializedVersion: 2
+          x: 4025.3384
+          y: -1132.645
+          width: 255.99976
+          height: 406.00006
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 1
+        hasPreview: 1
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        inputImage: {fileID: 0}
+        seed: 0
+        outImage: {fileID: 0}
+    - rid: 7516382939679031342
+      type: {class: SDPreviewNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: a8329116-18fb-4492-98b9-29944b1002a1
+        computeOrder: 9
+        position:
+          serializedVersion: 2
+          x: 4296.13
+          y: -1132.6667
+          width: 256
+          height: 406.00006
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 1
+        hasPreview: 1
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        inputImage: {fileID: 0}
+        seed: 0
+        outImage: {fileID: 0}
+    - rid: 7516382939679031344
+      type: {class: SDNormalFromHeightNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 5976fecf-ac72-4a63-b18e-65ee8f10f156
+        computeOrder: 11
+        position:
+          serializedVersion: 2
+          x: 4614.4355
+          y: -1588.8596
+          width: 256
+          height: 404.66663
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 1
+        hasPreview: 1
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        inputImage: {fileID: 0}
+        output: {fileID: 0}
+        strength: 1
+        shader: {fileID: -6465566751694194690, guid: 7cad23c262a495a4ba607510a558c0a6,
+          type: 3}
+        material: {fileID: 0}
+        shaderGUID: 7cad23c262a495a4ba607510a558c0a6
+    - rid: 7516382939679031345
+      type: {class: SDCameraRenderNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 30626926-64a1-4579-9d53-eaa7dd975557
+        computeOrder: 12
+        position:
+          serializedVersion: 2
+          x: 3201.333
+          y: -1705.4885
+          width: 256
+          height: 475.33325
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 1
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 1
+        hasPreview: 1
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        colorTarget: {fileID: 0}
+        normalTarget: {fileID: 0}
+        depthTarget: {fileID: 0}
+        inpaintTarget: {fileID: 0}
+        isRenderColor: 1
+        isRenderNormal: 0
+        isRenderDepth: 0
+        isRenderInPaint: 0
+        previewType: 0
+    - rid: 7516382939679031346
+      type: {class: SDCameraRenderNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 852dcae3-9f47-4019-a925-483e6ac4a474
+        computeOrder: 10
+        position:
+          serializedVersion: 2
+          x: 4296
+          y: -1628.8583
+          width: 256
+          height: 475.33325
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 1
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 1
+        hasPreview: 1
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        colorTarget: {fileID: 0}
+        normalTarget: {fileID: 0}
+        depthTarget: {fileID: 0}
+        inpaintTarget: {fileID: 0}
+        isRenderColor: 1
+        isRenderNormal: 0
+        isRenderDepth: 0
+        isRenderInPaint: 0
+        previewType: 0
