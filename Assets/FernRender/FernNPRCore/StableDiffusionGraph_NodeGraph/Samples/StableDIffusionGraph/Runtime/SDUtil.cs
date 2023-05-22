@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using GraphProcessor;
 using UnityEngine.Networking;
+using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -57,6 +58,18 @@ namespace FernNPRCore.SDNodeGraph
 
         public static int[] ScaleList = new int[] { 25, 50, 75, 100 };
         private const string LOG = "Fern SD Graph: ";
+
+        public static readonly string texture2DPrefix = "_2D";
+        public static readonly string texture3DPrefix = "_3D";
+        public static readonly string textureCubePrefix = "_Cube";
+
+        public static readonly Dictionary<TextureDimension, string> shaderPropertiesDimensionSuffix =
+            new Dictionary<TextureDimension, string>
+            {
+                { TextureDimension.Tex2D, texture2DPrefix },
+                { TextureDimension.Tex3D, texture3DPrefix },
+                { TextureDimension.Cube, textureCubePrefix },
+            };
 
         public static Vector2 GetMainGameViewSize()
         {
@@ -118,6 +131,23 @@ namespace FernNPRCore.SDNodeGraph
 #endif
         }
 
+        public static void SetTextureWithDimension(Material material, string propertyName, Texture texture)
+        {
+            if (shaderPropertiesDimensionSuffix.TryGetValue(texture.dimension, out var suffix))
+            {
+#if UNITY_EDITOR
+                int id = material.shader.FindPropertyIndex(propertyName + suffix);
+
+                if (id == -1)
+                    return;
+                if (material.shader.GetPropertyTextureDimension(id) == texture.dimension)
+#endif
+                {
+                    material.SetTexture(propertyName + suffix, texture);
+                }
+            }
+        }
+
         public static void Log(string log, bool isDebug = true)
         {
             if (!isDebug) return;
@@ -140,7 +170,8 @@ namespace FernNPRCore.SDNodeGraph
         {
             target.schedule.Execute(() =>
                 {
-                    target.visible = float.IsNaN(target.worldBound.x) || target.worldBound.Overlaps(view.worldBound);
+                    target.visible = float.IsNaN(target.worldBound.x) ||
+                                     target.worldBound.Overlaps(view.worldBound);
                 })
                 .Every(16); // refresh the visible for 60hz screens (should not cause problems for higher refresh rates)
         }

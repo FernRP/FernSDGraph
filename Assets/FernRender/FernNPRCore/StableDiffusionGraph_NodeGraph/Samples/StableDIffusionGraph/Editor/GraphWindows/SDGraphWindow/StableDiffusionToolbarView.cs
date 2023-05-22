@@ -23,7 +23,6 @@ namespace FernNPRCore.SDNodeGraph
 
         protected override void AddButtons()
         {
-            
             executor = new ConditionalProcessor(graphView.graph);
             graphView.computeOrderUpdated += executor.UpdateComputeOrder;
             

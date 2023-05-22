@@ -28,36 +28,54 @@ namespace FernNPRCore.SDNodeGraph
         
         public override string name => "SD Camera Render";
 
-        [Output("Color")] public RenderTexture colorTarget;
-        [Output("Normal")] public RenderTexture normalTarget;
-        [Output("Depth")] public RenderTexture depthTarget;
-        [Output("InPaint")] public RenderTexture inpaintTarget; 
+        [Output("Color")] public CustomRenderTexture colorTarget;
+        [Output("Normal")] public CustomRenderTexture normalTarget;
+        [Output("Depth")] public CustomRenderTexture depthTarget;
+        [Output("InPaint")] public CustomRenderTexture inpaintTarget; 
         [Input("Color"), ShowAsDrawer] public bool isRenderColor;
         [Input("Normal"), ShowAsDrawer] public bool isRenderNormal;
         [Input("Depth"), ShowAsDrawer] public bool isRenderDepth;
         [Input("InPaint"), ShowAsDrawer] public bool isRenderInPaint;
         
         public PreviewType previewType = PreviewType.Color;
-        
+
+        public override Texture previewTexture
+        {
+            get
+            {
+                switch (previewType)
+                {
+                    case PreviewType.Color:
+                        return colorTarget;
+                    case PreviewType.Normal:
+                        return normalTarget;
+                    case PreviewType.Depth:
+                        return depthTarget;
+                    case PreviewType.InPaint:
+                        return inpaintTarget;
+                }
+
+                return null;
+            }
+        }
+
         private Camera camera;
 
-        [ChangeEvent(true)]
-        public int width = 512;
-        [ChangeEvent(true)]
-        public int height = 512; 
+        private int width = 512;
+        private int height = 512; 
 
         private RenderTexture originRT;
 
         private UniversalAdditionalCameraData cameraUniversalData;
-
+        
 
         protected override void Enable()
         {
-            isUpdate = true;
             hasPreview = true;
-            InitRenderTarget();
-            SetPreviewType();
+            hasSettings = true;
             base.Enable();
+            isUpdate = true;
+            InitRenderTarget();
         }
 
         public override void OnNodeCreated()
@@ -74,30 +92,10 @@ namespace FernNPRCore.SDNodeGraph
             if (!IsValidate()) return;
             
             InitRenderTarget();
-            SetPreviewType();
             RenderColor();
             RenderNormal();
             RenderDepth();
             RenderInpaint();
-        }
-
-        private void SetPreviewType()
-        {
-            switch (previewType)
-            {
-                case PreviewType.Color:
-                    previewTexture = colorTarget;
-                    break;
-                case PreviewType.Normal:
-                    previewTexture = normalTarget;
-                    break;
-                case PreviewType.Depth:
-                    previewTexture = depthTarget;
-                    break;
-                case PreviewType.InPaint:
-                    previewTexture = inpaintTarget;
-                    break;
-            }
         }
 
         private bool IsValidate()
@@ -118,58 +116,15 @@ namespace FernNPRCore.SDNodeGraph
         private void InitRenderTarget()
         {
             if(!IsValidate()) return;
-            if (colorTarget == null)
-            {
-                colorTarget = RenderTexture.GetTemporary(width, height, 16,
-                    camera.allowHDR ? RenderTextureFormat.RGB111110Float : RenderTextureFormat.RGB111110Float);
-            }
-
-            if (normalTarget == null)
-            {
-                normalTarget = RenderTexture.GetTemporary(width, height, 16,
-                    camera.allowHDR ? RenderTextureFormat.RGB111110Float : RenderTextureFormat.RGB111110Float);
-            }
-
-            if (depthTarget == null)
-            {
-                depthTarget = RenderTexture.GetTemporary(width, height, 16,
-                    camera.allowHDR ? RenderTextureFormat.Depth : RenderTextureFormat.Depth);
-            }
-
-            if (inpaintTarget == null)
-            {
-                inpaintTarget = RenderTexture.GetTemporary(width, height, 16,
-                    camera.allowHDR ? RenderTextureFormat.R16 : RenderTextureFormat.R16);
-            }
-        }
-
-        protected override void Process()
-        {
-            GetPort(nameof(colorTarget), null).PushData();
-            GetPort(nameof(normalTarget), null).PushData();
-            GetPort(nameof(depthTarget), null).PushData();
-            GetPort(nameof(inpaintTarget), null).PushData();
+            
+            UpdateTempRenderTexture(ref colorTarget);
+            UpdateTempRenderTexture(ref normalTarget);
+            UpdateTempRenderTexture(ref depthTarget, false, false, CustomRenderTextureUpdateMode.OnDemand, true);
+            UpdateTempRenderTexture(ref inpaintTarget);
         }
 
         public void ResetRTResolution()
         {
-            if (colorTarget != null)
-            {
-                RenderTexture.ReleaseTemporary(colorTarget);
-            }
-            if (normalTarget != null)
-            {
-                RenderTexture.ReleaseTemporary(normalTarget);
-            }
-            if (depthTarget != null)
-            {
-                RenderTexture.ReleaseTemporary(depthTarget);
-            }
-            if (inpaintTarget != null)
-            {
-                RenderTexture.ReleaseTemporary(inpaintTarget);
-            }
-            
             InitRenderTarget();
         }
 
@@ -178,13 +133,13 @@ namespace FernNPRCore.SDNodeGraph
             base.Disable();
             isUpdate = false;
             if (colorTarget != null)
-                RenderTexture.ReleaseTemporary(colorTarget);
+                colorTarget.Release();
             if (normalTarget != null)
-                RenderTexture.ReleaseTemporary(normalTarget);
+                normalTarget.Release();
             if (depthTarget != null)
-                RenderTexture.ReleaseTemporary(depthTarget);
+                depthTarget.Release();
             if (inpaintTarget != null)
-                RenderTexture.ReleaseTemporary(inpaintTarget);
+                inpaintTarget.Release();
         }
 
         private void RenderColor()
@@ -194,6 +149,7 @@ namespace FernNPRCore.SDNodeGraph
             camera.targetTexture = colorTarget;
             camera.Render();
             camera.targetTexture = originRT;
+            colorTarget.Update();
         }
         
         private void RenderNormal()
@@ -222,6 +178,7 @@ namespace FernNPRCore.SDNodeGraph
             GraphicsSettings.renderPipelineAsset = normalRenderPipelineAsset;
             cameraUniversalData.SetRenderer(0); // TODO: may be no 0
             camera.targetTexture = originRT;
+            normalTarget.Update();
         }
         
         private void RenderInpaint()
@@ -250,6 +207,7 @@ namespace FernNPRCore.SDNodeGraph
             GraphicsSettings.renderPipelineAsset = normalRenderPipelineAsset;
             cameraUniversalData.SetRenderer(0); // TODO: may be no 0
             camera.targetTexture = originRT;
+            inpaintTarget.Update();
         }
         
         private void RenderDepth()
@@ -278,6 +236,7 @@ namespace FernNPRCore.SDNodeGraph
             GraphicsSettings.renderPipelineAsset = normalRenderPipelineAsset;
             cameraUniversalData.SetRenderer(0); // TODO: may be no 0
             camera.targetTexture = originRT;
+            depthTarget.Update();
         }
     }
 }

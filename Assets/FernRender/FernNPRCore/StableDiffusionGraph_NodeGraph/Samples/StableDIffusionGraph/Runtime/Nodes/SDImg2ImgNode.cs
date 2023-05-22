@@ -63,6 +63,8 @@ namespace FernNPRCore.SDNodeGraph
 		[HideInInspector] public int cur_step;
 		[HideInInspector] public bool isExecuting = false;
 
+		public override Texture previewTexture => OutputImage;
+
 
 		public Texture2D OutputImage
 		{
@@ -78,14 +80,12 @@ namespace FernNPRCore.SDNodeGraph
 		public override void OnNodeCreated()
 		{
 			hasPreview = true;
-			previewTexture = OutputImage;
 			base.OnNodeCreated();
 		}
 
 		protected override void Enable()
 		{
 			hasPreview = true;
-			previewTexture = OutputImage;
 			base.Enable();
 		}
 

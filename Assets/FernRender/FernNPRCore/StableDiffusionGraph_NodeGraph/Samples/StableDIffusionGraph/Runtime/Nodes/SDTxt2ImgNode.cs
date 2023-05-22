@@ -47,6 +47,8 @@ namespace FernNPRCore.SDNodeGraph
 
         public Action<long, long> OnUpdateSeedField;
 
+        public override Texture previewTexture => OutputImage;
+
         public Texture2D OutputImage
         {
             get
@@ -61,14 +63,12 @@ namespace FernNPRCore.SDNodeGraph
         protected override void Enable()
         {
             hasPreview = true;
-            previewTexture = OutputImage;
             base.Enable();
         }
 
         public override void OnNodeCreated()
         {
             hasPreview = true;
-            previewTexture = OutputImage;
             base.OnNodeCreated();
         }
 

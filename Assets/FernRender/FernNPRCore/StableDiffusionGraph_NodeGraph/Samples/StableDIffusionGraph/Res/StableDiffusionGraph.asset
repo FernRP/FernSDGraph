@@ -22,16 +22,16 @@ MonoBehaviour:
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: 0, y: 0, z: 0}
+  position: {x: 0, y: 81.333336, z: 0}
   scale: {x: 1, y: 1, z: 1}
   settings:
     widthScale: 1
     heightScale: 1
     depthScale: 1
-    width: 1024
-    height: 1024
-    depth: 1024
-    potSize: 1024
+    width: 512
+    height: 512
+    depth: 512
+    potSize: 512
     sizeMode: 1
     dimension: 2
     outputChannels: 1
@@ -40,7 +40,7 @@ MonoBehaviour:
     doubleBuffered: 0
     wrapMode: 0
     filterMode: 0
-    refreshMode: 0
+    refreshMode: 2
     period: 0
   _outputTextures: []
   defaultNodeInheritanceMode: -2

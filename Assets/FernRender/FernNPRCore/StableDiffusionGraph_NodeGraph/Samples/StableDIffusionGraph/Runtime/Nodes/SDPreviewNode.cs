@@ -13,24 +13,41 @@ namespace FernNPRCore.SDNodeGraph
 	[System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Preview")]
 	public class SDPreviewNode : SDNode
 	{
-		[Input(name = "Image"), ShowAsDrawer]
-		public Texture inputImage;
+		[Input(name = "Image")]
+		public CustomRenderTexture inputImage;
 		[Input(name = "Seed")]
 		public long seed;
 		[Output(name = "Image")]
-		public Texture outImage;
+		public CustomRenderTexture outImage;
 
 		public override string name => "SD Preview";
 
+		public override Texture previewTexture => outImage;
+
 		protected override void Enable()
 		{
+			hasPreview = true;
+			hasSettings = true;
 			base.Enable();
+
+			UpdateTempRenderTexture(ref outImage);
+		}
+
+		protected override void Disable()
+		{
+			base.Disable();
+			if(outImage != null)
+				outImage.Release();
+			if(inputImage != null)
+				inputImage.Release();
 		}
 
 		protected override void Process()
 		{
-			base.Process();
-			GetPort(nameof(inputImage), null).PushData();
+			base.Process();	
+			UpdateTempRenderTexture(ref outImage);
+			if(inputImage != null) Graphics.Blit(inputImage, outImage);
+			outImage.Update();
 		}
 	}
 }
