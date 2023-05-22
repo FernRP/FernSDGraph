@@ -39,7 +39,7 @@ namespace FernNPRCore.SDNodeGraph
         [HideInInspector]
         public Texture previewTexture = null;
         [HideInInspector]
-        public bool hasSettings = true;
+        public bool hasSettings = false;
         [HideInInspector]
         public bool hasPreview = false;
 
