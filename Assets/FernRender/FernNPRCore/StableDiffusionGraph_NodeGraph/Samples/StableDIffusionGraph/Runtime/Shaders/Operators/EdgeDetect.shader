@@ -8,12 +8,13 @@
 		[InlineTexture]_Source_Cube("Source", Cube) = "white" {}
 
 		_Step("Step", Range(0.01, 2)) = 1
+		_Pow("Pow", Range(1, 8)) = 1
 		[Tooltip(Output color mode, it can either be white and black or input texture coor)][Enum(Edge, 0, ColorEdge, 1)] _Mode("Mode", Float) = 0
 	}
 
 	HLSLINCLUDE
 	
-	#include "Packages/com.alelievr.mixture/Runtime/Shaders/MixtureFixed.hlsl"
+	#include "../../Shaders/MixtureFixed.hlsl"
 	#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
 	#pragma target 3.0
@@ -36,6 +37,7 @@
 
 	TEXTURE_SAMPLER_X(_Source);
 	float _Step;
+	float _Pow;
 	float _Mode;
 
 	float EdgeDetect(float3x3 pixels, bool h)
@@ -91,14 +93,18 @@
 				float2 edgeValue = float2(EdgeDetect(horizontalPixels, true), EdgeDetect(horizontalPixels, false));
 				float edge = length(edgeValue);
 
+				float4 color = 0;
+				
 				switch (_Mode)
 				{
-					default:
 					case 0:
-						return float4(edge.xxx, 1);
+						color = float4(edge.xxx, 1);break;
 					case 1:
-						return SAMPLE_X(_Source, i.localTexcoord.xyz, i.direction) * edge;
+						color = SAMPLE_X(_Source, i.localTexcoord.xyz, i.direction) * edge;break;
 				}
+
+				color.rgb = pow(color.rgb, _Pow);
+				return color;
 			}
 			ENDHLSL
 		}

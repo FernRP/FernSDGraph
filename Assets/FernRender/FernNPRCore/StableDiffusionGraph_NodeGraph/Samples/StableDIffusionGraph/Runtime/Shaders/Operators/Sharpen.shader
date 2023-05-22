@@ -12,7 +12,7 @@
 
 	HLSLINCLUDE
 	
-	#include "Packages/com.alelievr.mixture/Runtime/Shaders/MixtureFixed.hlsl"
+	#include "../../Shaders/MixtureFixed.hlsl"
 	#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
 	#pragma target 3.0

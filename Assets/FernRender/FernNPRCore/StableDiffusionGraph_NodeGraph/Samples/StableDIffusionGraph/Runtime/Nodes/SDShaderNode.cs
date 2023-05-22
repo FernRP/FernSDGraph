@@ -5,31 +5,24 @@ using UnityEngine;
 
 namespace FernNPRCore.SDNodeGraph
 {
-    [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Normal Form Height")]
-    public class SDNormalFromHeightNode : SDNode
+    public class SDShaderNode : SDNode
     {
-        [Input(name = "Image")] public Texture inputImage;
+        [Input(name = "Source")] public Texture inputImage;
 
         [Output(name = "Out"), Tooltip("Output Texture")]
         public CustomRenderTexture output = null;
-
-        [Range(0,128)]
-        public float strength = 1;
         
-        public override string name => "SD Normal From Height";
-
-        public string shaderName => "Hidden/Mixture/NormalFromHeight";
-
         [HideInInspector] public Shader shader;
         [HideInInspector] public Material material;
 
         [HideInInspector] public string shaderGUID;
 
+        public virtual string shaderName => null;
+        
         protected bool hasMips => false;
 
         public override Texture previewTexture => output;
-
-
+        
         protected override void Enable()
         {
             hasPreview = true;
@@ -46,13 +39,14 @@ namespace FernNPRCore.SDNodeGraph
             UpdateTempRenderTexture(ref output, hasMips: hasMips);
             output.material = material;
         }
-
-        void BeforeProcessSetup()
+        
+        public void BeforeProcessSetup()
         {
             UpdateShader();
             UpdateTempRenderTexture(ref output, hasMips: hasMips);
         }
 
+        
         void UpdateShader()
         {
 #if UNITY_EDITOR
@@ -75,7 +69,7 @@ namespace FernNPRCore.SDNodeGraph
                 UnityEditor.AssetDatabase.TryGetGUIDAndLocalFileIdentifier(shader, out shaderGUID, out long _);
 #endif
         }
-
+        
         void UpdateShaderAndMaterial()
         {
             if (shader == null)
@@ -89,16 +83,6 @@ namespace FernNPRCore.SDNodeGraph
                 material = new Material(shader);
                 material.hideFlags = HideFlags.HideInHierarchy | HideFlags.HideInInspector;
             }
-        }
-
-        protected override void Process()
-        {
-            base.Process();
-            if(inputImage == null) return;
-            BeforeProcessSetup();
-            material.SetTexture("_Source", inputImage);
-            material.SetFloat("_Strength", strength);
-            output.Update();
         }
     }
 }
