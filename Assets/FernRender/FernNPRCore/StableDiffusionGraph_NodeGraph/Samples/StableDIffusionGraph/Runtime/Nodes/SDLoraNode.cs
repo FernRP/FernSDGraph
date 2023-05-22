@@ -131,7 +131,6 @@ namespace FernNPRCore.SDNodeGraph
 
         protected override void Process()
         {
-            SDUtil.Log(lora);
             GetPort(nameof(prompt), null).PullData();
             if (!string.IsNullOrEmpty(loraPrompt)&&!loraPrompt.EndsWith(","))
                 loraPrompt += ",";

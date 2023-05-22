@@ -13,7 +13,7 @@ namespace FernNPRCore.SDNodeGraph
         [Output(name = "Out"), Tooltip("Output Texture")]
         public CustomRenderTexture output = null;
 
-        [Range(0,64)]
+        [Range(0,128)]
         public float strength = 1;
         
         public override string name => "SD Normal From Height";
