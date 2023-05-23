@@ -89,9 +89,9 @@ namespace FernNPRCore.SDNodeGraph
 			base.Enable();
 		}
 
-		protected override void Disable()
+		protected override void Destroy()
 		{
-			base.Disable();
+			base.Destroy();
 			if (outputImage != null)
 			{
 				Object.DestroyImmediate(outputImage);

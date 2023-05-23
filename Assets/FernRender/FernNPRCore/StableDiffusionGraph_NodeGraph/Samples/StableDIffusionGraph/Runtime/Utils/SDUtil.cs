@@ -10,6 +10,7 @@ using GraphProcessor;
 using UnityEngine.Networking;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
+using Object = System.Object;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -198,6 +199,33 @@ namespace FernNPRCore.SDNodeGraph
             // 将伽马空间的Texture2D编码为PNG
             byte[] pngData = gammaTexture.EncodeToPNG();
             File.WriteAllBytes(filePath, pngData);
+        }
+        
+        public static void SaveAsLinearPNG(Texture texture, string filePath)
+        {
+            RenderTexture renderTexture = RenderTexture.GetTemporary(
+                texture.width, texture.height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            Graphics.Blit(texture, renderTexture);
+
+            Texture2D texture2d = new Texture2D(texture.width, texture.height);
+            texture2d.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
+            
+            // 将Texture2D转换为伽马空间
+            Color[] pixels = texture2d.GetPixels();
+            for (int i = 0; i < pixels.Length; i++)
+            {
+                pixels[i] = pixels[i].gamma;
+            }
+
+            Texture2D gammaTexture = new Texture2D(texture.width, texture.height);
+            gammaTexture.SetPixels(pixels);
+            gammaTexture.Apply();
+
+            // 将伽马空间的Texture2D编码为PNG
+            byte[] pngData = gammaTexture.EncodeToPNG();
+            File.WriteAllBytes(filePath, pngData);
+            RenderTexture.ReleaseTemporary(renderTexture);
+            UnityEngine.Object.DestroyImmediate(texture2d);
         }
 
         static Material _dummyCustomRenderTextureMaterial;

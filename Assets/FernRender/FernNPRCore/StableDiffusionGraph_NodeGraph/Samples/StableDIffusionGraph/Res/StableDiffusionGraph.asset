@@ -21,8 +21,6 @@ MonoBehaviour:
   - rid: 7516382939679031360
   - rid: 7516382939679031362
   - rid: 7516382939679031365
-  - rid: 7516382939679031373
-  - rid: 7516382939679031374
   - rid: 7516382939679031376
   - rid: 7516382939679031379
   - rid: 7516382939679031382
@@ -72,54 +70,6 @@ MonoBehaviour:
     outputFieldName: output
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: fa06bb93-a921-4be1-b9f4-af0cec4c0920
-    owner: {fileID: 11400000}
-    inputNodeGUID: d1dd7349-499d-40fd-b085-7e3d847ece56
-    outputNodeGUID: d61ff35f-7450-49d4-b410-2cf282c550ab
-    inputFieldName: executed
-    outputFieldName: executes
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: 370692e9-9ddd-4e8e-a494-abcb8a81e231
-    owner: {fileID: 11400000}
-    inputNodeGUID: d1dd7349-499d-40fd-b085-7e3d847ece56
-    outputNodeGUID: d61ff35f-7450-49d4-b410-2cf282c550ab
-    inputFieldName: controlNetData
-    outputFieldName: controlNet
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: 4db9b2cc-cf63-40f4-ac24-0bfd767ae22f
-    owner: {fileID: 11400000}
-    inputNodeGUID: b8937712-82ce-4e35-aaba-46bff60f03eb
-    outputNodeGUID: dfe01011-798d-4788-a158-941095bd669e
-    inputFieldName: input
-    outputFieldName: executes
-    inputPortIdentifier: 0
-    outputPortIdentifier: 
-  - GUID: 42cf5d3e-fb76-431e-92ba-85a941eecbb7
-    owner: {fileID: 11400000}
-    inputNodeGUID: d61ff35f-7450-49d4-b410-2cf282c550ab
-    outputNodeGUID: b8937712-82ce-4e35-aaba-46bff60f03eb
-    inputFieldName: executed
-    outputFieldName: output
-    inputPortIdentifier: 
-    outputPortIdentifier: 0
-  - GUID: d1f57de0-3e3b-4c8e-9ac4-b278ee0bd838
-    owner: {fileID: 11400000}
-    inputNodeGUID: 266e21af-34f5-4cce-9410-22fc9b51cc64
-    outputNodeGUID: e4a15224-62fc-486b-ae75-62a21ed8ba72
-    inputFieldName: input
-    outputFieldName: output
-    inputPortIdentifier: 0
-    outputPortIdentifier: 
-  - GUID: 6af6d06f-df05-4a17-a5b1-b82fca777b0c
-    owner: {fileID: 11400000}
-    inputNodeGUID: 8427f6e1-a18d-4338-a527-4ef1c7435fe6
-    outputNodeGUID: 266e21af-34f5-4cce-9410-22fc9b51cc64
-    inputFieldName: positive
-    outputFieldName: output
-    inputPortIdentifier: 
-    outputPortIdentifier: 0
   - GUID: 05822073-c993-4c1f-a3cd-390ccc704902
     owner: {fileID: 11400000}
     inputNodeGUID: c7182a94-acb2-4021-8aab-79a3dae45699
@@ -160,12 +110,20 @@ MonoBehaviour:
     outputFieldName: output
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: b914a453-8650-4aea-ab98-d89f1b8dc71f
+  - GUID: 9e31a90b-5e15-4897-8a92-6a6a725c57db
     owner: {fileID: 11400000}
-    inputNodeGUID: d61ff35f-7450-49d4-b410-2cf282c550ab
-    outputNodeGUID: 048f8a2e-8823-4d01-b674-10b9edfc7057
-    inputFieldName: controlNetImg
-    outputFieldName: output
+    inputNodeGUID: d1dd7349-499d-40fd-b085-7e3d847ece56
+    outputNodeGUID: dfe01011-798d-4788-a158-941095bd669e
+    inputFieldName: executed
+    outputFieldName: executes
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 19ae7ab3-02c8-42dc-a4e2-8acd63ecd293
+    owner: {fileID: 11400000}
+    inputNodeGUID: 8427f6e1-a18d-4338-a527-4ef1c7435fe6
+    outputNodeGUID: eff7692f-2724-4652-9bcd-33745e018041
+    inputFieldName: positive
+    outputFieldName: outLoraString
     inputPortIdentifier: 
     outputPortIdentifier: 
   groups: []
@@ -199,7 +157,7 @@ MonoBehaviour:
     title: Post Process
     content: Description
   nodeInspectorReference: {fileID: 0}
-  position: {x: -1278.6666, y: 1769.3334, z: 0}
+  position: {x: -3376.6667, y: 1899.3334, z: 0}
   scale: {x: 1, y: 1, z: 1}
   settings:
     widthScale: 1
@@ -260,6 +218,7 @@ MonoBehaviour:
           period: 0
         hasSettings: 0
         hasPreview: 0
+        isCanSaveTexture: 0
         isPreviewCollapsed: 0
         previewMode: 15
         previewSRGB: 0
@@ -310,6 +269,7 @@ MonoBehaviour:
           period: 0
         hasSettings: 0
         hasPreview: 0
+        isCanSaveTexture: 0
         isPreviewCollapsed: 0
         previewMode: 15
         previewSRGB: 0
@@ -345,8 +305,8 @@ MonoBehaviour:
         - "\u7EFC\u5408_anythingV3Inpainting_1-inpainting"
         - "\u98CE\u683C\u5316\u4EBA\u50CF_portrait_10"
         - Textures_sxzLuma_098VAE
-        currentIndex: 18
-        Model: "\u52A8\u6F2B_experience_70"
+        currentIndex: 24
+        Model: Textures_sxzLuma_098VAE
     - rid: 7516382939679031336
       type: {class: SDPromptNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
       data:
@@ -355,8 +315,8 @@ MonoBehaviour:
         computeOrder: 5
         position:
           serializedVersion: 2
-          x: 2957.3337
-          y: -1066.6671
+          x: 2957.3335
+          y: -1152.319
           width: 200
           height: 106.66669
         expanded: 0
@@ -383,6 +343,7 @@ MonoBehaviour:
           period: 0
         hasSettings: 0
         hasPreview: 0
+        isCanSaveTexture: 0
         isPreviewCollapsed: 0
         previewMode: 15
         previewSRGB: 0
@@ -391,11 +352,11 @@ MonoBehaviour:
         previewEV100: 0
         previewSlice: 0
         isPinned: 0
-        positive: 4k, candy, colorful
-        negative: (bad quality, worst quality:1.3)
+        positive: 4k, candy, pattern,wowtexture of,<lora:sxz-wowtexture-v2:0.8>
+        negative: colorful
         output:
-          positive: 4k, candy, colorful
-          negative: (bad quality, worst quality:1.3)
+          positive: 4k, candy, pattern,wowtexture of,<lora:sxz-wowtexture-v2:0.8>
+          negative: colorful
     - rid: 7516382939679031338
       type: {class: StringNode, ns: , asm: Assembly-CSharp}
       data:
@@ -404,8 +365,8 @@ MonoBehaviour:
         computeOrder: 2
         position:
           serializedVersion: 2
-          x: 2693.3337
-          y: -844.66693
+          x: 2693.3335
+          y: -930.31885
           width: 200
           height: 118.666626
         expanded: 0
@@ -432,6 +393,7 @@ MonoBehaviour:
           period: 0
         hasSettings: 0
         hasPreview: 0
+        isCanSaveTexture: 0
         isPreviewCollapsed: 0
         previewMode: 15
         previewSRGB: 0
@@ -440,20 +402,20 @@ MonoBehaviour:
         previewEV100: 0
         previewSlice: 0
         isPinned: 0
-        output: (bad quality, worst quality:1.3)
+        output: colorful
         isShowString: 1
     - rid: 7516382939679031360
       type: {class: SDLoraNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
       data:
         nodeCustomName: 
         GUID: eff7692f-2724-4652-9bcd-33745e018041
-        computeOrder: 7
+        computeOrder: 4
         position:
           serializedVersion: 2
           x: 2693.3337
-          y: -1066.6671
+          y: -1207.3333
           width: 200
-          height: 153.33337
+          height: 192.66669
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -478,6 +440,7 @@ MonoBehaviour:
           period: 0
         hasSettings: 0
         hasPreview: 0
+        isCanSaveTexture: 0
         isPreviewCollapsed: 0
         previewMode: 15
         previewSRGB: 0
@@ -486,10 +449,10 @@ MonoBehaviour:
         previewEV100: 0
         previewSlice: 0
         isPinned: 0
-        prompt: wowtexture of room
+        prompt: 4k, candy, pattern
         strength: 0.8
-        outLoraString: wowtexture of room,<lora:sxz-wowtexture-v2:0.8>
-        loraPrompt: 
+        outLoraString: 4k, candy, pattern,wowtexture of,<lora:sxz-wowtexture-v2:0.8>
+        loraPrompt: wowtexture of,
         lora: sxz-wowtexture-v2
         loraDir: 
         loraNames:
@@ -537,13 +500,13 @@ MonoBehaviour:
       data:
         nodeCustomName: 
         GUID: d1dd7349-499d-40fd-b085-7e3d847ece56
-        computeOrder: 14
+        computeOrder: 6
         position:
           serializedVersion: 2
-          x: 3326.484
-          y: -1600.667
+          x: 3277.0557
+          y: -1600.6667
           width: 256
-          height: 503.33337
+          height: 616.6667
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -568,6 +531,7 @@ MonoBehaviour:
           period: 0
         hasSettings: 0
         hasPreview: 1
+        isCanSaveTexture: 0
         isPreviewCollapsed: 0
         previewMode: 15
         previewSRGB: 0
@@ -577,8 +541,8 @@ MonoBehaviour:
         previewSlice: 0
         isPinned: 0
         prompt:
-          positive: 4k, candy, colorful
-          negative: (bad quality, worst quality:1.3)
+          positive: 4k, candy, pattern,wowtexture of,<lora:sxz-wowtexture-v2:0.8>
+          negative: colorful
         width: 512
         height: 512
         step: 20
@@ -586,7 +550,7 @@ MonoBehaviour:
         seed: -1
         isTiling: 1
         outputImage: {fileID: 0}
-        outSeed: 2522929875318056614
+        outSeed: 5208186488789500738
         progress: 0.96
         speed: -0
         init_speed: 0
@@ -598,11 +562,11 @@ MonoBehaviour:
       data:
         nodeCustomName: 
         GUID: 2729675f-b2d3-4eca-886b-b1770fa99570
-        computeOrder: 6
+        computeOrder: 3
         position:
           serializedVersion: 2
-          x: 2412.6672
-          y: -1066.6671
+          x: 2412.6667
+          y: -1152.319
           width: 200
           height: 118.66669
         expanded: 0
@@ -629,6 +593,7 @@ MonoBehaviour:
           period: 0
         hasSettings: 0
         hasPreview: 0
+        isCanSaveTexture: 0
         isPreviewCollapsed: 0
         previewMode: 15
         previewSRGB: 0
@@ -637,173 +602,14 @@ MonoBehaviour:
         previewEV100: 0
         previewSlice: 0
         isPinned: 0
-        output: wowtexture of room
+        output: 4k, candy, pattern
         isShowString: 1
-    - rid: 7516382939679031373
-      type: {class: SDControlNetNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
-      data:
-        nodeCustomName: 
-        GUID: d61ff35f-7450-49d4-b410-2cf282c550ab
-        computeOrder: 13
-        position:
-          serializedVersion: 2
-          x: 2957.3333
-          y: -1600.667
-          width: 200
-          height: 132
-        expanded: 0
-        debug: 0
-        nodeLock: 0
-        isUpdate: 0
-        settings:
-          widthScale: 1
-          heightScale: 1
-          depthScale: 1
-          width: 512
-          height: 512
-          depth: 1
-          potSize: 0
-          sizeMode: -2
-          dimension: -2
-          outputChannels: -2
-          outputPrecision: -2
-          editFlags: -257
-          doubleBuffered: 0
-          wrapMode: -2
-          filterMode: -2
-          refreshMode: 0
-          period: 0
-        hasSettings: 0
-        hasPreview: 0
-        isPreviewCollapsed: 0
-        previewMode: 15
-        previewSRGB: 0
-        previewMip: 0
-        previewVisible: 1
-        previewEV100: 0
-        previewSlice: 0
-        isPinned: 0
-        controlNetImg: {fileID: 0}
-        weight: 1
-        resize_mode: 1
-        lowvram: 0
-        processor_res: 64
-        threshold_a: 64
-        threshold_b: 64
-        guidance_start: 0
-        guidance_end: 1
-        guidance: 1
-        control_mode: 2
-        module: none
-        model: control_v11p_sd15_lineart [43d4be0d]
-        modelList:
-        - control_v11e_sd15_ip2p [c4bb465c]
-        - control_v11e_sd15_shuffle [526bfdae]
-        - control_v11f1p_sd15_depth [cfd03158]
-        - control_v11p_sd15_canny [d14c016b]
-        - control_v11p_sd15_inpaint [ebff9138]
-        - control_v11p_sd15_lineart [43d4be0d]
-        - control_v11p_sd15_mlsd [aca30ff0]
-        - control_v11p_sd15_normalbae [316696f1]
-        - control_v11p_sd15_openpose [cab727d4]
-        - control_v11p_sd15_scribble [d4ba51ff]
-        - control_v11p_sd15_seg [e1f51eb9]
-        - control_v11p_sd15_softedge [a8575a2a]
-        - control_v11p_sd15s2_lineart_anime [3825e83e]
-        - control_v11u_sd15_tile [1f041471]
-        currentModelListIndex: 5
-        moudleList:
-        - none
-        - canny
-        - depth
-        - depth_leres
-        - hed
-        - hed_safe
-        - mediapipe_face
-        - mlsd
-        - normal_map
-        - openpose
-        - openpose_hand
-        - openpose_face
-        - openpose_faceonly
-        - openpose_full
-        - clip_vision
-        - color
-        - pidinet
-        - pidinet_safe
-        - pidinet_sketch
-        - pidinet_scribble
-        - scribble_xdog
-        - scribble_hed
-        - segmentation
-        - threshold
-        - depth_zoe
-        - normal_bae
-        - oneformer_coco
-        - oneformer_ade20k
-        - lineart
-        - lineart_coarse
-        - lineart_anime
-        - lineart_standard
-        - shuffle
-        - tile_resample
-        - inpaint
-        - invert
-        - lineart_anime_denoise
-        currentMoudleListIndex: 0
-    - rid: 7516382939679031374
-      type: {class: SDRelayNode, ns: , asm: Assembly-CSharp}
-      data:
-        nodeCustomName: 
-        GUID: b8937712-82ce-4e35-aaba-46bff60f03eb
-        computeOrder: 12
-        position:
-          serializedVersion: 2
-          x: 2868.3333
-          y: -1983.9276
-          width: 200
-          height: 200
-        expanded: 0
-        debug: 0
-        nodeLock: 0
-        isUpdate: 0
-        settings:
-          widthScale: 1
-          heightScale: 1
-          depthScale: 1
-          width: 512
-          height: 512
-          depth: 1
-          potSize: 0
-          sizeMode: -2
-          dimension: -2
-          outputChannels: -2
-          outputPrecision: -2
-          editFlags: -257
-          doubleBuffered: 0
-          wrapMode: -2
-          filterMode: -2
-          refreshMode: 0
-          period: 0
-        hasSettings: 0
-        hasPreview: 0
-        isPreviewCollapsed: 0
-        previewMode: 15
-        previewSRGB: 0
-        previewMip: 0
-        previewVisible: 1
-        previewEV100: 0
-        previewSlice: 0
-        isPinned: 0
-        unpackOutput: 0
-        packInput: 0
-        inputEdgeCount: 0
     - rid: 7516382939679031376
       type: {class: SDGradienMattetNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
       data:
         nodeCustomName: 
         GUID: d79ed4eb-3cf3-4ae4-a22c-40fc9e0b6516
-        computeOrder: 8
+        computeOrder: 7
         position:
           serializedVersion: 2
           x: 1422.6873
@@ -834,6 +640,7 @@ MonoBehaviour:
           period: 0
         hasSettings: 1
         hasPreview: 1
+        isCanSaveTexture: 0
         isPreviewCollapsed: 0
         previewMode: 15
         previewSRGB: 0
@@ -858,7 +665,7 @@ MonoBehaviour:
       data:
         nodeCustomName: 
         GUID: e0f62fb5-2bfe-4439-a208-0062d4ea7ea7
-        computeOrder: 10
+        computeOrder: 9
         position:
           serializedVersion: 2
           x: 2030.0205
@@ -889,6 +696,7 @@ MonoBehaviour:
           period: 0
         hasSettings: 1
         hasPreview: 1
+        isCanSaveTexture: 0
         isPreviewCollapsed: 0
         previewMode: 15
         previewSRGB: 0
@@ -909,13 +717,13 @@ MonoBehaviour:
       data:
         nodeCustomName: 
         GUID: e4a15224-62fc-486b-ae75-62a21ed8ba72
-        computeOrder: 3
+        computeOrder: 10
         position:
           serializedVersion: 2
           x: 2402.6667
-          y: -928.66675
+          y: -1014.31885
           width: 200
-          height: 118.66669
+          height: 118.666626
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -940,6 +748,7 @@ MonoBehaviour:
           period: 0
         hasSettings: 0
         hasPreview: 0
+        isCanSaveTexture: 0
         isPreviewCollapsed: 0
         previewMode: 15
         previewSRGB: 0
@@ -948,18 +757,18 @@ MonoBehaviour:
         previewEV100: 0
         previewSlice: 0
         isPinned: 0
-        output: 4k, candy, colorful
+        output: 4k, candy, white and black
         isShowString: 1
     - rid: 7516382939679031383
       type: {class: RelayNode, ns: , asm: com.alelievr.NodeGraphProcessor.Runtime}
       data:
         nodeCustomName: 
         GUID: 266e21af-34f5-4cce-9410-22fc9b51cc64
-        computeOrder: 4
+        computeOrder: 11
         position:
           serializedVersion: 2
-          x: 2823
-          y: -888.3333
+          x: 2822.6667
+          y: -974.31885
           width: 200
           height: 200
         expanded: 0
@@ -974,7 +783,7 @@ MonoBehaviour:
       data:
         nodeCustomName: 
         GUID: 0d75c177-73fc-4228-b0c2-18a6ca76d6fb
-        computeOrder: 15
+        computeOrder: 12
         position:
           serializedVersion: 2
           x: 3624.682
@@ -1005,6 +814,7 @@ MonoBehaviour:
           period: 0
         hasSettings: 1
         hasPreview: 1
+        isCanSaveTexture: 0
         isPreviewCollapsed: 0
         previewMode: 15
         previewSRGB: 0
@@ -1025,7 +835,7 @@ MonoBehaviour:
       data:
         nodeCustomName: 
         GUID: c7182a94-acb2-4021-8aab-79a3dae45699
-        computeOrder: 9
+        computeOrder: 8
         position:
           serializedVersion: 2
           x: 1726.0205
@@ -1056,6 +866,7 @@ MonoBehaviour:
           period: 0
         hasSettings: 1
         hasPreview: 1
+        isCanSaveTexture: 0
         isPreviewCollapsed: 0
         previewMode: 15
         previewSRGB: 0
@@ -1078,7 +889,7 @@ MonoBehaviour:
       data:
         nodeCustomName: 
         GUID: 048f8a2e-8823-4d01-b674-10b9edfc7057
-        computeOrder: 11
+        computeOrder: 13
         position:
           serializedVersion: 2
           x: 2318
@@ -1109,6 +920,7 @@ MonoBehaviour:
           period: 0
         hasSettings: 1
         hasPreview: 1
+        isCanSaveTexture: 0
         isPreviewCollapsed: 0
         previewMode: 15
         previewSRGB: 0
@@ -1131,7 +943,7 @@ MonoBehaviour:
       data:
         nodeCustomName: 
         GUID: fbce172e-047c-4c26-b7c5-9ec4e6e7499a
-        computeOrder: 16
+        computeOrder: 14
         position:
           serializedVersion: 2
           x: 3938.0964
@@ -1162,6 +974,7 @@ MonoBehaviour:
           period: 0
         hasSettings: 1
         hasPreview: 1
+        isCanSaveTexture: 0
         isPreviewCollapsed: 0
         previewMode: 15
         previewSRGB: 0
@@ -1175,4 +988,4 @@ MonoBehaviour:
         material: {fileID: 0}
         shaderGUID: c1f8bac2a6637264ea45079cfa2c04e8
         inputImage: {fileID: 0}
-        radius: 3.5
+        radius: 2
