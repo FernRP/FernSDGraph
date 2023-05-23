@@ -132,7 +132,7 @@ namespace FernNPRCore.SDNodeGraph
                 // Make a HTTP POST request to the Stable Diffusion server
                 //var txt2ImgAPI = controlNet == defaultControlNet ? SDDataHandle.TextToImageAPI : SDDataHandle.ControlNetTex2Img;
                 var txt2ImgAPI = SDGraphResource.SdGraphDataHandle.ProgressAPI;
-                httpWebRequest = (HttpWebRequest)WebRequest.Create(SDGraphResource.SdGraphDataHandle.serverURL + txt2ImgAPI);
+                httpWebRequest = (HttpWebRequest)WebRequest.Create(SDGraphResource.SdGraphDataHandle.GetServerURL() + txt2ImgAPI);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "GET";
                 httpWebRequest.SetRequestAuthorization();

@@ -131,10 +131,12 @@ namespace FernNPRCore.SDNodeGraph
                 SDUtil.Log("Model is null");
                 yield return null;
             }
+
+            HttpWebRequest httpWebRequest = null;
             try
             {
                 // Tell Stable Diffusion to use the specified model using an HTTP POST request
-                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
                 if (SDGraphResource.SdGraphDataHandle.GetUseAuth() && !string.IsNullOrEmpty(SDGraphResource.SdGraphDataHandle.GetUserName()) && !string.IsNullOrEmpty(SDGraphResource.SdGraphDataHandle.GetPassword()))
@@ -159,21 +161,44 @@ namespace FernNPRCore.SDNodeGraph
                         // Send the POST request to the server
                         streamWriter.Write(json);
                     }
-
-                    // Get the response of the server
-                    Task<WebResponse> webResponse = httpWebRequest.GetResponseAsync();
-                    var httpResponse = webResponse.Result;
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                    {
-                        string result = streamReader.ReadToEnd();
-                        SDUtil.Log("Set Model");
-                    }
                 }
             }
             catch (WebException e)
             {
                 SDUtil.Log("Error: " + e.Message);
             }
+            
+            
+            
+            if (httpWebRequest != null)
+            {
+                // Wait that the generation is complete before procedding
+                Task<WebResponse> webResponse = httpWebRequest.GetResponseAsync();
+                while (!webResponse.IsCompleted)
+                {           
+#if UNITY_EDITOR
+                    EditorUtility.ClearProgressBar();
+#endif
+                    yield return new WaitForSeconds(100);
+                }
+                // Stream the result from the server
+                var httpResponse = webResponse.Result;
+                
+                try
+                {
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        string result = streamReader.ReadToEnd();
+                        SDUtil.Log("Set Model");
+                    }
+                }
+                catch (WebException e)
+                {
+                    SDUtil.Log("Error: " + e.Message);
+                }
+            }
+
+            
             callback?.Invoke();
         }
 	}

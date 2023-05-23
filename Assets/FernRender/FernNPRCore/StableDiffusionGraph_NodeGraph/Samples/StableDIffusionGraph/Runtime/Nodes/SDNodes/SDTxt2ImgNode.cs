@@ -109,7 +109,7 @@ namespace FernNPRCore.SDNodeGraph
                 //var txt2ImgAPI = controlNet == defaultControlNet ? SDDataHandle.TextToImageAPI : SDDataHandle.ControlNetTex2Img;
                 var txt2ImgAPI = SDDataHandle.Instance.ProgressAPI;
                 
-                httpWebRequest = (HttpWebRequest)WebRequest.Create(SDGraphResource.SdGraphDataHandle.serverURL + txt2ImgAPI);
+                httpWebRequest = (HttpWebRequest)WebRequest.Create(SDGraphResource.SdGraphDataHandle.GetServerURL() + txt2ImgAPI);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "GET";
                 httpWebRequest.SetRequestAuthorization();
@@ -133,41 +133,48 @@ namespace FernNPRCore.SDNodeGraph
                 }
                 while (!webResponse.IsCompleted)
                 {                
-                    yield return new WaitForSeconds(100);
+                    yield return null;
                 }
                 
                 // Stream the result from the server
-                var httpResponse = webResponse.Result;
-
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                try
                 {
-                    // Decode the response as a JSON string
-                    string result = streamReader.ReadToEnd();
-                    
-                    // Deserialize the JSON string into a data structure
-                    SDResponseProgress json = JsonConvert.DeserializeObject<SDResponseProgress>(result);
-                    // If no image, there was probably an error so abort
-                    if (json != null && !string.IsNullOrEmpty(json.current_image))
+                    var httpResponse = webResponse.Result;
+
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
-                        byte[] imageData = Convert.FromBase64String(json.current_image);
-                        OutputImage.LoadImage(imageData);
-                    
-                        if (json.state != null && json.state.sampling_step > cur_step) 
+                        // Decode the response as a JSON string
+                        string result = streamReader.ReadToEnd();
+                        
+                        // Deserialize the JSON string into a data structure
+                        SDResponseProgress json = JsonConvert.DeserializeObject<SDResponseProgress>(result);
+                        // If no image, there was probably an error so abort
+                        if (json != null && !string.IsNullOrEmpty(json.current_image))
                         {
-                            cur_step = json.state.sampling_step;
-                            if (cur_step == 0)
-                                init_speed = 1 / (float)oTime.TotalSeconds;
-                            else
-                                speed = cur_step/(float)(oTime.TotalSeconds - 1 / init_speed);
+                            byte[] imageData = Convert.FromBase64String(json.current_image);
+                            OutputImage.LoadImage(imageData);
+                        
+                            if (json.state != null && json.state.sampling_step > cur_step) 
+                            {
+                                cur_step = json.state.sampling_step;
+                                if (cur_step == 0)
+                                    init_speed = 1 / (float)oTime.TotalSeconds;
+                                else
+                                    speed = cur_step/(float)(oTime.TotalSeconds - 1 / init_speed);
+                            }
+                            progress = json.progress;
+                            onProgressUpdate?.Invoke(progress);
                         }
-                        progress = json.progress;
-                        onProgressUpdate?.Invoke(progress);
+                        
+                        if (cur_step == -1) yield break;
+                        // TODO:?
+                        // var pro = Mathf.Clamp((((float)oTime.TotalSeconds - 1f / init_speed) * speed) / (step - 1f), cur_step/(step - 1.0f), (cur_step + 1)/(step - 1.0f) - 0.001f);
+                        // progress = Mathf.Min(1, pro);
                     }
-                    
-                    if (cur_step == -1) yield break;
-                    // TODO:?
-                    // var pro = Mathf.Clamp((((float)oTime.TotalSeconds - 1f / init_speed) * speed) / (step - 1f), cur_step/(step - 1.0f), (cur_step + 1)/(step - 1.0f) - 0.001f);
-                    // progress = Mathf.Min(1, pro);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(e);
                 }
             }
         }
