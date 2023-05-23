@@ -289,7 +289,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                 {
                     word = word.tag,
                 });
-                refresh = true;
+                // refresh = true;
 
             }
             GUI.color = color;
@@ -310,7 +310,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                 {
                     word = word,
                 });
-                refresh = true;
+                // refresh = true;
 
             }
             GUI.color = color;
@@ -496,7 +496,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
             return isHasChanged;
         }
 
-        private bool refresh = true;
+        // private bool refresh = true;
     
 
         #endregion
@@ -658,7 +658,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                 SetCurrentWord(-1);
                 current_idx = -1;
                 showCurrentWord = false;
-                refresh = true;
+                // refresh = true;
             }
             
                     
@@ -682,7 +682,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                 {
                     RegisterUndo("prompt Remove");
                     promptDatas.RemoveAt(current_idx);
-                    refresh = true;
+                    // refresh = true;
                     SetCurrentWord(-1);
                     current_idx = -1;
                 }
@@ -703,7 +703,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                     {
                         RegisterUndo("prompt SetWeight");
                         promptDatas[current_idx] = promptDatas[current_idx].SetWeight(Weight);
-                        refresh = true;
+                        // refresh = true;
                     }
                     GUILayout.Space(4);
                     DrawSplitter();
@@ -723,7 +723,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                     {
                         RegisterUndo("prompt SetProcess");
                         promptDatas[current_idx] = promptDatas[current_idx].SetProcess(Process);
-                        refresh = true;
+                        // refresh = true;
                     }
                     EditorGUILayout.EndScrollView();
                 }
@@ -888,7 +888,7 @@ namespace FernRender.FernNPRCore.StableDiffusionGraph.SDGraph.Editor
                     
                     RegisterUndo("prompt SetColor");
                     promptDatas[wordIdx] = promptDatas[wordIdx].SetColor(prompt_col);
-                    refresh = true;
+                    // refresh = true;
                 }
                 GUI.color = color;
                 controlRect.height = 2;

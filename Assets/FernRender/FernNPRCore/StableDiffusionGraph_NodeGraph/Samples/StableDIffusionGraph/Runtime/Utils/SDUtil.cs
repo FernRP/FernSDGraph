@@ -725,4 +725,15 @@ namespace FernNPRCore.SDNodeGraph
     public class StringStringDic : SerializableDictionaryBase<string, string>
     {
     }
+
+    [Serializable]
+    public class HiresUpscaler
+    {
+        public float denoising_strength = 0.75f;
+        public float hr_scale = 2;
+        public string hr_upscaler = "";
+        public int hr_second_pass_steps = 1;
+        public int hr_resize_x = 0;
+        public int hr_resize_y = 0;
+    }
 }

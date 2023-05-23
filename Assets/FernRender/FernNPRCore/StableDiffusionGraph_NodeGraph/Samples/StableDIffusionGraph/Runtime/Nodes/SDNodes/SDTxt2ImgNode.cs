@@ -23,6 +23,7 @@ namespace FernNPRCore.SDNodeGraph
     public class SDTxt2ImgNode : LinearSDProcessorNode
     {
         [Input(name = "ControlNet")] private ControlNetData controlNetData;
+        [Input(name = "Upscaler")] public HiresUpscaler upscaler;
         [Input(name = "Prompt")] public Prompt prompt;
 
         [Input(name = "Width"), ShowAsDrawer] public int width = 512;
@@ -36,10 +37,12 @@ namespace FernNPRCore.SDNodeGraph
         [Output("Seed")] public long outSeed;
 
         [HideInInspector] public float progress;
-        [HideInInspector] public DateTime startTime;
+        [HideInInspector] public DateTime pre_step_time;
+        [HideInInspector] public int pre_step;
+        [HideInInspector] public int pre_step_count = 20;
+        [HideInInspector] public int pre_job_no;
+        [HideInInspector] public int job_no_count;
         [HideInInspector] public float speed; // it/s
-        [HideInInspector] public int cur_step;
-        [HideInInspector] public int init_step ;
         [HideInInspector] public string samplerMethod = "Euler";
 
         public override string name => "SD Txt2Img";
@@ -73,7 +76,7 @@ namespace FernNPRCore.SDNodeGraph
 
         public void Complete()
         {
-            EditorPrefs.SetFloat("SD.GPU.it_speed", speed);
+            pre_job_no = -1;
         }
 
         protected override void Destroy()
@@ -86,12 +89,6 @@ namespace FernNPRCore.SDNodeGraph
             }
         }
 
-        public void Init()
-        {
-            cur_step = 0;
-            progress = 0;
-            speed = EditorPrefs.GetFloat("SD.GPU.it_speed", 0.0001f);
-        }
 
         private IEnumerator UpdateGenerationProgress()
         {
@@ -117,10 +114,14 @@ namespace FernNPRCore.SDNodeGraph
             {
                 // Wait that the generation is complete before procedding
                 Task<WebResponse> webResponse = httpWebRequest.GetResponseAsync();
-
                 while (!webResponse.IsCompleted)
                 {                
-                    yield return null;
+                    var TotalSeconds = (float)DateTime.Now.Subtract(pre_step_time).TotalSeconds;
+                    progress = Mathf.Min((float)pre_step / pre_step_count /*(json.progress)*/ + TotalSeconds * speed / pre_step_count, (pre_step + 1f) / pre_step_count);
+                    if (job_no_count <= pre_job_no)
+                        progress = 1;
+                    onProgressUpdate?.Invoke(progress);
+                    yield return new WaitForSeconds(100);
                 }
                 
                 // Stream the result from the server
@@ -143,26 +144,26 @@ namespace FernNPRCore.SDNodeGraph
                                 byte[] imageData = Convert.FromBase64String(json.current_image);
                                 OutputImage.LoadImage(imageData);
                             }
-                        
-                            var TotalSeconds = 0f;
-                            if (json.state != null && json.state.sampling_step > cur_step) 
-                            {
-                                if (cur_step == 0)
-                                {
-                                    init_step = json.state.sampling_step;
-                                    startTime = DateTime.Now;
-                                }
 
-                                if (cur_step > 0)
+                            if (json.state != null)
+                            {
+                                pre_step_count = json.state.sampling_steps;
+                                job_no_count = json.state.job_count;
+                                if (json.state.job_no > pre_job_no)
                                 {
-                                    TotalSeconds = (float)DateTime.Now.Subtract(startTime).TotalSeconds;
-                                    speed = (json.state.sampling_step - init_step)/TotalSeconds;
+                                    pre_step_time = DateTime.Now;
+                                    progress = 0;
+                                    pre_step = 0;
+                                    if (json.state.job_no == 0) speed = 0.01f;
+                                    pre_job_no = json.state.job_no;
                                 }
-                                cur_step = json.state.sampling_step;
+                                if (json.state.sampling_step > pre_step) 
+                                {
+                                    speed = (json.state.sampling_step - pre_step)/(float)DateTime.Now.Subtract(pre_step_time).TotalSeconds;;
+                                    pre_step_time = DateTime.Now;
+                                    pre_step = json.state.sampling_step;
+                                }
                             }
-                            if (cur_step > 0)
-                                progress = Mathf.Max(TotalSeconds * speed / step, (cur_step + 1f) / step);
-                            onProgressUpdate?.Invoke(progress);
                         }
                     }
                 }
@@ -220,6 +221,17 @@ namespace FernNPRCore.SDNodeGraph
                         sd.tiling = isTiling;
                         sd.seed = seed; 
                         sd.sampler_name = samplerMethod;
+                        sd.enable_hr = false;
+                        if (upscaler != null && !string.IsNullOrEmpty(upscaler.hr_upscaler) && !upscaler.hr_upscaler.ToLower().Equals("none"))
+                        {
+                            sd.enable_hr = true;
+                            sd.hr_second_pass_steps = upscaler.hr_second_pass_steps;
+                            sd.hr_upscaler = upscaler.hr_upscaler;
+                            sd.hr_resize_x = upscaler.hr_resize_x;
+                            sd.hr_resize_y = upscaler.hr_resize_y;
+                            sd.denoising_strength = upscaler.denoising_strength;
+                            sd.hr_scale = upscaler.hr_scale;
+                        }
                         // Serialize the input parameters
                         json = JsonConvert.SerializeObject(sd);
                     }
@@ -241,6 +253,17 @@ namespace FernNPRCore.SDNodeGraph
                             sd.alwayson_scripts = new ALWAYSONSCRIPTS();
                             sd.alwayson_scripts.controlnet = new ControlNetDataArgs();
                             sd.alwayson_scripts.controlnet.args = new[] { controlNetData };
+                        }
+                        sd.enable_hr = false;
+                        if (upscaler != null && !string.IsNullOrEmpty(upscaler.hr_upscaler) && !upscaler.hr_upscaler.ToLower().Equals("none"))
+                        {
+                            sd.enable_hr = true;
+                            sd.hr_second_pass_steps = upscaler.hr_second_pass_steps;
+                            sd.hr_upscaler = upscaler.hr_upscaler;
+                            sd.hr_resize_x = upscaler.hr_resize_x;
+                            sd.hr_resize_y = upscaler.hr_resize_y;
+                            sd.denoising_strength = upscaler.denoising_strength;
+                            sd.hr_scale = upscaler.hr_scale;
                         }
 
                         // Serialize the input parameters
@@ -323,7 +346,6 @@ namespace FernNPRCore.SDNodeGraph
 
         protected override IEnumerator Execute()
         {
-            Init();
             GetPort(nameof(prompt), null).PullData();
             yield return GenerateAsync();
         }
