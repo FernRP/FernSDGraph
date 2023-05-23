@@ -77,12 +77,7 @@ public class SDTxt2ImgNodeView : SDNodeView
 	
 	private void OnUpdateProgressBar(float progress)
 	{
-		var label = node.cur_step == -1 ? "init" : $"{node.speed:F3}it/s";
-		var total = (long)((node.step - 1) / node.speed + 1 / node.init_speed);
-		total = Math.Max(total, 0);
-		var re = total - (long)DateTime.Now.Subtract(node.startTime).TotalSeconds;
-		re = Math.Max(re, 0);
-		progressBar.title = $"{node.progress * 100:F1}% ({label})";
+		progressBar.title = $"{node.progress * 100:F1}% ({node.speed:F3}it/s)";
 		progressBar.value = progress;
 	}
 	

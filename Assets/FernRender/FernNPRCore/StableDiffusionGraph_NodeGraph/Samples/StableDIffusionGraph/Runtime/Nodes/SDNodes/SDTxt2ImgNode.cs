@@ -38,9 +38,8 @@ namespace FernNPRCore.SDNodeGraph
         [HideInInspector] public float progress;
         [HideInInspector] public DateTime startTime;
         [HideInInspector] public float speed; // it/s
-        [HideInInspector] public float init_speed = 0.0001f; // it/s
         [HideInInspector] public int cur_step;
-        [HideInInspector] public bool isExecuting = false;
+        [HideInInspector] public int init_step ;
         [HideInInspector] public string samplerMethod = "Euler";
 
         public override string name => "SD Txt2Img";
@@ -74,9 +73,7 @@ namespace FernNPRCore.SDNodeGraph
 
         public void Complete()
         {
-            isExecuting = false;
             EditorPrefs.SetFloat("SD.GPU.it_speed", speed);
-            EditorPrefs.SetFloat("SD.GPU.init_speed", init_speed);
         }
 
         protected override void Destroy()
@@ -91,12 +88,9 @@ namespace FernNPRCore.SDNodeGraph
 
         public void Init()
         {
-            cur_step = -1;
-            startTime = DateTime.Now;
+            cur_step = 0;
             progress = 0;
             speed = EditorPrefs.GetFloat("SD.GPU.it_speed", 0.0001f);
-            init_speed = EditorPrefs.GetFloat("SD.GPU.init_speed", 0.0001f);
-            isExecuting = true;
         }
 
         private IEnumerator UpdateGenerationProgress()
@@ -124,13 +118,6 @@ namespace FernNPRCore.SDNodeGraph
                 // Wait that the generation is complete before procedding
                 Task<WebResponse> webResponse = httpWebRequest.GetResponseAsync();
 
-                var currentTime = DateTime.Now;
-                TimeSpan oTime = currentTime.Subtract(startTime);
-                if (cur_step == -1)
-                {
-                    var pro = (float)oTime.TotalSeconds * init_speed;
-                    progress = Mathf.Min(1, pro);
-                }
                 while (!webResponse.IsCompleted)
                 {                
                     yield return null;
@@ -149,27 +136,34 @@ namespace FernNPRCore.SDNodeGraph
                         // Deserialize the JSON string into a data structure
                         SDResponseProgress json = JsonConvert.DeserializeObject<SDResponseProgress>(result);
                         // If no image, there was probably an error so abort
-                        if (json != null && !string.IsNullOrEmpty(json.current_image))
+                        if (json != null)
                         {
-                            byte[] imageData = Convert.FromBase64String(json.current_image);
-                            OutputImage.LoadImage(imageData);
+                            if (!string.IsNullOrEmpty(json.current_image))
+                            {
+                                byte[] imageData = Convert.FromBase64String(json.current_image);
+                                OutputImage.LoadImage(imageData);
+                            }
                         
+                            var TotalSeconds = 0f;
                             if (json.state != null && json.state.sampling_step > cur_step) 
                             {
-                                cur_step = json.state.sampling_step;
                                 if (cur_step == 0)
-                                    init_speed = 1 / (float)oTime.TotalSeconds;
-                                else
-                                    speed = cur_step/(float)(oTime.TotalSeconds - 1 / init_speed);
+                                {
+                                    init_step = json.state.sampling_step;
+                                    startTime = DateTime.Now;
+                                }
+
+                                if (cur_step > 0)
+                                {
+                                    TotalSeconds = (float)DateTime.Now.Subtract(startTime).TotalSeconds;
+                                    speed = (json.state.sampling_step - init_step)/TotalSeconds;
+                                }
+                                cur_step = json.state.sampling_step;
                             }
-                            progress = json.progress;
+                            if (cur_step > 0)
+                                progress = Mathf.Max(TotalSeconds * speed / step, (cur_step + 1f) / step);
                             onProgressUpdate?.Invoke(progress);
                         }
-                        
-                        if (cur_step == -1) yield break;
-                        // TODO:?
-                        // var pro = Mathf.Clamp((((float)oTime.TotalSeconds - 1f / init_speed) * speed) / (step - 1f), cur_step/(step - 1.0f), (cur_step + 1)/(step - 1.0f) - 0.001f);
-                        // progress = Mathf.Min(1, pro);
                     }
                 }
                 catch (Exception e)
