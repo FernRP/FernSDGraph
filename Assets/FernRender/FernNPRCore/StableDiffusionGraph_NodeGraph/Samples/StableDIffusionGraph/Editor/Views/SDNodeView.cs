@@ -90,6 +90,17 @@ namespace FernNPRCore.SDNodeGraph
 			pinButton.AddToClassList("PinButton");
 			rightTitleContainer.Add(pinButton);
 
+			if (nodeTarget.hasPreview)
+			{
+				var saveButton = new Button(OnSave);
+				saveButton.style.backgroundImage = SDTextureHandle.SaveIcon;
+				saveButton.style.width = 20;
+				saveButton.style.height = 20;
+				saveButton.style.alignSelf = Align.FlexEnd;
+				saveButton.style.bottom = 5;
+				rightTitleContainer.Add(saveButton);
+			}
+
 			previewContainer = new VisualElement();
 			previewContainer.AddToClassList("Preview");
 			controlsContainer.Add(previewContainer);
@@ -100,6 +111,20 @@ namespace FernNPRCore.SDNodeGraph
 		~SDNodeView()
 		{
 			
+		}
+		
+		private void OnSave()
+		{
+			if (nodeTarget.previewTexture != null)
+			{
+				string path = EditorUtility.SaveFilePanel("Save texture as PNG", "Assets", $"img_preview.png", "png");
+				if (path.Length != 0)
+				{
+					SDUtil.SaveAsLinearPNG(nodeTarget.previewTexture, path);
+					AssetDatabase.Refresh();
+					SDUtil.SetToNone(path);
+				}
+			}
 		}
 		
 		void UpdatePorts()

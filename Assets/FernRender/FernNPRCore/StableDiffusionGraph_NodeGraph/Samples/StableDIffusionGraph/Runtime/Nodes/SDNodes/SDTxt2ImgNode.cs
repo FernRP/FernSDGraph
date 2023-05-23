@@ -69,7 +69,7 @@ namespace FernNPRCore.SDNodeGraph
         public override void OnNodeCreated()
         {
             hasPreview = true;
-            base.OnNodeCreated();
+            base.OnNodeCreated();   
         }
 
         public void Complete()

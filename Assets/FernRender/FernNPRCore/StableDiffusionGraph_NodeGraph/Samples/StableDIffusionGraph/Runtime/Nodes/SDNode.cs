@@ -42,6 +42,8 @@ namespace FernNPRCore.SDNodeGraph
         public bool hasSettings = false;
         [HideInInspector]
         public bool hasPreview = false;
+        [HideInInspector]
+        public bool isCanSaveTexture = false;
 
         public virtual List<OutputDimension> supportedDimensions => new List<OutputDimension>()
         {

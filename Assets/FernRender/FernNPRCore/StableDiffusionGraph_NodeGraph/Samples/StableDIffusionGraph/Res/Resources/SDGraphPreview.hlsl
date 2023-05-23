@@ -51,7 +51,6 @@ float4 MakePreviewColor(v2f i, float2 texelSize, float4 imageColor)
     imageColor.xyz = ConvertToSRGBIfNeeded(imageColor.xyz);
     // Then checkerboard
     imageColor.xyz = lerp(checkerboard, imageColor.xyz, imageColor.a);
-    imageColor.a = 1;
 
     // Preview exposure offset
     imageColor.xyz *= pow(2, _EV100);
