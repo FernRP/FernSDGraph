@@ -60,7 +60,7 @@ namespace FernNPRCore.SDNodeGraph
 			else
 			{
 				SDGraphResource.SdGraphDataHandle.OverrideSettings = false;
-				outServerURL = SDGraphResource.SdGraphDataHandle.serverURL;
+				outServerURL = SDGraphResource.SdGraphDataHandle.GetServerURL();
 			}
 
 			yield return null;
