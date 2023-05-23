@@ -48,15 +48,13 @@ namespace FernNPRCore.SDNodeGraph
 			base.Enable();
 			hasPreview = false;
 			controlNet = new ControlNetData();
-			EditorCoroutineUtility.StartCoroutine(ControlNetModelListAsync(), this);
-			EditorCoroutineUtility.StartCoroutine(ControlNetMoudleList(), this);
 		}
 		
 		/// <summary>
 		/// Get the list of available Stable Diffusion models.
 		/// </summary>
 		/// <returns></returns>
-		IEnumerator ControlNetModelListAsync()
+		public IEnumerator ControlNetModelListAsync()
 		{
 			// Stable diffusion API url for getting the models list
 			string url = SDGraphResource.SdGraphDataHandle.GetServerURL() + SDGraphResource.SdGraphDataHandle.ControlNetModelList;
@@ -99,7 +97,7 @@ namespace FernNPRCore.SDNodeGraph
 		/// Get the list of available Stable Diffusion models.
 		/// </summary>
 		/// <returns></returns>
-		IEnumerator ControlNetMoudleList()
+		public IEnumerator ControlNetMoudleList()
 		{
 			// Stable diffusion API url for getting the models list
 			string url = SDGraphResource.SdGraphDataHandle.GetServerURL() + SDGraphResource.SdGraphDataHandle.ControlNetMoudleList;

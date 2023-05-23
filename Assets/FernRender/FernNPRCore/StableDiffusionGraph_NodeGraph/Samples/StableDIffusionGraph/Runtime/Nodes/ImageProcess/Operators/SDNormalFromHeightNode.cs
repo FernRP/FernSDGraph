@@ -8,6 +8,7 @@ namespace FernNPRCore.SDNodeGraph
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Normal Form Height")]
     public class SDNormalFromHeightNode : SDShaderNode
     {
+        [Input(name = "Source")] public Texture inputImage;
         [Range(0,128)]
         public float strength = 32;
         

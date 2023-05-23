@@ -8,7 +8,7 @@ namespace FernNPRCore.SDNodeGraph
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Sharpen")]
     public class SDSharpenNode : SDShaderNode
     {
-
+        [Input(name = "Source")] public Texture inputImage;
         [Range(0.01f, 8)]
         public float strength = 1;
         

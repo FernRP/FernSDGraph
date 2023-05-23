@@ -8,7 +8,7 @@ namespace FernNPRCore.SDNodeGraph
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Invert")]
     public class SDInvertNode : SDShaderNode
     {
-
+        [Input(name = "Source")] public Texture inputImage;
         public bool hue = true;
         public bool saturation = true;
         public bool value = true;

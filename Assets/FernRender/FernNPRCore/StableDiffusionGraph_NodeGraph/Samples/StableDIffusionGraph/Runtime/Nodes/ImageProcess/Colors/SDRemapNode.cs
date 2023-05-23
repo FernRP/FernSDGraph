@@ -21,7 +21,7 @@ namespace FernNPRCore.SDNodeGraph
             Saturation_Curve = 3,
             Hue_Curve = 4,
         }
-        
+        [Input(name = "Source")] public Texture inputImage;
         [Input("Map")] public Texture mapImage;
 
         public SDRemapMode mode = SDRemapMode.Brightness_Gradient;

@@ -8,6 +8,7 @@ namespace FernNPRCore.SDNodeGraph
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Contrast")]
     public class SDContrastNode : SDShaderNode
     {
+        [Input(name = "Source")] public Texture inputImage;
         [Range(-1,1)]
         public float saturation = 0;
         [Range(-1,1)]

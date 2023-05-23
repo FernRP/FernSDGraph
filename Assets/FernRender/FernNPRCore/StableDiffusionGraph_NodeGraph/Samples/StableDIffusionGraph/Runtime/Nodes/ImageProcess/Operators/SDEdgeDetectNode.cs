@@ -14,7 +14,7 @@ namespace FernNPRCore.SDNodeGraph
             Edge = 0, 
             ColorEdge = 1
         }
-        
+        [Input(name = "Source")] public Texture inputImage;
         [Range(0.01f,2)]
         public float step = 0.5f;
         [Range(1,8)]

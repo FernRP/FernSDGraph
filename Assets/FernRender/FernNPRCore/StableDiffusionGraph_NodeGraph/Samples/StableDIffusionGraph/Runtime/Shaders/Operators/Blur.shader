@@ -13,7 +13,7 @@
 
 	HLSLINCLUDE
 	
-	#include "Packages/com.alelievr.mixture/Runtime/Shaders/MixtureFixed.hlsl"
+	#include "../../Shaders/MixtureFixed.hlsl"
 
 	#pragma target 3.0
 	// The list of defines that will be active when processing the node with a certain dimension

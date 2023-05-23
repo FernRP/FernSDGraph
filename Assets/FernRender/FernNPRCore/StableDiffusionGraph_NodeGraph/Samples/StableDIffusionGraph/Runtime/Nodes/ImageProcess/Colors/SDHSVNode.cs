@@ -8,7 +8,7 @@ namespace FernNPRCore.SDNodeGraph
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD HSV")]
     public class SDHSVNode : SDShaderNode
     {
-
+        [Input(name = "Source")] public Texture inputImage;
         [Input(name = "HSV Offset")] public Texture hsvOffsetImage;
         
         [Range(0.0f, 1.0f)]

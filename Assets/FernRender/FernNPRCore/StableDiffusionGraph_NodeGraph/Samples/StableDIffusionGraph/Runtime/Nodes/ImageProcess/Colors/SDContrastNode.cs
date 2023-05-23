@@ -48,6 +48,7 @@ namespace FernNPRCore.SDNodeGraph
             A = 4
         }
         
+        [Input(name = "Source")] public Texture inputImage;
         [Input(name = "Target")] public Texture targetImage;
         [Input(name = "Mask")] public Texture maskImage;
         

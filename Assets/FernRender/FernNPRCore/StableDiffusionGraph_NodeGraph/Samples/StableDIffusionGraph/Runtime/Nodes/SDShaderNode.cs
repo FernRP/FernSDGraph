@@ -7,7 +7,6 @@ namespace FernNPRCore.SDNodeGraph
 {
     public class SDShaderNode : SDNode
     {
-        [Input(name = "Source")] public Texture inputImage;
 
         [Output(name = "Out"), Tooltip("Output Texture")]
         public CustomRenderTexture output = null;
