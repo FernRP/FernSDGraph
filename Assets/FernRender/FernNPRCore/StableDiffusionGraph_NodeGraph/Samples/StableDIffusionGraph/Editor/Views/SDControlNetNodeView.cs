@@ -6,6 +6,7 @@ using UnityEditor.UIElements;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
 using GraphProcessor;
+using Unity.EditorCoroutines.Editor;
 
 namespace FernNPRCore.SDNodeGraph
 {
@@ -50,6 +51,10 @@ namespace FernNPRCore.SDNodeGraph
                 
                 extensionContainer.Add(listContainer);
             }
+            else
+            {
+	            EditorCoroutineUtility.StartCoroutine(node.ControlNetModelListAsync(), this);
+            }
             
             if (node.moudleList != null && node.moudleList.Count > 0)
             {
@@ -71,6 +76,10 @@ namespace FernNPRCore.SDNodeGraph
                 listContainer.Add(popup);
                 
                 extensionContainer.Add(listContainer);
+            }
+            else
+            {
+	            EditorCoroutineUtility.StartCoroutine(node.ControlNetMoudleList(), this);
             }
             
             RefreshExpandedState();

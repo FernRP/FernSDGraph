@@ -27,7 +27,7 @@ namespace FernNPRCore.SDNodeGraph
         public POTSize potSize;
         [FormerlySerializedAs("widthMode")] public OutputSizeMode sizeMode;
         public OutputDimension dimension;
-        public GraphicsFormat graphicsFormat => ConvertToGraphicsFormat(outputChannels, outputPrecision);
+        public GraphicsFormat graphicsFormat => ConvertToGraphicsFormat(outputPrecision);
         public OutputChannel outputChannels;
         public OutputPrecision outputPrecision;
         public EditFlags editFlags;
@@ -49,8 +49,8 @@ namespace FernNPRCore.SDNodeGraph
                 widthScale = 1.0f,
                 heightScale = 1.0f,
                 depthScale = 1.0f,
-                width = 1024,
-                height = 1024,
+                width = 512,
+                height = 512,
                 depth = 1,
                 sizeMode = OutputSizeMode.InheritFromParent,
                 dimension = OutputDimension.InheritFromParent,
@@ -76,7 +76,7 @@ namespace FernNPRCore.SDNodeGraph
             var graph = node.graph;
             
             if(graph == null) return;
-
+            
             // Fixup scale issue that wasn't catch by the migration:
             if (widthScale == 0)
                 widthScale = 1;
@@ -283,27 +283,17 @@ namespace FernNPRCore.SDNodeGraph
             }
         }
 
-        internal static GraphicsFormat ConvertToGraphicsFormat(OutputChannel channels, OutputPrecision precisions)
+        internal static GraphicsFormat ConvertToGraphicsFormat(OutputPrecision precisions)
         {
-            return (channels, precisions) switch
+            return (precisions) switch
             {
                 // RGBA
-                (OutputChannel.RGBA, OutputPrecision.LDR) => GraphicsFormat.R8G8B8A8_UNorm,
-                (OutputChannel.RGBA, OutputPrecision.Half) => GraphicsFormat.R16G16B16A16_SFloat,
-                (OutputChannel.RGBA, OutputPrecision.Full) => GraphicsFormat.R32G32B32A32_SFloat,
-
-                // RG
-                (OutputChannel.RG, OutputPrecision.LDR) => GraphicsFormat.R8G8_UNorm,
-                (OutputChannel.RG, OutputPrecision.Half) => GraphicsFormat.R16G16_SFloat,
-                (OutputChannel.RG, OutputPrecision.Full) => GraphicsFormat.R32G32_SFloat,
-
-                // R
-                (OutputChannel.R, OutputPrecision.LDR) => GraphicsFormat.R8_UNorm,
-                (OutputChannel.R, OutputPrecision.Half) => GraphicsFormat.R16_SFloat,
-                (OutputChannel.R, OutputPrecision.Full) => GraphicsFormat.R32_SFloat,
+                (OutputPrecision.LDR) => GraphicsFormat.R8G8B8A8_UNorm,
+                (OutputPrecision.Half) => GraphicsFormat.R16G16B16A16_SFloat,
+                (OutputPrecision.Full) => GraphicsFormat.R32G32B32A32_SFloat,
 
                 // Conversion not found
-                (var x, var y) => throw new Exception($"Missing GraphicsFormat conversion for {x} {y}"),
+                (var x) => throw new Exception($"Missing GraphicsFormat conversion for {x}"),
             };
         }
 
@@ -316,7 +306,7 @@ namespace FernNPRCore.SDNodeGraph
         public bool CanEdit(EditFlags flag) => (this.editFlags & flag) != 0;
 
         public GraphicsFormat GetGraphicsFormat(StableDiffusionGraph graph)
-            => ConvertToGraphicsFormat(GetResolvedChannels(graph), GetResolvedPrecision(graph));
+            => ConvertToGraphicsFormat(GetResolvedPrecision(graph));
 
         public int GetResolvedWidth(StableDiffusionGraph graph) => resolvedSettings.width;
         public int GetResolvedHeight(StableDiffusionGraph graph) => resolvedSettings.height;

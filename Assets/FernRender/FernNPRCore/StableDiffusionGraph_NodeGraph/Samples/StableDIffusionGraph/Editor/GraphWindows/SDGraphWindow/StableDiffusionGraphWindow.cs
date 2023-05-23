@@ -52,7 +52,7 @@ namespace FernNPRCore.SDNodeGraph
             {
                 graphView = new StableDiffusionGraphView(this);
                 toolBarView = new StableDiffusionToolbarView(graphView);
-                graphView.Add(new MiniMapView(graphView));
+                //graphView.Add(new MiniMapView(graphView));
                 graphView.Add(toolBarView);
             }
 

@@ -43,14 +43,5 @@ namespace FernNPRCore.SDNodeGraph
 					mainContainer.Add(controlsContainer);
 			}
 		}
-
-		protected override void OnFieldChanged(string fieldName, object value)
-		{
-			base.OnFieldChanged(fieldName, value);
-			if (fieldName is nameof(node.width) or nameof(node.height))
-			{
-				node.ResetRTResolution();
-			}
-		}
 	}
 }

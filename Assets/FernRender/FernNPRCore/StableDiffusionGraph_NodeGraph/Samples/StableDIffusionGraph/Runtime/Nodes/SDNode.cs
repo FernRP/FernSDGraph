@@ -37,9 +37,9 @@ namespace FernNPRCore.SDNodeGraph
         }
 
         [HideInInspector]
-        public Texture previewTexture = null;
+        public virtual Texture previewTexture => null;
         [HideInInspector]
-        public bool hasSettings = true;
+        public bool hasSettings = false;
         [HideInInspector]
         public bool hasPreview = false;
 
@@ -205,9 +205,6 @@ namespace FernNPRCore.SDNodeGraph
 			CustomRenderTextureUpdateMode updateMode = CustomRenderTextureUpdateMode.OnDemand, bool depthBuffer = false,
 			GraphicsFormat overrideGraphicsFormat = GraphicsFormat.None, bool hideAsset = true)
 		{
-			if (graph.mainOutputTexture == null)
-				return false;
-
 			bool changed = false;
 			int outputWidth = settings.GetResolvedWidth(graph);
 			int outputHeight = settings.GetResolvedHeight(graph);

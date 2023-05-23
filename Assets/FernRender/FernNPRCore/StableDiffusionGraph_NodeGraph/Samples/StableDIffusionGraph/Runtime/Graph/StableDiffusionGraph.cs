@@ -21,8 +21,8 @@ namespace FernNPRCore.SDNodeGraph
         public SDNodeSetting settings = new SDNodeSetting()
         {
             // Default graph values:
-            width = 1024,
-            height = 1024,
+            width = 512,
+            height = 512,
             depth = 1,
             widthScale = 1,
             heightScale = 1,
@@ -85,8 +85,33 @@ namespace FernNPRCore.SDNodeGraph
 
         protected override void OnEnable()
         {
+            MigrateGraph();
             SanitizeSettings();
             base.OnEnable();
+        }
+
+        void MigrateGraph()
+        {
+            foreach (var node in nodes)
+            {
+                // Migrate node settings
+                if (node is not SDNode n) continue;
+                if (n.settings.outputChannels == 0)
+                    n.settings.outputChannels = OutputChannel.InheritFromGraph;
+                if (n.settings.outputPrecision == 0)
+                    n.settings.outputPrecision = OutputPrecision.InheritFromGraph;
+                if (n.settings.dimension == 0)
+                    n.settings.dimension = OutputDimension.InheritFromGraph;
+                if (n.settings.sizeMode == 0)
+                    n.settings.sizeMode = OutputSizeMode.InheritFromGraph;
+                if (n.settings.widthScale == 0)
+                    n.settings.widthScale = 1;
+                if (n.settings.heightScale == 0)
+                    n.settings.heightScale = 1;
+                if (n.settings.depthScale == 0)
+                    n.settings.depthScale = 1;
+            }
+            settings.refreshMode = RefreshMode.EveryXMillis;
         }
 
         void SanitizeSettings()
@@ -105,7 +130,7 @@ namespace FernNPRCore.SDNodeGraph
             if (settings.sizeMode.Inherits())
                 settings.sizeMode = OutputSizeMode.Absolute;
             if (settings.potSize == 0)
-                settings.SetPOTSize(1024);
+                settings.SetPOTSize(512);
             if (settings.widthScale == 0)
                 settings.widthScale = 1;
             if (settings.heightScale == 0)
