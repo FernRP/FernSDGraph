@@ -25,7 +25,7 @@ namespace FernNPRCore.SDNodeGraph
         public int depth;
 
         public POTSize potSize;
-        [FormerlySerializedAs("widthMode")] public OutputSizeMode sizeMode;
+        public OutputSizeMode sizeMode = OutputSizeMode.InheritFromParent;
         public OutputDimension dimension;
         public GraphicsFormat graphicsFormat => ConvertToGraphicsFormat(outputPrecision);
         public OutputChannel outputChannels;
@@ -87,7 +87,7 @@ namespace FernNPRCore.SDNodeGraph
 
             if (resolvedSettings == this || resolvedSettings == null)
                 resolvedSettings = new SDNodeSetting();
-
+ 
             resolvedSettings.dimension = ResolveTextureDimension(node, graph);
             resolvedSettings.width = Mathf.Clamp(ResolveWidth(node, graph), 1, k_MaxTextureResolution);
             resolvedSettings.height = Mathf.Clamp(ResolveHeight(node, graph), 1, k_MaxTextureResolution);
@@ -108,16 +108,10 @@ namespace FernNPRCore.SDNodeGraph
                 switch (node.settings.sizeMode)
                 {
                     default:
-                    case OutputSizeMode.InheritFromGraph:
-                        return (int)(graph.settings.width * node.settings.widthScale);
                     case OutputSizeMode.InheritFromParent:
                         if (node?.parentSettingsNode == null)
                             return (int)(graph.settings.width * node.settings.widthScale);
                         return (int)(ResolveWidth(node.parentSettingsNode, graph) * node.settings.widthScale);
-                    case OutputSizeMode.InheritFromChild:
-                        if (node?.childSettingsNode == null)
-                            return (int)(graph.settings.width * node.settings.widthScale);
-                        return (int)(ResolveWidth(node.childSettingsNode, graph) * node.settings.widthScale);
                     case OutputSizeMode.Absolute:
                         return node.settings.width;
                 }
@@ -128,16 +122,10 @@ namespace FernNPRCore.SDNodeGraph
                 switch (node.settings.sizeMode)
                 {
                     default:
-                    case OutputSizeMode.InheritFromGraph:
-                        return (int)(graph.settings.height * node.settings.heightScale);
                     case OutputSizeMode.InheritFromParent:
                         if (node?.parentSettingsNode == null)
                             return (int)(graph.settings.height * node.settings.heightScale);
                         return (int)(ResolveHeight(node.parentSettingsNode, graph) * node.settings.heightScale);
-                    case OutputSizeMode.InheritFromChild:
-                        if (node?.childSettingsNode == null)
-                            return (int)(graph.settings.height * node.settings.heightScale);
-                        return (int)(ResolveHeight(node.childSettingsNode, graph) * node.settings.heightScale);
                     case OutputSizeMode.Absolute:
                         return node.settings.height;
                 }
@@ -151,16 +139,10 @@ namespace FernNPRCore.SDNodeGraph
                 switch (node.settings.sizeMode)
                 {
                     default:
-                    case OutputSizeMode.InheritFromGraph:
-                        return (int)(graph.settings.depth * node.settings.depthScale);
                     case OutputSizeMode.InheritFromParent:
                         if (node?.parentSettingsNode == null)
                             return (int)(graph.settings.depth * node.settings.depthScale);
                         return (int)(ResolveDepth(node.parentSettingsNode, graph) * node.settings.depthScale);
-                    case OutputSizeMode.InheritFromChild:
-                        if (node?.childSettingsNode == null)
-                            return (int)(graph.settings.depth * node.settings.depthScale);
-                        return (int)(ResolveDepth(node.childSettingsNode, graph) * node.settings.depthScale);
                     case OutputSizeMode.Absolute:
                         return node.settings.depth;
                 }
@@ -209,13 +191,6 @@ namespace FernNPRCore.SDNodeGraph
                 // if this function is called from the output node and the dimension is default, then we set it to a default value
                 switch (node.settings.dimension)
                 {
-                    case OutputDimension.InheritFromGraph:
-                        return graph.settings.dimension;
-                    case OutputDimension.InheritFromChild:
-                        if (node?.childSettingsNode == null)
-                            return graph.settings.dimension;
-                        // settings.node can be null :/
-                        return ResolveTextureDimension(node.childSettingsNode, graph);
                     case OutputDimension.InheritFromParent:
                         if (node?.parentSettingsNode == null)
                             return graph.settings.dimension;

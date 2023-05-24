@@ -16,6 +16,7 @@ public class SDTxt2ImgNodeView : SDNodeView
 	private DropdownField samplerMethodDropdown;
 	private LongField longLastField;
 	private ProgressBar progressBar;
+	private TextField savePathTxtField;
 
 	public override void Enable()
 	{
@@ -55,7 +56,7 @@ public class SDTxt2ImgNodeView : SDNodeView
 		longLastField = new LongField();
 		longLastField.value = node.outSeed;
 		longLastField.style.flexGrow = 1;
-		longLastField.style.maxWidth = 140;
+		longLastField.style.maxWidth = 160;
 		var containerLastSeed = new VisualElement();
 		containerLastSeed.style.flexDirection = FlexDirection.Row;
 		containerLastSeed.style.alignItems = Align.Center;
@@ -63,6 +64,28 @@ public class SDTxt2ImgNodeView : SDNodeView
 		containerLastSeed.Add(longLastField);
 		extensionContainer.Add(containerLastSeed);
 		
+		// Save Path
+		var savePath = new Label("Auto Save");
+		savePath.style.width = StyleKeyword.Auto;
+		savePath.style.marginRight = 5;
+		savePathTxtField = new TextField();
+		savePathTxtField.value = node.savePath;
+		savePathTxtField.style.flexGrow = 1;
+		savePathTxtField.style.maxWidth = 160;
+		var savePathBtn = new Button(SavePathBtn);
+		savePathBtn.style.backgroundImage = SDTextureHandle.OpenFolderIcon;
+		savePathBtn.style.width = 20;
+		savePathBtn.style.height = 20;				
+		savePathBtn.style.right = 3;
+
+		var containersavePath = new VisualElement();
+		containersavePath.style.flexDirection = FlexDirection.Row;
+		containersavePath.style.alignItems = Align.Center;
+		containersavePath.Add(savePath);
+		containersavePath.Add(savePathTxtField);
+		containersavePath.Add(savePathBtn);
+		extensionContainer.Add(containersavePath);
+
 		progressBar = new ProgressBar();
 		progressBar.highValue = 1;
 		node.onProgressStart = null;
@@ -74,7 +97,22 @@ public class SDTxt2ImgNodeView : SDNodeView
 		
 		RefreshExpandedState();
 	}
-	
+
+	private void SavePathBtn()
+	{
+		string path;
+		if (string.IsNullOrEmpty(node.savePath))
+		{
+			path = EditorUtility.SaveFilePanel("Save texture as PNG", "Assets", $"img_preview.png", "png");
+		}
+		else
+		{
+			path = EditorUtility.SaveFilePanel("Save texture as PNG", node.savePath, $"img_preview.png", "png");
+		}
+		savePathTxtField.value = path;
+		node.savePath = path;
+	}
+
 	private void OnUpdateProgressBar(float progress)
 	{
 		var total = (long)(node.pre_step_count / node.speed);

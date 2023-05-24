@@ -411,17 +411,13 @@ namespace FernNPRCore.SDNodeGraph
 
     public enum OutputSizeMode
     {
-        InheritFromGraph = NodeInheritanceMode.InheritFromGraph,
         InheritFromParent = NodeInheritanceMode.InheritFromParent,
-        InheritFromChild = NodeInheritanceMode.InheritFromChild,
         Absolute = 1,
     }
 
     public enum OutputDimension
     {
-        InheritFromGraph = NodeInheritanceMode.InheritFromGraph,
         InheritFromParent = NodeInheritanceMode.InheritFromParent,
-        InheritFromChild = NodeInheritanceMode.InheritFromChild,
         Texture2D = TextureDimension.Tex2D,
         CubeMap = TextureDimension.Cube,
         Texture3D = TextureDimension.Tex3D,

@@ -101,9 +101,9 @@ namespace FernNPRCore.SDNodeGraph
                 if (n.settings.outputPrecision == 0)
                     n.settings.outputPrecision = OutputPrecision.InheritFromGraph;
                 if (n.settings.dimension == 0)
-                    n.settings.dimension = OutputDimension.InheritFromGraph;
+                    n.settings.dimension = OutputDimension.InheritFromParent;
                 if (n.settings.sizeMode == 0)
-                    n.settings.sizeMode = OutputSizeMode.InheritFromGraph;
+                    n.settings.sizeMode = OutputSizeMode.InheritFromParent;
                 if (n.settings.widthScale == 0)
                     n.settings.widthScale = 1;
                 if (n.settings.heightScale == 0)

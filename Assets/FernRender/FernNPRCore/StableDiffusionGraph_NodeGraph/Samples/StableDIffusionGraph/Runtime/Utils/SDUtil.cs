@@ -48,6 +48,21 @@ namespace FernNPRCore.SDNodeGraph
                 return _saveIcon;
             }
         }
+        
+        private static Texture2D _openFolderIcon;
+
+        public static Texture2D OpenFolderIcon
+        {
+            get
+            {
+                if (_refreshIcon == null)
+                {
+                    _refreshIcon = Resources.Load<Texture2D>("Icons/openfolder");
+                }
+
+                return _refreshIcon;
+            }
+        }
     }
 
     public class SDUtil

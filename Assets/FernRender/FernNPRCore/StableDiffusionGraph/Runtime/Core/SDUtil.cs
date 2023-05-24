@@ -29,6 +29,8 @@ namespace FernNPRCore.StableDiffusionGraph
                 return _refreshIcon;
             }
         }
+        
+        
 
         private static Texture2D _saveIcon;
 

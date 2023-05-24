@@ -30,22 +30,6 @@ MonoBehaviour:
     outputFieldName: executes
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: 1a532444-b15a-42b9-bd26-5539f7416db5
-    owner: {fileID: 11400000}
-    inputNodeGUID: 1c2a65b6-b493-4de7-87e2-521eaa032f5e
-    outputNodeGUID: 35b4dfbb-d9e6-4d41-b0c8-a975be67aec1
-    inputFieldName: negative
-    outputFieldName: Negative
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: 5eedc31c-0af1-42a3-9f46-5da828ca990a
-    owner: {fileID: 11400000}
-    inputNodeGUID: 1c2a65b6-b493-4de7-87e2-521eaa032f5e
-    outputNodeGUID: 41e1d442-826b-4550-b1bc-65262e4c7d97
-    inputFieldName: positive
-    outputFieldName: output
-    inputPortIdentifier: 
-    outputPortIdentifier: 0
   - GUID: 3c8ee985-ae65-4dc0-a815-5c59b6200e0c
     owner: {fileID: 11400000}
     inputNodeGUID: 1c2a65b6-b493-4de7-87e2-521eaa032f5e
@@ -486,6 +470,7 @@ MonoBehaviour:
         cfg: 7
         seed: -1
         isTiling: 0
+        extension: 
         outputImage: {fileID: 0}
         outSeed: 2486157368464927097
         progress: 1
