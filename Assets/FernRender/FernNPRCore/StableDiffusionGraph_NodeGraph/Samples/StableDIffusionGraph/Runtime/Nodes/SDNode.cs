@@ -20,6 +20,7 @@ namespace FernNPRCore.SDNodeGraph
         [NonSerialized] internal SDNode childSettingsNode;
 
         protected virtual SDNodeSetting defaultSettings => SDNodeSetting.defaultValue;
+        private float m_nodeWidth = 0;
         public virtual float nodeWidth
         {
 	        get
@@ -30,9 +31,13 @@ namespace FernNPRCore.SDNodeGraph
 		        }
 		        else
 		        {
+			        if (m_nodeWidth != 0) return m_nodeWidth;
 			        return SDUtil.defaultNodeWidth;
-
 		        }
+	        }
+	        set
+	        {
+		        m_nodeWidth = value;
 	        }
         }
 
