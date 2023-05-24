@@ -21,12 +21,20 @@ namespace FernNPRCore.SDNodeGraph
 	[System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Img2Img")]
 	public class SDImg2ImgNode : LinearSDProcessorNode
 	{
+		public enum ResizeMode
+		{
+			[InspectorName("Just resize")]Just_resize,
+			[InspectorName("Crop and resize")]Crop_and_resize,
+			[InspectorName("Resize and fill")]Resize_and_fill,
+			[InspectorName("Just resize (latent upscale)")]Latent_upscale,
+		}
 		public override string		name => "SD Img2Img"; 
 		
 		[Input("Image")] public Texture InputImage;
 		[Input("Mask")] public Texture MaskImage;
 		[Input("ControlNet")] public ControlNetData controlNetData;
 		[Input("Prompt")] public Prompt prompt;
+		[Input("Resize Mode"), ShowAsDrawer] public ResizeMode resizeMode;
 		[Input("Step"), ShowAsDrawer] public int step = 20;
 		[Input("CFG"), ShowAsDrawer] public int cfg = 7;
 		[Input("Denoising Strength"), ShowAsDrawer] public float denisoStrength = 0.75f;
@@ -232,7 +240,7 @@ namespace FernNPRCore.SDNodeGraph
                     {
                         SDUtil.Log("use ControlNet");
                         SDParamsInImg2ImgControlNet sd = new SDParamsInImg2ImgControlNet();
-
+                        sd.resize_mode = (int)resizeMode;
                         sd.init_images = new string[] { inputImgString };
                         sd.prompt = prompt.positive;
                         sd.negative_prompt = prompt.negative;
@@ -253,6 +261,7 @@ namespace FernNPRCore.SDNodeGraph
                         SDUtil.Log("use Mask");
                         
                         SDParamsInImg2ImgMask sd = new SDParamsInImg2ImgMask();
+                        sd.resize_mode = (int)resizeMode;
                         sd.init_images = new string[] { inputImgString };
                         sd.prompt = prompt.positive;
                         sd.negative_prompt = prompt.negative;
@@ -279,7 +288,7 @@ namespace FernNPRCore.SDNodeGraph
                     {
                         SDUtil.Log("use Only Img2Img");
                         SDParamsInImg2Img sd = new SDParamsInImg2Img();
-
+                        sd.resize_mode = (int)resizeMode;
                         sd.init_images = new string[] { inputImgString };
                         sd.prompt = prompt.positive;
                         sd.negative_prompt = prompt.negative;
