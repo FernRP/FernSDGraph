@@ -132,8 +132,7 @@ namespace FernNPRCore.SDNodeGraph
                         if (models != null)
                         {
                             modelNames.Clear();
-                            foreach (var model_name in modelNames_default)
-                                modelNames.Add(model_name);
+                            modelNames.AddRange(modelNames_default);
                             foreach (SDUpscalerModel model in models) 
                                 modelNames.Add(model.name);
                             action?.Invoke();
