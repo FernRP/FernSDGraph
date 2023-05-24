@@ -8,6 +8,9 @@ using UnityEngine.Serialization;
 
 namespace FernNPRCore.SDNodeGraph
 {
+    /// <summary>
+    /// Extention From: https://github.com/tjm35/asymmetric-tiling-sd-webui/
+    /// </summary>
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Extension Asymmetric Tiling")]
     public class SDExtensionTilingNode : SDNode
     {
@@ -58,10 +61,17 @@ namespace FernNPRCore.SDNodeGraph
             asymmetricTiling.stoptilingAfterStep = stoptilingAfterStep;
             string json = JsonConvert.SerializeObject(asymmetricTiling);
             // just for test
-            // var activeValue = active ? "true" : "false";
-            // var tilingXValue = tilingX ? "true" : "false";
-            // var tilingYValue = tilingY ? "true" : "false";
-            extensionOut = $"{extension}{header}{json}]" + "}";
+            var activeValue = active ? "true" : "false";
+            var tilingXValue = tilingX ? "true" : "false";
+            var tilingYValue = tilingY ? "true" : "false";
+            if (!string.IsNullOrEmpty(extension))
+            {
+                extensionOut = $"{extension},{header}{activeValue},{tilingXValue},{tilingYValue},{startTilingFromStep},{stoptilingAfterStep}]" + "}";
+            }
+            else
+            {
+                extensionOut = $"{header}{activeValue},{tilingXValue},{tilingYValue},{startTilingFromStep},{stoptilingAfterStep}]" + "}";
+            }
         }
     }
 }
