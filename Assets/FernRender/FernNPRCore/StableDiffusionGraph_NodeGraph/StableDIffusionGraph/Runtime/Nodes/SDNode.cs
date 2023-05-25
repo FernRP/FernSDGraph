@@ -197,7 +197,7 @@ namespace FernNPRCore.SDNodeGraph
             return true;
         }
 
-        void UpdateSettings() => UpdateSettings(null);
+        public void UpdateSettings() => UpdateSettings(null);
 
         void UpdateSettings(SerializableEdge edge)
         {

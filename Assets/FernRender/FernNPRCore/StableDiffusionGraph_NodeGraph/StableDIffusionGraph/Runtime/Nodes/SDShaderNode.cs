@@ -83,5 +83,11 @@ namespace FernNPRCore.SDNodeGraph
                 material.hideFlags = HideFlags.HideInHierarchy | HideFlags.HideInInspector;
             }
         }
+
+        protected override void Process()
+        {
+            base.Process();
+            UpdateSettings();
+        }
     }
 }

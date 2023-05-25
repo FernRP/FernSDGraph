@@ -11,7 +11,10 @@ namespace FernNPRCore.SDNodeGraph
 	public class StableDiffusionGraphView : BaseGraphView
 	{
 		public new StableDiffusionGraph	graph => base.graph as StableDiffusionGraph;
-		public StableDiffusionGraphView(EditorWindow window) : base(window) {}
+
+		public StableDiffusionGraphView(EditorWindow window) : base(window)
+		{
+		}
 
 		public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
 		{
