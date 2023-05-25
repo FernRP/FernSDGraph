@@ -236,10 +236,9 @@ namespace FernNPRCore.SDNodeGraph
                             sd.hr_scale = upscaler.hr_scale;
                         }
 
-                        
                         // Serialize the input parameters
                         json = JsonConvert.SerializeObject(sd);
-                        if (extension != null)
+                        if (!string.IsNullOrEmpty(extension))
                         {
                             var scriptsHeader = ",\"alwayson_scripts\":{";
                             var scriptslast = "}";
@@ -281,7 +280,7 @@ namespace FernNPRCore.SDNodeGraph
                         // Serialize the input parameters
                         json = JsonConvert.SerializeObject(sd);
                         
-                        if (extension != null)
+                        if (!string.IsNullOrEmpty(extension))
                         {
                             //var scriptsHeader = ",\"alwayson_scripts\":{";
                             var scriptsContent = $",{extension}";
@@ -312,7 +311,6 @@ namespace FernNPRCore.SDNodeGraph
                 }
                 onProgressFinish?.Invoke();
 
-                // Stream the result from the server
                 var httpResponse = webResponse.Result;
 
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -378,7 +376,6 @@ namespace FernNPRCore.SDNodeGraph
             settings.sizeMode = OutputSizeMode.Absolute;
             settings.width = width;
             settings.height = height;
-            GetPort(nameof(prompt), null).PullData();
             yield return GenerateAsync();
         }
     }

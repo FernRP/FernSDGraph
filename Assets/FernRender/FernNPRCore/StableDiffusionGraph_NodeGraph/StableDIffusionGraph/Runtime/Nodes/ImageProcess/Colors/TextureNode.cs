@@ -13,6 +13,14 @@ namespace FernNPRCore.SDNodeGraph
         public Texture textureAsset;
 
         [Output(name = "Texture")] public Texture outputTexture;
+        public override Texture previewTexture => textureAsset;
+
+        protected override void Enable()
+        {
+            hasPreview = true;
+            hasSettings = true;
+            base.Enable();
+        }
 
         public bool InitializeNodeFromObject(Texture value)
         {

@@ -10,7 +10,10 @@ namespace FernNPRCore.SDNodeGraph
     public class SDEditorUtils
     {
         public static StableDiffusionGraph GetGraphAtPath(string path)
-            => AssetDatabase.LoadAllAssetsAtPath(path).FirstOrDefault(o => o is StableDiffusionGraph) as StableDiffusionGraph;
+        {
+            
+            return AssetDatabase.LoadAllAssetsAtPath(path).FirstOrDefault(o => o is StableDiffusionGraph) as StableDiffusionGraph;
+        }
         
         static Texture2D _pinIcon;
         public static Texture2D pinIcon

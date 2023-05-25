@@ -22,8 +22,6 @@ MonoBehaviour:
   - rid: 7516382989335658503
   - rid: 7516382989335658508
   - rid: 7516382989335658509
-  - rid: 7516382989335658510
-  - rid: 7516382989335658511
   - rid: 7516382989335658514
   - rid: 7516382989335658515
   - rid: 7516382989335658516
@@ -42,14 +40,6 @@ MonoBehaviour:
     outputNodeGUID: ebbb63b1-b430-446e-a0b1-8b5cd0542256
     inputFieldName: extension
     outputFieldName: extensionOut
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: 0d3fe417-5cfd-49b7-8550-d9a68ecc1224
-    owner: {fileID: 11400000}
-    inputNodeGUID: 56a7e393-2505-4be8-9c54-1b2478167a06
-    outputNodeGUID: 2a865fcc-9dde-4b14-a812-3556dbf472c6
-    inputFieldName: prompt
-    outputFieldName: output
     inputPortIdentifier: 
     outputPortIdentifier: 
   - GUID: 2009e9b3-8990-4d88-8442-2189117ac485
@@ -84,30 +74,6 @@ MonoBehaviour:
     outputFieldName: output
     inputPortIdentifier: 
     outputPortIdentifier: 0
-  - GUID: 05880cb5-6ba7-4eb7-827f-4f3932606e8b
-    owner: {fileID: 11400000}
-    inputNodeGUID: 6444c1ca-a0f5-45e4-b34e-804e391362d1
-    outputNodeGUID: 56a7e393-2505-4be8-9c54-1b2478167a06
-    inputFieldName: inputImage
-    outputFieldName: outputImage
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: 9f5e3a21-9211-4b59-ba40-a4cd40cf5fae
-    owner: {fileID: 11400000}
-    inputNodeGUID: 6444c1ca-a0f5-45e4-b34e-804e391362d1
-    outputNodeGUID: 1450506f-6d46-4259-9e5d-0f11720cacb2
-    inputFieldName: targetImage
-    outputFieldName: output
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: 763458e8-30ab-4b42-b66e-9814b07406be
-    owner: {fileID: 11400000}
-    inputNodeGUID: 4ee4cab7-455f-43f0-a9b7-f79fb1fc28a7
-    outputNodeGUID: 30a07e38-eeaf-44fb-8bb4-c90d0c768602
-    inputFieldName: executed
-    outputFieldName: executes
-    inputPortIdentifier: 
-    outputPortIdentifier: 
   - GUID: c31922ed-d1db-433c-81cb-ba9fdbc435e5
     owner: {fileID: 11400000}
     inputNodeGUID: 56a7e393-2505-4be8-9c54-1b2478167a06
@@ -116,7 +82,15 @@ MonoBehaviour:
     outputFieldName: executes
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: 11dd5afb-4766-4fa8-9286-0cf70c6f6ae8
+  - GUID: 18062560-c930-48f2-9e10-ebe18ad8b0f3
+    owner: {fileID: 11400000}
+    inputNodeGUID: 4ee4cab7-455f-43f0-a9b7-f79fb1fc28a7
+    outputNodeGUID: 30a07e38-eeaf-44fb-8bb4-c90d0c768602
+    inputFieldName: executed
+    outputFieldName: executes
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: ee47a58f-9e9b-4e0a-b46d-fd33481e9f62
     owner: {fileID: 11400000}
     inputNodeGUID: 5567e7f5-afd6-42d1-85b0-265a8172f76a
     outputNodeGUID: 642907fa-e6bc-4da1-a39d-cef45f3e0cc9
@@ -124,7 +98,7 @@ MonoBehaviour:
     outputFieldName: colorTarget
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: 3cd92e25-f2dd-48f7-a12a-b6edb5ec50ea
+  - GUID: d54c0ebb-d8af-4b8a-8f28-67f5141115c7
     owner: {fileID: 11400000}
     inputNodeGUID: 4ee4cab7-455f-43f0-a9b7-f79fb1fc28a7
     outputNodeGUID: 5567e7f5-afd6-42d1-85b0-265a8172f76a
@@ -132,12 +106,20 @@ MonoBehaviour:
     outputFieldName: output
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: b4b1b44e-2daa-4408-aca9-7d45df0cd293
+  - GUID: 16f88388-cdaa-4e13-b3aa-e873f3836c59
     owner: {fileID: 11400000}
     inputNodeGUID: 56a7e393-2505-4be8-9c54-1b2478167a06
     outputNodeGUID: 4ee4cab7-455f-43f0-a9b7-f79fb1fc28a7
     inputFieldName: controlNetData
     outputFieldName: controlNet
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 64e6cea6-0f76-4b22-b467-acb316a7e66a
+    owner: {fileID: 11400000}
+    inputNodeGUID: 56a7e393-2505-4be8-9c54-1b2478167a06
+    outputNodeGUID: 2a865fcc-9dde-4b14-a812-3556dbf472c6
+    inputFieldName: prompt
+    outputFieldName: output
     inputPortIdentifier: 
     outputPortIdentifier: 
   groups: []
@@ -148,9 +130,9 @@ MonoBehaviour:
   stickyNotes:
   - position:
       serializedVersion: 2
-      x: 56.666668
-      y: 737.3334
-      width: 200
+      x: 60.056778
+      y: 726.9018
+      width: 200.00002
       height: 100
     title: Prompt
     content: Description
@@ -162,17 +144,9 @@ MonoBehaviour:
       height: 100
     title: Set Model
     content: Description
-  - position:
-      serializedVersion: 2
-      x: -262.25
-      y: 271.7667
-      width: 199.99998
-      height: 100.66669
-    title: Processor
-    content: Description
   nodeInspectorReference: {fileID: 0}
-  position: {x: -418, y: -222, z: 0}
-  scale: {x: 0.7561437, y: 0.7561437, z: 1}
+  position: {x: -90, y: -60.666668, z: 0}
+  scale: {x: 0.43232757, y: 0.43232757, z: 1}
   settings:
     widthScale: 1
     heightScale: 1
@@ -329,10 +303,10 @@ MonoBehaviour:
         computeOrder: 10
         position:
           serializedVersion: 2
-          x: 827.3334
-          y: 473.85492
-          width: 255.99994
-          height: 563.33325
+          x: 835.2683
+          y: 453.33325
+          width: 256.00006
+          height: 563.3334
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -341,11 +315,11 @@ MonoBehaviour:
           widthScale: 1
           heightScale: 1
           depthScale: 1
-          width: 512
-          height: 512
+          width: 480
+          height: 270
           depth: 1
           potSize: 0
-          sizeMode: -2
+          sizeMode: 1
           dimension: -2
           outputChannels: -2
           outputPrecision: -2
@@ -378,23 +352,23 @@ MonoBehaviour:
             girl illust,,a 360 equirectangular panorama,<lora:LatentLabs360:1>
           negative: lowres,longbody,bad anatomy,bad hands,cropped,low quality,worst
             quality
-        width: 1024
-        height: 512
+        width: 480
+        height: 270
         step: 20
         cfg: 7
         seed: -1
         isTiling: 0
         extension: '"Asymmetric Tiling":{"args":[true,true,false,0,-1]}'
         outputImage: {fileID: 0}
-        outSeed: 2891766288534342983
+        outSeed: 2707420577418629307
         progress: 1
         pre_step: 0
         pre_step_count: 20
         pre_job_no: -1
         job_no_count: 0
-        speed: 2.6811068
+        speed: 6.973272
         samplerMethod: Euler
-        savePath: D:/ForkProject/FernNPR/FernNPR/Assets/FernRender/FernNPRCore/StableDiffusionGraph_NodeGraph/Samples/StableDIffusionGraph/Res/Texture/img_skybox.png
+        savePath: 
     - rid: 7516382989335658499
       type: {class: SDExtensionTilingNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
       data:
@@ -409,7 +383,7 @@ MonoBehaviour:
           height: 178.66669
         expanded: 0
         debug: 0
-        nodeLock: 1
+        nodeLock: 0
         isUpdate: 0
         settings:
           widthScale: 1
@@ -439,7 +413,7 @@ MonoBehaviour:
         previewVisible: 1
         previewEV100: 0
         previewSlice: 0
-        isPinned: 1
+        isPinned: 0
         extension: 
         extensionOut: '"Asymmetric Tiling":{"args":[true,true,false,0,-1]}'
         active: 1
@@ -455,10 +429,10 @@ MonoBehaviour:
         computeOrder: 6
         position:
           serializedVersion: 2
-          x: 65.978325
-          y: 560.14087
+          x: 65.33324
+          y: 523.33325
           width: 200
-          height: 106.66669
+          height: 106.666626
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -509,10 +483,10 @@ MonoBehaviour:
         computeOrder: 5
         position:
           serializedVersion: 2
-          x: -315.9784
-          y: 560
+          x: -490.988
+          y: 523.79553
           width: 200
-          height: 153.33337
+          height: 153.33331
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -603,10 +577,10 @@ MonoBehaviour:
         computeOrder: 3
         position:
           serializedVersion: 2
-          x: -1086.6667
-          y: 560
-          width: 632.6666
-          height: 486.6667
+          x: -1314.6666
+          y: 523.3334
+          width: 632.6667
+          height: 487.99994
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -739,8 +713,8 @@ MonoBehaviour:
         computeOrder: 4
         position:
           serializedVersion: 2
-          x: -296.182
-          y: 964.0001
+          x: -431.65466
+          y: 938.46216
           width: 200
           height: 200
         expanded: 0
@@ -750,118 +724,6 @@ MonoBehaviour:
         unpackOutput: 0
         packInput: 0
         inputEdgeCount: 1
-    - rid: 7516382989335658510
-      type: {class: SDGradienMattetNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
-      data:
-        nodeCustomName: 
-        GUID: 1450506f-6d46-4259-9e5d-0f11720cacb2
-        computeOrder: 11
-        position:
-          serializedVersion: 2
-          x: 1123.9132
-          y: 702.02167
-          width: 256
-          height: 507.3333
-        expanded: 0
-        debug: 0
-        nodeLock: 0
-        isUpdate: 0
-        settings:
-          widthScale: 1
-          heightScale: 1
-          depthScale: 1
-          width: 512
-          height: 512
-          depth: 1
-          potSize: 0
-          sizeMode: -2
-          dimension: -2
-          outputChannels: -2
-          outputPrecision: -2
-          editFlags: -257
-          doubleBuffered: 0
-          wrapMode: -2
-          filterMode: -2
-          refreshMode: 0
-          period: 0
-        hasSettings: 1
-        hasPreview: 1
-        isCanSaveTexture: 0
-        isPreviewCollapsed: 0
-        previewMode: 7
-        previewSRGB: 0
-        previewMip: 0
-        previewVisible: 1
-        previewEV100: 0
-        previewSlice: 0
-        isPinned: 0
-        output: {fileID: 0}
-        shader: {fileID: 4800000, guid: 46c02ba1b0b63954bab0afcd9e828ac6, type: 3}
-        material: {fileID: 0}
-        shaderGUID: 46c02ba1b0b63954bab0afcd9e828ac6
-        gradientMode: 5
-        directionMode: 0
-        spiralTurnCount: 3.6
-        spiralBranchCount: -5
-        color1: {r: 4.6490135, g: 4.6490135, b: 4.6490135, a: 1}
-        color2: {r: 0.42976663, g: 1.1486983, b: 0, a: 1}
-        falloff: 1
-    - rid: 7516382989335658511
-      type: {class: SDBlendNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
-      data:
-        nodeCustomName: 
-        GUID: 6444c1ca-a0f5-45e4-b34e-804e391362d1
-        computeOrder: 12
-        position:
-          serializedVersion: 2
-          x: 1417.3441
-          y: 494.06497
-          width: 256
-          height: 386
-        expanded: 0
-        debug: 0
-        nodeLock: 0
-        isUpdate: 0
-        settings:
-          widthScale: 1
-          heightScale: 1
-          depthScale: 1
-          width: 1024
-          height: 512
-          depth: 1
-          potSize: 0
-          sizeMode: 1
-          dimension: -2
-          outputChannels: -2
-          outputPrecision: -2
-          editFlags: -257
-          doubleBuffered: 0
-          wrapMode: -2
-          filterMode: -2
-          refreshMode: 0
-          period: 0
-        hasSettings: 1
-        hasPreview: 1
-        isCanSaveTexture: 0
-        isPreviewCollapsed: 0
-        previewMode: 15
-        previewSRGB: 0
-        previewMip: 0
-        previewVisible: 1
-        previewEV100: 0
-        previewSlice: 0
-        isPinned: 0
-        output: {fileID: 0}
-        shader: {fileID: 4800000, guid: 5d69ff00d9a32944ea012824393d489a, type: 3}
-        material: {fileID: 0}
-        shaderGUID: 5d69ff00d9a32944ea012824393d489a
-        inputImage: {fileID: 0}
-        targetImage: {fileID: 0}
-        maskImage: {fileID: 0}
-        blendMode: 0
-        opacity: 0
-        maskMode: 0
-        clamp: 1
     - rid: 7516382989335658514
       type: {class: SDControlNetNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
       data:
@@ -870,8 +732,8 @@ MonoBehaviour:
         computeOrder: 9
         position:
           serializedVersion: 2
-          x: 285.95673
-          y: -98.96995
+          x: 265.78336
+          y: -46.43336
           width: 256.00003
           height: 416
         expanded: 0
@@ -987,23 +849,23 @@ MonoBehaviour:
         computeOrder: 7
         position:
           serializedVersion: 2
-          x: -633.33356
-          y: -70.00003
-          width: 256
-          height: 347.3333
+          x: -681.4633
+          y: -20.000002
+          width: 255.99997
+          height: 363.3333
         expanded: 0
         debug: 0
         nodeLock: 0
         isUpdate: 1
         settings:
-          widthScale: 2
+          widthScale: 1
           heightScale: 1
           depthScale: 1
-          width: 512
-          height: 512
+          width: 960
+          height: 540
           depth: 1
           potSize: 0
-          sizeMode: -2
+          sizeMode: 1
           dimension: -2
           outputChannels: -2
           outputPrecision: -2
@@ -1041,10 +903,10 @@ MonoBehaviour:
         computeOrder: 8
         position:
           serializedVersion: 2
-          x: -278.00003
-          y: -69.71338
-          width: 255.99998
-          height: 448.6667
+          x: -322.61252
+          y: -20.000002
+          width: 256
+          height: 336.66666
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -1083,6 +945,6 @@ MonoBehaviour:
         material: {fileID: 0}
         shaderGUID: 62c4e7a707db68a4dbd8256c8edbb232
         inputImage: {fileID: 0}
-        step: 1.1
-        pow: 3.06
+        step: 0.78
+        pow: 2.61
         mode: 0

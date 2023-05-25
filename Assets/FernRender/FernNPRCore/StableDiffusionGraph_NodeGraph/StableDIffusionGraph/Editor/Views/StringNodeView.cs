@@ -32,14 +32,14 @@ namespace FernNPRCore.SDNodeGraph
             togglePreviewButton.AddToClassList("PreviewToggleButton");
             controlsContainer.Add(togglePreviewButton);
 
-            textArea = new TextField(-1, true, false, '*') { value = node.output };
+            textArea = new TextField(-1, true, false, '*') { value = node.textFiledValue };
             textArea.Children().First().style.unityTextAlign = TextAnchor.UpperLeft;
             textArea.style.whiteSpace = WhiteSpace.Normal;
             textArea.style.height = float.NaN;
             textArea.RegisterValueChangedCallback(v =>
             {
                 owner.RegisterCompleteObjectUndo("Edit string node");
-                node.output = v.newValue;
+                node.textFiledValue = v.newValue;
             });
             controlsContainer.Add(textArea);
         }

@@ -110,7 +110,6 @@ namespace FernNPRCore.SDNodeGraph
 		protected override IEnumerator Execute()
 		{
 			Init();
-			GetPort(nameof(InputImage), null).PullData();
 			yield return GenerateAsync();
 		}
 		
