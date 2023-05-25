@@ -10,10 +10,8 @@ namespace FernNPRCore.SDNodeGraph
     [System.Serializable, NodeMenuItem("Custom/TextureNode")]
     public class TextureNode : SDNode, ICreateNodeFrom<Texture>
     {
-        public Texture textureAsset;
-
         [Output(name = "Texture")] public Texture outputTexture;
-        public override Texture previewTexture => textureAsset;
+        public override Texture previewTexture => outputTexture;
 
         protected override void Enable()
         {
@@ -24,7 +22,7 @@ namespace FernNPRCore.SDNodeGraph
 
         public bool InitializeNodeFromObject(Texture value)
         {
-            textureAsset = value;
+            outputTexture = value;
             return true;
         }
     }

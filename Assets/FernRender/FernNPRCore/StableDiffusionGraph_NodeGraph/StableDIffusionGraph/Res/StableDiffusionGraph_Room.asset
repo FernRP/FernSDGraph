@@ -480,6 +480,7 @@ MonoBehaviour:
         job_no_count: 0
         speed: 1.1854479
         samplerMethod: Euler
+        savePath: 
     - rid: 7516382967068885004
       type: {class: StringNode, ns: , asm: Assembly-CSharp}
       data:
@@ -525,6 +526,7 @@ MonoBehaviour:
         previewEV100: 0
         previewSlice: 0
         isPinned: 0
+        inputString: 
         output: a 360 equirectangular panorama , modelshoot style, (extremely detailed
           CG unity 8k wallpaper), cosmic waves in galaxy , starry night, trending
           on artstation, pixiv, hyperdetailed Unreal Engine 4k 8k ultra HD, Stanley
@@ -534,6 +536,7 @@ MonoBehaviour:
           Antonio Moro, trending on ArtStation, trending on CGSociety, Intricate,
           High Detail, Sharp focus, dramatic, photorealistic painting art by greg
           rutkowski
+        textFiledValue: 
         isShowString: 1
     - rid: 7516382967068885005
       type: {class: StringNode, ns: , asm: Assembly-CSharp}
@@ -580,5 +583,7 @@ MonoBehaviour:
         previewEV100: 0
         previewSlice: 0
         isPinned: 0
+        inputString: 
         output: ' '
+        textFiledValue: 
         isShowString: 1

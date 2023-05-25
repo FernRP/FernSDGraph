@@ -49,6 +49,9 @@ namespace FernNPRCore.SDNodeGraph
             }
         }
         
+        static Texture2D _assetLogo;
+        public static Texture2D AssetLogo => _assetLogo == null ? _assetLogo = Resources.Load<Texture2D>("assetLogo") : _assetLogo;
+
         private static Texture2D _openFolderIcon;
 
         public static Texture2D OpenFolderIcon

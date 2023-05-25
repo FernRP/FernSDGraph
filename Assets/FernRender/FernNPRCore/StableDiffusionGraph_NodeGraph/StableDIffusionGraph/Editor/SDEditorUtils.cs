@@ -11,21 +11,24 @@ namespace FernNPRCore.SDNodeGraph
     {
         public static StableDiffusionGraph GetGraphAtPath(string path)
         {
-            
-            return AssetDatabase.LoadAllAssetsAtPath(path).FirstOrDefault(o => o is StableDiffusionGraph) as StableDiffusionGraph;
+            return AssetDatabase.LoadAllAssetsAtPath(path).FirstOrDefault(o => o is StableDiffusionGraph) as
+                StableDiffusionGraph;
         }
-        
+
         static Texture2D _pinIcon;
+
         public static Texture2D pinIcon
         {
             get => _pinIcon == null ? _pinIcon = LoadIcon("Icons/Pin") : _pinIcon;
         }
+
         static Texture2D _unpinIcon;
+
         public static Texture2D unpinIcon
         {
             get => _unpinIcon == null ? _unpinIcon = LoadIcon("Icons/Unpin") : _unpinIcon;
         }
-        
+
         static Texture2D LoadIcon(string resourceName)
         {
             if (UnityEditorInternal.InternalEditorUtility.HasPro())
@@ -38,7 +41,7 @@ namespace FernNPRCore.SDNodeGraph
 
             return Resources.Load<Texture2D>(resourceName);
         }
-        
+
         public static Vector4 GetChannelsMask(PreviewChannels channels)
         {
             return new Vector4(
@@ -50,4 +53,3 @@ namespace FernNPRCore.SDNodeGraph
         }
     }
 }
-

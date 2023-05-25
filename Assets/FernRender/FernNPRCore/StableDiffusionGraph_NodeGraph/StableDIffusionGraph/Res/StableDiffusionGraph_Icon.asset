@@ -25,8 +25,7 @@ MonoBehaviour:
   - rid: 7516383004303294491
   - rid: 7516383008435470340
   - rid: 7516383008435470341
-  - rid: 7516383008435470345
-  - rid: 7516383008435470346
+  - rid: 7516383008435470382
   edges:
   - GUID: f571012d-49de-48c4-925b-9df42614685a
     owner: {fileID: 11400000}
@@ -66,14 +65,6 @@ MonoBehaviour:
     outputNodeGUID: 8cfddd2b-1e49-44f7-bff2-0079b2991085
     inputFieldName: controlNetData
     outputFieldName: controlNet
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: 54354f88-196c-45bc-8fc9-a08c0786b780
-    owner: {fileID: 11400000}
-    inputNodeGUID: 2ef00803-c95f-4fe7-8cd6-0e6d27b93ff0
-    outputNodeGUID: 8cfddd2b-1e49-44f7-bff2-0079b2991085
-    inputFieldName: executed
-    outputFieldName: executes
     inputPortIdentifier: 
     outputPortIdentifier: 
   - GUID: 3edf45c6-5f72-4f15-96cb-248652af71bb
@@ -124,28 +115,12 @@ MonoBehaviour:
     outputFieldName: colorTarget
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: 38c0c52d-93c0-4936-801c-24a9f3518a7f
+  - GUID: ad87a270-992b-47eb-a4fc-e50dd0c261f1
     owner: {fileID: 11400000}
-    inputNodeGUID: b4813137-06f0-4d2e-8472-94001fc28c9a
-    outputNodeGUID: 2ef00803-c95f-4fe7-8cd6-0e6d27b93ff0
-    inputFieldName: executed
-    outputFieldName: executes
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: 1b640a99-1e1a-473d-bfb0-2d5d7b784e5d
-    owner: {fileID: 11400000}
-    inputNodeGUID: 60329f12-f23a-4ae7-a530-6c078d1ab44c
-    outputNodeGUID: 2ef00803-c95f-4fe7-8cd6-0e6d27b93ff0
+    inputNodeGUID: 5f87aaaf-e17c-46ec-b5ea-d3480ed39b2a
+    outputNodeGUID: 6d7fe1a5-8b5b-499e-9e88-1185fcda5bf5
     inputFieldName: inputImage
-    outputFieldName: outputImage
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: 940ad9ad-d7e3-4f2e-a6b2-c7aa347404fd
-    owner: {fileID: 11400000}
-    inputNodeGUID: cbbceebe-577c-4749-ad4f-7cdf1baac8f7
-    outputNodeGUID: 60329f12-f23a-4ae7-a530-6c078d1ab44c
-    inputFieldName: inputImage
-    outputFieldName: output
+    outputFieldName: colorTarget
     inputPortIdentifier: 
     outputPortIdentifier: 
   groups: []
@@ -155,7 +130,7 @@ MonoBehaviour:
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: -634, y: -400, z: 0}
+  position: {x: 419.33334, y: -244, z: 0}
   scale: {x: 0.65751624, y: 0.65751624, z: 1}
   settings:
     widthScale: 1
@@ -313,10 +288,10 @@ MonoBehaviour:
         computeOrder: 10
         position:
           serializedVersion: 2
-          x: 775.0725
-          y: 642.34784
-          width: 255.99994
-          height: 691.3333
+          x: 1114.5857
+          y: 790.99994
+          width: 256
+          height: 691.3334
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -358,25 +333,25 @@ MonoBehaviour:
           hr_resize_x: 0
           hr_resize_y: 0
         prompt:
-          positive: masterpiece,best quality,(photoreal:0.40)colorful text, fern,
-            logo,logo,<lora:logo_v1-000012:1>
+          positive: '[blue masterpiece:0.87],best quality,(photoreal:1.31),lace,text
+            with shadow, fern, logo,logo,<lora:logo_v1-000012:1>'
           negative: lowres,low quality,worst quality,ugly,poorly drawn hands,out
             of focus,nsfw,bad anatomynsfw, girl, man, women
         width: 512
         height: 512
         step: 20
         cfg: 7
-        seed: -1
+        seed: 1059688245187264487
         isTiling: 0
         extension: 
         outputImage: {fileID: 0}
-        outSeed: 3631189243835407105
+        outSeed: 1059688245187264487
         progress: 1
         pre_step: 0
         pre_step_count: 20
         pre_job_no: -1
         job_no_count: 0
-        speed: 6.427458
+        speed: 5.9229426
         samplerMethod: Euler
         savePath: 
     - rid: 7516383004303294481
@@ -483,8 +458,8 @@ MonoBehaviour:
         material: {fileID: 0}
         shaderGUID: 62c4e7a707db68a4dbd8256c8edbb232
         inputImage: {fileID: 0}
-        step: 0.59
-        pow: 2.22
+        step: 1.95
+        pow: 2.3
         mode: 0
     - rid: 7516383004303294484
       type: {class: SDPromptRegisterNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
@@ -540,15 +515,25 @@ MonoBehaviour:
           - word: "\u6770\u4F5C"
             weight: 0
             end: 0
-            process: 0
-            color: 0
+            process: 0.87
+            color: 32
           - word: "\u6700\u9AD8\u8D28\u91CF"
             weight: 0
             end: 0
             process: 0
             color: 0
           - word: "\u6444\u5F71"
-            weight: -0.6
+            weight: 0.31
+            end: 0
+            process: 0
+            color: 0
+          - word: "\u82B1\u8FB9"
+            weight: 0
+            end: 0
+            process: 0
+            color: 0
+          - word: "\u79D1\u6280"
+            weight: 0
             end: 0
             process: 0
             color: 0
@@ -594,10 +579,10 @@ MonoBehaviour:
             process: 0
             color: 0
         Prompt:
-          positive: masterpiece,best quality,(photoreal:0.40)
+          positive: '[blue masterpiece:0.87],best quality,(photoreal:1.31),lace,'
           negative: lowres,low quality,worst quality,ugly,poorly drawn hands,out
             of focus,nsfw,bad anatomy
-        Positive: masterpiece,best quality,(photoreal:0.40)
+        Positive: '[blue masterpiece:0.87],best quality,(photoreal:1.31),lace,'
         Negative: lowres,low quality,worst quality,ugly,poorly drawn hands,out of
           focus,nsfw,bad anatomy
     - rid: 7516383004303294485
@@ -645,12 +630,13 @@ MonoBehaviour:
         previewEV100: 0
         previewSlice: 0
         isPinned: 0
-        positive: masterpiece,best quality,(photoreal:0.40)colorful text, fern, logo,logo,<lora:logo_v1-000012:1>
+        positive: '[blue masterpiece:0.87],best quality,(photoreal:1.31),lace,text
+          with shadow, fern, logo,logo,<lora:logo_v1-000012:1>'
         negative: lowres,low quality,worst quality,ugly,poorly drawn hands,out of
           focus,nsfw,bad anatomynsfw, girl, man, women
         output:
-          positive: masterpiece,best quality,(photoreal:0.40)colorful text, fern,
-            logo,logo,<lora:logo_v1-000012:1>
+          positive: '[blue masterpiece:0.87],best quality,(photoreal:1.31),lace,text
+            with shadow, fern, logo,logo,<lora:logo_v1-000012:1>'
           negative: lowres,low quality,worst quality,ugly,poorly drawn hands,out
             of focus,nsfw,bad anatomynsfw, girl, man, women
     - rid: 7516383004303294490
@@ -699,7 +685,7 @@ MonoBehaviour:
         previewSlice: 0
         isPinned: 0
         controlNetImg: {fileID: 0}
-        weight: 1.2
+        weight: 1.4
         resize_mode: 1
         lowvram: 0
         processor_res: 64
@@ -815,10 +801,11 @@ MonoBehaviour:
         previewEV100: 0
         previewSlice: 0
         isPinned: 0
-        prompt: masterpiece,best quality,(photoreal:0.40)colorful text, fern, logo
+        prompt: '[blue masterpiece:0.87],best quality,(photoreal:1.31),lace,text
+          with shadow, fern, logo'
         strength: 1
-        outLoraString: masterpiece,best quality,(photoreal:0.40)colorful text, fern,
-          logo,logo,<lora:logo_v1-000012:1>
+        outLoraString: '[blue masterpiece:0.87],best quality,(photoreal:1.31),lace,text
+          with shadow, fern, logo,logo,<lora:logo_v1-000012:1>'
         loraPrompt: logo,
         lora: logo_v1-000012
         loraDir: 
@@ -960,22 +947,23 @@ MonoBehaviour:
         previewEV100: 0
         previewSlice: 0
         isPinned: 0
-        inputString: masterpiece,best quality,(photoreal:0.40)
-        output: masterpiece,best quality,(photoreal:0.40)colorful text, fern, logo
-        textFiledValue: colorful text, fern, logo
+        inputString: '[blue masterpiece:0.87],best quality,(photoreal:1.31),lace,'
+        output: '[blue masterpiece:0.87],best quality,(photoreal:1.31),lace,text
+          with shadow, fern, logo'
+        textFiledValue: text with shadow, fern, logo
         isShowString: 1
-    - rid: 7516383008435470345
-      type: {class: SDNormalFromHeightNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+    - rid: 7516383008435470382
+      type: {class: SDSplitNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
       data:
         nodeCustomName: 
-        GUID: 60329f12-f23a-4ae7-a530-6c078d1ab44c
+        GUID: 5f87aaaf-e17c-46ec-b5ea-d3480ed39b2a
         computeOrder: 11
         position:
           serializedVersion: 2
-          x: 1234.9504
-          y: 962.71387
-          width: 100
-          height: 100
+          x: 1090.2411
+          y: 395.83167
+          width: 200
+          height: 154.66666
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -999,7 +987,7 @@ MonoBehaviour:
           refreshMode: 0
           period: 0
         hasSettings: 1
-        hasPreview: 1
+        hasPreview: 0
         isCanSaveTexture: 0
         isPreviewCollapsed: 0
         previewMode: 15
@@ -1009,61 +997,8 @@ MonoBehaviour:
         previewEV100: 0
         previewSlice: 0
         isPinned: 0
-        output: {fileID: 0}
-        shader: {fileID: -6465566751694194690, guid: 7cad23c262a495a4ba607510a558c0a6,
-          type: 3}
-        material: {fileID: 0}
-        shaderGUID: 7cad23c262a495a4ba607510a558c0a6
         inputImage: {fileID: 0}
-        strength: 73
-    - rid: 7516383008435470346
-      type: {class: SDBlurNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
-      data:
-        nodeCustomName: 
-        GUID: cbbceebe-577c-4749-ad4f-7cdf1baac8f7
-        computeOrder: 12
-        position:
-          serializedVersion: 2
-          x: 1565.3333
-          y: 962.6667
-          width: 256
-          height: 404.66663
-        expanded: 0
-        debug: 0
-        nodeLock: 0
-        isUpdate: 0
-        settings:
-          widthScale: 1
-          heightScale: 1
-          depthScale: 1
-          width: 512
-          height: 512
-          depth: 1
-          potSize: 0
-          sizeMode: -2
-          dimension: -2
-          outputChannels: -2
-          outputPrecision: -2
-          editFlags: -257
-          doubleBuffered: 0
-          wrapMode: -2
-          filterMode: -2
-          refreshMode: 0
-          period: 0
-        hasSettings: 1
-        hasPreview: 1
-        isCanSaveTexture: 0
-        isPreviewCollapsed: 0
-        previewMode: 15
-        previewSRGB: 0
-        previewMip: 0
-        previewVisible: 1
-        previewEV100: 0
-        previewSlice: 0
-        isPinned: 0
-        output: {fileID: 0}
-        shader: {fileID: 4800000, guid: c1f8bac2a6637264ea45079cfa2c04e8, type: 3}
-        material: {fileID: 0}
-        shaderGUID: c1f8bac2a6637264ea45079cfa2c04e8
-        inputImage: {fileID: 0}
-        radius: 1
+        outputR: {fileID: 0}
+        outputG: {fileID: 0}
+        outputB: {fileID: 0}
+        outputA: {fileID: 0}

@@ -117,7 +117,7 @@ namespace FernNPRCore.SDNodeGraph
         {
             if(!IsValidate()) return;
             
-            UpdateTempRenderTexture(ref colorTarget);
+            UpdateTempRenderTexture(ref colorTarget,false, false, CustomRenderTextureUpdateMode.OnDemand, true);
             UpdateTempRenderTexture(ref normalTarget);
             UpdateTempRenderTexture(ref depthTarget, false, false, CustomRenderTextureUpdateMode.OnDemand, true);
             UpdateTempRenderTexture(ref inpaintTarget);
