@@ -45,6 +45,7 @@ namespace FernNPRCore.SDNodeGraph
 
 		protected override void Enable()
 		{
+			nodeWidth = 256;
 			base.Enable();
 			hasPreview = false;
 			controlNet = new ControlNetData();

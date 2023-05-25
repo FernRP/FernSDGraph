@@ -65,11 +65,13 @@ namespace FernNPRCore.SDNodeGraph
         protected override void Process()
         {
             base.Process();
-            if(inputImage == null) return;
             BeforeProcessSetup();
-            SDUtil.SetTextureWithDimension(material, "_Source", inputImage);
-            SDUtil.SetTextureWithDimension(material, "_Target", targetImage);
-            SDUtil.SetTextureWithDimension(material, "_Mask", targetImage);
+            if(inputImage != null) 
+                SDUtil.SetTextureWithDimension(material, "_Source", inputImage);
+            if(targetImage != null)
+                SDUtil.SetTextureWithDimension(material, "_Target", targetImage);
+            if(maskImage != null)
+                SDUtil.SetTextureWithDimension(material, "_Mask", maskImage);
             material.SetFloat("_BlendMode", (float)blendMode);
             material.SetFloat("_MaskMode", (float)maskMode);
             material.SetFloat("_Opacity", opacity);

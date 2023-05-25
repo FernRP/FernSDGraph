@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using FernNPRCore.StableDiffusionGraph;
 using Newtonsoft.Json;
 using NodeGraphProcessor.Examples;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine.Events;
 using UnityEngine.Experimental.Rendering;
@@ -32,6 +33,7 @@ namespace FernNPRCore.SDNodeGraph
         [Input(name = "CFG"), ShowAsDrawer] public int cfg = 7;
         [Input(name = "Seed"), ShowAsDrawer] public long seed = -1;
         [Input(name = "Tiling"), ShowAsDrawer] public bool isTiling = false;
+        [Input(name = "Extension")] public string extension = null;
 
         [Output("Image")] public Texture2D outputImage;
         [Output("Seed")] public long outSeed;
@@ -44,6 +46,7 @@ namespace FernNPRCore.SDNodeGraph
         [HideInInspector] public int job_no_count;
         [HideInInspector] public float speed; // it/s
         [HideInInspector] public string samplerMethod = "Euler";
+        [HideInInspector] public string savePath = null;
 
         public override string name => "SD Txt2Img";
 
@@ -232,8 +235,17 @@ namespace FernNPRCore.SDNodeGraph
                             sd.denoising_strength = upscaler.denoising_strength;
                             sd.hr_scale = upscaler.hr_scale;
                         }
+
+                        
                         // Serialize the input parameters
                         json = JsonConvert.SerializeObject(sd);
+                        if (extension != null)
+                        {
+                            var scriptsHeader = ",\"alwayson_scripts\":{";
+                            var scriptslast = "}";
+                            var scriptsContent = $"{scriptsHeader}{extension}{scriptslast}";
+                            json = json.Insert(json.Length - 1, scriptsContent);
+                        }
                     }
                     else
                     {
@@ -268,7 +280,15 @@ namespace FernNPRCore.SDNodeGraph
 
                         // Serialize the input parameters
                         json = JsonConvert.SerializeObject(sd);
+                        
+                        if (extension != null)
+                        {
+                            //var scriptsHeader = ",\"alwayson_scripts\":{";
+                            var scriptsContent = $",{extension}";
+                            json = json.Insert(json.Length - 2, scriptsContent);
+                        }
                     }
+                    SDUtil.Log($"Txt2Img Json Data: {json}");
 
                     // Send to the server
                     streamWriter.Write(json);
@@ -324,12 +344,21 @@ namespace FernNPRCore.SDNodeGraph
 
                             // Read the seed that was used by Stable Diffusion to generate this result
                             outSeed = info.seed;
-                            if (!Directory.Exists(SDGraphResource.SdGraphDataHandle.SavePath))
-                                Directory.CreateDirectory(SDGraphResource.SdGraphDataHandle.SavePath);
-                            File.WriteAllBytes(
-                                $"{SDGraphResource.SdGraphDataHandle.SavePath}/img_{DateTime.Now.ToString("yyyyMMddHHmmss")}_{outSeed}.png",
-                                imageData);
+                            string tempSavePath = null;
+                            if (!string.IsNullOrEmpty(savePath) && Directory.Exists(SDGraphResource.SdGraphDataHandle.SavePath))
+                            {
+                                tempSavePath = savePath;
+                            }
+                            else
+                            {
+                                if (!Directory.Exists(SDGraphResource.SdGraphDataHandle.SavePath))
+                                    Directory.CreateDirectory(SDGraphResource.SdGraphDataHandle.SavePath);
+                                tempSavePath =
+                                    $"{SDGraphResource.SdGraphDataHandle.SavePath}/img_{DateTime.Now.ToString("yyyyMMddHHmmss")}_{outSeed}.png";
+                            }
+                            File.WriteAllBytes(tempSavePath,imageData);
                             OnUpdateSeedField?.Invoke(this.seed, outSeed);
+                            AssetDatabase.Refresh();
                             SDUtil.Log("Txt 2 Img");
                             InvokeOnExecuteFinsih();
                         }

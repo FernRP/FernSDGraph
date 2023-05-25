@@ -20,6 +20,7 @@ namespace FernNPRCore.SDNodeGraph
         [NonSerialized] internal SDNode childSettingsNode;
 
         protected virtual SDNodeSetting defaultSettings => SDNodeSetting.defaultValue;
+        private float m_nodeWidth = 0;
         public virtual float nodeWidth
         {
 	        get
@@ -30,9 +31,13 @@ namespace FernNPRCore.SDNodeGraph
 		        }
 		        else
 		        {
+			        if (m_nodeWidth != 0) return m_nodeWidth;
 			        return SDUtil.defaultNodeWidth;
-
 		        }
+	        }
+	        set
+	        {
+		        m_nodeWidth = value;
 	        }
         }
 
@@ -406,17 +411,13 @@ namespace FernNPRCore.SDNodeGraph
 
     public enum OutputSizeMode
     {
-        InheritFromGraph = NodeInheritanceMode.InheritFromGraph,
         InheritFromParent = NodeInheritanceMode.InheritFromParent,
-        InheritFromChild = NodeInheritanceMode.InheritFromChild,
         Absolute = 1,
     }
 
     public enum OutputDimension
     {
-        InheritFromGraph = NodeInheritanceMode.InheritFromGraph,
         InheritFromParent = NodeInheritanceMode.InheritFromParent,
-        InheritFromChild = NodeInheritanceMode.InheritFromChild,
         Texture2D = TextureDimension.Tex2D,
         CubeMap = TextureDimension.Cube,
         Texture3D = TextureDimension.Tex3D,
