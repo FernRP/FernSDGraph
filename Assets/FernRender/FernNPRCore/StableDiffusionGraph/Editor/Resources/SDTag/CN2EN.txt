@@ -773,12 +773,29 @@ T恤	t-shirt
 流汗	sweat
 
 低分辨率	lowres
-长结构	longbody
-错误结构	bad anatomy
-错误手部	bad hands
-裁切不正	cropped
 低质量	low quality
 最差质量	worst quality
+
+身体长	longbody
+长颈	long neck
+错误手部	bad hands
+解剖不良	bad anatomy
+裁切不正	cropped
+不适合公开场合出现的图	nsfw
+变异的手和手指	mutated hands and fingers
+畸形的	deformed
+毁容	disfigured
+脸部画得不好	poorly drawn face
+变异的	mutated
+多余的肢体	extra limb
+丑陋	ugly
+手部画得很差	poorly drawn hands
+缺少的肢体	missing limb
+漂浮的四肢	loating limbs
+肢体不连贯	disconnected limbs
+畸形的手	malformed hands
+脱离焦点	out of focus
+
 
 杰作	masterpiece
 最高质量	best quality
