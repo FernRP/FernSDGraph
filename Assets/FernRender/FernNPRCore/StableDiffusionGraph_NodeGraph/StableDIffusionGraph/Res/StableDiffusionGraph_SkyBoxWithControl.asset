@@ -145,8 +145,8 @@ MonoBehaviour:
     title: Set Model
     content: Description
   nodeInspectorReference: {fileID: 0}
-  position: {x: -90, y: -60.666668, z: 0}
-  scale: {x: 0.43232757, y: 0.43232757, z: 1}
+  position: {x: 492.66666, y: 182, z: 0}
+  scale: {x: 0.2842624, y: 0.2842624, z: 1}
   settings:
     widthScale: 1
     heightScale: 1

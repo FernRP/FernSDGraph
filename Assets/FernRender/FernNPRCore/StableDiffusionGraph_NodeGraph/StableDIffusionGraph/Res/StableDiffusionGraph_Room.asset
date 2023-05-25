@@ -19,8 +19,12 @@ MonoBehaviour:
   - rid: 7516382967068884996
   - rid: 7516382967068884997
   - rid: 7516382967068885003
-  - rid: 7516382967068885004
   - rid: 7516382967068885005
+  - rid: 7516383008435470396
+  - rid: 7516383008435470397
+  - rid: 7516383008435470398
+  - rid: 7516383008435470400
+  - rid: 7516383008435470401
   edges:
   - GUID: 115a57df-fe07-4e54-87a7-f60e7412bf65
     owner: {fileID: 11400000}
@@ -38,26 +42,10 @@ MonoBehaviour:
     outputFieldName: outLoraString
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: 07fa16c6-aa38-4696-87df-63fd7d891c22
-    owner: {fileID: 11400000}
-    inputNodeGUID: 5529effa-fadb-457e-8626-533151affe30
-    outputNodeGUID: 1739dc0b-d0f4-4e2e-8e2e-cdbc3830930a
-    inputFieldName: executed
-    outputFieldName: executes
-    inputPortIdentifier: 
-    outputPortIdentifier: 
   - GUID: 91542259-a604-4358-afd9-a61824a837b7
     owner: {fileID: 11400000}
     inputNodeGUID: 5529effa-fadb-457e-8626-533151affe30
     outputNodeGUID: 1c2a65b6-b493-4de7-87e2-521eaa032f5e
-    inputFieldName: prompt
-    outputFieldName: output
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: f1629612-a7bc-4001-b764-317ad3f519c1
-    owner: {fileID: 11400000}
-    inputNodeGUID: a37f3fb7-6026-40eb-abfb-4c0d188b9e35
-    outputNodeGUID: 6357d0e4-a43c-405d-9044-57577ec63b44
     inputFieldName: prompt
     outputFieldName: output
     inputPortIdentifier: 
@@ -70,6 +58,94 @@ MonoBehaviour:
     outputFieldName: output
     inputPortIdentifier: 
     outputPortIdentifier: 
+  - GUID: a6b8f6a5-5bf7-421a-85e1-e4b3d609cbb0
+    owner: {fileID: 11400000}
+    inputNodeGUID: 66a4a58a-fd77-498e-aaee-0c4021b81765
+    outputNodeGUID: 1739dc0b-d0f4-4e2e-8e2e-cdbc3830930a
+    inputFieldName: executed
+    outputFieldName: executes
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: e1212e82-3394-432f-bbff-a7a70c2881a3
+    owner: {fileID: 11400000}
+    inputNodeGUID: cffbcb5e-3f5f-4587-ad92-1575812149b8
+    outputNodeGUID: b381c010-ab6c-4659-bcc8-86864cfb1d1d
+    inputFieldName: inputImage
+    outputFieldName: colorTarget
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 18c00cb7-d9b8-4948-8e60-2b57c7617d16
+    owner: {fileID: 11400000}
+    inputNodeGUID: 66a4a58a-fd77-498e-aaee-0c4021b81765
+    outputNodeGUID: cffbcb5e-3f5f-4587-ad92-1575812149b8
+    inputFieldName: controlNetImg
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 09452700-0b05-4632-9a24-480392013537
+    owner: {fileID: 11400000}
+    inputNodeGUID: a37f3fb7-6026-40eb-abfb-4c0d188b9e35
+    outputNodeGUID: e5db597a-d7fb-4cf5-a7a9-69d7ad3c719c
+    inputFieldName: prompt
+    outputFieldName: Positive
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 40208990-40fa-4601-b2ad-9bab427f2ffc
+    owner: {fileID: 11400000}
+    inputNodeGUID: c460c767-97b9-4d9d-b5b5-26d783f3c61d
+    outputNodeGUID: e5db597a-d7fb-4cf5-a7a9-69d7ad3c719c
+    inputFieldName: inputString
+    outputFieldName: Negative
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: fbfdf1f9-1380-400f-996b-8a8b11f0010e
+    owner: {fileID: 11400000}
+    inputNodeGUID: 4467e124-4384-4067-9594-c67c20e570cb
+    outputNodeGUID: 5b6330d7-9c49-459b-9188-afac2e591288
+    inputFieldName: input
+    outputFieldName: output
+    inputPortIdentifier: 0
+    outputPortIdentifier: 0
+  - GUID: 93a9879c-9372-4f2d-9a36-d47102827e48
+    owner: {fileID: 11400000}
+    inputNodeGUID: 7768642a-fd3b-499c-ac2f-5b2f5a1a4338
+    outputNodeGUID: 1c2a65b6-b493-4de7-87e2-521eaa032f5e
+    inputFieldName: prompt
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: c5f016a3-f259-46bc-9020-a5051a95bf0f
+    owner: {fileID: 11400000}
+    inputNodeGUID: 5529effa-fadb-457e-8626-533151affe30
+    outputNodeGUID: 66a4a58a-fd77-498e-aaee-0c4021b81765
+    inputFieldName: controlNetData
+    outputFieldName: controlNet
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 371a11a1-f30d-4397-a81e-9a3b21480991
+    owner: {fileID: 11400000}
+    inputNodeGUID: 7768642a-fd3b-499c-ac2f-5b2f5a1a4338
+    outputNodeGUID: 5529effa-fadb-457e-8626-533151affe30
+    inputFieldName: executed
+    outputFieldName: executes
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 5573877c-c4fb-4b49-8139-a2b7e99b3798
+    owner: {fileID: 11400000}
+    inputNodeGUID: 7768642a-fd3b-499c-ac2f-5b2f5a1a4338
+    outputNodeGUID: b381c010-ab6c-4659-bcc8-86864cfb1d1d
+    inputFieldName: InputImage
+    outputFieldName: colorTarget
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 935ca40d-faa1-4dd9-8632-9c523998ff86
+    owner: {fileID: 11400000}
+    inputNodeGUID: 7768642a-fd3b-499c-ac2f-5b2f5a1a4338
+    outputNodeGUID: 66a4a58a-fd77-498e-aaee-0c4021b81765
+    inputFieldName: executed
+    outputFieldName: executes
+    inputPortIdentifier: 
+    outputPortIdentifier: 
   groups: []
   stackNodes: []
   pinnedElements: []
@@ -77,8 +153,8 @@ MonoBehaviour:
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: -957.3333, y: -378, z: 0}
-  scale: {x: 0.8695652, y: 0.8695652, z: 1}
+  position: {x: -858.6667, y: -280.66666, z: 0}
+  scale: {x: 0.7561437, y: 0.7561437, z: 1}
   settings:
     widthScale: 1
     heightScale: 1
@@ -110,10 +186,10 @@ MonoBehaviour:
         computeOrder: 0
         position:
           serializedVersion: 2
-          x: 576
-          y: 255.2485
+          x: 581.29004
+          y: -67.97041
           width: 200
-          height: 190.66666
+          height: 190.66667
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -161,10 +237,10 @@ MonoBehaviour:
         computeOrder: 1
         position:
           serializedVersion: 2
-          x: 884.6667
-          y: 255.2485
-          width: 200
-          height: 154.66666
+          x: 889.9567
+          y: -67.97041
+          width: 199.99994
+          height: 156
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -201,9 +277,7 @@ MonoBehaviour:
         ServerURL: 
         modelNames:
         - ChilloutMix_chilloutmix_NiPrunedFp32Fix
-        - Dreamlike_cheeseDaddys_35
         - Dreamlike_dreamlikeDiffusion10_10
-        - Dreamlike_dreamshaper_331BakedVae
         - Girl_aresMix_v01
         - Girl_chilloutmix_NiCkpt
         - Girl_chilloutmix_NiPrunedFp32
@@ -217,15 +291,17 @@ MonoBehaviour:
         - Textures_sxzLuma_098VAE
         - Textures_TextureDiffusion_10
         - unstableinkdream_v6
-        - v1-5-pruned-emaonly
         - "\u4E2D\u56FD\u6A21\u7279_kaelvinsmixhc_releaseV10"
-        - "\u52A8\u6F2B_experience_70"
         - "\u52A8\u6F2B_UnstableInkDream_unstableinkdream_v6"
         - "\u52A8\u6F2B_\u539A\u6D82\u98CE\u683C_dalcefoPainting_v4"
-        - "\u7EFC\u5408_anythingV3_fp16"
         - "\u7EFC\u5408_anythingV3Inpainting_1-inpainting"
         - "\u98CE\u683C\u5316\u4EBA\u50CF_portrait_10"
-        currentIndex: 19
+        - Dreamlike_dreamshaper_331BakedVae
+        - "\u52A8\u6F2B_experience_70"
+        - "\u7EFC\u5408_anythingV3_fp16"
+        - v1-5-pruned-emaonly
+        - Dreamlike_cheeseDaddys_35
+        currentIndex: 21
         Model: "\u52A8\u6F2B_experience_70"
     - rid: 7516382967068884996
       type: {class: SDLoraNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
@@ -235,10 +311,10 @@ MonoBehaviour:
         computeOrder: 3
         position:
           serializedVersion: 2
-          x: 884.8029
-          y: 639.5735
+          x: 896.5692
+          y: 728.6667
           width: 200
-          height: 194
+          height: 153.33331
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -272,25 +348,11 @@ MonoBehaviour:
         previewEV100: 0
         previewSlice: 0
         isPinned: 0
-        prompt: a 360 equirectangular panorama , modelshoot style, (extremely detailed
-          CG unity 8k wallpaper), cosmic waves in galaxy , starry night, trending
-          on artstation, pixiv, hyperdetailed Unreal Engine 4k 8k ultra HD, Stanley
-          Artgerm Lau, WLOP, Rossdraws, James Jean Marc Simonetti Ruan Jia and Mandy
-          Jurgens and Artgerm and William-Adolphe Bouguerea Sakimichan, yuru camp,
-          illustration, digital art, concept art, by Jeremy Mann, Greg Manchess,
-          Antonio Moro, trending on ArtStation, trending on CGSociety, Intricate,
-          High Detail, Sharp focus, dramatic, photorealistic painting art by greg
-          rutkowski
+        prompt: masterpiece,best quality,photoreal,inside a train,UBWAY STATION,fantasy
+          girl illust
         strength: 0.7
-        outLoraString: a 360 equirectangular panorama , modelshoot style, (extremely
-          detailed CG unity 8k wallpaper), cosmic waves in galaxy , starry night,
-          trending on artstation, pixiv, hyperdetailed Unreal Engine 4k 8k ultra
-          HD, Stanley Artgerm Lau, WLOP, Rossdraws, James Jean Marc Simonetti Ruan
-          Jia and Mandy Jurgens and Artgerm and William-Adolphe Bouguerea Sakimichan,
-          yuru camp, illustration, digital art, concept art, by Jeremy Mann, Greg
-          Manchess, Antonio Moro, trending on ArtStation, trending on CGSociety,
-          Intricate, High Detail, Sharp focus, dramatic, photorealistic painting
-          art by greg rutkowski,<lora:sxz-wowtexture-v2:0.7>
+        outLoraString: masterpiece,best quality,photoreal,inside a train,UBWAY STATION,fantasy
+          girl illust,<lora:sxz-wowtexture-v2:0.7>
         loraPrompt: 
         lora: sxz-wowtexture-v2
         loraDir: 
@@ -322,6 +384,7 @@ MonoBehaviour:
         - mix
         - XSarchitectural-38InteriorForBedroom
         - LatentLabs360
+        - logo_v1-000012
         - sxz-wowtexture-v2
         - yui
         - liuyifei
@@ -343,10 +406,10 @@ MonoBehaviour:
         computeOrder: 5
         position:
           serializedVersion: 2
-          x: 1292.0503
-          y: 759.3335
+          x: 1265.3333
+          y: 709.7681
           width: 200
-          height: 106.666626
+          height: 106.66669
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -380,33 +443,19 @@ MonoBehaviour:
         previewEV100: 0
         previewSlice: 0
         isPinned: 0
-        positive: a 360 equirectangular panorama , modelshoot style, (extremely detailed
-          CG unity 8k wallpaper), cosmic waves in galaxy , starry night, trending
-          on artstation, pixiv, hyperdetailed Unreal Engine 4k 8k ultra HD, Stanley
-          Artgerm Lau, WLOP, Rossdraws, James Jean Marc Simonetti Ruan Jia and Mandy
-          Jurgens and Artgerm and William-Adolphe Bouguerea Sakimichan, yuru camp,
-          illustration, digital art, concept art, by Jeremy Mann, Greg Manchess,
-          Antonio Moro, trending on ArtStation, trending on CGSociety, Intricate,
-          High Detail, Sharp focus, dramatic, photorealistic painting art by greg
-          rutkowski,<lora:sxz-wowtexture-v2:0.7>
-        negative: ' '
+        positive: masterpiece,best quality,photoreal,inside a train,UBWAY STATION,fantasy
+          girl illust,<lora:sxz-wowtexture-v2:0.7>
+        negative: women, girl, man, people
         output:
-          positive: a 360 equirectangular panorama , modelshoot style, (extremely
-            detailed CG unity 8k wallpaper), cosmic waves in galaxy , starry night,
-            trending on artstation, pixiv, hyperdetailed Unreal Engine 4k 8k ultra
-            HD, Stanley Artgerm Lau, WLOP, Rossdraws, James Jean Marc Simonetti Ruan
-            Jia and Mandy Jurgens and Artgerm and William-Adolphe Bouguerea Sakimichan,
-            yuru camp, illustration, digital art, concept art, by Jeremy Mann, Greg
-            Manchess, Antonio Moro, trending on ArtStation, trending on CGSociety,
-            Intricate, High Detail, Sharp focus, dramatic, photorealistic painting
-            art by greg rutkowski,<lora:sxz-wowtexture-v2:0.7>
-          negative: ' '
+          positive: masterpiece,best quality,photoreal,inside a train,UBWAY STATION,fantasy
+            girl illust,<lora:sxz-wowtexture-v2:0.7>
+          negative: women, girl, man, people
     - rid: 7516382967068885003
       type: {class: SDTxt2ImgNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
       data:
         nodeCustomName: 
         GUID: 5529effa-fadb-457e-8626-533151affe30
-        computeOrder: 6
+        computeOrder: 9
         position:
           serializedVersion: 2
           x: 1638.9961
@@ -421,11 +470,11 @@ MonoBehaviour:
           widthScale: 1
           heightScale: 1
           depthScale: 1
-          width: 512
+          width: 1024
           height: 512
           depth: 1
           potSize: 0
-          sizeMode: -2
+          sizeMode: 1
           dimension: -2
           outputChannels: -2
           outputPrecision: -2
@@ -454,90 +503,26 @@ MonoBehaviour:
           hr_resize_x: 0
           hr_resize_y: 0
         prompt:
-          positive: a 360 equirectangular panorama , modelshoot style, (extremely
-            detailed CG unity 8k wallpaper), cosmic waves in galaxy , starry night,
-            trending on artstation, pixiv, hyperdetailed Unreal Engine 4k 8k ultra
-            HD, Stanley Artgerm Lau, WLOP, Rossdraws, James Jean Marc Simonetti Ruan
-            Jia and Mandy Jurgens and Artgerm and William-Adolphe Bouguerea Sakimichan,
-            yuru camp, illustration, digital art, concept art, by Jeremy Mann, Greg
-            Manchess, Antonio Moro, trending on ArtStation, trending on CGSociety,
-            Intricate, High Detail, Sharp focus, dramatic, photorealistic painting
-            art by greg rutkowski,<lora:sxz-wowtexture-v2:0.7>
-          negative: ' '
-        width: 1538
-        height: 768
+          positive: masterpiece,best quality,photoreal,inside a train,UBWAY STATION,fantasy
+            girl illust,<lora:sxz-wowtexture-v2:0.7>
+          negative: women, girl, man, people
+        width: 1024
+        height: 512
         step: 20
         cfg: 7
-        seed: -1
+        seed: 306363631839068869
         isTiling: 0
         extension: 
         outputImage: {fileID: 0}
-        outSeed: 2486157368464927097
+        outSeed: 306363631839068869
         progress: 1
         pre_step: 0
         pre_step_count: 20
         pre_job_no: -1
         job_no_count: 0
-        speed: 1.1854479
+        speed: 2.6051145
         samplerMethod: Euler
         savePath: 
-    - rid: 7516382967068885004
-      type: {class: StringNode, ns: , asm: Assembly-CSharp}
-      data:
-        nodeCustomName: 
-        GUID: 6357d0e4-a43c-405d-9044-57577ec63b44
-        computeOrder: 2
-        position:
-          serializedVersion: 2
-          x: 352.09167
-          y: 686.6667
-          width: 200
-          height: 358.66663
-        expanded: 0
-        debug: 0
-        nodeLock: 0
-        isUpdate: 0
-        settings:
-          widthScale: 1
-          heightScale: 1
-          depthScale: 1
-          width: 512
-          height: 512
-          depth: 1
-          potSize: 0
-          sizeMode: -2
-          dimension: -2
-          outputChannels: -2
-          outputPrecision: -2
-          editFlags: -257
-          doubleBuffered: 0
-          wrapMode: -2
-          filterMode: -2
-          refreshMode: 0
-          period: 0
-        hasSettings: 0
-        hasPreview: 0
-        isCanSaveTexture: 0
-        isPreviewCollapsed: 0
-        previewMode: 15
-        previewSRGB: 0
-        previewMip: 0
-        previewVisible: 1
-        previewEV100: 0
-        previewSlice: 0
-        isPinned: 0
-        inputString: 
-        output: a 360 equirectangular panorama , modelshoot style, (extremely detailed
-          CG unity 8k wallpaper), cosmic waves in galaxy , starry night, trending
-          on artstation, pixiv, hyperdetailed Unreal Engine 4k 8k ultra HD, Stanley
-          Artgerm Lau, WLOP, Rossdraws, James Jean Marc Simonetti Ruan Jia and Mandy
-          Jurgens and Artgerm and William-Adolphe Bouguerea Sakimichan, yuru camp,
-          illustration, digital art, concept art, by Jeremy Mann, Greg Manchess,
-          Antonio Moro, trending on ArtStation, trending on CGSociety, Intricate,
-          High Detail, Sharp focus, dramatic, photorealistic painting art by greg
-          rutkowski
-        textFiledValue: 
-        isShowString: 1
     - rid: 7516382967068885005
       type: {class: StringNode, ns: , asm: Assembly-CSharp}
       data:
@@ -584,6 +569,396 @@ MonoBehaviour:
         previewSlice: 0
         isPinned: 0
         inputString: 
-        output: ' '
-        textFiledValue: 
+        output: women, girl, man, people
+        textFiledValue: women, girl, man, people
         isShowString: 1
+    - rid: 7516383008435470396
+      type: {class: SDControlNetNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 66a4a58a-fd77-498e-aaee-0c4021b81765
+        computeOrder: 8
+        position:
+          serializedVersion: 2
+          x: 1209.5459
+          y: 254.66669
+          width: 256
+          height: 372
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 0
+        hasPreview: 0
+        isCanSaveTexture: 0
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        controlNetImg: {fileID: 0}
+        weight: 1
+        resize_mode: 1
+        lowvram: 0
+        processor_res: 64
+        threshold_a: 64
+        threshold_b: 64
+        guidance_start: 0
+        guidance_end: 1
+        guidance: 1
+        control_mode: 2
+        module: none
+        model: control_v11p_sd15_canny [d14c016b]
+        modelList:
+        - control_v11e_sd15_ip2p [c4bb465c]
+        - control_v11e_sd15_shuffle [526bfdae]
+        - control_v11f1p_sd15_depth [cfd03158]
+        - control_v11p_sd15_canny [d14c016b]
+        - control_v11p_sd15_inpaint [ebff9138]
+        - control_v11p_sd15_lineart [43d4be0d]
+        - control_v11p_sd15_mlsd [aca30ff0]
+        - control_v11p_sd15_normalbae [316696f1]
+        - control_v11p_sd15_openpose [cab727d4]
+        - control_v11p_sd15_scribble [d4ba51ff]
+        - control_v11p_sd15_seg [e1f51eb9]
+        - control_v11p_sd15_softedge [a8575a2a]
+        - control_v11p_sd15s2_lineart_anime [3825e83e]
+        - control_v11u_sd15_tile [1f041471]
+        currentModelListIndex: 3
+        moudleList:
+        - none
+        - canny
+        - depth
+        - depth_leres
+        - depth_leres++
+        - hed
+        - hed_safe
+        - mediapipe_face
+        - mlsd
+        - normal_map
+        - openpose
+        - openpose_hand
+        - openpose_face
+        - openpose_faceonly
+        - openpose_full
+        - clip_vision
+        - color
+        - pidinet
+        - pidinet_safe
+        - pidinet_sketch
+        - pidinet_scribble
+        - scribble_xdog
+        - scribble_hed
+        - segmentation
+        - threshold
+        - depth_zoe
+        - normal_bae
+        - oneformer_coco
+        - oneformer_ade20k
+        - lineart
+        - lineart_coarse
+        - lineart_anime
+        - lineart_standard
+        - shuffle
+        - tile_resample
+        - invert
+        - lineart_anime_denoise
+        - reference_only
+        - reference_adain
+        - reference_adain+attn
+        - inpaint
+        currentMoudleListIndex: 0
+    - rid: 7516383008435470397
+      type: {class: SDCameraRenderNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: b381c010-ab6c-4659-bcc8-86864cfb1d1d
+        computeOrder: 6
+        position:
+          serializedVersion: 2
+          x: 419.24982
+          y: 195.3334
+          width: 256
+          height: 475.3333
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 1
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 1024
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: 1
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 1
+        hasPreview: 1
+        isCanSaveTexture: 0
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        colorTarget: {fileID: 0}
+        normalTarget: {fileID: 0}
+        depthTarget: {fileID: 0}
+        inpaintTarget: {fileID: 0}
+        isRenderColor: 1
+        isRenderNormal: 0
+        isRenderDepth: 0
+        isRenderInPaint: 0
+        previewType: 0
+    - rid: 7516383008435470398
+      type: {class: SDEdgeDetectNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: cffbcb5e-3f5f-4587-ad92-1575812149b8
+        computeOrder: 7
+        position:
+          serializedVersion: 2
+          x: 716.6011
+          y: 222.00002
+          width: 256
+          height: 448.6667
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 1
+        hasPreview: 1
+        isCanSaveTexture: 0
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        output: {fileID: 0}
+        shader: {fileID: 4800000, guid: 62c4e7a707db68a4dbd8256c8edbb232, type: 3}
+        material: {fileID: 0}
+        shaderGUID: 62c4e7a707db68a4dbd8256c8edbb232
+        inputImage: {fileID: 0}
+        step: 1.12
+        pow: 3.04
+        mode: 0
+    - rid: 7516383008435470400
+      type: {class: SDPromptRegisterNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: e5db597a-d7fb-4cf5-a7a9-69d7ad3c719c
+        computeOrder: 2
+        position:
+          serializedVersion: 2
+          x: 177.53331
+          y: 728.6667
+          width: 632.6667
+          height: 488
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 0
+        hasPreview: 0
+        isCanSaveTexture: 0
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        RegisterData:
+          title:
+            m_Text: 
+            m_Image: {fileID: 0}
+            m_Tooltip: 
+          positiveDatas:
+          - word: "\u6770\u4F5C"
+            weight: 0
+            end: 0
+            process: 0
+            color: 0
+          - word: "\u6700\u9AD8\u8D28\u91CF"
+            weight: 0
+            end: 0
+            process: 0
+            color: 0
+          - word: "\u6444\u5F71"
+            weight: 0
+            end: 0
+            process: 0
+            color: 0
+          - word: "\u7535\u8F66\u5185"
+            weight: 0
+            end: 0
+            process: 0
+            color: 0
+          - word: "\u8F66\u7AD9"
+            weight: 0
+            end: 0
+            process: 0
+            color: 0
+          - word: "\u5149"
+            weight: 0
+            end: 0
+            process: 0
+            color: 0
+          - word: "\u70AB\u5149\u6548\u679C"
+            weight: 0
+            end: 0
+            process: 0
+            color: 0
+          negativeDatas: []
+        Prompt:
+          positive: masterpiece,best quality,photoreal,inside a train,UBWAY STATION,fantasy
+            girl illust
+          negative: 
+        Positive: masterpiece,best quality,photoreal,inside a train,UBWAY STATION,fantasy
+          girl illust
+        Negative: 
+    - rid: 7516383008435470401
+      type: {class: SDImg2ImgNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
+      data:
+        nodeCustomName: 
+        GUID: 7768642a-fd3b-499c-ac2f-5b2f5a1a4338
+        computeOrder: 10
+        position:
+          serializedVersion: 2
+          x: 1986.4032
+          y: 398.66666
+          width: 256.00012
+          height: 579.3333
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 0
+        hasPreview: 1
+        isCanSaveTexture: 0
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        InputImage: {fileID: 0}
+        MaskImage: {fileID: 0}
+        prompt:
+          positive: masterpiece,best quality,photoreal,inside a train,UBWAY STATION,fantasy
+            girl illust,<lora:sxz-wowtexture-v2:0.7>
+          negative: women, girl, man, people
+        resizeMode: 0
+        step: 20
+        cfg: 7
+        denisoStrength: 0.5
+        width: 1024
+        height: 512
+        seed: 306363631839068869
+        outputImage: {fileID: 0}
+        outSeed: 306363631839068869
+        samplerMethod: Euler
+        Inpaint: 0
+        inpainting_fill: 0
+        inpaint_full_res: 1
+        inpaint_full_res_padding: 32
+        inpainting_mask_invert: 0
+        mask_blur: 0
+        progress: 0.9190909
+        speed: -0
+        init_speed: 0
+        cur_step: 10
+        isExecuting: 1
