@@ -376,6 +376,8 @@ namespace FernNPRCore.SDNodeGraph
         protected override IEnumerator Execute()
         {
             GetPort(nameof(prompt), null).PullData();
+            settings.resolvedSettings.width = width;
+            settings.resolvedSettings.height = height;
             yield return GenerateAsync();
         }
     }

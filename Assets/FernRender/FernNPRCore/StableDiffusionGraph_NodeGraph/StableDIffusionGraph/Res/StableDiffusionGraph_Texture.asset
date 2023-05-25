@@ -159,8 +159,8 @@ MonoBehaviour:
     title: Post Process
     content: Description
   nodeInspectorReference: {fileID: 0}
-  position: {x: -4514, y: 2038, z: 0}
-  scale: {x: 1.520875, y: 1.520875, z: 1}
+  position: {x: -658, y: 646, z: 0}
+  scale: {x: 0.2842624, y: 0.2842624, z: 1}
   settings:
     widthScale: 1
     heightScale: 1
@@ -601,6 +601,7 @@ MonoBehaviour:
         job_no_count: 0
         speed: 3.309193
         samplerMethod: DPM++ 2M Karras
+        savePath: 
     - rid: 7516382939679031365
       type: {class: StringNode, ns: , asm: Assembly-CSharp}
       data:

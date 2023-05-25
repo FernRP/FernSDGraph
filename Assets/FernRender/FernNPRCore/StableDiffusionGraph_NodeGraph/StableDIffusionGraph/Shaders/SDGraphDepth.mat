@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_SDGraphNormal
-  m_Shader: {fileID: -6465566751694194690, guid: e7a721e612454cd44b1f52e76ffb39a6,
+  m_Name: SDGraphDepth
+  m_Shader: {fileID: -6465566751694194690, guid: abc58fd07ebbe7d4c9be97f262630f1e,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0

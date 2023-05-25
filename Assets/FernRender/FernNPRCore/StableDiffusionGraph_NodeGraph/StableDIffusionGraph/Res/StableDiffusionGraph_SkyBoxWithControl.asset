@@ -171,8 +171,8 @@ MonoBehaviour:
     title: Processor
     content: Description
   nodeInspectorReference: {fileID: 0}
-  position: {x: -41.333332, y: -88.666664, z: 0}
-  scale: {x: 0.49717674, y: 0.49717674, z: 1}
+  position: {x: -418, y: -222, z: 0}
+  scale: {x: 0.7561437, y: 0.7561437, z: 1}
   settings:
     widthScale: 1
     heightScale: 1
@@ -801,11 +801,11 @@ MonoBehaviour:
         shaderGUID: 46c02ba1b0b63954bab0afcd9e828ac6
         gradientMode: 5
         directionMode: 0
-        spiralTurnCount: 1
-        spiralBranchCount: 1
+        spiralTurnCount: 3.6
+        spiralBranchCount: -5
         color1: {r: 4.6490135, g: 4.6490135, b: 4.6490135, a: 1}
         color2: {r: 0.42976663, g: 1.1486983, b: 0, a: 1}
-        falloff: 0.31
+        falloff: 1
     - rid: 7516382989335658511
       type: {class: SDBlendNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
       data:
