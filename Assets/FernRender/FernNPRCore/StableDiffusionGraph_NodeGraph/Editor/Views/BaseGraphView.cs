@@ -154,6 +154,7 @@ namespace GraphProcessor
 
 			SetupZoom(0.05f, 2f);
 
+			Undo.undoRedoPerformed -= ReloadView;
 			Undo.undoRedoPerformed += ReloadView;
 
 			createNodeMenu = ScriptableObject.CreateInstance< CreateNodeMenuWindow >();
@@ -700,9 +701,9 @@ namespace GraphProcessor
 			}
 
 			// Remove everything
+			RemoveGroups();
 			RemoveNodeViews();
 			RemoveEdges();
-			RemoveGroups();
 #if UNITY_2020_1_OR_NEWER
 			RemoveStrickyNotes();
 #endif
