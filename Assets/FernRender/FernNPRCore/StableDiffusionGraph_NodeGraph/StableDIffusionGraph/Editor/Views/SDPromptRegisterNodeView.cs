@@ -541,6 +541,10 @@ namespace FernNPRCore.SDNodeGraph
             new Color(0.65f, 0.49f, 0.24f),
         };
 
+        private void RefreshPrompt()
+        {
+            LoadConfigTxt();
+        }
         void OnGUI()
         {
             if(nodeTarget is not SDPromptRegisterNode register) return;
@@ -571,7 +575,8 @@ namespace FernNPRCore.SDNodeGraph
             });
             if (GUILayout.Button(showInEn ? "EN" : "CN", GUILayout.Width(30)))
                 showInEn = !showInEn;
-            
+            if (GUILayout.Button(new GUIContent(SDTextureHandle.RefreshIcon), GUILayout.Height(20), GUILayout.Width(30)))
+                RefreshPrompt();
             EditorGUILayout.EndHorizontal();
             // ------------------------------------------------------------------------------------------------
 
