@@ -122,13 +122,13 @@ Shader "FernRender/URP/FERNNPRStandard"
         [SubToggle(AISetting)] _ClearShading("Clear Shading", Float) = 0
 
         //Effect is in Developing
-        [Title(_, Effect)]
-        [Main(DissolveSetting, _, off, off)]
-        _groupDissolveSetting ("Dissolve Setting", float) = 0
-        [Space()]
-        [SubToggle(DissolveSetting, _USEDISSOLVEEFFECT)] _UseDissolveEffect("Use Dissolve Effect", Float) = 0.0
-        [Tex(DissolveSetting._USEDISSOLVEEFFECT)] _DissolveNoiseTex ("Dissolve Noise Tex", 2D) = "white" { }
-        [Sub(DissolveSetting)] _DissolveThreshold ("Dissolve Threshold", Range(0, 1)) = 0
+//        [Title(_, Effect)]
+//        [Main(DissolveSetting, _, off, off)]
+//        _groupDissolveSetting ("Dissolve Setting", float) = 0
+//        [Space()]
+//        [SubToggle(DissolveSetting, _USEDISSOLVEEFFECT)] _UseDissolveEffect("Use Dissolve Effect", Float) = 0.0
+//        [Tex(DissolveSetting._USEDISSOLVEEFFECT)] _DissolveNoiseTex ("Dissolve Noise Tex", 2D) = "white" { }
+//        [Sub(DissolveSetting)] _DissolveThreshold ("Dissolve Threshold", Range(0, 1)) = 0
 
         // RenderSetting
         [Title(_, RenderSetting)]

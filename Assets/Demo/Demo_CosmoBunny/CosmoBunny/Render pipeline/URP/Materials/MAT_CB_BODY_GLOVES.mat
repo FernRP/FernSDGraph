@@ -57,6 +57,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DissolveNoiseTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -115,6 +119,7 @@ Material:
     - _BumpScale: 1
     - _CELLSmoothing: 0.24
     - _CELLThreshold: 0.662
+    - _CasterShadow: 1
     - _CellBandSoftness: 0.001
     - _CellBands: 1
     - _ClearCoat: 0
@@ -126,6 +131,7 @@ Material:
     - _Cutoff: 0.5
     - _DepthOffsetRimReverseX: 0
     - _DepthOffsetShadowReverseX: 0
+    - _DepthPrePass: 0
     - _DepthRimOffset: -0.17
     - _DepthRimThresoldOffset: 0.18
     - _DepthShadowOffset: 0.15
@@ -133,6 +139,7 @@ Material:
     - _DepthShadowThresoldOffset: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _DissolveThreshold: 0
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EmissionColorAlbedoWeight: 0
@@ -173,6 +180,7 @@ Material:
     - _Surface: 0
     - _UVSec: 0
     - _UseDepthShadow: 0
+    - _UseDissolveEffect: 0
     - _UseEmissionTex: 0
     - _UseHalfLambert: 1
     - _UseRadianceOcclusion: 0
@@ -181,6 +189,9 @@ Material:
     - _ZWrite: 1
     - _enum_diffuse: 3
     - _enum_env: 1
+    - _enum_outline_color: 0
+    - _enum_outline_smoothed: 0
+    - _enum_outline_width: 0
     - _enum_rim: 2
     - _enum_specular: 1
     - _group: 0
@@ -188,6 +199,7 @@ Material:
     - _groupAI: 1
     - _groupAdditionLight: 1
     - _groupClearCoat: 1
+    - _groupDissolveSetting: 0
     - _groupEmission: 0
     - _groupEnvironment: 1
     - _groupOutline: 1
@@ -195,10 +207,11 @@ Material:
     - _groupShadingMask: 0
     - _groupShadowSetting: 1
     - _groupSpecular: 1
+    - _groupSurface: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 0.87398344, b: 0.858, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DarkColor: {r: 0.77099997, g: 0.3466977, b: 0.274476, a: 1}
+    - _DarkColor: {r: 0.77254903, g: 0.44237828, b: 0.3847294, a: 1}
     - _EmissionChannel: {r: 0, g: 0, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HighColor: {r: 0.9716981, g: 0.90447366, b: 0.90447366, a: 1}

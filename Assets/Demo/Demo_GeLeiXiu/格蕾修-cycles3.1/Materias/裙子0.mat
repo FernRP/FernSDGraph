@@ -59,6 +59,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 73131ef27d38b4d45b2091da76bff8aa, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DissolveNoiseTex:
+        m_Texture: {fileID: 2800000, guid: c7b6e2a760b2b7a4680fb9cd94d715e9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -136,6 +140,7 @@ Material:
     - _BumpScale: 1
     - _CELLSmoothing: 0.04
     - _CELLThreshold: 0.259
+    - _CasterShadow: 1
     - _CellBandSoftness: 0.001
     - _CellBands: 1
     - _ClearCoat: 0
@@ -148,6 +153,7 @@ Material:
     - _DEPTHSHADOW: 0
     - _DepthOffsetRimReverseX: 0
     - _DepthOffsetShadowReverseX: 0
+    - _DepthPrePass: 0
     - _DepthRimLightCameraDistanceFadeoutEnd: 80
     - _DepthRimLightCameraDistanceStart: 20
     - _DepthRimOffset: -0.161
@@ -158,6 +164,7 @@ Material:
     - _DepthShadowThresoldOffset: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _DissolveThreshold: 0
     - _DstBlend: 0
     - _EmissionColorAlbedoWeight: 0
     - _EnvironmentReflections: 1
@@ -199,6 +206,7 @@ Material:
     - _Surface: 0
     - _UVSec: 0
     - _UseDepthShadow: 0
+    - _UseDissolveEffect: 0
     - _UseEmissionTex: 0
     - _UseHalfLambert: 1
     - _UseRadianceOcclusion: 1
@@ -207,6 +215,9 @@ Material:
     - _ZWrite: 1
     - _enum_diffuse: 0
     - _enum_env: 1
+    - _enum_outline_color: 0
+    - _enum_outline_smoothed: 0
+    - _enum_outline_width: 0
     - _enum_rim: 2
     - _enum_specular: 1
     - _group: 0
@@ -214,6 +225,7 @@ Material:
     - _groupAI: 1
     - _groupAdditionLight: 1
     - _groupClearCoat: 1
+    - _groupDissolveSetting: 0
     - _groupEmission: 0
     - _groupEnvironment: 1
     - _groupOutline: 1
@@ -221,6 +233,7 @@ Material:
     - _groupShadingMask: 0
     - _groupShadowSetting: 1
     - _groupSpecular: 1
+    - _groupSurface: 1
     m_Colors:
     - _AnisoSecondarySpecularColor: {r: 0, g: 0, b: 0, a: 1}
     - _AnisoSpecularColor: {r: 0, g: 0, b: 0, a: 1}
