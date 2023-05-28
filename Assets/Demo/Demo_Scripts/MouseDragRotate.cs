@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace FernNPRCore.Scripts
+namespace FernNPRCore.Demo
 {
     public class MouseDragRotate : MonoBehaviour
     {

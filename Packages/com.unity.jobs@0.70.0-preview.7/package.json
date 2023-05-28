@@ -1,0 +1,27 @@
+{
+  "name": "com.unity.jobs",
+  "displayName": "Jobs",
+  "version": "0.70.0-preview.7",
+  "unity": "2020.3",
+  "unityRelease": "30f1",
+  "description": "The Jobs package provides additional job types like IJobParallelForBatch.",
+  "dependencies": {
+    "com.unity.collections": "1.4.0"
+  },
+  "keywords": [
+    "dots",
+    "jobs",
+    "unity"
+  ],
+  "upm": {
+    "changelog": "### Changed\n\n* com.unity.jobs is a deprecated package. This code for this package has been combined into com.unity.collections-1.4.0, please prefer that package instead."
+  },
+  "upmCi": {
+    "footprint": "5ce5b846cf8e5d771600c6a663d8f266df54aa46"
+  },
+  "repository": {
+    "url": "https://github.cds.internal.unity3d.com/unity/dots.git",
+    "type": "git",
+    "revision": "063a98897b40805f53b859bb426ce664229d0c00"
+  }
+}
