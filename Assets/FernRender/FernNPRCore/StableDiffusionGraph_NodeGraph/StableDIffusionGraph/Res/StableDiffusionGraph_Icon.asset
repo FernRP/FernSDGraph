@@ -123,6 +123,14 @@ MonoBehaviour:
     outputFieldName: colorTarget
     inputPortIdentifier: 
     outputPortIdentifier: 
+  - GUID: 13102886-3df9-4ac1-9503-d384f57923e6
+    owner: {fileID: 11400000}
+    inputNodeGUID: 932fa369-b743-44ef-9d0f-3c445d0041f0
+    outputNodeGUID: 0acf56b6-54fa-4355-8e83-1e5f83a58c5a
+    inputFieldName: ServerURL
+    outputFieldName: outServerURL
+    inputPortIdentifier: 
+    outputPortIdentifier: 
   groups: []
   stackNodes: []
   pinnedElements: []
@@ -130,8 +138,8 @@ MonoBehaviour:
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: 419.33334, y: -244, z: 0}
-  scale: {x: 0.65751624, y: 0.65751624, z: 1}
+  position: {x: 639.3333, y: -4, z: 0}
+  scale: {x: 0.8695652, y: 0.8695652, z: 1}
   settings:
     widthScale: 1
     heightScale: 1
@@ -200,9 +208,9 @@ MonoBehaviour:
         previewEV100: 0
         previewSlice: 0
         isPinned: 0
-        outServerURL: http://127.0.0.1:7860
-        overrideSettings: 0
-        serverURL: http://127.0.0.1:7860
+        outServerURL: http://stable-diffusion-portal.fc-stable-diffuson.1241312024601235.cn-shanghai.fc.devsapp.net
+        overrideSettings: 1
+        serverURL: http://stable-diffusion-portal.fc-stable-diffuson.1241312024601235.cn-shanghai.fc.devsapp.net
         useAuth: 0
         user: 
         pass: 
@@ -251,7 +259,7 @@ MonoBehaviour:
         previewEV100: 0
         previewSlice: 0
         isPinned: 0
-        ServerURL: 
+        ServerURL: http://stable-diffusion-portal.fc-stable-diffuson.1241312024601235.cn-shanghai.fc.devsapp.net
         modelNames:
         - ChilloutMix_chilloutmix_NiPrunedFp32Fix
         - Dreamlike_cheeseDaddys_35
@@ -416,8 +424,8 @@ MonoBehaviour:
         computeOrder: 8
         position:
           serializedVersion: 2
-          x: -121.654755
-          y: 366
+          x: -105.90008
+          y: 445.3501
           width: 256
           height: 448.66666
         expanded: 0
@@ -713,48 +721,7 @@ MonoBehaviour:
         - control_v11p_sd15s2_lineart_anime [3825e83e]
         - control_v11u_sd15_tile [1f041471]
         currentModelListIndex: 5
-        moudleList:
-        - none
-        - canny
-        - depth
-        - depth_leres
-        - depth_leres++
-        - hed
-        - hed_safe
-        - mediapipe_face
-        - mlsd
-        - normal_map
-        - openpose
-        - openpose_hand
-        - openpose_face
-        - openpose_faceonly
-        - openpose_full
-        - clip_vision
-        - color
-        - pidinet
-        - pidinet_safe
-        - pidinet_sketch
-        - pidinet_scribble
-        - scribble_xdog
-        - scribble_hed
-        - segmentation
-        - threshold
-        - depth_zoe
-        - normal_bae
-        - oneformer_coco
-        - oneformer_ade20k
-        - lineart
-        - lineart_coarse
-        - lineart_anime
-        - lineart_standard
-        - shuffle
-        - tile_resample
-        - invert
-        - lineart_anime_denoise
-        - reference_only
-        - reference_adain
-        - reference_adain+attn
-        - inpaint
+        moudleList: []
         currentMoudleListIndex: 0
     - rid: 7516383004303294491
       type: {class: SDLoraNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
@@ -809,44 +776,7 @@ MonoBehaviour:
         loraPrompt: logo,
         lora: logo_v1-000012
         loraDir: 
-        loraNames:
-        - little_black_dress
-        - bustCupCumInBetweenBooba_v10
-        - cheeseDaddysLandscapes_35
-        - chineseCosplayerXiaorouseeu_v10
-        - doggystyle_lora32V1
-        - doggystylePov_v10
-        - hmsCheshireAzurLane_delta
-        - Japanese-doll-likeness
-        - japaneseDollLikeness_v10
-        - kagurazakaMayufuLora_v01
-        - koreanDollLikeness_v10
-        - koreanDollLikeness_v15
-        - LORAChineseDoll_chinesedolllikeness1
-        - LORAJingyiJuChinese_jingyi10
-        - mix4
-        - pnx_doggyFaceFocus
-        - POVDoggy
-        - povDoggystyleLora1MB_povdoggy
-        - realdoggyst_v10
-        - spaMikoLora_v01
-        - taiwanDollLikeness_v10
-        - wakamezakeCumBetweenThighs_v10
-        - chilloutmixss30_v30
-        - "chilloutmixss_xss10(\u4E00\u6817\u6C99\u5B50)"
-        - mix
-        - XSarchitectural-38InteriorForBedroom
-        - LatentLabs360
-        - logo_v1-000012
-        - sxz-wowtexture-v2
-        - yui
-        - liuyifei
-        - yy
-        - "animeLineartStyle_v20Offset(\u7EBF\u7A3F)"
-        - jackscape
-        - Jordan_3
-        - sakimori-000017
-        - xsarchitectural-12NightMoonsci-fi
+        loraNames: []
         currentIndex: 27
         useLoraBlockWeight: 0
         loraBlockWeightPresetName: ALL

@@ -21,7 +21,9 @@ MonoBehaviour:
   - rid: 7516383008435470408
   - rid: 7516383008435470409
   - rid: 7516383008435470410
-  - rid: 7516383008435470411
+  - rid: 91304114922455045
+  - rid: 91304114922455054
+  - rid: 91304114922455055
   edges:
   - GUID: 89324b92-f8be-4d40-8f59-f6c34a711f96
     owner: {fileID: 11400000}
@@ -47,38 +49,6 @@ MonoBehaviour:
     outputFieldName: outLoraString
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: 690da4cd-8089-41de-bc48-5bb7ca761c51
-    owner: {fileID: 11400000}
-    inputNodeGUID: f1ba9f93-ff31-4bcd-94c6-f50da638c546
-    outputNodeGUID: b7227e78-d13a-4473-b5a5-060a50f1ff6b
-    inputFieldName: negative
-    outputFieldName: output
-    inputPortIdentifier: 
-    outputPortIdentifier: 0
-  - GUID: e0fa5045-dac0-4e73-8bb6-04beffb359ee
-    owner: {fileID: 11400000}
-    inputNodeGUID: 5d54986a-464b-4f55-991e-8b020b41641d
-    outputNodeGUID: ddd60115-2fe6-438e-b262-4533d61b04f7
-    inputFieldName: prompt
-    outputFieldName: Positive
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: cb337523-6cec-4bcc-8a76-d190f4c42c94
-    owner: {fileID: 11400000}
-    inputNodeGUID: b7227e78-d13a-4473-b5a5-060a50f1ff6b
-    outputNodeGUID: ddd60115-2fe6-438e-b262-4533d61b04f7
-    inputFieldName: input
-    outputFieldName: Negative
-    inputPortIdentifier: 0
-    outputPortIdentifier: 
-  - GUID: 0b7857e1-ca7f-4418-8f09-a1e2f478efe7
-    owner: {fileID: 11400000}
-    inputNodeGUID: b1bead54-99f2-4685-a2f8-9e633df8981b
-    outputNodeGUID: ad8e5f4c-6fa1-4e7a-a88c-cdacc8f1317a
-    inputFieldName: inputImage
-    outputFieldName: colorTarget
-    inputPortIdentifier: 
-    outputPortIdentifier: 
   - GUID: d3164b7a-628f-4bff-9e49-4c67ad5a7c25
     owner: {fileID: 11400000}
     inputNodeGUID: cef22d93-182f-4429-87a2-6c258a02c9fc
@@ -87,6 +57,62 @@ MonoBehaviour:
     outputFieldName: executes
     inputPortIdentifier: 
     outputPortIdentifier: 
+  - GUID: 9a6784ec-2ff2-4e83-840b-03e056a21525
+    owner: {fileID: 11400000}
+    inputNodeGUID: cef22d93-182f-4429-87a2-6c258a02c9fc
+    outputNodeGUID: f1ba9f93-ff31-4bcd-94c6-f50da638c546
+    inputFieldName: prompt
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 4a8fc4fe-8590-479a-b582-a37ec939d3e2
+    owner: {fileID: 11400000}
+    inputNodeGUID: 895e9e93-5e7c-4fbd-ae24-bdaf8b6c74be
+    outputNodeGUID: 3f7a9fa1-9812-4666-92be-6c07e6ed0d9e
+    inputFieldName: ServerURL
+    outputFieldName: outServerURL
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 6f198450-3686-47d4-bb7a-5afb343185a1
+    owner: {fileID: 11400000}
+    inputNodeGUID: 5d54986a-464b-4f55-991e-8b020b41641d
+    outputNodeGUID: ddd60115-2fe6-438e-b262-4533d61b04f7
+    inputFieldName: prompt
+    outputFieldName: Positive
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 0ae31fe0-5c03-4119-ba44-d6d21a499d69
+    owner: {fileID: 11400000}
+    inputNodeGUID: 77d4193b-856f-493c-8087-dc7386032c96
+    outputNodeGUID: 922d6830-d3b7-4bed-9860-cd521e464f0b
+    inputFieldName: input
+    outputFieldName: output
+    inputPortIdentifier: 0
+    outputPortIdentifier: 0
+  - GUID: 6fe9b23b-734c-4627-aecf-c13e3ea97f83
+    owner: {fileID: 11400000}
+    inputNodeGUID: f1ba9f93-ff31-4bcd-94c6-f50da638c546
+    outputNodeGUID: 77d4193b-856f-493c-8087-dc7386032c96
+    inputFieldName: negative
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 0
+  - GUID: 757c7f47-b562-4062-b7d0-fea0b89e3530
+    owner: {fileID: 11400000}
+    inputNodeGUID: 8236638c-877f-410c-8800-93cb91c2569a
+    outputNodeGUID: ddd60115-2fe6-438e-b262-4533d61b04f7
+    inputFieldName: input
+    outputFieldName: Negative
+    inputPortIdentifier: 0
+    outputPortIdentifier: 
+  - GUID: 68371e4e-2ca5-4597-ba72-1e86e6797772
+    owner: {fileID: 11400000}
+    inputNodeGUID: 922d6830-d3b7-4bed-9860-cd521e464f0b
+    outputNodeGUID: 8236638c-877f-410c-8800-93cb91c2569a
+    inputFieldName: input
+    outputFieldName: output
+    inputPortIdentifier: 0
+    outputPortIdentifier: 0
   groups: []
   stackNodes: []
   pinnedElements: []
@@ -94,8 +120,8 @@ MonoBehaviour:
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: -8.666667, y: -283.33334, z: 0}
-  scale: {x: 0.65751624, y: 0.65751624, z: 1}
+  position: {x: 985.3333, y: -148.66667, z: 0}
+  scale: {x: 0.7561437, y: 0.7561437, z: 1}
   settings:
     widthScale: 1
     heightScale: 1
@@ -119,6 +145,63 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 91304114922455045
+      type: {class: RelayNode, ns: , asm: com.alelievr.NodeGraphProcessor.Runtime}
+      data:
+        nodeCustomName: 
+        GUID: 922d6830-d3b7-4bed-9860-cd521e464f0b
+        computeOrder: 5
+        position:
+          serializedVersion: 2
+          x: -322.13348
+          y: 781.33344
+          width: 200
+          height: 200
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        unpackOutput: 0
+        packInput: 0
+        inputEdgeCount: 1
+    - rid: 91304114922455054
+      type: {class: RelayNode, ns: , asm: com.alelievr.NodeGraphProcessor.Runtime}
+      data:
+        nodeCustomName: 
+        GUID: 77d4193b-856f-493c-8087-dc7386032c96
+        computeOrder: 6
+        position:
+          serializedVersion: 2
+          x: -152.3
+          y: 781.3334
+          width: 200
+          height: 200
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        unpackOutput: 0
+        packInput: 0
+        inputEdgeCount: 1
+    - rid: 91304114922455055
+      type: {class: RelayNode, ns: , asm: com.alelievr.NodeGraphProcessor.Runtime}
+      data:
+        nodeCustomName: 
+        GUID: 8236638c-877f-410c-8800-93cb91c2569a
+        computeOrder: 4
+        position:
+          serializedVersion: 2
+          x: -487.50018
+          y: 781.3334
+          width: 200
+          height: 200
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        unpackOutput: 0
+        packInput: 0
+        inputEdgeCount: 1
     - rid: 7516383008435470404
       type: {class: SDStartNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
       data:
@@ -127,10 +210,10 @@ MonoBehaviour:
         computeOrder: 0
         position:
           serializedVersion: 2
-          x: -205.99988
-          y: 269.44702
+          x: -205.99998
+          y: 274
           width: 200
-          height: 190.66669
+          height: 190.66666
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -164,9 +247,9 @@ MonoBehaviour:
         previewEV100: 0
         previewSlice: 0
         isPinned: 0
-        outServerURL: http://127.0.0.1:7860
+        outServerURL: https://3108n063s1.imdo.co
         overrideSettings: 1
-        serverURL: http://127.0.0.1:7860
+        serverURL: https://3108n063s1.imdo.co
         useAuth: 0
         user: 
         pass: 
@@ -178,8 +261,8 @@ MonoBehaviour:
         computeOrder: 1
         position:
           serializedVersion: 2
-          x: 85.3334
-          y: 269.44702
+          x: 85.33333
+          y: 274
           width: 200
           height: 156
         expanded: 0
@@ -215,17 +298,18 @@ MonoBehaviour:
         previewEV100: 0
         previewSlice: 0
         isPinned: 0
-        ServerURL: 
+        ServerURL: https://3108n063s1.imdo.co
         modelNames:
         - ChilloutMix_chilloutmix_NiPrunedFp32Fix
+        - Dreamlike_cheeseDaddys_35
         - Dreamlike_dreamlikeDiffusion10_10
         - Dreamlike_dreamshaper_331BakedVae
         - Girl_aresMix_v01
         - Girl_chilloutmix_NiCkpt
-        - Girl_chilloutmix_NiPrunedFp32
         - Girl_feiji_v2
         - Girl_kaelvinsmixhc_releaseV10
         - Girl_luckyStrikeMix_V02Realistic
+        - Girl_majicmixRealistic_v5Preview
         - Girl_uberRealisticPornMerge_urpmv12
         - Logo_graphicArt_graphicArtBeta11
         - Porn_uberRealisticPornMerge_urpmv13
@@ -235,21 +319,21 @@ MonoBehaviour:
         - unstableinkdream_v6
         - v1-5-pruned-emaonly
         - "\u4E2D\u56FD\u6A21\u7279_kaelvinsmixhc_releaseV10"
+        - "\u52A8\u6F2B_experience_70"
         - "\u52A8\u6F2B_UnstableInkDream_unstableinkdream_v6"
         - "\u52A8\u6F2B_\u539A\u6D82\u98CE\u683C_dalcefoPainting_v4"
+        - "\u7EFC\u5408_anythingV3_fp16"
         - "\u7EFC\u5408_anythingV3Inpainting_1-inpainting"
         - "\u98CE\u683C\u5316\u4EBA\u50CF_portrait_10"
-        - "\u7EFC\u5408_anythingV3_fp16"
-        - Dreamlike_cheeseDaddys_35
-        - "\u52A8\u6F2B_experience_70"
-        currentIndex: 24
+        - Girl_chilloutmix_NiPrunedFp32
+        currentIndex: 19
         Model: "\u52A8\u6F2B_experience_70"
     - rid: 7516383008435470406
       type: {class: SDTxt2ImgNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
       data:
         nodeCustomName: 
         GUID: cef22d93-182f-4429-87a2-6c258a02c9fc
-        computeOrder: 7
+        computeOrder: 9
         position:
           serializedVersion: 2
           x: 764.89264
@@ -309,13 +393,13 @@ MonoBehaviour:
         isTiling: 0
         extension: '"Asymmetric Tiling":{"args":[true,true,false,0,-1]}'
         outputImage: {fileID: 0}
-        outSeed: 7440613152540372423
+        outSeed: 516324551480876699
         progress: 1
         pre_step: 0
         pre_step_count: 20
         pre_job_no: -1
         job_no_count: 0
-        speed: 4.3557744
+        speed: 2.749936
         samplerMethod: Euler
         savePath: 
     - rid: 7516383008435470407
@@ -326,9 +410,9 @@ MonoBehaviour:
         computeOrder: 2
         position:
           serializedVersion: 2
-          x: 435.4001
-          y: 852.66675
-          width: 260
+          x: 482.56265
+          y: 852.6667
+          width: 259.99997
           height: 178.66663
         expanded: 0
         debug: 0
@@ -375,7 +459,7 @@ MonoBehaviour:
       data:
         nodeCustomName: 
         GUID: f1ba9f93-ff31-4bcd-94c6-f50da638c546
-        computeOrder: 6
+        computeOrder: 8
         position:
           serializedVersion: 2
           x: 85.33324
@@ -429,12 +513,12 @@ MonoBehaviour:
       data:
         nodeCustomName: 
         GUID: 5d54986a-464b-4f55-991e-8b020b41641d
-        computeOrder: 5
+        computeOrder: 7
         position:
           serializedVersion: 2
-          x: -470.988
-          y: 543.79553
-          width: 200
+          x: -406
+          y: 543.3334
+          width: 199.99998
           height: 153.33331
         expanded: 0
         debug: 0
@@ -517,8 +601,8 @@ MonoBehaviour:
         - xsarchitectural-12NightMoonsci-fi
         currentIndex: 26
         useLoraBlockWeight: 0
-        loraBlockWeightPresetName: 
-        currentLoraBlockWeightPresetIndex: 0
+        loraBlockWeightPresetName: IND
+        currentLoraBlockWeightPresetIndex: 3
     - rid: 7516383008435470410
       type: {class: SDPromptRegisterNode, ns: FernNPRCore.SDNodeGraph, asm: Assembly-CSharp}
       data:
@@ -527,7 +611,7 @@ MonoBehaviour:
         computeOrder: 3
         position:
           serializedVersion: 2
-          x: -1294.6666
+          x: -1320
           y: 543.3334
           width: 632.6667
           height: 487.99994
@@ -655,22 +739,3 @@ MonoBehaviour:
           girl illust,
         Negative: lowres,longbody,bad anatomy,bad hands,cropped,low quality,worst
           quality
-    - rid: 7516383008435470411
-      type: {class: RelayNode, ns: , asm: com.alelievr.NodeGraphProcessor.Runtime}
-      data:
-        nodeCustomName: 
-        GUID: b7227e78-d13a-4473-b5a5-060a50f1ff6b
-        computeOrder: 4
-        position:
-          serializedVersion: 2
-          x: -411.65466
-          y: 958.46216
-          width: 200
-          height: 200
-        expanded: 0
-        debug: 0
-        nodeLock: 0
-        isUpdate: 0
-        unpackOutput: 0
-        packInput: 0
-        inputEdgeCount: 1
