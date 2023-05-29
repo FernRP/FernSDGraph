@@ -1196,7 +1196,6 @@ namespace GraphProcessor
 			edgeView.input = inputPortView;
 			edgeView.output = outputPortView;
 
-
 			return Connect(edgeView, autoDisconnectInputs);
 		}
 

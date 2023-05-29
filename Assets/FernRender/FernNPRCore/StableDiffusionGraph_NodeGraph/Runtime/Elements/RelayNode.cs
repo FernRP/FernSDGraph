@@ -113,7 +113,7 @@ public class RelayNode : BaseNode
 			displayName = "",
 			displayType = inputType.type,
 			identifier = "0",
-			acceptMultipleEdges = true,
+			acceptMultipleEdges = false,
 			sizeInPixel = Mathf.Min(k_MaxPortSize, sizeInPixel + 8),
 		};
 	}
@@ -128,7 +128,7 @@ public class RelayNode : BaseNode
 				displayName = "",
 				displayType = typeof(object),
 				identifier = "0",
-				acceptMultipleEdges = true,
+				acceptMultipleEdges = false,
 			};
 			yield break;
 		}
@@ -142,7 +142,7 @@ public class RelayNode : BaseNode
 				displayName = "Pack",
 				identifier = packIdentifier,
 				displayType = inputType.type,
-				acceptMultipleEdges = true,
+				acceptMultipleEdges = false,
 				sizeInPixel = Mathf.Min(k_MaxPortSize, Mathf.Max(underlyingPortData.Count, 1) + 7), // TODO: function
 			};
 
@@ -153,7 +153,7 @@ public class RelayNode : BaseNode
 					displayName = underlyingPortData?[i].name ?? "",
 					displayType = underlyingPortData?[i].type ?? typeof(object),
 					identifier = i.ToString(),
-					acceptMultipleEdges = true,
+					acceptMultipleEdges = false,
 					sizeInPixel = 0,
 				};
 			}
@@ -164,7 +164,7 @@ public class RelayNode : BaseNode
 				displayName = "",
 				displayType = inputType.type,
 				identifier = "0",
-				acceptMultipleEdges = true,
+				acceptMultipleEdges = false,
 				sizeInPixel = Mathf.Min(k_MaxPortSize, Mathf.Max(underlyingPortData.Count, 1) + 7),
 			};
 		}
