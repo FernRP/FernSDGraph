@@ -4,19 +4,17 @@ using UnityEngine;
 using GraphProcessor;
 using System.Linq;
 
-[System.Serializable, NodeMenuItem("Custom/Vector")]
+[System.Serializable, NodeMenuItem("Constant/Vector")]
 public class VectorNode : BaseNode
 {
-	[Output(name = "Out")]
-	public Vector4				output;
-	
-	[Input(name = "In"), SerializeField]
-	public Vector4				input;
+    [Output(name = "Out")] public Vector4 output;
 
-	public override string		name => "Vector";
+    [Input(name = "In"), SerializeField] public Vector4 input;
 
-	protected override void Process()
-	{
-		output = input;
-	}
+    public override string name => "Vector";
+
+    protected override void Process()
+    {
+        output = input;
+    }
 }

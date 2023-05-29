@@ -4,7 +4,7 @@ using UnityEngine;
 using GraphProcessor;
 using System.Linq;
 
-[System.Serializable, NodeMenuItem("Custom/PortConnectionTests")]
+// [System.Serializable, NodeMenuItem("Test/PortConnectionTests")]
 public class PortConnectionTests : BaseNode
 {
 	[Input]
@@ -22,6 +22,7 @@ public class PortConnectionTests : BaseNode
 	[CustomPortBehavior(nameof(inputs))]
 	IEnumerable< PortData > GetPortsForInputs(List< SerializableEdge > edges)
 	{
+		Debug.LogError("GetPortsForInputs");
         yield return new PortData{ displayName = "In 0", displayType = typeof(float), identifier = "0" };
         yield return new PortData{ displayName = "In 1", displayType = typeof(Color), identifier = "1" };
         yield return new PortData{ displayName = "In 2", displayType = typeof(Vector4), identifier = "2" };
@@ -35,6 +36,7 @@ public class PortConnectionTests : BaseNode
 	[CustomPortBehavior(nameof(outputs))]
 	IEnumerable< PortData > GetPortsForOutput(List< SerializableEdge > edges)
 	{
+		Debug.LogError("GetPortsForOutput");
         yield return new PortData{ displayName = "Out 0", displayType = typeof(float), identifier = "0" };
         yield return new PortData{ displayName = "Out 1", displayType = typeof(Color), identifier = "1" };
         yield return new PortData{ displayName = "Out 2", displayType = typeof(Vector4), identifier = "2" };

@@ -23,9 +23,6 @@ namespace FernNPRCore.SDNodeGraph
     }
 
     [System.Serializable]
-    /// <summary>
-    /// This class represent a simple node which takes one event in parameter and pass it to the next node
-    /// </summary>
     public abstract class LinearSDProcessorNode : SDProcessorNode
     {
         // These booleans will controls wether or not the execution of the folowing nodes will be done or discarded.
@@ -54,9 +51,6 @@ namespace FernNPRCore.SDNodeGraph
     }
 
     [System.Serializable]
-    /// <summary>
-    /// This class represent a waitable node which invokes another node after a time/frame
-    /// </summary>
     public abstract class WaitableNode : LinearSDProcessorNode
     {
         [Output(name = "Execute After")] public ConditionalLink executeAfter;

@@ -7,7 +7,7 @@ using FernNPRCore.SDNodeGraph;
 
 namespace FernNPRCore.SDNodeGraph
 {
-    [System.Serializable, NodeMenuItem("Custom/TextureNode")]
+    [System.Serializable, NodeMenuItem("Asset/TextureNode")]
     public class TextureNode : SDNode, ICreateNodeFrom<Texture>
     {
         [Output(name = "Texture")] public Texture outputTexture;

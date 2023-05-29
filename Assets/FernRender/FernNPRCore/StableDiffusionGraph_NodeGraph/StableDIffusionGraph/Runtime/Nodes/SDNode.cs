@@ -192,7 +192,6 @@ namespace FernNPRCore.SDNodeGraph
 
             // There are some exception where node don't have settings but we still inherit from them
             settings |= n is TextureNode;
-            settings |= n is SelfNode;
 
             return true;
         }

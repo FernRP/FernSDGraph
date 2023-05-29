@@ -1,10 +1,10 @@
 using UnityEngine;
 using GraphProcessor;
 
-[System.Serializable, NodeMenuItem("Custom/Vertical")]
+// [System.Serializable, NodeMenuItem("Test/Vertical")]
 public class VerticalNode : BaseNode
 {
-	[Input, Vertical]
+	[Input(name = "1"), Vertical]
     public float                input;
 
 	[Output, Vertical]

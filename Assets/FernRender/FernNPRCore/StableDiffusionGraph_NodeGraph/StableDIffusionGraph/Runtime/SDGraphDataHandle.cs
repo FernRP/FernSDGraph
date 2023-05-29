@@ -11,6 +11,7 @@ namespace FernNPRCore.SDNodeGraph
         public string ModelsAPI = "/sdapi/v1/sd-models";
         public string LorasAPI = "/sdapi/v1/loras";
         public string ControlNetTex2Img = "/controlnet/txt2img";
+        public string UpscalersAPI = "/sdapi/v1/upscalers";
         public string ControlNetModelList = "/controlnet/model_list";
         public string ControlNetMoudleList = "/controlnet/module_list";
         public string ControlNetDetect = "/controlnet/detect";
