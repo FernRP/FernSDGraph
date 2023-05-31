@@ -209,7 +209,7 @@ namespace FernNPRCore.SDNodeGraph
         }
         
         protected bool UpdateTempRenderTexture(ref CustomRenderTexture target, bool hasMips = false, bool autoGenerateMips = false,
-			CustomRenderTextureUpdateMode updateMode = CustomRenderTextureUpdateMode.OnDemand, bool depthBuffer = false,
+			CustomRenderTextureUpdateMode updateMode = CustomRenderTextureUpdateMode.OnDemand, bool depthBuffer = true,
 			GraphicsFormat overrideGraphicsFormat = GraphicsFormat.None, bool hideAsset = true)
 		{
 			bool changed = false;

@@ -23,7 +23,6 @@ namespace FernNPRCore.SDNodeGraph
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Txt2Img")]
     public class SDTxt2ImgNode : LinearSDProcessorNode
     {
-        [Input(name = "ControlNet")] private ControlNetData controlNetData;
         [Input(name = "Upscaler")] public HiresUpscaler upscaler;
         [Input(name = "Prompt")] public Prompt prompt;
 
@@ -212,80 +211,36 @@ namespace FernNPRCore.SDNodeGraph
                 // Send the generation parameters along with the POST request
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
-                    if (controlNetData == null)
+                    SDParamsInTxt2Img sd = new SDParamsInTxt2Img();
+                    sd.prompt = prompt.positive;
+                    sd.negative_prompt = prompt.negative;
+                    sd.steps = step;
+                    sd.cfg_scale = cfg;
+                    sd.width = width;
+                    sd.height = height;
+                    sd.tiling = isTiling;
+                    sd.seed = seed; 
+                    sd.sampler_name = samplerMethod;
+                    sd.enable_hr = false;
+                    if (upscaler != null && !string.IsNullOrEmpty(upscaler.hr_upscaler) && !upscaler.hr_upscaler.ToLower().Equals("none"))
                     {
-                        SDParamsInTxt2Img sd = new SDParamsInTxt2Img();
-                        sd.prompt = prompt.positive;
-                        sd.negative_prompt = prompt.negative;
-                        sd.steps = step;
-                        sd.cfg_scale = cfg;
-                        sd.width = width;
-                        sd.height = height;
-                        sd.tiling = isTiling;
-                        sd.seed = seed; 
-                        sd.sampler_name = samplerMethod;
-                        sd.enable_hr = false;
-                        if (upscaler != null && !string.IsNullOrEmpty(upscaler.hr_upscaler) && !upscaler.hr_upscaler.ToLower().Equals("none"))
-                        {
-                            sd.enable_hr = true;
-                            sd.hr_second_pass_steps = upscaler.hr_second_pass_steps;
-                            sd.hr_upscaler = upscaler.hr_upscaler;
-                            sd.hr_resize_x = upscaler.hr_resize_x;
-                            sd.hr_resize_y = upscaler.hr_resize_y;
-                            sd.denoising_strength = upscaler.denoising_strength;
-                            sd.hr_scale = upscaler.hr_scale;
-                        }
-
-                        // Serialize the input parameters
-                        json = JsonConvert.SerializeObject(sd);
-                        if (!string.IsNullOrEmpty(extension))
-                        {
-                            var scriptsHeader = ",\"alwayson_scripts\":{";
-                            var scriptslast = "}";
-                            var scriptsContent = $"{scriptsHeader}{extension}{scriptslast}";
-                            json = json.Insert(json.Length - 1, scriptsContent);
-                        }
+                        sd.enable_hr = true;
+                        sd.hr_second_pass_steps = upscaler.hr_second_pass_steps;
+                        sd.hr_upscaler = upscaler.hr_upscaler;
+                        sd.hr_resize_x = upscaler.hr_resize_x;
+                        sd.hr_resize_y = upscaler.hr_resize_y;
+                        sd.denoising_strength = upscaler.denoising_strength;
+                        sd.hr_scale = upscaler.hr_scale;
                     }
-                    else
-                    {
-                        SDParamsInTxt2ImgContronlNet sd = new SDParamsInTxt2ImgContronlNet();
-                        sd.prompt = prompt.positive;
-                        sd.negative_prompt = prompt.negative;
-                        sd.steps = step;
-                        sd.cfg_scale = cfg;
-                        sd.width = width;
-                        sd.height = height;
-                        sd.tiling = isTiling;
-                        sd.seed = seed;
-                        sd.sampler_name = samplerMethod;
-                        if (controlNetData != null)
-                        {
-                            SDUtil.Log($"use controlNet: {controlNetData.model}");
-                            sd.alwayson_scripts = new ALWAYSONSCRIPTS();
-                            sd.alwayson_scripts.controlnet = new ControlNetDataArgs();
-                            sd.alwayson_scripts.controlnet.args = new[] { controlNetData };
-                        }
-                        sd.enable_hr = false;
-                        if (upscaler != null && !string.IsNullOrEmpty(upscaler.hr_upscaler) && !upscaler.hr_upscaler.ToLower().Equals("none"))
-                        {
-                            sd.enable_hr = true;
-                            sd.hr_second_pass_steps = upscaler.hr_second_pass_steps;
-                            sd.hr_upscaler = upscaler.hr_upscaler;
-                            sd.hr_resize_x = upscaler.hr_resize_x;
-                            sd.hr_resize_y = upscaler.hr_resize_y;
-                            sd.denoising_strength = upscaler.denoising_strength;
-                            sd.hr_scale = upscaler.hr_scale;
-                        }
 
-                        // Serialize the input parameters
-                        json = JsonConvert.SerializeObject(sd);
-                        
-                        if (!string.IsNullOrEmpty(extension))
-                        {
-                            //var scriptsHeader = ",\"alwayson_scripts\":{";
-                            var scriptsContent = $",{extension}";
-                            json = json.Insert(json.Length - 2, scriptsContent);
-                        }
+                    // Serialize the input parameters
+                    json = JsonConvert.SerializeObject(sd);
+                    if (!string.IsNullOrEmpty(extension))
+                    {
+                        var scriptsHeader = ",\"alwayson_scripts\":{";
+                        var scriptslast = "}";
+                        var scriptsContent = $"{scriptsHeader}{extension}{scriptslast}";
+                        json = json.Insert(json.Length - 1, scriptsContent);
                     }
                     SDUtil.Log($"Txt2Img Json Data: {json}");
 

@@ -32,7 +32,6 @@ namespace FernNPRCore.SDNodeGraph
 		
 		[Input("Image")] public Texture InputImage;
 		[Input("Mask")] public Texture MaskImage;
-		[Input("ControlNet")] public ControlNetData controlNetData;
 		[Input("Prompt")] public Prompt prompt;
 		[Input("Resize Mode"), ShowAsDrawer] public ResizeMode resizeMode;
 		[Input("Step"), ShowAsDrawer] public int step = 20;
@@ -41,6 +40,8 @@ namespace FernNPRCore.SDNodeGraph
 		[Input("Width"), ShowAsDrawer] public int width = 512;
 		[Input("Height"), ShowAsDrawer] public int height = 512;
 		[Input("Seed"), ShowAsDrawer] public long seed = -1;
+		[Input("Script")] public SCRIPT script;
+		[Input("Extension")] public string extension = null;
 		
 		[Output("Image")] public Texture2D outputImage;
 		[Output("Seed")] public long outSeed;
@@ -65,11 +66,12 @@ namespace FernNPRCore.SDNodeGraph
 		public Action<long, long> OnUpdateSeedField;
 		
 		[HideInInspector] public float progress;
-		[HideInInspector] public DateTime startTime;
+		[HideInInspector] public DateTime pre_step_time;
+		[HideInInspector] public int pre_step;
+		[HideInInspector] public int pre_step_count = 20;
+		[HideInInspector] public int pre_job_no;
+		[HideInInspector] public int job_no_count;
 		[HideInInspector] public float speed; // it/s
-		[HideInInspector] public float init_speed = 0.0001f; // it/s
-		[HideInInspector] public int cur_step;
-		[HideInInspector] public bool isExecuting = false;
 
 		public override Texture previewTexture => OutputImage;
 
@@ -109,25 +111,13 @@ namespace FernNPRCore.SDNodeGraph
 
 		protected override IEnumerator Execute()
 		{
-			Init();
 			yield return GenerateAsync();
 		}
 		
-		public void Init()
-		{
-			cur_step = -1;
-			startTime = DateTime.Now;
-			progress = 0;
-			speed = EditorPrefs.GetFloat("SD.GPU.it_speed", 0.0001f);
-			init_speed = EditorPrefs.GetFloat("SD.GPU.init_speed", 0.0001f);
-			isExecuting = true;
-		}
 		
 		public void Complete()
 		{
-			isExecuting = false;
-			EditorPrefs.SetFloat("SD.GPU.it_speed", speed);
-			EditorPrefs.SetFloat("SD.GPU.init_speed", init_speed);
+			pre_job_no = -1;
 		}
 		
 		private IEnumerator UpdateGenerationProgress()
@@ -155,16 +145,14 @@ namespace FernNPRCore.SDNodeGraph
                 // Wait that the generation is complete before procedding
                 Task<WebResponse> webResponse = httpWebRequest.GetResponseAsync();
 
-                var currentTime = DateTime.Now;
-                TimeSpan oTime = currentTime.Subtract(startTime);
-                if (cur_step == -1)
-                {
-                    var pro = (float)oTime.TotalSeconds * init_speed;
-                    progress = Mathf.Min(1, pro);
-                }
                 while (!webResponse.IsCompleted)
                 {                
-                    yield return new WaitForSeconds(100);
+	                var TotalSeconds = (float)DateTime.Now.Subtract(pre_step_time).TotalSeconds;
+	                progress = Mathf.Min((float)pre_step / pre_step_count /*(json.progress)*/ + TotalSeconds * speed / pre_step_count, (pre_step + 1f) / pre_step_count);
+	                if (job_no_count <= pre_job_no)
+		                progress = 1;
+	                onProgressUpdate?.Invoke(progress);
+	                yield return new WaitForSeconds(100);
                 }
                 
                 // Stream the result from the server
@@ -178,27 +166,26 @@ namespace FernNPRCore.SDNodeGraph
                     // Deserialize the JSON string into a data structure
                     SDResponseProgress json = JsonConvert.DeserializeObject<SDResponseProgress>(result);
                     // If no image, there was probably an error so abort
-                    if (json != null && !string.IsNullOrEmpty(json.current_image))
+                    
+                    if (json.state != null)
                     {
-                        byte[] imageData = Convert.FromBase64String(json.current_image);
-                        OutputImage.LoadImage(imageData);
-                    
-                        if (json.state != null && json.state.sampling_step > cur_step) 
-                        {
-                            cur_step = json.state.sampling_step;
-                            if (cur_step == 0)
-                                init_speed = 1 / (float)oTime.TotalSeconds;
-                            else
-                                speed = cur_step/(float)(oTime.TotalSeconds - 1 / init_speed);
-                        }
-                        progress = json.progress;
-                        onProgressUpdate?.Invoke(progress);
+	                    pre_step_count = json.state.sampling_steps;
+	                    job_no_count = json.state.job_count;
+	                    if (json.state.job_no > pre_job_no)
+	                    {
+		                    pre_step_time = DateTime.Now;
+		                    progress = 0;
+		                    pre_step = 0;
+		                    if (json.state.job_no == 0) speed = 0.01f;
+		                    pre_job_no = json.state.job_no;
+	                    }
+	                    if (json.state.sampling_step > pre_step) 
+	                    {
+		                    speed = (json.state.sampling_step - pre_step)/(float)DateTime.Now.Subtract(pre_step_time).TotalSeconds;;
+		                    pre_step_time = DateTime.Now;
+		                    pre_step = json.state.sampling_step;
+	                    }
                     }
-                    
-                    if (cur_step == -1) yield break;
-                    // TODO:?
-                    // var pro = Mathf.Clamp((((float)oTime.TotalSeconds - 1f / init_speed) * speed) / (step - 1f), cur_step/(step - 1.0f), (cur_step + 1)/(step - 1.0f) - 0.001f);
-                    // progress = Mathf.Min(1, pro);
                 }
             }
         }
@@ -234,73 +221,41 @@ namespace FernNPRCore.SDNodeGraph
                     string maskImgString = "";
 
                     string json;
-                    
-                    if (controlNetData != null)
+                    SDParamsInImg2Img sd = new SDParamsInImg2Img();
+                    sd.resize_mode = (int)resizeMode;
+                    sd.init_images = new string[] { inputImgString };
+                    sd.prompt = prompt.positive;
+                    sd.negative_prompt = prompt.negative;
+                    sd.steps = step;
+                    sd.cfg_scale = cfg;
+                    sd.denoising_strength = denisoStrength;
+                    sd.width = width;
+                    sd.height = height;
+                    sd.seed = seed;
+                    sd.tiling = false;
+                    sd.sampler_name = samplerMethod;
+                    if (MaskImage)
                     {
-                        SDUtil.Log("use ControlNet");
-                        SDParamsInImg2ImgControlNet sd = new SDParamsInImg2ImgControlNet();
-                        sd.resize_mode = (int)resizeMode;
-                        sd.init_images = new string[] { inputImgString };
-                        sd.prompt = prompt.positive;
-                        sd.negative_prompt = prompt.negative;
-                        sd.steps = step;
-                        sd.cfg_scale = cfg;
-                        sd.denoising_strength = denisoStrength;
-                        sd.width = width;
-                        sd.height = height;
-                        sd.seed = seed;
-                        sd.tiling = false;
-                        sd.sampler_name = samplerMethod;
-                        sd.alwayson_scripts = new ALWAYSONSCRIPTS();
-                        sd.alwayson_scripts.controlnet = new ControlNetDataArgs();
-                        sd.alwayson_scripts.controlnet.args = new[] { controlNetData };
-                        json = JsonConvert.SerializeObject(sd);
-                    }else if (MaskImage != null)
-                    {
-                        SDUtil.Log("use Mask");
-                        
-                        SDParamsInImg2ImgMask sd = new SDParamsInImg2ImgMask();
-                        sd.resize_mode = (int)resizeMode;
-                        sd.init_images = new string[] { inputImgString };
-                        sd.prompt = prompt.positive;
-                        sd.negative_prompt = prompt.negative;
-                        sd.steps = step;
-                        sd.cfg_scale = cfg;
-                        sd.denoising_strength = denisoStrength;
-                        sd.width = width;
-                        sd.height = height;
-                        sd.seed = seed;
-                        sd.tiling = false;
-                        sd.sampler_name = samplerMethod;
-                        byte[] maskImgBytes = SDUtil.TextureToTexture2D(MaskImage).EncodeToPNG();
-                        maskImgString = Convert.ToBase64String(maskImgBytes);
-                        sd.mask = maskImgString;
-                        sd.inpainting_fill = inpainting_fill;
-                        sd.inpaint_full_res = inpaint_full_res;
-                        sd.inpaint_full_res_padding = inpaint_full_res_padding;
-                        sd.inpainting_mask_invert = inpainting_mask_invert;
-                        sd.mask_blur = mask_blur;
-
-                        json = JsonConvert.SerializeObject(sd);
+	                    byte[] maskImgBytes = SDUtil.TextureToTexture2D(MaskImage).EncodeToPNG();
+	                    maskImgString = Convert.ToBase64String(maskImgBytes);
+	                    sd.mask = maskImgString;
+	                    sd.inpainting_fill = inpainting_fill;
+	                    sd.inpaint_full_res = inpaint_full_res;
+	                    sd.inpaint_full_res_padding = inpaint_full_res_padding;
+	                    sd.inpainting_mask_invert = inpainting_mask_invert;
+	                    sd.mask_blur = mask_blur;
                     }
-                    else
+                    if (script != null)
                     {
-                        SDUtil.Log("use Only Img2Img");
-                        SDParamsInImg2Img sd = new SDParamsInImg2Img();
-                        sd.resize_mode = (int)resizeMode;
-                        sd.init_images = new string[] { inputImgString };
-                        sd.prompt = prompt.positive;
-                        sd.negative_prompt = prompt.negative;
-                        sd.steps = step;
-                        sd.cfg_scale = cfg;
-                        sd.denoising_strength = denisoStrength;
-                        sd.width = width;
-                        sd.height = height;
-                        sd.seed = seed;
-                        sd.tiling = false;
-                        sd.sampler_name = samplerMethod;
-
-                        json = JsonConvert.SerializeObject(sd);
+	                    sd.script_name = script.name;
+	                    sd.script_args = script.args;
+                    }
+                    
+                    json = JsonConvert.SerializeObject(sd);
+                    if (!string.IsNullOrEmpty(extension))
+                    {
+	                    var scriptsContent = $",\"alwayson_scripts\":{{{extension}}}";
+	                    json = json.Insert(json.Length - 1, scriptsContent);
                     }
                     
                     // Send to the server

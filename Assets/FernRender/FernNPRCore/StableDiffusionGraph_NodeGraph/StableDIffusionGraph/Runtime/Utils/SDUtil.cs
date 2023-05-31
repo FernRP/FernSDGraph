@@ -374,7 +374,6 @@ namespace FernNPRCore.SDNodeGraph
         public float s_noise = 1;
         public bool override_settings_restore_afterwards = true;
         public string sampler_index = "Euler";
-        public ALWAYSONSCRIPTS alwayson_scripts = null;
     }
 
     class SDParamsInTxt2Img
@@ -462,9 +461,9 @@ namespace FernNPRCore.SDNodeGraph
         public float s_noise = 1;
         public SettingsOveride override_settings;
         public bool override_settings_restore_afterwards = true;
-        public string[] script_args = { };
+        public object[] script_args = { };
         public string sampler_index = "Euler";
-        public string script_name = "";
+        public string script_name = null;
 
         public class SettingsOveride
         {
@@ -509,27 +508,16 @@ namespace FernNPRCore.SDNodeGraph
         public float s_noise = 1;
         public SettingsOveride override_settings;
         public bool override_settings_restore_afterwards = true;
-        public string[] script_args = { };
+        public object[] script_args = { };
         public string sampler_index = "Euler";
 
         public bool include_init_images = false;
 
-        //    public string script_name = ""; // including this throws a 422 Unprocessable Entity error
+        public string script_name = null;
+        public string mask = null;
         public class SettingsOveride
         {
         }
-    }
-
-    class SDParamsInImg2ImgMask : SDParamsInImg2Img
-    {
-        public string mask = "";
-    }
-
-
-    class SDParamsInImg2ImgControlNet : SDParamsInImg2Img
-    {
-        public string mask = null;
-        public ALWAYSONSCRIPTS alwayson_scripts = null;
     }
 
     /// <summary>
@@ -572,10 +560,10 @@ namespace FernNPRCore.SDNodeGraph
         public float s_noise = 1;
         public SettingsOveride override_settings;
         public bool override_settings_restore_afterwards = true;
-        public string[] script_args = { };
+        public object[] script_args = { };
         public string sampler_index = "Euler";
         public bool include_init_images = false;
-        public string script_name = "";
+        public string script_name = null;
 
         public class SettingsOveride
         {
@@ -691,11 +679,12 @@ namespace FernNPRCore.SDNodeGraph
     {
         public ControlNetData[] args;
     }
+    
 
-
-    public class ALWAYSONSCRIPTS
+    public class SCRIPT
     {
-        public ControlNetDataArgs controlnet;
+        public string name;
+        public object[] args;
     }
 
     public class SDModel

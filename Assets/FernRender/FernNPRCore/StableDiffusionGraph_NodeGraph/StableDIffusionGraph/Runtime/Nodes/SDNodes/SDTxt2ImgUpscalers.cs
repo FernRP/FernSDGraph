@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace FernNPRCore.SDNodeGraph
 {
-    [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Hires Upscaler")]
+    [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Hires Upscaler (txt2img)")]
     public class SDTxt2ImgUpscalers : SDNode
     {
         [Output] public HiresUpscaler upscaler;
