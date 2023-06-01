@@ -179,6 +179,31 @@ namespace FernNPRCore.SDNodeGraph
 			GetPort(nameof(controlNet), null).PushData();
 			yield return null;
 		}
+		
+		
+		protected override void Process()
+		{
+			base.Process();
+			controlNet ??= new ControlNetData();
+			controlNet.module = module;
+			controlNet.model = model;
+			controlNet.weight = weight;
+			controlNet.resize_mode = (int)resize_mode;
+			controlNet.lowvram = lowvram;
+			controlNet.processor_res = processor_res;
+			controlNet.threshold_a = threshold_a;
+			controlNet.threshold_b = threshold_b;
+			controlNet.guidance_start = guidance_start;
+			controlNet.guidance_end = guidance_end;
+			controlNet.guidance = guidance;
+			controlNet.control_mode = (int)control_mode;
+			if (controlNetImg != null)
+			{
+				byte[] inputImgBytes = SDUtil.TextureToTexture2D(controlNetImg).EncodeToPNG();
+				string inputImgString = Convert.ToBase64String(inputImgBytes);
+				controlNet.input_image = inputImgString;
+			}
+		}
 	}
 }
 
