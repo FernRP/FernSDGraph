@@ -3,7 +3,7 @@ using UnityEngine.Rendering;
 
 namespace NodeGraphProcessor.Examples
 {
-	[System.Serializable, NodeMenuItem("Conditional/Comparison")]
+	[System.Serializable, NodeMenuItem("Math/Comparison")]
 	public class Comparison : BaseNode
 	{
 		[Input(name = "In A")]

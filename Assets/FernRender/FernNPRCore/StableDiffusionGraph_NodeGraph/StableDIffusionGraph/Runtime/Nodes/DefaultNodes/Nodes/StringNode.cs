@@ -5,7 +5,7 @@ using GraphProcessor;
 using System.Linq;
 using FernNPRCore.SDNodeGraph;
 
-[System.Serializable, NodeMenuItem("String")]
+[System.Serializable, NodeMenuItem("Constant/String")]
 public class StringNode : SDNode
 {
     [Input(name = "In")] public string inputString;

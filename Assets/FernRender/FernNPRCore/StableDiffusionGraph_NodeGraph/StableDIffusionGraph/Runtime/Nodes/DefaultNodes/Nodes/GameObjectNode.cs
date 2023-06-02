@@ -4,7 +4,7 @@ using UnityEngine;
 using GraphProcessor;
 using System.Linq;
 
-[System.Serializable, NodeMenuItem("Custom/Game Object")]
+[System.Serializable, NodeMenuItem("Asset/Game Object")]
 public class GameObjectNode : BaseNode, ICreateNodeFrom<GameObject>
 {
 	[Output(name = "Out"), SerializeField]

@@ -4,7 +4,7 @@ using UnityEngine;
 using GraphProcessor;
 using System.Linq;
 
-[System.Serializable, NodeMenuItem("Primitives/Text")]
+[System.Serializable, NodeMenuItem("Constant/Text")]
 public class TextNode : BaseNode
 {
 	[Output(name = "Label"), SerializeField]

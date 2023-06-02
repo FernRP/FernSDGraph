@@ -5,7 +5,7 @@ using UnityEngine;
 using GraphProcessor;
 using NodeGraphProcessor.Examples;
 
-[NodeMenuItem("Print")]
+[NodeMenuItem("Debug/Print")]
 public class PrintNode : BaseNode
 {
 	[Input]
@@ -14,7 +14,7 @@ public class PrintNode : BaseNode
 	public override string name => "Print";
 }
 
-[NodeMenuItem("Conditional/Print")]
+[NodeMenuItem("Debug/Control Flow/Print")]
 public class SDProcessorPrintNode : LinearSDProcessorNode
 {
 	[Input]

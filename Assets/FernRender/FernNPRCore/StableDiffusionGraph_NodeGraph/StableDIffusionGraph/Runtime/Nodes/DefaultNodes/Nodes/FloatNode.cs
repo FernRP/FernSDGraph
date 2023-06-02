@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GraphProcessor;
 
-[System.Serializable, NodeMenuItem("Primitives/Float")]
+[System.Serializable, NodeMenuItem("Constant/Float")]
 public class FloatNode : BaseNode
 {
     [Output("Out")]

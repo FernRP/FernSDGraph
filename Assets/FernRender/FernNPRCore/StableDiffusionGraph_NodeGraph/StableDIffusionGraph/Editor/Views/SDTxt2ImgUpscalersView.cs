@@ -94,7 +94,7 @@ namespace FernNPRCore.SDNodeGraph
             try
             {
                 // Stable diffusion API url for getting the models list
-                string url = SDDataHandle.Instance.GetServerURL() + SDDataHandle.Instance.UpscalersAPI;
+                string url = SDGraphResource.SdGraphDataHandle.GetServerURL() + SDGraphResource.SdGraphDataHandle.UpscalersAPI;
 
                 httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
                 httpWebRequest.ContentType = "application/json";
