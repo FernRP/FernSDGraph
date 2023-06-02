@@ -5,7 +5,6 @@ using UnityEngine;
 using GraphProcessor;
 using System.Linq;
 using System.Text;
-using FernNPRCore.StableDiffusionGraph;
 using Newtonsoft.Json;
 using Unity.EditorCoroutines.Editor;
 using UnityEngine.Networking;

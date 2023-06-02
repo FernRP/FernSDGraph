@@ -8,7 +8,6 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using FernNPRCore.StableDiffusionGraph;
 using Newtonsoft.Json;
 using NodeGraphProcessor.Examples;
 using Unity.VisualScripting;
@@ -101,7 +100,7 @@ namespace FernNPRCore.SDNodeGraph
             {
                 // Make a HTTP POST request to the Stable Diffusion server
                 //var txt2ImgAPI = controlNet == defaultControlNet ? SDDataHandle.TextToImageAPI : SDDataHandle.ControlNetTex2Img;
-                var txt2ImgAPI = SDDataHandle.Instance.ProgressAPI;
+                var txt2ImgAPI = SDGraphResource.SdGraphDataHandle.ProgressAPI;
                 
                 httpWebRequest = (HttpWebRequest)WebRequest.Create(SDGraphResource.SdGraphDataHandle.GetServerURL() + txt2ImgAPI);
                 httpWebRequest.ContentType = "application/json";

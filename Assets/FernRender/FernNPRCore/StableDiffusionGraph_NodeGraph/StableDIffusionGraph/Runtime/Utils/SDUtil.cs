@@ -48,9 +48,11 @@ namespace FernNPRCore.SDNodeGraph
                 return _saveIcon;
             }
         }
-        
+
         static Texture2D _assetLogo;
-        public static Texture2D AssetLogo => _assetLogo == null ? _assetLogo = Resources.Load<Texture2D>("assetLogo") : _assetLogo;
+
+        public static Texture2D AssetLogo =>
+            _assetLogo == null ? _assetLogo = Resources.Load<Texture2D>("assetLogo") : _assetLogo;
 
         private static Texture2D _openFolderIcon;
 
@@ -218,7 +220,7 @@ namespace FernNPRCore.SDNodeGraph
             byte[] pngData = gammaTexture.EncodeToPNG();
             File.WriteAllBytes(filePath, pngData);
         }
-        
+
         public static void SaveAsLinearPNG(Texture texture, string filePath)
         {
             RenderTexture renderTexture = RenderTexture.GetTemporary(
@@ -227,7 +229,7 @@ namespace FernNPRCore.SDNodeGraph
 
             Texture2D texture2d = new Texture2D(texture.width, texture.height);
             texture2d.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
-            
+
             // 将Texture2D转换为伽马空间
             Color[] pixels = texture2d.GetPixels();
             for (int i = 0; i < pixels.Length; i++)
@@ -520,6 +522,30 @@ namespace FernNPRCore.SDNodeGraph
         }
     }
 
+    class ExtraSingleImageParam
+    {
+        public string image = "";
+        public int resize_mode = 0;
+        public bool show_extras_results = true;
+        public float gfpgan_visibility = 0;
+        public float codeformer_visibility = 0;
+        public float codeformer_weight = 0;
+        public float upscaling_resize = 2;
+        public int upscaling_resize_w = 512;
+        public int upscaling_resize_h = 512;
+        public bool upscaling_crop = true;
+        public string upscaler_1 = "None";
+        public string upscaler_2 = "None";
+        public float extras_upscaler_2_visibility = 0;
+        public bool upscale_first = false;
+    }
+    
+    class ExtraSingleImageResponse
+    {
+        public string html_info = "";
+        public string image = "";
+    }
+
     class SDParamsInImg2ImgMask : SDParamsInImg2Img
     {
         public string mask = "";
@@ -706,6 +732,15 @@ namespace FernNPRCore.SDNodeGraph
         public string sha256;
         public string filename;
         public string config;
+    }
+
+    public class SDUpscalerModel
+    {
+        public string name;
+        public string model_name;
+        public string model_path;
+        public string model_url;
+        public string scale;
     }
 
     public class SDLoraModel

@@ -7,7 +7,6 @@ using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using FernNPRCore.SDNodeGraph;
-using FernNPRCore.StableDiffusionGraph;
 using GraphProcessor;
 using Newtonsoft.Json;
 using NodeGraphProcessor.Examples;

@@ -16,6 +16,7 @@ MonoBehaviour:
   ModelsAPI: /sdapi/v1/sd-models
   LorasAPI: /sdapi/v1/loras
   ControlNetTex2Img: /controlnet/txt2img
+  UpscalersAPI: /sdapi/v1/upscalers
   ControlNetModelList: /controlnet/model_list
   ControlNetMoudleList: /controlnet/module_list
   ControlNetDetect: /controlnet/detect
@@ -24,6 +25,7 @@ MonoBehaviour:
   OptionAPI: /sdapi/v1/options
   DataDirAPI: /sdapi/v1/cmd-flags
   ProgressAPI: /sdapi/v1/progress
+  ExtraSingleImage: /sdapi/v1/extra-single-image
   SavePath: TmpPhotos
   UseAuth: 0
   Username: 
@@ -48,29 +50,40 @@ MonoBehaviour:
   - DPM++ SDE Karras
   - DDIM
   - PLMS
+  UpscalerModel:
+  - None
+  - Lanczos
+  - Nearest
+  - ESRGAN_4x
+  - LDSR
+  - R-ESRGAN 4x+
+  - R-ESRGAN 4x+ Anime6B
+  - ScuNET
+  - ScuNET PSNR
+  - SwinIR 4x
   loraBlockWeightPresets:
     reorderableList:
-      canAdd: 0
-      canRemove: 0
-      draggable: 0
-      expandable: 0
-      multipleSelection: 0
-      isExpanded: 0
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 1
       label:
-        m_Text: 
+        m_Text: Keys
         m_Image: {fileID: 0}
         m_Tooltip: 
-      headerHeight: 0
-      footerHeight: 0
-      slideEasing: 0
-      verticalSpacing: 0
-      showDefaultBackground: 0
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
       elementDisplayType: 0
       elementNameProperty: 
       elementNameOverride: 
       elementIcon: {fileID: 0}
     reqReferences: {fileID: 0}
-    isExpanded: 0
+    isExpanded: 1
     _keyValues: []
     _keys: []
     _values: []
