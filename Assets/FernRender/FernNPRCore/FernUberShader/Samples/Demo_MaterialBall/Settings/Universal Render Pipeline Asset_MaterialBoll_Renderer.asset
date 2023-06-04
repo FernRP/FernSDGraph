@@ -1,5 +1,23 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3330285417864105305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99044e0b7d7b80241981c71e36b391ed, type: 3}
+  m_Name: StylizedGrass.GrassBendingFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  bendingShader: {fileID: 4800000, guid: 83f1a74da0594f2439500e813fc6108b, type: 3}
+  settings:
+    renderRange: 50
+    ignoreSceneView: 0
+    ignoreOverlayCamera: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18,6 +36,7 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: 3408530085571000257}
   - {fileID: 8086772303577859252}
+  - {fileID: -3330285417864105305}
   m_RendererFeatureMap: c1f7b0bc0d884d2fb4c4398690fc3970
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
