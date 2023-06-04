@@ -241,8 +241,8 @@ half3 StylizedSpecular(half3 albedo, half ndothClamp, half specularSize, half sp
 half BlinnPhongSpecular(half shininess, half ndoth)
 {
     half phongSmoothness = exp2(10 * shininess + 1);
-    half normalize = (phongSmoothness + 7) * INV_PI8; // bling-phong 能量守恒系数
-    half specular = max(pow(ndoth, phongSmoothness) * normalize, 0.001);
+    half normalize = (phongSmoothness + 7) * INV_PI8;
+    half specular = max(pow(ndoth, phongSmoothness) * normalize, 1e-4);
     return specular;
 }
 

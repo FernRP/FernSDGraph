@@ -8,17 +8,19 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 02 - Default
-  m_Shader: {fileID: 4800000, guid: 0bb4a4d350ca3de41aed86ede804a971, type: 3}
+  m_Shader: {fileID: 4800000, guid: 335dcad6d9fdba943a91b0a9295ee10e, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _KAJIYAHAIR
+  - _GGX
   - _LAMBERTIAN
   - _NORMALMAP
   - _RENDERENVSETTING
-  m_InvalidKeywords:
-  - _IS_FILTER_LIGHTCOLOR_ON
   - _SCREENSPACERIM
+  m_InvalidKeywords:
+  - _ALPHAPREMULTIPLY_ON
+  - _IS_FILTER_LIGHTCOLOR_ON
+  - _KAJIYAHAIR
   - _USEHALFLAMBERT_ON
   - _USERADIANCEOCCLUSION_ON
   m_LightmapFlags: 4
@@ -128,16 +130,19 @@ Material:
     - _BumpScale: 1
     - _CELLSmoothing: 0.5
     - _CELLThreshold: 0.5
+    - _CasterShadow: 1
     - _CellBandSoftness: 0.001
     - _CellBands: 1
     - _ClearCoat: 0
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _ClearCoatTexSource: 0
+    - _ClearShading: 0
     - _Cull: 2
     - _Cutoff: 0.5
     - _DepthOffsetRimReverseX: 0
     - _DepthOffsetShadowReverseX: 0
+    - _DepthPrePass: 0
     - _DepthRimLightCameraDistanceFadeoutEnd: 80
     - _DepthRimLightCameraDistanceStart: 50
     - _DepthRimOffset: -0.02
@@ -154,6 +159,7 @@ Material:
     - _Glossiness: 0.140028
     - _GlossyReflections: 1
     - _Is_Filter_LightColor: 1
+    - _Is_SDInPaint: 0
     - _LightIntensityClamp: 1
     - _Metallic: 0
     - _Mode: 3
@@ -172,7 +178,11 @@ Material:
     - _Shininess: 1
     - _Smoothness: 0.567
     - _SmoothnessTextureChannel: 0
+    - _SpaceScreenThresold: 0.5
+    - _SpecularAA: 0
+    - _SpecularAAStrength: 1
     - _SpecularHighlights: 1
+    - _SpecularIntensity: 1
     - _SpecularMask: 0
     - _SrcBlend: 1
     - _StylizedSpecularAlbedoWeight: 0
@@ -185,13 +195,18 @@ Material:
     - _UseHalfLambert: 0
     - _UseRadianceOcclusion: 0
     - _WorkflowMode: 1
+    - _ZOffset: 0
     - _ZWrite: 1
-    - _enum_diffuse: 2
+    - _enum_diffuse: 3
     - _enum_env: 1
+    - _enum_outline_color: 0
+    - _enum_outline_smoothed: 0
+    - _enum_outline_width: 0
     - _enum_rim: 2
     - _enum_specular: 1
     - _group: 0
     - _group1: 1
+    - _groupAI: 1
     - _groupAdditionLight: 1
     - _groupClearCoat: 1
     - _groupEmission: 0
@@ -201,6 +216,7 @@ Material:
     - _groupShadingMask: 0
     - _groupShadowSetting: 1
     - _groupSpecular: 1
+    - _groupSurface: 1
     m_Colors:
     - _AngleRingBrightColor: {r: 1, g: 1, b: 1, a: 1}
     - _AngleRingShadowColor: {r: 1, g: 1, b: 1, a: 1}
