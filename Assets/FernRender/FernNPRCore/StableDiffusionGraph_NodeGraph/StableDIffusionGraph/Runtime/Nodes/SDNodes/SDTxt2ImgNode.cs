@@ -120,6 +120,7 @@ namespace FernNPRCore.SDNodeGraph
                 {                
                     var TotalSeconds = (float)DateTime.Now.Subtract(pre_step_time).TotalSeconds;
                     progress = Mathf.Min((float)pre_step / pre_step_count /*(json.progress)*/ + TotalSeconds * speed / pre_step_count, (pre_step + 1f) / pre_step_count);
+                    progress = (pre_job_no + Mathf.Min(1, progress)) / job_no_count;
                     if (job_no_count <= pre_job_no)
                         progress = 1;
                     onProgressUpdate?.Invoke(progress);
@@ -139,34 +140,29 @@ namespace FernNPRCore.SDNodeGraph
                         // Deserialize the JSON string into a data structure
                         SDResponseProgress json = JsonConvert.DeserializeObject<SDResponseProgress>(result);
                         // If no image, there was probably an error so abort
-                        if (json != null)
+                        if (json == null) yield break;
+                        if (!string.IsNullOrEmpty(json.current_image))
                         {
-                            if (!string.IsNullOrEmpty(json.current_image))
-                            {
-                                byte[] imageData = Convert.FromBase64String(json.current_image);
-                                OutputImage.LoadImage(imageData);
-                            }
-
-                            if (json.state != null)
-                            {
-                                pre_step_count = json.state.sampling_steps;
-                                job_no_count = json.state.job_count;
-                                if (json.state.job_no > pre_job_no)
-                                {
-                                    pre_step_time = DateTime.Now;
-                                    progress = 0;
-                                    pre_step = 0;
-                                    if (json.state.job_no == 0) speed = 0.01f;
-                                    pre_job_no = json.state.job_no;
-                                }
-                                if (json.state.sampling_step > pre_step) 
-                                {
-                                    speed = (json.state.sampling_step - pre_step)/(float)DateTime.Now.Subtract(pre_step_time).TotalSeconds;;
-                                    pre_step_time = DateTime.Now;
-                                    pre_step = json.state.sampling_step;
-                                }
-                            }
+                            byte[] imageData = Convert.FromBase64String(json.current_image);
+                            OutputImage.LoadImage(imageData);
                         }
+
+                        if (json.state == null) yield break;
+                        pre_step_count = json.state.sampling_steps;
+                        job_no_count = json.state.job_count;
+                        if (json.state.job_no != pre_job_no)
+                        {
+                            pre_step_time = DateTime.Now;
+                            progress = 0;
+                            pre_step = 0;
+                            if (json.state.job_no == 0) speed = 0.01f;
+                            pre_job_no = json.state.job_no;
+                        }
+
+                        if (json.state.sampling_step <= pre_step) yield break;
+                        speed = (json.state.sampling_step - pre_step)/(float)DateTime.Now.Subtract(pre_step_time).TotalSeconds;;
+                        pre_step_time = DateTime.Now;
+                        pre_step = json.state.sampling_step;
                     }
                 }
                 catch (Exception e)
@@ -297,6 +293,7 @@ namespace FernNPRCore.SDNodeGraph
 
                             // Read the seed that was used by Stable Diffusion to generate this result
                             outSeed = info.seed;
+                            OutputImage.name = info.seed.ToString();
                             string tempSavePath = null;
                             if (!string.IsNullOrEmpty(savePath) && Directory.Exists(SDGraphResource.SdGraphDataHandle.SavePath))
                             {
@@ -331,6 +328,7 @@ namespace FernNPRCore.SDNodeGraph
             settings.sizeMode = OutputSizeMode.Absolute;
             settings.width = width;
             settings.height = height;
+            pre_job_no = -1;
             yield return GenerateAsync();
         }
     }

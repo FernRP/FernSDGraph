@@ -79,8 +79,8 @@ namespace FernNPRCore.SDNodeGraph
         	
         private void OnUpdateProgressBar(float progress)
         {
-            var total = (long)(node.pre_step_count / node.speed);
-            var re = (long)((1 - progress) * total);
+            var total = node.pre_step_count / node.speed;
+            var re = (long)((1 - progress) * total * node.job_no_count);
             var str_time = $"{re.Seconds_To_HMS()}";
             var str_speed = node.speed > 1 ? $"{node.speed:F1}it/s" : $"{(1 / node.speed):F3}s/it";
             var str_progress = $"{node.progress * 100:F1}%";
