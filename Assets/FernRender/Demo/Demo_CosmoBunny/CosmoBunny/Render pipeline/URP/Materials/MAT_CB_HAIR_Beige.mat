@@ -219,6 +219,9 @@ Material:
     - _ZWrite: 1
     - _enum_diffuse: 2
     - _enum_env: 1
+    - _enum_outline_color: 0
+    - _enum_outline_smoothed: 0
+    - _enum_outline_width: 0
     - _enum_rim: 0
     - _enum_specular: 1
     - _group: 0
@@ -233,6 +236,7 @@ Material:
     - _groupShadingMask: 0
     - _groupShadowSetting: 1
     - _groupSpecular: 1
+    - _groupSurface: 1
     m_Colors:
     - _AngleRingBrightColor: {r: 1, g: 1, b: 1, a: 1}
     - _AngleRingShadowColor: {r: 1, g: 1, b: 1, a: 1}

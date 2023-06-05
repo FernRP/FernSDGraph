@@ -327,7 +327,6 @@ namespace FernNPRCore.SDNodeGraph
 
 		protected virtual void DrawImGUIPreview(SDNode node, Rect previewRect, float currentSlice)
 		{
-			var outputNode = node as OutputNode;
 			SDGraphResource.texture2DPreviewMaterial.SetTexture("_MainTex", node.previewTexture);
 			SDGraphResource.texture2DPreviewMaterial.SetVector("_Size",
 				new Vector4(node.previewTexture.width, node.previewTexture.height, 1, 1));

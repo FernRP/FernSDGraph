@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using FernNPRCore.SDNodeGraph;
-using FernNPRCore.StableDiffusionGraph;
 using GraphProcessor;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
@@ -108,7 +107,8 @@ namespace FernNPRCore.SDNodeGraph
             {
                 if (loraWeightPresetName == null || loraWeightPresetName.Count == 0)
                 {
-                    loraWeightPresetName = SDDataHandle.Instance.loraBlockWeightPresets.Keys.ToList();
+                    loraWeightPresetName = SDGraphResource.SdGraphDataHandle.loraBlockWeightPresets.Keys.ToList();
+                    
                 }
                 EditorGUILayout.BeginVertical();
                 EditorGUILayout.BeginHorizontal();

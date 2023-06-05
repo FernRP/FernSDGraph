@@ -4,7 +4,7 @@ using UnityEngine;
 using GraphProcessor;
 using System.Linq;
 
-[System.Serializable, NodeMenuItem("Primitives/Color")]
+[System.Serializable, NodeMenuItem("Constant/Color")]
 public class ColorNode : BaseNode
 {
 	[Output(name = "Color"), SerializeField]

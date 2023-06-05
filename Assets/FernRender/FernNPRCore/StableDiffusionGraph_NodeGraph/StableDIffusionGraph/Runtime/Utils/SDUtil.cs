@@ -686,6 +686,30 @@ namespace FernNPRCore.SDNodeGraph
         public string name;
         public object[] args;
     }
+    
+    class ExtraSingleImageParam
+    {
+        public string image = "";
+        public int resize_mode = 0;
+        public bool show_extras_results = true;
+        public float gfpgan_visibility = 0;
+        public float codeformer_visibility = 0;
+        public float codeformer_weight = 0;
+        public float upscaling_resize = 2;
+        public int upscaling_resize_w = 512;
+        public int upscaling_resize_h = 512;
+        public bool upscaling_crop = true;
+        public string upscaler_1 = "None";
+        public string upscaler_2 = "None";
+        public float extras_upscaler_2_visibility = 0;
+        public bool upscale_first = false;
+    }
+    
+    class ExtraSingleImageResponse
+    {
+        public string html_info = "";
+        public string image = "";
+    }
 
     public class SDModel
     {

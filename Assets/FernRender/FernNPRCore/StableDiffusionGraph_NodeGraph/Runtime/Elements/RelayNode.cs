@@ -5,7 +5,6 @@ using GraphProcessor;
 using System.Linq;
 using System;
 
-[System.Serializable, NodeMenuItem("Utils/Relay")]
 public class RelayNode : BaseNode
 {
 	const string packIdentifier = "_Pack";

@@ -6,7 +6,6 @@ using System.Linq;
 using System;
 using FernNPRCore.SDNodeGraph;
 
-[System.Serializable, NodeMenuItem("Utils/SD Relay")]
 public class SDRelayNode : SDProcessorNode
 {
 	const string packIdentifier = "_Pack";

@@ -6,7 +6,7 @@ using System.Linq;
 using FernNPRCore.SDNodeGraph;
 using NodeGraphProcessor.Examples;
 
-[System.Serializable, NodeMenuItem("Conditional/ForLoop")]
+[System.Serializable, NodeMenuItem("Control Flow/ForLoop")]
 public class ForLoopNode : LinearSDProcessorNode
 {
 	[Output(name = "Loop Body")]

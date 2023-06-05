@@ -8,7 +8,6 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using FernNPRCore.StableDiffusionGraph;
 using Newtonsoft.Json;
 using NodeGraphProcessor.Examples;
 using Unity.EditorCoroutines.Editor;

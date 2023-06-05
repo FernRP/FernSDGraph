@@ -24,9 +24,8 @@ MonoBehaviour:
   - rid: 91303785846538386
   - rid: 91303785846538388
   - rid: 91303785846538389
-  - rid: 91303785846538390
-  - rid: 91303785846538391
-  - rid: 91303785846538392
+  - rid: 91304114922455057
+  - rid: 91304114922455058
   comments: []
   assetVersion: 1
   references:
@@ -212,6 +211,13 @@ MonoBehaviour:
         Prompt:
           positive: room, best quality
           negative: blurry, low quality
+        upscaler:
+          denoising_strength: 0.75
+          hr_scale: 2
+          hr_upscaler: 
+          hr_second_pass_steps: 1
+          hr_resize_x: 0
+          hr_resize_y: 0
         Step: 20
         CFG: 7
         width: 960
@@ -247,59 +253,13 @@ MonoBehaviour:
           connections:
           - nodeId: ec16c9cb-673b-4a8c-a9b9-d1f82ab72d60
             portName: Negative
-        positiveDatas:
-        - word: "\u5361\u901A"
-          weight: 0
-          color: 0
-        - word: "\u6700\u9AD8\u8D28\u91CF"
-          weight: 0
-          color: 0
-        - word: "\u5361\u901A"
-          weight: 0
-          color: 0
-        - word: "\u7F8E\u56FE"
-          weight: 0
-          color: 0
-        - word: "\u8272\u56FE"
-          weight: 0
-          color: 0
-        - word: "\u6444\u5F71"
-          weight: 0
-          color: 0
-        - word: "\u30A8\u30ED\u753B\u50CF"
-          weight: 0
-          color: 0
-        - word: "\u30A8\u30ED\u753B\u50CF"
-          weight: 0
-          color: 0
-        negativeDatas:
-        - word: "\u9519\u8BEF\u7ED3\u6784"
-          weight: 0
-          color: 0
-        - word: "\u957F\u7ED3\u6784"
-          weight: 0
-          color: 0
-        - word: "\u9519\u8BEF\u624B\u90E8"
-          weight: 0
-          color: 0
-        - word: "\u88C1\u5207\u4E0D\u6B63"
-          weight: 0
-          color: 0
-        - word: "\u4F4E\u8D28\u91CF"
-          weight: 0
-          color: 0
-        - word: "\u4F4E\u8D28\u91CF"
-          weight: 0
-          color: 0
-        - word: "\u9519\u8BEF\u7ED3\u6784"
-          weight: 0
-          color: 0
-        - word: "\u957F\u7ED3\u6784"
-          weight: 0
-          color: 0
-        - word: "\u4F4E\u5206\u8FA8\u7387"
-          weight: 0
-          color: 0
+        RegisterData:
+          title:
+            m_Text: 
+            m_Image: {fileID: 0}
+            m_Tooltip: 
+          positiveDatas: []
+          negativeDatas: []
         Prompt:
           positive: toon,best quality,toon,fantasy girl illust,hentai,photoreal,nsfw,nsfw
           negative: bad anatomy,longbody,bad hands,cropped,low quality,low quality,bad
@@ -339,29 +299,21 @@ MonoBehaviour:
         Prompt:
           positive: 
           negative: 
-    - rid: 91303785846538390
-      type: {class: SDCombineAreaNode, ns: FernNPRCore.StableDiffusionGraph, asm: Assembly-CSharp}
-      data:
-        id: 
-        name: SD Combine Area Node
-        graph: {fileID: 11400000}
-        position: {x: -209.33879, y: 515.14966}
-        ports: []
-    - rid: 91303785846538391
+    - rid: 91304114922455057
       type: {class: SDDrawAreaNode, ns: FernNPRCore.StableDiffusionGraph, asm: Assembly-CSharp}
       data:
-        id: 
+        id: 8c7aeef7-8e38-499f-bc07-ac6ae3e74010
         name: SD Draw Area Node
         graph: {fileID: 11400000}
-        position: {x: -209.33879, y: 515.14966}
+        position: {x: -344, y: 799.6666}
         ports: []
-    - rid: 91303785846538392
+    - rid: 91304114922455058
       type: {class: SDDrawAreaNode, ns: FernNPRCore.StableDiffusionGraph, asm: Assembly-CSharp}
       data:
-        id: 
+        id: ee205330-0d64-4c20-9891-c55aace17e4f
         name: SD Draw Area Node
         graph: {fileID: 11400000}
-        position: {x: -209.33879, y: 515.14966}
+        position: {x: -344, y: 799.6666}
         ports: []
     - rid: 7516382605447528451
       type: {class: SDStart, ns: FernNPRCore.StableDiffusionGraph, asm: Assembly-CSharp}

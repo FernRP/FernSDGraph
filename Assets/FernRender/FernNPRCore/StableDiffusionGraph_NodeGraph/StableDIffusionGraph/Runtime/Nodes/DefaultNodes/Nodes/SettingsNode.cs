@@ -11,7 +11,7 @@ public enum Setting
 	S3,
 }
 
-[System.Serializable, NodeMenuItem("Custom/SettingsNode")]
+// [System.Serializable, NodeMenuItem("Test/SettingsNode")]
 public class SettingsNode : BaseNode
 {
 	public Setting				setting;

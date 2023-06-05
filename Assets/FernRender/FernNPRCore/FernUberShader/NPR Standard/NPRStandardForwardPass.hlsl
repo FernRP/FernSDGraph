@@ -202,7 +202,7 @@ half3 NPRSpecularLighting(BRDFData brdfData, NPRSurfaceData surfData, Varyings i
     #elif _STYLIZED
         specular = StylizedSpecular(albedo, lightData.NdotHClamp, _StylizedSpecularSize, _StylizedSpecularSoftness, _StylizedSpecularAlbedoWeight) * surfData.specularIntensity;
     #elif _BLINNPHONG
-        specular = BlinnPhongSpecular((1 - brdfData.perceptualRoughness) * _Shininess, lightData.NdotHClamp) * surfData.specularIntensity;
+        specular = BlinnPhongSpecular(_Shininess, lightData.NdotHClamp) * surfData.specularIntensity;
     #elif _KAJIYAHAIR
         half2 anisoUV = input.uv.xy * _AnisoShiftScale;
         AnisoSpecularData anisoSpecularData;

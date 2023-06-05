@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using GraphProcessor;
 using System.Linq;
+using FernNPRCore.SDNodeGraph;
 
-[System.Serializable, NodeMenuItem("Conditional/Switch")]
-public class SwitchNode : BaseNode
+[System.Serializable, NodeMenuItem("Control Flow/Switch")]
+public class SwitchNode : LinearSDProcessorNode
 {
-	[Input(name = "In")]
-    public float                input;
+    [Input] public List<object> inputs = new List<object>();
 
-	[Output(name = "Out")]
-	public float				output;
+    [Input] public int index;
 
-	public override string		name => "Switch";
 
-	protected override void Process()
-	{
-	    output = input * 42;
-	}
+    [Output(name = "Out")] public object output;
+
+    public override string name => "Switch";
+
+    protected override void Process()
+    {
+        if (inputs == null || index < 0 || index >= inputs.Count)
+            return;
+        output = inputs[index];
+    }
 }

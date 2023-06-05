@@ -120,8 +120,8 @@ MonoBehaviour:
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: 985.3333, y: -148.66667, z: 0}
-  scale: {x: 0.7561437, y: 0.7561437, z: 1}
+  position: {x: 596.6667, y: 114.666664, z: 0}
+  scale: {x: 0.49717674, y: 0.49717674, z: 1}
   settings:
     widthScale: 1
     heightScale: 1
@@ -210,9 +210,9 @@ MonoBehaviour:
         computeOrder: 0
         position:
           serializedVersion: 2
-          x: -205.99998
-          y: 274
-          width: 200
+          x: -406.00003
+          y: 273.99997
+          width: 199.99998
           height: 190.66666
         expanded: 0
         debug: 0
@@ -261,8 +261,8 @@ MonoBehaviour:
         computeOrder: 1
         position:
           serializedVersion: 2
-          x: 85.33333
-          y: 274
+          x: -114.66663
+          y: 273.99997
           width: 200
           height: 156
         expanded: 0
@@ -393,13 +393,13 @@ MonoBehaviour:
         isTiling: 0
         extension: '"Asymmetric Tiling":{"args":[true,true,false,0,-1]}'
         outputImage: {fileID: 0}
-        outSeed: 516324551480876699
+        outSeed: 162859555323043442
         progress: 1
         pre_step: 0
         pre_step_count: 20
         pre_job_no: -1
         job_no_count: 0
-        speed: 2.749936
+        speed: 4.622127
         samplerMethod: Euler
         savePath: 
     - rid: 7516383008435470407
@@ -520,7 +520,7 @@ MonoBehaviour:
           y: 543.3334
           width: 199.99998
           height: 153.33331
-        expanded: 0
+        expanded: 1
         debug: 0
         nodeLock: 0
         isUpdate: 0
@@ -611,9 +611,9 @@ MonoBehaviour:
         computeOrder: 3
         position:
           serializedVersion: 2
-          x: -1320
+          x: -1319.3428
           y: 543.3334
-          width: 632.6667
+          width: 632.6666
           height: 487.99994
         expanded: 0
         debug: 0
@@ -733,8 +733,7 @@ MonoBehaviour:
         Prompt:
           positive: masterpiece,best quality,photoreal,residence,House,school,fantasy
             girl illust,
-          negative: lowres,longbody,bad anatomy,bad hands,cropped,low quality,worst
-            quality
+          negative: lowres,bad hands,cropped,low quality,worst quality
         Positive: masterpiece,best quality,photoreal,residence,House,school,fantasy
           girl illust,
         Negative: lowres,longbody,bad anatomy,bad hands,cropped,low quality,worst

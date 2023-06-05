@@ -45,14 +45,15 @@ Shader "FernRender/URP/FERNNPRStandard"
         [KWEnum(Specular, None, _, PBR_GGX, _GGX, Stylized, _STYLIZED, Blinn_Phong, _BLINNPHONG)] _enum_specular ("Shading Mode", float) = 1
         [SubToggle(Specular._GGX._STYLIZED._BLINNPHONG._KAJIYAHAIR, _SPECULARMASK)] _SpecularMask("Use Specular Mask", Float) = 0.0
         [Channel(Specular._SPECULARMASK)] _SpecularIntensityChannel("Specular Intensity Channel", Vector) = (1,0,0,0)
-        [Sub(Specular._GGX._STYLIZED._BLINNPHONG._KAJIYAHAIR)][HDR] _SpecularColor ("Specular Color", Color) = (1,1,1,1)
+        [Sub(Specular._GGX._STYLIZED._BLINNPHONG._KAJIYAHAIR)] _SpecularColor ("Specular Color", Color) = (1,1,1,1)
+        [Sub(Specular._GGX._STYLIZED._BLINNPHONG._KAJIYAHAIR)] _SpecularIntensity ("Specular Intensity", Range(0,8)) = 1 // version: 1.0.1
         [Sub(Specular._STYLIZED)] _StylizedSpecularSize ("Stylized Specular Size", Range(0,1)) = 0.1
         [Sub(Specular._STYLIZED)] _StylizedSpecularSoftness ("Stylized Specular Softness", Range(0.001,1)) = 0.05
         [Sub(Specular._STYLIZED)] _StylizedSpecularAlbedoWeight ("Specular Color Albedo Weight", Range(0,1)) = 0
         [Sub(Specular._BLINNPHONG)] _Shininess ("BlinnPhong Shininess", Range(0,1)) = 1
         [SubToggle(Specular._GGX, _SPECULARAA)] _SpecularAA("Use Specular AA", Float) = 0.0
-        [Sub(Specular._SPECULARAA)] _SpaceScreenVariant ("SpecularAA Variant", Range(0,1)) = 0.5
-        [Sub(Specular._SPECULARAA)] _SpecularAAThreshold ("SpecularAA Threshold", Range(0,1)) = 1
+        [Sub(Specular._SPECULARAA)] _SpaceScreenThresold ("SpecularAA Threshold", Range(0,1)) = 0.5 // version: 1.0.0 is Specular AA Variant
+        [Sub(Specular._SPECULARAA)] _SpecularAAStrength ("SpecularAA Strength", Range(0,1)) = 1 // version: 1.0.0 is Specular AA Thresold
         
         [Main(Environment, _, off, off)]
         _groupEnvironment ("EnvironmentSettings", float) = 1
