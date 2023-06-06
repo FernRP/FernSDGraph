@@ -111,6 +111,7 @@ namespace FernNPRCore.SDNodeGraph
 
 		protected override IEnumerator Execute()
 		{
+			pre_job_no = -1;
 			yield return GenerateAsync();
 		}
 		
@@ -149,6 +150,7 @@ namespace FernNPRCore.SDNodeGraph
                 {                
 	                var TotalSeconds = (float)DateTime.Now.Subtract(pre_step_time).TotalSeconds;
 	                progress = Mathf.Min((float)pre_step / pre_step_count /*(json.progress)*/ + TotalSeconds * speed / pre_step_count, (pre_step + 1f) / pre_step_count);
+	                progress = (pre_job_no + Mathf.Min(1, progress)) / job_no_count;
 	                if (job_no_count <= pre_job_no)
 		                progress = 1;
 	                onProgressUpdate?.Invoke(progress);
@@ -160,32 +162,36 @@ namespace FernNPRCore.SDNodeGraph
 
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
-                    // Decode the response as a JSON string
-                    string result = streamReader.ReadToEnd();
-                    
-                    // Deserialize the JSON string into a data structure
-                    SDResponseProgress json = JsonConvert.DeserializeObject<SDResponseProgress>(result);
-                    // If no image, there was probably an error so abort
-                    
-                    if (json.state != null)
-                    {
-	                    pre_step_count = json.state.sampling_steps;
-	                    job_no_count = json.state.job_count;
-	                    if (json.state.job_no > pre_job_no)
-	                    {
-		                    pre_step_time = DateTime.Now;
-		                    progress = 0;
-		                    pre_step = 0;
-		                    if (json.state.job_no == 0) speed = 0.01f;
-		                    pre_job_no = json.state.job_no;
-	                    }
-	                    if (json.state.sampling_step > pre_step) 
-	                    {
-		                    speed = (json.state.sampling_step - pre_step)/(float)DateTime.Now.Subtract(pre_step_time).TotalSeconds;;
-		                    pre_step_time = DateTime.Now;
-		                    pre_step = json.state.sampling_step;
-	                    }
-                    }
+	                // Decode the response as a JSON string
+	                string result = streamReader.ReadToEnd();
+
+	                // Deserialize the JSON string into a data structure
+	                SDResponseProgress json = JsonConvert.DeserializeObject<SDResponseProgress>(result);
+	                // If no image, there was probably an error so abort
+	                // If no image, there was probably an error so abort
+	                if (json == null) yield break;
+	                if (!string.IsNullOrEmpty(json.current_image))
+	                {
+		                byte[] imageData = Convert.FromBase64String(json.current_image);
+		                OutputImage.LoadImage(imageData);
+	                }
+
+	                if (json.state == null) yield break;
+	                pre_step_count = json.state.sampling_steps;
+	                job_no_count = json.state.job_count;
+	                if (json.state.job_no != pre_job_no)
+	                {
+		                pre_step_time = DateTime.Now;
+		                progress = 0;
+		                pre_step = 0;
+		                if (json.state.job_no == 0) speed = 0.01f;
+		                pre_job_no = json.state.job_no;
+	                }
+
+	                if (json.state.sampling_step <= pre_step) yield break;
+	                speed = (json.state.sampling_step - pre_step)/(float)DateTime.Now.Subtract(pre_step_time).TotalSeconds;;
+	                pre_step_time = DateTime.Now;
+	                pre_step = json.state.sampling_step;
                 }
             }
         }
@@ -204,6 +210,7 @@ namespace FernNPRCore.SDNodeGraph
                     (HttpWebRequest)WebRequest.Create(SDGraphResource.SdGraphDataHandle.GetServerURL() + SDGraphResource.SdGraphDataHandle.ImageToImageAPI);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
+                httpWebRequest.Timeout = 1000 * 60 * 10;
 
                 // add auth-header to request
                 if (SDGraphResource.SdGraphDataHandle.GetUseAuth() && !string.IsNullOrEmpty(SDGraphResource.SdGraphDataHandle.GetUserName()) && !string.IsNullOrEmpty(SDGraphResource.SdGraphDataHandle.GetPassword()))
@@ -317,6 +324,7 @@ namespace FernNPRCore.SDNodeGraph
 
                             // Read the seed that was used by Stable Diffusion to generate this result
                             outSeed = info.seed;
+                            OutputImage.name = info.seed.ToString();
                             if (!Directory.Exists(SDGraphResource.SdGraphDataHandle.SavePath))
                                 Directory.CreateDirectory(SDGraphResource.SdGraphDataHandle.SavePath);
                             File.WriteAllBytes($"{SDGraphResource.SdGraphDataHandle.SavePath}/img_{DateTime.Now.ToString("yyyyMMddHHmmss")}_{outSeed}.png", imageData);
