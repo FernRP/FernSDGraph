@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GraphProcessor;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace FernNPRCore.SDNodeGraph
 {
@@ -51,7 +52,7 @@ namespace FernNPRCore.SDNodeGraph
 
         public override string shaderName => "Hidden/Mixture/GradientMatte";
 
-        protected override void Process()
+        protected override void Process(CommandBuffer cmd)
         {
             base.Process();
             BeforeProcessSetup();

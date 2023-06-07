@@ -9,6 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: 02 - Default_NPR
   m_Shader: {fileID: 4800000, guid: 335dcad6d9fdba943a91b0a9295ee10e, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _CLEARCOAT
   - _FRESNELRIM
@@ -26,6 +28,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -110,14 +113,19 @@ Material:
     - _BumpScale: 1
     - _CELLSmoothing: 0.5
     - _CELLThreshold: 0.5
+    - _CasterShadow: 1
     - _CellBandSoftness: 0.001
     - _CellBands: 1
     - _ClearCoat: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _ClearCoatTexSource: 0
+    - _ClearShading: 0
     - _Cull: 2
     - _Cutoff: 0.5
+    - _DepthOffsetRimReverseX: 0
+    - _DepthOffsetShadowReverseX: 0
+    - _DepthPrePass: 0
     - _DepthRimLightCameraDistanceFadeoutEnd: 80
     - _DepthRimLightCameraDistanceStart: 50
     - _DepthRimOffset: -0.02
@@ -134,6 +142,7 @@ Material:
     - _Glossiness: 0.140028
     - _GlossyReflections: 1
     - _Is_Filter_LightColor: 1
+    - _Is_SDInPaint: 0
     - _LightIntensityClamp: 1
     - _Metallic: 0.112
     - _Mode: 3
@@ -152,7 +161,11 @@ Material:
     - _Shininess: 1
     - _Smoothness: 0.955
     - _SmoothnessTextureChannel: 0
+    - _SpaceScreenThresold: 0.5
+    - _SpecularAA: 0
+    - _SpecularAAStrength: 1
     - _SpecularHighlights: 1
+    - _SpecularIntensity: 1
     - _SpecularMask: 0
     - _SrcBlend: 1
     - _StylizedSpecularAlbedoWeight: 0
@@ -165,13 +178,18 @@ Material:
     - _UseHalfLambert: 1
     - _UseRadianceOcclusion: 0
     - _WorkflowMode: 1
+    - _ZOffset: 0
     - _ZWrite: 1
     - _enum_diffuse: 1
     - _enum_env: 1
+    - _enum_outline_color: 0
+    - _enum_outline_smoothed: 0
+    - _enum_outline_width: 0
     - _enum_rim: 1
     - _enum_specular: 2
     - _group: 0
     - _group1: 1
+    - _groupAI: 1
     - _groupAdditionLight: 1
     - _groupClearCoat: 1
     - _groupEmission: 0
@@ -181,8 +199,9 @@ Material:
     - _groupShadingMask: 0
     - _groupShadowSetting: 1
     - _groupSpecular: 1
+    - _groupSurface: 1
     m_Colors:
-    - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 0}
+    - _BaseColor: {r: 0.8, g: 0.8, b: 0.8, a: 0}
     - _Color: {r: 0.79073066, g: 0.79073066, b: 0.79073066, a: 0}
     - _DarkColor: {r: 0.07843137, g: 0.5415431, b: 0.7647059, a: 1}
     - _EmissionChannel: {r: 0, g: 0, b: 1, a: 0}

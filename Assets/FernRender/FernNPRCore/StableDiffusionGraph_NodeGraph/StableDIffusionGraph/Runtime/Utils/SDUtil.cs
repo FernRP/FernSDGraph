@@ -3,6 +3,7 @@ using System.IO;
 using UnityEngine;
 using RotaryHeart.Lib.SerializableDictionary;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -131,6 +132,36 @@ namespace FernNPRCore.SDNodeGraph
             // 返回新的Texture2D对象
             return outputTexture;
         }
+        
+        public static void SetupDimensionKeyword(Material material, TextureDimension dimension)
+        {
+            foreach (var keyword in material.shaderKeywords.Where(s => s.ToLower().Contains("crt")))
+                material.DisableKeyword(keyword);
+
+            switch (dimension)
+            {
+                case TextureDimension.Tex2D:
+                    material.EnableKeyword("CRT_2D");
+                    break;
+                case TextureDimension.Tex2DArray:
+                    material.EnableKeyword("CRT_2D_ARRAY");
+                    break;
+                case TextureDimension.Tex3D:
+                    material.EnableKeyword("CRT_3D");
+                    break;
+                case TextureDimension.Cube:
+                    material.EnableKeyword("CRT_CUBE");
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        static int textureDimensionShaderId = Shader.PropertyToID("_TextureDimension");
+        public static void SetupComputeTextureDimension(CommandBuffer cmd, ComputeShader computeShader, TextureDimension dimension)
+        {
+            cmd.SetComputeFloatParam(computeShader, textureDimensionShaderId, (int)dimension);
+        }
 
         public static void SetToNone(string assetPath)
         {
@@ -164,6 +195,17 @@ namespace FernNPRCore.SDNodeGraph
                 {
                     material.SetTexture(propertyName + suffix, texture);
                 }
+            }
+        }
+        
+        public static void SetTextureWithDimension(CommandBuffer cmd, ComputeShader compute, int kernelIndex, string propertyName, Texture texture)
+        {
+            foreach (var dim in shaderPropertiesDimensionSuffix)
+            {
+                if (dim.Key == texture.dimension)
+                    cmd.SetComputeTextureParam(compute, kernelIndex, propertyName + dim.Value, texture);
+                else // We still need to bind something to the other texture dimension to avoid errors in the console
+                    cmd.SetComputeTextureParam(compute, kernelIndex, propertyName + dim.Value, TextureUtils.GetBlackTexture(dim.Key));
             }
         }
 

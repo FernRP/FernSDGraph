@@ -6,6 +6,7 @@ using GraphProcessor;
 using System.Linq;
 using NodeGraphProcessor.Examples;
 using Unity.VisualScripting;
+using UnityEngine.Rendering;
 using Debug = UnityEngine.Debug;
 
 namespace FernNPRCore.SDNodeGraph
@@ -33,14 +34,7 @@ namespace FernNPRCore.SDNodeGraph
 			UpdateTempRenderTexture(ref outImage);
 		}
 
-		protected override void Disable()
-		{
-			base.Disable();
-			if(outImage != null)
-				outImage.Release();
-		}
-
-		protected override void Process()
+		protected override void Process(CommandBuffer cmd)
 		{
 			base.Process();	
 			UpdateTempRenderTexture(ref outImage);

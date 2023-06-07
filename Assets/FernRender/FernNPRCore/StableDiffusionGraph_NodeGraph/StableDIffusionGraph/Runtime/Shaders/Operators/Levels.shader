@@ -1,27 +1,30 @@
 Shader "Hidden/Mixture/Levels"
 {
     Properties
-	{
-		[InlineTexture]_Input_2D("Input", 2D) = "black" {}
-		[InlineTexture]_Input_3D("Input", 3D) = "black" {}
-		[InlineTexture]_Input_Cube("Input", Cube) = "black" {}
-	}
-	SubShader
-	{
-		Tags { "RenderType"="Opaque" }
-		LOD 100
+    {
+        [InlineTexture]_Input_2D("Input", 2D) = "black" {}
+        [InlineTexture]_Input_3D("Input", 3D) = "black" {}
+        [InlineTexture]_Input_Cube("Input", Cube) = "black" {}
+    }
+    SubShader
+    {
+        Tags
+        {
+            "RenderType"="Opaque"
+        }
+        LOD 100
 
-		Pass
-		{
-			HLSLPROGRAM
-			#include "../../Shaders/MixtureFixed.hlsl"
+        Pass
+        {
+            HLSLPROGRAM
+            #include "../../Shaders/MixtureFixed.hlsl"
             #include "../../../Editor/Resources/HistogramData.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
             #pragma vertex CustomRenderTextureVertexShader
-			#pragma fragment MixtureFragment
-			#pragma target 5.0
+            #pragma fragment MixtureFragment
+            #pragma target 5.0
 
-			// The list of defines that will be active when processing the node with a certain dimension
+            // The list of defines that will be active when processing the node with a certain dimension
             #pragma shader_feature CRT_2D CRT_3D CRT_CUBE
             // #pragma enable_d3d11_debug_symbols
 
@@ -60,8 +63,8 @@ Shader "Hidden/Mixture/Levels"
                 maxLuminance = _Luminance[0].maxLuminance;
             }
 
-			float4 mixture (v2f_customrendertexture i) : SV_Target
-			{
+            float4 mixture(v2f_customrendertexture i) : SV_Target
+            {
                 // TODO: function to turn the id into direction / uv for cube / 3D
                 float3 uv = GetDefaultUVs(i);
                 uv += _RcpTextureSize * 0.5;
@@ -90,7 +93,6 @@ Shader "Hidden/Mixture/Levels"
                     // Remap luminance with curve
                     float t = luminance01;
                     luminance01 = _InterpolationCurve.SampleLevel(s_linear_clamp_sampler, luminance01, 0).r;
-
                     // Remap luminance between min and max
                     float correctedLuminance = luminance01 * (totalMaxLum - totalMinLum) + totalMinLum;
                     // Correct the color with the new luminance
@@ -106,8 +108,8 @@ Shader "Hidden/Mixture/Levels"
                 }
 
                 return input;
-			}
-			ENDHLSL
-		}
-	}
+            }
+            ENDHLSL
+        }
+    }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FernNPRCore.SDNodeGraph;
 using GraphProcessor;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace FernNPRCore.SDNodeGraph
 {
@@ -43,7 +44,7 @@ namespace FernNPRCore.SDNodeGraph
         public MirrorZPositionn cornerZPosition = MirrorZPositionn.Back;
         [Range(0, 1)] public float offset = 0;
 
-        protected override void Process()
+        protected override void Process(CommandBuffer cmd)
         {
             base.Process();
             BeforeProcessSetup();

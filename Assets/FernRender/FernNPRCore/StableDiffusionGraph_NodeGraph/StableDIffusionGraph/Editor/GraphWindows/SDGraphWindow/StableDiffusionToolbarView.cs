@@ -12,7 +12,7 @@ namespace FernNPRCore.SDNodeGraph
     public class StableDiffusionToolbarView : ToolbarView
     {
         ConditionalProcessor executor;
-        BaseGraphProcessor processor;
+        SDProcessGraphProcessor processor;
 
         public bool isAlwaysUpdate = false;
 
@@ -26,7 +26,7 @@ namespace FernNPRCore.SDNodeGraph
             executor = new ConditionalProcessor(graphView.graph);
             graphView.computeOrderUpdated += executor.UpdateComputeOrder;
             
-            processor = new ProcessGraphProcessor(graphView.graph);
+            processor = new SDProcessGraphProcessor(graphView.graph);
             graphView.computeOrderUpdated += processor.UpdateComputeOrder;
             
             AddButton("Save", graphView.SaveGraphToDisk);

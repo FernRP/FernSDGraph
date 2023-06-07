@@ -1,0 +1,163 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel Clear
+#pragma kernel ClearLuminance
+#pragma kernel ComputeLuminanceBuffer
+#pragma kernel ReduceLuminanceBuffer
+#pragma kernel GenerateHistogram
+#pragma kernel ComputeHistogramData
+#pragma kernel CopyMinMaxToBuffer
+
+#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+#include "../../../Editor/Resources/HistogramData.hlsl"
+#include "../../Shaders/MixtureComputeUtils.hlsl"
+
+float4 _InputTextureSize;
+uint _DispatchSizeX;
+
+// #pragma enable_d3d11_debug_symbols
+
+TEXTURE_X(_Input);
+
+[numthreads(8,8,1)]
+void Clear(uint3 id : SV_DispatchThreadID)
+{
+    uint index = id.x + id.y * _DispatchSizeX * 8 + id.z * _DispatchSizeX * _DispatchSizeX * 8;
+
+    if (index < _HistogramBucketCount)
+        _Histogram[index] = (HistogramBucket)0;
+
+    _ImageLuminance[index] = (LuminanceData)0;
+}
+
+[numthreads(8,8,1)]
+void ClearLuminance(uint3 id : SV_DispatchThreadID)
+{
+    uint index = id.x + id.y * _DispatchSizeX * 8 + id.z * _DispatchSizeX * _DispatchSizeX * 8;
+    _ImageLuminance[index] = (LuminanceData)0;
+}
+
+groupshared float g_luminance[64];
+float3 _RcpTextureSize;
+
+[numthreads(8,8,1)]
+void ComputeLuminanceBuffer(uint3 id : SV_DispatchThreadID, int3 gid : SV_GroupThreadID, uint3 groupId : SV_GroupID)
+{
+    float3 uvs = GetDefaultUVsComputeShader(id, _RcpTextureSize);
+    float4 input = SAMPLE_X(_Input, s_point_clamp_sampler, uvs, uvs);
+
+    // Insert your code here
+    // TODO: shared memory with min max redux
+    float minLuminance = Luminance(input);
+    float maxLuminance = minLuminance;
+    g_luminance[gid.x + gid.y * 8 + gid.z * 8 * 8] = minLuminance;
+
+    // Wait for all threads in the group to write in g_luminance
+    GroupMemoryBarrierWithGroupSync();
+
+    if (all(gid == 0))
+    {
+        for (uint x = 0; x < 8; x++)
+        {
+            for (uint y = 0; y < 8; y++)
+            {
+                minLuminance = min(minLuminance, g_luminance[x + y * 8]);
+                maxLuminance = max(maxLuminance, g_luminance[x + y * 8]);
+            }
+        }
+
+        int d = _InputTextureSize.x / 8;
+        uint index = groupId.x + groupId.y * d + groupId.z * d * d;
+        // Push results to image luminance
+        _ImageLuminance[index].minLuminance = minLuminance;
+        _ImageLuminance[index].maxLuminance = maxLuminance;
+    }
+}
+
+uint _LuminanceBufferSize;
+uint _LuminanceBufferStride;
+
+#define REDUCE_KERNEL_SIZE 64
+
+groupshared LuminanceData g_lum[REDUCE_KERNEL_SIZE];
+
+[numthreads(REDUCE_KERNEL_SIZE, 1, 1)]
+void ReduceLuminanceBuffer(uint3 id : SV_DispatchThreadID, uint3 threadId : SV_GroupThreadID)
+{
+    uint luminanceIndex = id.x * _LuminanceBufferStride;
+
+    g_lum[threadId.x] = _ImageLuminance[luminanceIndex];
+    GroupMemoryBarrierWithGroupSync();
+
+    for (uint i = REDUCE_KERNEL_SIZE / 2; i > 0; i >>= 1)
+    {
+        if (luminanceIndex + i < _LuminanceBufferSize)
+        {
+            g_lum[threadId.x].minLuminance = min(g_lum[threadId.x].minLuminance, g_lum[threadId.x + i].minLuminance);
+            g_lum[threadId.x].maxLuminance = max(g_lum[threadId.x].maxLuminance, g_lum[threadId.x + i].maxLuminance);
+        }
+        GroupMemoryBarrierWithGroupSync();
+    }
+
+    // For every group of 64 threads, we output the min max value at the begining of the luminance buffer.
+    if (threadId.x == 0)
+    {
+        _ImageLuminance[luminanceIndex] = g_lum[0];
+    }
+}
+
+// TODO: optimize histogram generation with tiling technique
+[numthreads(8,8,1)]
+void GenerateHistogram(uint3 id : SV_DispatchThreadID)
+{
+    float3 uvs = GetDefaultUVsComputeShader(id, _RcpTextureSize);
+    float4 input = SAMPLE_X(_Input, s_point_clamp_sampler, uvs, uvs);
+
+    LuminanceData data = _ImageLuminance[0]; // the index 0 contains min and max lum of the whole image
+
+    // TODO: histogram modes
+    // Compute the normalized luminance
+    uint result;
+    input = float4(Luminance(input), input.rgb);
+    float4 color01 = saturate((input - data.minLuminance) / (data.maxLuminance - data.minLuminance));
+    color01 *= _HistogramBucketCount;
+    color01 = int4(color01); // Ensure that the color / luminance always end up in the correct bucket
+    InterlockedAdd(_Histogram[uint(color01.x)].luminance, 1);
+    InterlockedAdd(_Histogram[uint(color01.y)].r, 1);
+    InterlockedAdd(_Histogram[uint(color01.z)].g, 1);
+    InterlockedAdd(_Histogram[uint(color01.w)].b, 1);
+}
+
+[numthreads(64, 1, 1)]
+void ComputeHistogramData(uint id : SV_DispatchThreadID)
+{
+    if (id >= _HistogramBucketCount)
+        return;
+
+    // TODO: compute histogram min and max with kernel reduce reduce
+    if (id == 0)
+    {
+        uint maxCount = 0;
+        uint minCount = 0;
+
+        for (uint i = 0; i < _HistogramBucketCount; i++)
+        {
+            HistogramBucket b = _Histogram.Load(i);
+            uint minB = min(b.luminance, min(b.r, min(b.g, b.b)));
+            uint maxB = max(b.luminance, max(b.r, max(b.g, b.b)));
+            maxCount = max(maxCount, b.luminance);
+            minCount = min(minCount, b.luminance);
+        }
+
+        _HistogramData[0].minBucketCount = minCount;
+        _HistogramData[0].maxBucketCount = maxCount;
+    }
+}
+
+RWStructuredBuffer<LuminanceData> _Target;
+
+[numthreads(1, 1, 1)]
+void CopyMinMaxToBuffer(uint id : SV_DispatchThreadID)
+{
+    _Target[0].minLuminance = _ImageLuminance[0].minLuminance;
+    _Target[0].maxLuminance = _ImageLuminance[0].maxLuminance;
+}

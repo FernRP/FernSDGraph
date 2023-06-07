@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FernNPRCore.SDNodeGraph;
 using GraphProcessor;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace FernNPRCore.SDNodeGraph
 {
@@ -17,7 +18,7 @@ namespace FernNPRCore.SDNodeGraph
         [Range(0, 100)] public float radius = 0;
         public Vector4 direction = new Vector2(0.707f, 0.707f);
 
-        protected override void Process()
+        protected override void Process(CommandBuffer cmd)
         {
             base.Process();
             BeforeProcessSetup();
