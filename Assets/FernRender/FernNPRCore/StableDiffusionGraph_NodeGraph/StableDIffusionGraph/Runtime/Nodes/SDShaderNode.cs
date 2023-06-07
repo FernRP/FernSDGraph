@@ -89,5 +89,11 @@ namespace FernNPRCore.SDNodeGraph
             base.Process();
             UpdateSettings();
         }
+        
+        protected override void Disable()
+        {
+            base.Disable();
+            output.Release();
+        }
     }
 }
