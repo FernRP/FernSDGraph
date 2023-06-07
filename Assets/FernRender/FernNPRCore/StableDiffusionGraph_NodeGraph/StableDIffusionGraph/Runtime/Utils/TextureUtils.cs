@@ -34,7 +34,7 @@ namespace FernNPRCore.SDNodeGraph
                 pixels[i] = new Color(curve.Evaluate(t), 0, 0, 1);
             }
             curveTexture.SetPixels(pixels);
-            curveTexture.Apply(false);
+           // curveTexture.Apply(false);
         }
         
         public static Texture GetBlackTexture(TextureDimension dim, int sliceCount = 0)

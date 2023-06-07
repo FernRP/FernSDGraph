@@ -59,7 +59,6 @@ namespace FernNPRCore.SDNodeGraph
 
         public override string shaderName => "Hidden/Mixture/Levels";
         
-        protected CustomRenderTexture tempRenderTexture;
         public override Texture previewTexture => output;
 
         protected override void Enable()
@@ -103,6 +102,12 @@ namespace FernNPRCore.SDNodeGraph
             material.SetTexture("_InterpolationCurveB", curveTextureB);
             
             output.Update();
+        }
+
+        protected override void Disable()
+        {
+            base.Disable();
+            minMaxBuffer?.Dispose();
         }
     }
 }
