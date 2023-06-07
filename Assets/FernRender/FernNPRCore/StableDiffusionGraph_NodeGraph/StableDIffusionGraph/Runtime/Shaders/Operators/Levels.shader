@@ -93,7 +93,6 @@ Shader "Hidden/Mixture/Levels"
                     // Remap luminance with curve
                     float t = luminance01;
                     luminance01 = _InterpolationCurve.SampleLevel(s_linear_clamp_sampler, luminance01, 0).r;
-
                     // Remap luminance between min and max
                     float correctedLuminance = luminance01 * (totalMaxLum - totalMinLum) + totalMinLum;
                     // Correct the color with the new luminance

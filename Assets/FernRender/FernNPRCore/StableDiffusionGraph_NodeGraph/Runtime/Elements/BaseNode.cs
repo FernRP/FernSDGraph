@@ -102,6 +102,9 @@ namespace GraphProcessor
         public event ProcessDelegate onExecuteFinish;
         public event Action<string, NodeMessageType> onMessageAdded;
         public event Action<string> onMessageRemoved;
+        
+        public event Action beforeProcessSetup;
+        public event Action afterProcessCleanup;
 
         /// <summary>
         /// Triggered after an edge was connected on the node
@@ -678,8 +681,9 @@ namespace GraphProcessor
         public void OnProcess(CommandBuffer cmd)
         {
             inputPorts.PullDatas();
-
+            beforeProcessSetup?.Invoke();
             ExceptionToLog.Call(() => Process(cmd));
+            afterProcessCleanup?.Invoke();
 
             InvokeOnProcessed();
 

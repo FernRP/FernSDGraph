@@ -67,8 +67,6 @@ namespace FernNPRCore.SDNodeGraph
         [SerializeField, HideInInspector] public bool isPreviewCollapsed = false;
 
         public event Action onSettingsChanged;
-        public event Action beforeProcessSetup;
-        public event Action afterProcessCleanup;
 
         internal event Action onEnabled;
 
