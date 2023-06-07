@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GraphProcessor;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace FernNPRCore.SDNodeGraph
 {
@@ -19,7 +20,7 @@ namespace FernNPRCore.SDNodeGraph
     
         public override string name => "SD Sample Gradient";
 
-        protected override void Process()
+        protected override void Process(CommandBuffer cmd)
         {
             base.Process();
             color = gradient.Evaluate(x);

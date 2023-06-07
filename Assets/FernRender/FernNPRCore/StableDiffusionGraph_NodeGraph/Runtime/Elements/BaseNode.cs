@@ -6,6 +6,7 @@ using System.Reflection;
 using Unity.Jobs;
 using System.Linq;
 using Unity.EditorCoroutines.Editor;
+using UnityEngine.Rendering;
 
 namespace GraphProcessor
 {
@@ -674,6 +675,17 @@ namespace GraphProcessor
             outputPorts.PushDatas();
         }
 
+        public void OnProcess(CommandBuffer cmd)
+        {
+            inputPorts.PullDatas();
+
+            ExceptionToLog.Call(() => Process(cmd));
+
+            InvokeOnProcessed();
+
+            outputPorts.PushDatas();
+        }
+        
         private WaitForSecondsRealtime waitOnExecute = new WaitForSecondsRealtime(0.3333f);
 
         public IEnumerator OnExecute()
@@ -717,6 +729,10 @@ namespace GraphProcessor
         /// Override this method to implement custom processing
         /// </summary>
         protected virtual void Process()
+        {
+        }
+        
+        protected virtual void Process(CommandBuffer cmd)
         {
         }
 
