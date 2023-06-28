@@ -39,3 +39,8 @@ https://github.com/FernRender/FernSDGraph/assets/18584942/994c74dd-c945-4005-a0c
 
 想要使用本工具需要先在本地部署[stable diffusion webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui), 并在webui-user.bat文件中的COMMANDLINE_ARGS添加--api命令。
 ___
+
+## Related Link
+
+- [NodeGraphProcessor](https://github.com/alelievr/NodeGraphProcessor)
+

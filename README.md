@@ -42,3 +42,7 @@ https://github.com/FernRender/FernSDGraph/assets/18584942/994c74dd-c945-4005-a0c
 ## Note
 
 To use this tool, you need to deploy [stable diffusion webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui) locally, and add the --api command to the COMMANDLINE_ARGS in the webui-user.bat file.
+
+## Related Link
+
+- [NodeGraphProcessor](https://github.com/alelievr/NodeGraphProcessor)
