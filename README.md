@@ -24,6 +24,8 @@ https://github.com/FernRender/FernSDGraph/assets/18584942/994c74dd-c945-4005-a0c
 
 ### Texture Modify
 
+Developed by [kaamiissa](https://github.com/kaamiissa)
+
 ![](/DocAssets/TextureModify.png)
 
 
