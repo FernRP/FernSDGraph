@@ -41,3 +41,13 @@ https://github.com/FernRender/FernSDGraph/assets/18584942/123f1f13-c395-4026-b51
 
 想要使用本工具需要先在本地部署[stable diffusion webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui), 并在webui-user.bat文件中的COMMANDLINE_ARGS添加--api命令。
 ___
+
+## Related Link
+
+- [BiliBili](https://space.bilibili.com/477693184)
+
+- [知乎专栏](https://www.zhihu.com/column/c_1587028302690304000)
+
+- [LWGUI](https://github.com/JasonMa0012/LWGUI)
+
+- [爱发电](https://afdian.net/a/FernRender)
