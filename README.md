@@ -21,15 +21,13 @@ https://github.com/FernRender/FernSDGraph/assets/18584942/bdb3a3e3-220a-4b43-87a
 
 https://github.com/FernRender/FernSDGraph/assets/18584942/994c74dd-c945-4005-a0ce-69b9d9c82a59
 
-
 ### Texture Modify
-
-Developed by [kaamiissa](https://github.com/kaamiissa)
 
 ![](/DocAssets/TextureModify.png)
 
-
 ### Promt Search
+
+Developed by [kaamiissa](https://github.com/kaamiissa)
 
 ![](/DocAssets/PromptGenerator.png)
 
