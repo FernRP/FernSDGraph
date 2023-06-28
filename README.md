@@ -3,6 +3,8 @@
 [中文](https://github.com/FernRender/FernSDGraph/blob/master/README_CN.md) | [English](https://github.com/FernRender/FernSDGraph/blob/master/README.md)
 
 FernSDGraph is a Graph tool in Unity, which can obtain the scene information of Unity and generate images using Stable Diffusion.
+
+The old Git repository was: https://github.com/FernRender/FernNPR
 ___
 
 ## Showcase
@@ -11,13 +13,13 @@ ___
 
 ![](/DocAssets/TilingPBR.jpg)
 
-https://github.com/FernRender/FernSDGraph/assets/18584942/dc6db661-7a9b-4bb8-9f7f-bf3931397c02
+https://github.com/FernRender/FernSDGraph/assets/18584942/bdb3a3e3-220a-4b43-87a9-c91457d20711
 
 ### Sky HDRI
 
 ![](/DocAssets/SkyHDRI.png)
 
-https://github.com/FernRender/FernSDGraph/assets/18584942/123f1f13-c395-4026-b515-18af0b924a2d
+https://github.com/FernRender/FernSDGraph/assets/18584942/994c74dd-c945-4005-a0ce-69b9d9c82a59
 
 
 ### Texture Modify
