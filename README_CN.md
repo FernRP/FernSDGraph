@@ -4,6 +4,12 @@ FernAI 是一个集成在Unity中的Graph工具，可以提取Unity的画面信�
 
 旧仓库是：https://github.com/FernRender/FernNPR
 
+## Documentation
+
+请先阅读使用文档：
+
+[Fern SD Graph Documentation](https://www.notion.so/rookiefern/Fern-Render-Stable-Diffusion-Graph-c93aa9a1d29748ef8f5fdc4523af503b)
+
 ## Showcase
 
 ### Tiling Texture

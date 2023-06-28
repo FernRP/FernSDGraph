@@ -7,6 +7,12 @@ FernSDGraph is a Graph tool in Unity, which can obtain the scene information of 
 The old Git repository was: https://github.com/FernRender/FernNPR
 ___
 
+## Documentation
+
+Please read the documentation before using this project：
+
+[Fern SD Graph Documentation](https://www.notion.so/rookiefern/Fern-Render-Stable-Diffusion-Graph-c93aa9a1d29748ef8f5fdc4523af503b)
+
 ## Showcase
 
 ### Tiling Texture
