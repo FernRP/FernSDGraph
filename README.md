@@ -1,6 +1,6 @@
 # FernSDGraph
 
-[中文](https://github.com/DeJhon-Huang/FernNPR/blob/master/README_CN.md) | [English](https://github.com/DeJhon-Huang/FernNPR/blob/master/README.md)
+[中文](https://github.com/FernRender/FernSDGraph/blob/master/README_CN.md) | [English](https://github.com/FernRender/FernSDGraph/blob/master/README.md)
 
 FernSDGraph is a Graph tool in Unity, which can obtain the scene information of Unity and generate images using Stable Diffusion.
 ___

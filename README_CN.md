@@ -1,6 +1,3 @@
-![cover](https://github.com/DeJhon-Huang/FernNPR/blob/master/DocAssets/cover.jpg)
-------------------------------------
-
 # FernSDGraph
 
 FernAI 是一个集成在Unity中的Graph工具，可以提取Unity的画面信息以及利用Stable Diffusion生成图片。
