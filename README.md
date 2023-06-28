@@ -37,7 +37,7 @@ https://github.com/FernRender/FernSDGraph/assets/18584942/994c74dd-c945-4005-a0c
 
 ![](/DocAssets/ControlNet2.jpg)
 
-[More Example](https://github.com/DeJhon-Huang/FernNPR/wiki/Stable-Graph-Example)
+[More Example](https://github.com/FernRender/FernSDGraph/wiki/Graph-Example)
 
 ## Note
 
