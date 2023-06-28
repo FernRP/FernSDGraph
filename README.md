@@ -42,13 +42,3 @@ https://github.com/FernRender/FernSDGraph/assets/18584942/994c74dd-c945-4005-a0c
 ## Note
 
 To use this tool, you need to deploy [stable diffusion webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui) locally, and add the --api command to the COMMANDLINE_ARGS in the webui-user.bat file.
-
-## Related Link
-
-- [BiliBili](https://space.bilibili.com/477693184)
-
-- [知乎专栏](https://www.zhihu.com/column/c_1587028302690304000)
-
-- [LWGUI](https://github.com/JasonMa0012/LWGUI)
-
-- [爱发电](https://afdian.net/a/FernRender)
