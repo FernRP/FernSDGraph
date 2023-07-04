@@ -131,7 +131,7 @@ MonoBehaviour:
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: 476.66666, y: 76.666664, z: 0}
+  position: {x: 448.66666, y: 92.666664, z: 0}
   scale: {x: 0.21494322, y: 0.21494322, z: 1}
   settings:
     widthScale: 1

@@ -1,8 +1,0 @@
-{
-    "name": "Unity.Jobs",
-    "references": [],
-    "optionalUnityReferences": [],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-	"allowUnsafeCode": true
-}
