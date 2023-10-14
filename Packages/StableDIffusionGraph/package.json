@@ -1,0 +1,23 @@
+{
+  "name": "com.fernrender.sdgraph",
+  "displayName": "Fern SD Graph",
+  "version": "1.0.0",
+  "unity": "2020.3",
+  "description": "Stable Diffusion With Unity Graph",
+  "keywords": [
+    "graph",
+    "Stable Diffusion",
+    "unity"
+  ],
+  "samples": [
+    {
+      "displayName": "Examples",
+      "description": "examples",
+      "path": "Samples~/Examples"
+    }
+  ],
+  "category": "Unity",
+  "dependencies": {
+    "com.alelievr.node-graph-processor": "1.3.0"
+  }
+}
