@@ -1,0 +1,472 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00da1bd8917fcef41a928a1df60f714c, type: 3}
+  m_Name: StableDiffusionGraph_Texture
+  m_EditorClassIdentifier: 
+  serializedNodes: []
+  nodes:
+  - rid: 398521611895439384
+  - rid: 398521611895439385
+  - rid: 398521611895439387
+  - rid: 398521611895439388
+  - rid: 398521611895439389
+  edges:
+  - GUID: 38ed6567-76f8-4d11-9f82-b023ac72d210
+    owner: {fileID: 11400000}
+    inputNodeGUID: d7908568-e075-4ece-a3f5-390159b3036f
+    outputNodeGUID: c6112d12-f663-4439-afdd-417ec99aeb5e
+    inputFieldName: executed
+    outputFieldName: executes
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: dcbb7fc2-4090-4bfb-b977-488ef64f63ac
+    owner: {fileID: 11400000}
+    inputNodeGUID: 298ffae2-0db0-4b43-9b34-bcab2e982a1f
+    outputNodeGUID: d7908568-e075-4ece-a3f5-390159b3036f
+    inputFieldName: executed
+    outputFieldName: executes
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 3a967831-ca56-494f-897b-6438079087da
+    owner: {fileID: 11400000}
+    inputNodeGUID: 98cfa19e-912a-4603-8bd0-726614d144e4
+    outputNodeGUID: 298ffae2-0db0-4b43-9b34-bcab2e982a1f
+    inputFieldName: inputImage
+    outputFieldName: outputImage
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: f42ad5f9-ff8c-4120-b598-757db3037ab6
+    owner: {fileID: 11400000}
+    inputNodeGUID: b6af57c5-263e-4467-a94c-53c92b35a9e6
+    outputNodeGUID: 98cfa19e-912a-4603-8bd0-726614d144e4
+    inputFieldName: inputImage
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  groups: []
+  stackNodes: []
+  pinnedElements: []
+  exposedParameters: []
+  serializedParameterList: []
+  stickyNotes: []
+  nodeInspectorReference: {fileID: 0}
+  position: {x: -1436, y: 1451.3334, z: 0}
+  scale: {x: 0.7561437, y: 0.7561437, z: 1}
+  settings:
+    widthScale: 1
+    heightScale: 1
+    depthScale: 1
+    width: 512
+    height: 512
+    depth: 512
+    potSize: 512
+    sizeMode: 1
+    dimension: 2
+    outputChannels: 1
+    outputPrecision: 3
+    editFlags: 128
+    doubleBuffered: 0
+    wrapMode: 0
+    filterMode: 0
+    refreshMode: 2
+    period: 0
+  _outputTextures: []
+  defaultNodeInheritanceMode: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: 398521611895439384
+      type: {class: SDStartNode, ns: FernNPRCore.SDNodeGraph, asm: FernRender.SDGraph.Runtime}
+      data:
+        nodeCustomName: 
+        GUID: c6112d12-f663-4439-afdd-417ec99aeb5e
+        computeOrder: 0
+        position:
+          serializedVersion: 2
+          x: 2233
+          y: -1702.3334
+          width: 200
+          height: 125.333374
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 0
+        hasPreview: 0
+        isCanSaveTexture: 0
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        outServerURL: http://127.0.0.1:7860
+        overrideSettings: 0
+        serverURL: http://127.0.0.1:7860
+        useAuth: 0
+        user: 
+        pass: 
+    - rid: 398521611895439385
+      type: {class: SDSetModelNode, ns: FernNPRCore.SDNodeGraph, asm: FernRender.SDGraph.Runtime}
+      data:
+        nodeCustomName: 
+        GUID: d7908568-e075-4ece-a3f5-390159b3036f
+        computeOrder: 1
+        position:
+          serializedVersion: 2
+          x: 2474
+          y: -1702.6667
+          width: 200
+          height: 133.33337
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 0
+        hasPreview: 0
+        isCanSaveTexture: 0
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        ServerURL: 
+        modelNames: []
+        currentIndex: 0
+        Model: 
+    - rid: 398521611895439387
+      type: {class: SDTxt2ImgNode, ns: FernNPRCore.SDNodeGraph, asm: FernRender.SDGraph.Runtime}
+      data:
+        nodeCustomName: 
+        GUID: 298ffae2-0db0-4b43-9b34-bcab2e982a1f
+        computeOrder: 2
+        position:
+          serializedVersion: 2
+          x: 2849.6667
+          y: -1532.3334
+          width: 256
+          height: 667.3333
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 0
+        hasPreview: 1
+        isCanSaveTexture: 0
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        upscaler:
+          denoising_strength: 0.75
+          hr_scale: 2
+          hr_upscaler: 
+          hr_second_pass_steps: 1
+          hr_resize_x: 0
+          hr_resize_y: 0
+        prompt:
+          positive: 
+          negative: 
+        width: 512
+        height: 512
+        step: 20
+        cfg: 7
+        seed: -1
+        isTiling: 0
+        extension: 
+        outputImage: {fileID: 0}
+        outSeed: 0
+        progress: 0
+        pre_step: 0
+        pre_step_count: 20
+        pre_job_no: 0
+        job_no_count: 0
+        speed: 0
+        samplerMethod: Euler
+        savePath: 
+    - rid: 398521611895439388
+      type: {class: SDHSVNode, ns: FernNPRCore.SDNodeGraph, asm: FernRender.SDGraph.Runtime}
+      data:
+        nodeCustomName: 
+        GUID: 98cfa19e-912a-4603-8bd0-726614d144e4
+        computeOrder: 3
+        position:
+          serializedVersion: 2
+          x: 3205.6692
+          y: -1438.7268
+          width: 256
+          height: 493.99994
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 1
+        hasPreview: 1
+        isCanSaveTexture: 0
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        output: {fileID: 0}
+        shader: {fileID: 4800000, guid: a3ba7c94177ca5a4bad9dbfc61b32d29, type: 3}
+        material: {fileID: 0}
+        shaderGUID: a3ba7c94177ca5a4bad9dbfc61b32d29
+        inputImage: {fileID: 0}
+        hsvOffsetImage: {fileID: 0}
+        hue: 0.5
+        saturation: 0.5
+        value: 0.5
+        maxValue: 0.5
+    - rid: 398521611895439389
+      type: {class: SDLevelNode, ns: FernNPRCore.SDNodeGraph, asm: FernRender.SDGraph.Runtime}
+      data:
+        nodeCustomName: 
+        GUID: b6af57c5-263e-4467-a94c-53c92b35a9e6
+        computeOrder: 4
+        position:
+          serializedVersion: 2
+          x: 3543.2144
+          y: -1349.3336
+          width: 256
+          height: 484
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 1
+        hasPreview: 1
+        isCanSaveTexture: 0
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        output: {fileID: 0}
+        shader: {fileID: 4800000, guid: 8d37ac1ca6ef8224abd423570da36e26, type: 3}
+        material: {fileID: 0}
+        shaderGUID: 8d37ac1ca6ef8224abd423570da36e26
+        inputImage: {fileID: 0}
+        min: 0
+        max: 1
+        mode: 0
+        channelMode: 0
+        interpolationCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 0
+            outSlope: 1
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 1
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        interpolationCurveR:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 0
+            outSlope: 1
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 1
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        interpolationCurveG:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 0
+            outSlope: 1
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 1
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        interpolationCurveB:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 0
+            outSlope: 1
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 1
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        histogramMode: 0
+        curveTexture: {fileID: 0}
+        curveTextureR: {fileID: 0}
+        histogramData:
+          mode: 0
+          bucketCount: 256
+          previewMaterial: {fileID: 0}
+          minLuminance: 0
+          maxLuminance: 0

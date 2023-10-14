@@ -31,104 +31,10 @@ namespace FernNPRCore.SDNodeGraph
         
 		public override string	name => "SD Set Model";
         
-        public class SDSetModelMonoBehaviour : MonoBehaviour
-        {
-            public void Process(int frame, Action callback)
-            {
-                StartCoroutine(_Process(frame, callback));
-            }
-
-            private IEnumerator _Process(int frame, Action callback)
-            {
-                for(int i = 0; i < frame; i++)
-                {
-                    yield return new WaitForEndOfFrame();
-                    i++;
-                }
-
-                callback.Invoke();
-            }
-        }
-
-
 		protected override IEnumerator Execute()
 		{
 			yield return SetModelAsync(Model, null);
 		}
-		
-		public void GetModelList(UnityAction action = null)
-        {
-            GetPort(nameof(ServerURL), null).PushData();
-            //StartCoroutine(ListModelsAsync(action), this);
-		}
-		 
-		/// <summary>
-        /// Get the list of available Stable Diffusion models.
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerator ListModelsAsync(UnityAction unityAction = null)
-        {
-            HttpWebRequest httpWebRequest = null;
-            try
-            {
-                string serverUrl = "http://127.0.0.1:7860";
-                serverUrl = string.IsNullOrEmpty(ServerURL) ?  SDGraphResource.SdGraphDataHandle.GetServerURL() : ServerURL;
-                string url = serverUrl + SDGraphResource.SdGraphDataHandle.ModelsAPI;
-
-                httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = "GET";
-                NetAuthorizationUtil.SetRequestAuthorization(httpWebRequest);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e.Message + "\n\n" + e.StackTrace);
-            }
-            if (httpWebRequest != null)
-            {
-                // Wait that the generation is complete before procedding
-                Task<WebResponse> webResponse = httpWebRequest.GetResponseAsync();
-                while (!webResponse.IsCompleted)
-                {           
-#if UNITY_EDITOR
-                    EditorUtility.ClearProgressBar();
-#endif
-                    yield return new WaitForSeconds(100);
-                }
-                // Stream the result from the server
-                var httpResponse = webResponse.Result;
-                
-
-                try
-                {
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                    {
-
-                        // SDUtil.Log(request.downloadHandler.text);
-                        // Decode the response as a JSON string
-                        string result = streamReader.ReadToEnd();
-                        // Deserialize the response to a class
-                        SDModel[] ms = JsonConvert.DeserializeObject<SDModel[]>(result);
-
-                        // Keep only the names of the models
-                        List<string> modelsNames = new List<string>();
-
-                        foreach (SDModel m in ms) 
-                            modelsNames.Add(m.model_name);
-
-                        // Convert the list into an array and store it for futur use
-                        modelNames = modelsNames.ToArray();
-                        SDUtil.Log($"models load success, Count: {modelsNames.Count}");
-                    }
-                }
-                catch (Exception)
-                {
-                    SDUtil.Log("Server needs and API key authentication. Please check your settings!");
-                }
-            }
-            unityAction?.Invoke();
-        }
-
 		
 		// <summary>
         /// Set a model to use by Stable Diffusion.
