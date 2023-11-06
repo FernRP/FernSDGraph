@@ -456,7 +456,8 @@ namespace FernNPRCore.SDNodeGraph
         public string searchingText;
         public static bool DrawSearchField(ref string searchingText, GUIContent[] searchModeMenus, int selectedMenusIndex = 0, Action<object, string[], int> menuCallback = null) // 
         {
-            var toolbarSearchTextFieldPopup = new GUIStyle("ToolbarSeachTextFieldPopup");
+            
+            var toolbarSearchTextFieldPopup = new GUIStyle();// ToolbarSeachTextFieldPopup
 
             bool isHasChanged = false;
             EditorGUI.BeginChangeCheck();

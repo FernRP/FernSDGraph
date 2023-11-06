@@ -121,8 +121,8 @@ namespace FernNPRCore.SDNodeGraph
                             modelsNames.Add(m.model_name);
 
                         // Convert the list into an array and store it for futur use
-                        modelNames = modelsNames.ToArray();
-                        SDUtil.Log($"models load success, Count: {modelsNames.Count}");
+                        setModelNode.modelNames = modelsNames.ToArray();
+                        SDUtil.Log($"models load success, Count: {setModelNode.modelNames.Length}");
                     }
                 }
                 catch (Exception)
@@ -141,6 +141,7 @@ namespace FernNPRCore.SDNodeGraph
 				GetModelList(() =>
 				{
 					modelNames = setModelNode.modelNames;
+					Debug.Log(modelNames.Length);
 					if (modelNames != null && modelNames.Length > 0)
 					{
 						extensionContainer.Clear();
