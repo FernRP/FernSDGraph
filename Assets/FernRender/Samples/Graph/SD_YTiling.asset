@@ -10,13 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00da1bd8917fcef41a928a1df60f714c, type: 3}
-  m_Name: StableDiffusionGraph_SkyBoxBase
+  m_Name: SD_YTiling
   m_EditorClassIdentifier: 
   serializedNodes: []
   nodes:
-  - rid: 91304114922455045
-  - rid: 91304114922455054
-  - rid: 91304114922455055
   - rid: 398521611895439361
   - rid: 398521611895439362
   - rid: 398521611895439363
@@ -25,22 +22,6 @@ MonoBehaviour:
   - rid: 398521611895439366
   - rid: 398521611895439367
   edges:
-  - GUID: 0ae31fe0-5c03-4119-ba44-d6d21a499d69
-    owner: {fileID: 11400000}
-    inputNodeGUID: 77d4193b-856f-493c-8087-dc7386032c96
-    outputNodeGUID: 922d6830-d3b7-4bed-9860-cd521e464f0b
-    inputFieldName: input
-    outputFieldName: output
-    inputPortIdentifier: 0
-    outputPortIdentifier: 0
-  - GUID: 68371e4e-2ca5-4597-ba72-1e86e6797772
-    owner: {fileID: 11400000}
-    inputNodeGUID: 922d6830-d3b7-4bed-9860-cd521e464f0b
-    outputNodeGUID: 8236638c-877f-410c-8800-93cb91c2569a
-    inputFieldName: input
-    outputFieldName: output
-    inputPortIdentifier: 0
-    outputPortIdentifier: 0
   - GUID: 8c852bde-02ab-480b-8525-fd72af4b8226
     owner: {fileID: 11400000}
     inputNodeGUID: 292fc1a0-37d9-4db0-8fdd-807b7870cebe
@@ -65,30 +46,6 @@ MonoBehaviour:
     outputFieldName: executes
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: bfcaea42-3b18-4493-acdb-9f53c2f6b935
-    owner: {fileID: 11400000}
-    inputNodeGUID: c5d82b07-8c34-491b-8c56-0c111c8688e8
-    outputNodeGUID: f82ec881-2e32-4e79-ab36-09f28944a3a8
-    inputFieldName: extension
-    outputFieldName: extensionOut
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: bda71553-7ba5-457b-9ec5-98c338ba57df
-    owner: {fileID: 11400000}
-    inputNodeGUID: 8236638c-877f-410c-8800-93cb91c2569a
-    outputNodeGUID: 783f216c-be3a-4069-8a7a-0b198d3f4825
-    inputFieldName: input
-    outputFieldName: Negative
-    inputPortIdentifier: 0
-    outputPortIdentifier: 
-  - GUID: 40a935a9-176a-4c6f-98db-11b268fdca6a
-    owner: {fileID: 11400000}
-    inputNodeGUID: d2d0e985-7cf2-4a9e-8ce5-da53b365ae42
-    outputNodeGUID: 77d4193b-856f-493c-8087-dc7386032c96
-    inputFieldName: negative
-    outputFieldName: output
-    inputPortIdentifier: 
-    outputPortIdentifier: 0
   - GUID: 6075bd31-d353-42f2-9c58-a765ccab77d3
     owner: {fileID: 11400000}
     inputNodeGUID: d2d0e985-7cf2-4a9e-8ce5-da53b365ae42
@@ -105,47 +62,31 @@ MonoBehaviour:
     outputFieldName: output
     inputPortIdentifier: 
     outputPortIdentifier: 
+  - GUID: f0d6853b-c123-437a-9cd3-d8c5365eaa6a
+    owner: {fileID: 11400000}
+    inputNodeGUID: d2d0e985-7cf2-4a9e-8ce5-da53b365ae42
+    outputNodeGUID: 783f216c-be3a-4069-8a7a-0b198d3f4825
+    inputFieldName: negative
+    outputFieldName: Negative
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 28c7f383-9fce-41fa-b276-9e6b6a39d10b
+    owner: {fileID: 11400000}
+    inputNodeGUID: c5d82b07-8c34-491b-8c56-0c111c8688e8
+    outputNodeGUID: f82ec881-2e32-4e79-ab36-09f28944a3a8
+    inputFieldName: extension
+    outputFieldName: extensionOut
+    inputPortIdentifier: 
+    outputPortIdentifier: 
   groups: []
   stackNodes: []
   pinnedElements: []
   exposedParameters: []
   serializedParameterList: []
-  stickyNotes:
-  - position:
-      serializedVersion: 2
-      x: 238.66667
-      y: 836
-      width: 197.33333
-      height: 100
-    title: Tiling Extention
-    content: 
-  - position:
-      serializedVersion: 2
-      x: -413.6667
-      y: 824
-      width: 199.99998
-      height: 100
-    title: ReDirect Node
-    content: 
-  - position:
-      serializedVersion: 2
-      x: -1129.9459
-      y: 578.14667
-      width: 200
-      height: 114
-    title: "\u63D0\u793A\u8BCD\u751F\u6210\u5668"
-    content: "\u8BE5\u8282\u70B9\u53EF\u4EE5\u5FEB\u901F\u68C0\u7D22\u63D0\u793A\u8BCD"
-  - position:
-      serializedVersion: 2
-      x: -480.82962
-      y: 522.68854
-      width: 200
-      height: 100
-    title: Lora Node
-    content: 
+  stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: 792.6667, y: 332, z: 0}
-  scale: {x: 0.2471847, y: 0.2471847, z: 1}
+  position: {x: 996, y: 24.666666, z: 0}
+  scale: {x: 0.65751624, y: 0.65751624, z: 1}
   settings:
     widthScale: 1
     heightScale: 1
@@ -169,63 +110,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 91304114922455045
-      type: {class: RelayNode, ns: , asm: com.alelievr.NodeGraphProcessor.Runtime}
-      data:
-        nodeCustomName: 
-        GUID: 922d6830-d3b7-4bed-9860-cd521e464f0b
-        computeOrder: 2
-        position:
-          serializedVersion: 2
-          x: -322.13348
-          y: 781.33344
-          width: 200
-          height: 200
-        expanded: 0
-        debug: 0
-        nodeLock: 0
-        isUpdate: 0
-        unpackOutput: 0
-        packInput: 0
-        inputEdgeCount: 1
-    - rid: 91304114922455054
-      type: {class: RelayNode, ns: , asm: com.alelievr.NodeGraphProcessor.Runtime}
-      data:
-        nodeCustomName: 
-        GUID: 77d4193b-856f-493c-8087-dc7386032c96
-        computeOrder: 3
-        position:
-          serializedVersion: 2
-          x: -152.3
-          y: 781.3334
-          width: 200
-          height: 200
-        expanded: 0
-        debug: 0
-        nodeLock: 0
-        isUpdate: 0
-        unpackOutput: 0
-        packInput: 0
-        inputEdgeCount: 1
-    - rid: 91304114922455055
-      type: {class: RelayNode, ns: , asm: com.alelievr.NodeGraphProcessor.Runtime}
-      data:
-        nodeCustomName: 
-        GUID: 8236638c-877f-410c-8800-93cb91c2569a
-        computeOrder: 1
-        position:
-          serializedVersion: 2
-          x: -487.50018
-          y: 781.3334
-          width: 200
-          height: 200
-        expanded: 0
-        debug: 0
-        nodeLock: 0
-        isUpdate: 0
-        unpackOutput: 0
-        packInput: 0
-        inputEdgeCount: 1
     - rid: 398521611895439361
       type: {class: SDPromptRegisterNode, ns: FernNPRCore.SDNodeGraph, asm: FernRender.SDGraph.Runtime}
       data:
@@ -234,10 +118,10 @@ MonoBehaviour:
         computeOrder: 0
         position:
           serializedVersion: 2
-          x: -1367.9459
-          y: 711.48
-          width: 452.6667
-          height: 424.66663
+          x: -1126.4637
+          y: 636.2319
+          width: 632.6666
+          height: 488
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -276,23 +160,38 @@ MonoBehaviour:
             m_Text: 
             m_Image: {fileID: 0}
             m_Tooltip: 
-          positiveDatas: []
+          positiveDatas:
+          - word: "\u6770\u4F5C"
+            weight: 0
+            end: 0
+            process: 0
+            color: 0
+          - word: man
+            weight: 0
+            end: 0
+            process: 0
+            color: 0
+          - word: landscape
+            weight: 0
+            end: 0
+            process: 0
+            color: 0
           negativeDatas: []
         Prompt:
-          positive: 
+          positive: masterpiece,man,landscape
           negative: 
-        Positive: 
+        Positive: masterpiece,man,landscape
         Negative: 
     - rid: 398521611895439362
       type: {class: SDLoraNode, ns: FernNPRCore.SDNodeGraph, asm: FernRender.SDGraph.Runtime}
       data:
         nodeCustomName: 
         GUID: 292fc1a0-37d9-4db0-8fdd-807b7870cebe
-        computeOrder: 4
+        computeOrder: 1
         position:
           serializedVersion: 2
-          x: -714.6002
-          y: 590.73346
+          x: -352
+          y: 521.971
           width: 200
           height: 153.33331
         expanded: 0
@@ -328,9 +227,9 @@ MonoBehaviour:
         previewEV100: 0
         previewSlice: 0
         isPinned: 0
-        prompt: 
+        prompt: masterpiece,man,landscape
         strength: 1
-        outLoraString: ',<lora::1>'
+        outLoraString: masterpiece,man,landscape,<lora::1>
         loraPrompt: 
         lora: 
         loraDir: 
@@ -344,7 +243,7 @@ MonoBehaviour:
       data:
         nodeCustomName: 
         GUID: d2d0e985-7cf2-4a9e-8ce5-da53b365ae42
-        computeOrder: 5
+        computeOrder: 2
         position:
           serializedVersion: 2
           x: 35.333393
@@ -384,22 +283,22 @@ MonoBehaviour:
         previewEV100: 0
         previewSlice: 0
         isPinned: 0
-        positive: ',<lora::1>'
+        positive: masterpiece,man,landscape,<lora::1>
         negative: 
         output:
-          positive: ',<lora::1>'
+          positive: masterpiece,man,landscape,<lora::1>
           negative: 
     - rid: 398521611895439364
       type: {class: SDExtensionTilingNode, ns: FernNPRCore.SDNodeGraph, asm: FernRender.SDGraph.Runtime}
       data:
         nodeCustomName: 
         GUID: f82ec881-2e32-4e79-ab36-09f28944a3a8
-        computeOrder: 6
+        computeOrder: 3
         position:
           serializedVersion: 2
-          x: 235.34999
-          y: 950.9169
-          width: 260
+          x: 404.92758
+          y: 878.0001
+          width: 260.00003
           height: 178.66669
         expanded: 0
         debug: 0
@@ -446,7 +345,7 @@ MonoBehaviour:
       data:
         nodeCustomName: 
         GUID: c5d82b07-8c34-491b-8c56-0c111c8688e8
-        computeOrder: 9
+        computeOrder: 6
         position:
           serializedVersion: 2
           x: 712.6667
@@ -494,7 +393,7 @@ MonoBehaviour:
           hr_resize_x: 0
           hr_resize_y: 0
         prompt:
-          positive: ',<lora::1>'
+          positive: masterpiece,man,landscape,<lora::1>
           negative: 
         width: 512
         height: 512
@@ -504,13 +403,13 @@ MonoBehaviour:
         isTiling: 0
         extension: '"Asymmetric Tiling":{"args":[true,true,false,0,-1]}'
         outputImage: {fileID: 0}
-        outSeed: 0
-        progress: 0
+        outSeed: 6221425267642941840
+        progress: 1
         pre_step: 0
         pre_step_count: 20
         pre_job_no: -1
         job_no_count: 0
-        speed: 0
+        speed: 10.750585
         samplerMethod: Euler
         savePath: 
     - rid: 398521611895439366
@@ -518,7 +417,7 @@ MonoBehaviour:
       data:
         nodeCustomName: 
         GUID: b2244f4f-d64c-48ce-80bc-a5af6a20fe09
-        computeOrder: 7
+        computeOrder: 4
         position:
           serializedVersion: 2
           x: -351.99994
@@ -569,7 +468,7 @@ MonoBehaviour:
       data:
         nodeCustomName: 
         GUID: 0e4117f7-fcca-4652-b3c3-cc6e99481e9f
-        computeOrder: 8
+        computeOrder: 5
         position:
           serializedVersion: 2
           x: -64.666534
@@ -610,6 +509,11 @@ MonoBehaviour:
         previewSlice: 0
         isPinned: 0
         ServerURL: 
-        modelNames: []
-        currentIndex: 0
-        Model: 
+        modelNames:
+        - v1-5-pruned-emaonly
+        - Real_analogMadness_v60
+        - Real_chilloutmix_NiPrunedFp32Fix
+        - Real_minadukiMix_v10
+        - Real_realisticVisionV51_v51VAE
+        currentIndex: 1
+        Model: Real_analogMadness_v60
