@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using GraphProcessor;
 
-[System.Serializable, NodeMenuItem("Constant/Float")]
-public class FloatNode : BaseNode
+[System.Serializable, NodeMenuItem("Constant/Number")]
+public class DoubleNode : BaseNode
 {
     [Output("Out")]
-	public float		output;
+	public double		output;
 	
     [Input("In")]
-	public float		input;
+	public double		input;
 
 	public override string name => "Float";
 

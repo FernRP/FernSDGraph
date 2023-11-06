@@ -54,7 +54,7 @@ public class SDTxt2ImgNodeView : SDNodeView
 		labelLastSeed.style.marginRight = 5;
             
 		longLastField = new LongField();
-		longLastField.value = node.outSeed;
+		longLastField.value = (long)node.outSeed;
 		longLastField.style.flexGrow = 1;
 		longLastField.style.maxWidth = 160;
 		var containerLastSeed = new VisualElement();

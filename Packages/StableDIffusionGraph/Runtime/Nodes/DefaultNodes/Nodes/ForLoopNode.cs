@@ -15,11 +15,11 @@ public class ForLoopNode : LinearSDProcessorNode
 	[Output(name = "Loop Completed")]
 	public ConditionalLink		loopCompleted;
 
-	public int					start = 0;
-	public int					end = 10;
+	public float					start = 0;
+	public float					end = 10;
 
 	[Output]
-	public int					index;
+	public double					index;
 
 	public override string		name => "ForLoop";
 

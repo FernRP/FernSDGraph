@@ -29,12 +29,12 @@ namespace FernNPRCore.SDNodeGraph
         [Input(name = "Height"), ShowAsDrawer] public int height = 512;
         [Input(name = "Step"), ShowAsDrawer] public int step = 20;
         [Input(name = "CFG"), ShowAsDrawer] public int cfg = 7;
-        [Input(name = "Seed"), ShowAsDrawer] public long seed = -1;
+        [Input(name = "Seed"), ShowAsDrawer] public double seed = -1;
         [Input(name = "Tiling"), ShowAsDrawer] public bool isTiling = false;
         [Input(name = "Extension")] public string extension = null;
 
         [Output("Image")] public Texture2D outputImage;
-        [Output("Seed")] public long outSeed;
+        [Output("Seed")] public double outSeed;
 
         [HideInInspector] public float progress;
         [HideInInspector] public DateTime pre_step_time;
@@ -48,7 +48,7 @@ namespace FernNPRCore.SDNodeGraph
 
         public override string name => "SD Txt2Img";
 
-        public Action<long, long> OnUpdateSeedField;
+        public Action<double, double> OnUpdateSeedField;
 
         public override Texture previewTexture => OutputImage;
 
@@ -173,7 +173,7 @@ namespace FernNPRCore.SDNodeGraph
 
         IEnumerator GenerateAsync()
         {
-            long seed = this.seed;
+            long seed = (long)this.seed;
             if (seed == -1)
                 seed = SDUtil.GenerateRandomLong(-1, Int64.MaxValue);
             // Generate the image

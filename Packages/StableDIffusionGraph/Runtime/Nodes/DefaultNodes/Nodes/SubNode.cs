@@ -7,10 +7,10 @@ using System.Linq;
 [System.Serializable, NodeMenuItem("Math/Sub")]
 public class SubNode : BaseNode
 {
-    [Input(name = "A")] public float inputA;
-    [Input(name = "B")] public float inputB;
+    [Input(name = "A")] public double inputA;
+    [Input(name = "B")] public double inputB;
 
-    [Output(name = "Out")] public float output;
+    [Output(name = "Out")] public double output;
 
     public override string name => "Sub";
 

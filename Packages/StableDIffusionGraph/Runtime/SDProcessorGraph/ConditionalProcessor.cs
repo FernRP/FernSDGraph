@@ -136,7 +136,7 @@ namespace NodeGraphProcessor.Examples
                                 forLoopNode.index = forLoopNode.start - 1; // Initialize the start index
                                 foreach (var n in forLoopNode.GetExecutedNodesLoopCompleted())
                                     nodeToExecute.Push(n);
-                                for (int i = forLoopNode.start; i < forLoopNode.end; i++)
+                                for (int i = (int)forLoopNode.start; i < forLoopNode.end; i++)
                                 {
                                     foreach (var n in forLoopNode.GetExecutedNodesLoopBody())
                                         nodeToExecute.Push(n);

@@ -7,12 +7,12 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
 using GraphProcessor;
 
-[NodeCustomEditor(typeof(FloatNode))]
+[NodeCustomEditor(typeof(DoubleNode))]
 public class FloatNodeView : BaseNodeView
 {
 	public override void Enable()
 	{
-		var floatNode = nodeTarget as FloatNode;
+		var floatNode = nodeTarget as DoubleNode;
 
 		DoubleField floatField = new DoubleField
 		{

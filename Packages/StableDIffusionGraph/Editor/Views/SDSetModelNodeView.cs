@@ -141,7 +141,6 @@ namespace FernNPRCore.SDNodeGraph
 				GetModelList(() =>
 				{
 					modelNames = setModelNode.modelNames;
-					Debug.Log(modelNames.Length);
 					if (modelNames != null && modelNames.Length > 0)
 					{
 						extensionContainer.Clear();
