@@ -30,6 +30,7 @@ namespace FernNPRCore.SDNodeGraph
         [Input(name = "Step"), ShowAsDrawer] public int step = 20;
         [Input(name = "CFG"), ShowAsDrawer] public int cfg = 7;
         [Input(name = "Seed"), ShowAsDrawer] public double seed = -1;
+        [Input(name = "SubSeed"), ShowAsDrawer] public double subSeed = -1;
         [Input(name = "Tiling"), ShowAsDrawer] public bool isTiling = false;
         [Input(name = "Extension")] public string extension = null;
 
@@ -215,6 +216,7 @@ namespace FernNPRCore.SDNodeGraph
                     sd.height = height;
                     sd.tiling = isTiling;
                     sd.seed = seed; 
+                    sd.subseed = (long)subSeed; 
                     sd.sampler_name = samplerMethod;
                     sd.enable_hr = false;
                     if (upscaler != null && !string.IsNullOrEmpty(upscaler.hr_upscaler) && !upscaler.hr_upscaler.ToLower().Equals("none"))

@@ -411,17 +411,9 @@ namespace FernNPRCore.SDNodeGraph
 
     class SDParamsInTxt2Img
     {
-        public bool enable_hr = false;
-        public float denoising_strength = 0.75f;
-        public int firstphase_width = 0;
-        public int firstphase_height = 0;
-        public float hr_scale = 2;
-        public string hr_upscaler = "";
-        public int hr_second_pass_steps = 0;
-        public int hr_resize_x = 0;
-        public int hr_resize_y = 0;
         public string prompt = "";
-        public string[] styles = { "" };
+        public string negative_prompt = "";
+        public string[] styles = { };
         public long seed = -1;
         public long subseed = -1;
         public float subseed_strength = 0;
@@ -436,13 +428,33 @@ namespace FernNPRCore.SDNodeGraph
         public int height = 512;
         public bool restore_faces = false;
         public bool tiling = false;
-        public string negative_prompt = "";
+        public bool do_not_save_samples = false;
+        public bool do_not_save_grid = false;
         public float eta = 0;
+        public float denoising_strength = 0.75f;
+        public float s_min_uncond = 0.75f;
         public float s_churn = 0;
         public float s_tmax = 0;
         public float s_tmin = 0;
         public float s_noise = 1;
+        // "override_settings": {},
         public bool override_settings_restore_afterwards = true;
+        public string refiner_checkpoint = "";
+        //public float refiner_switch_at = 0;
+        public bool disable_extra_networks = false;
+        //"comments": {},
+        public bool enable_hr = false;
+        public int firstphase_width = 0;
+        public int firstphase_height = 0;
+        public float hr_scale = 2;
+        public string hr_upscaler = "";
+        public int hr_second_pass_steps = 0;
+        public int hr_resize_x = 0;
+        public int hr_resize_y = 0;
+        public string hr_checkpoint_name = "";
+        public string hr_sampler_name = "";
+        public string hr_prompt = "";
+        public string hr_negative_prompt = "";
         public string sampler_index = "Euler";
     }
 

@@ -17,8 +17,12 @@ MonoBehaviour:
   - rid: 398521611895439384
   - rid: 398521611895439385
   - rid: 398521611895439387
-  - rid: 398521611895439388
-  - rid: 398521611895439389
+  - rid: 2101531907433693225
+  - rid: 2101531907433693226
+  - rid: 2101531907433693227
+  - rid: 2101531907433693228
+  - rid: 2101531907433693229
+  - rid: 2101531907433693230
   edges:
   - GUID: 38ed6567-76f8-4d11-9f82-b023ac72d210
     owner: {fileID: 11400000}
@@ -26,22 +30,6 @@ MonoBehaviour:
     outputNodeGUID: c6112d12-f663-4439-afdd-417ec99aeb5e
     inputFieldName: executed
     outputFieldName: executes
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: dcbb7fc2-4090-4bfb-b977-488ef64f63ac
-    owner: {fileID: 11400000}
-    inputNodeGUID: 298ffae2-0db0-4b43-9b34-bcab2e982a1f
-    outputNodeGUID: d7908568-e075-4ece-a3f5-390159b3036f
-    inputFieldName: executed
-    outputFieldName: executes
-    inputPortIdentifier: 
-    outputPortIdentifier: 
-  - GUID: 3a967831-ca56-494f-897b-6438079087da
-    owner: {fileID: 11400000}
-    inputNodeGUID: 98cfa19e-912a-4603-8bd0-726614d144e4
-    outputNodeGUID: 298ffae2-0db0-4b43-9b34-bcab2e982a1f
-    inputFieldName: inputImage
-    outputFieldName: outputImage
     inputPortIdentifier: 
     outputPortIdentifier: 
   - GUID: f42ad5f9-ff8c-4120-b598-757db3037ab6
@@ -52,6 +40,78 @@ MonoBehaviour:
     outputFieldName: output
     inputPortIdentifier: 
     outputPortIdentifier: 
+  - GUID: b658c7f8-778d-4cfc-a019-e92c711c0b36
+    owner: {fileID: 11400000}
+    inputNodeGUID: 7aa7dcb2-4693-46af-ab5a-278b3f45a5d4
+    outputNodeGUID: 66f2cd7f-dfe3-42cd-a234-2e87ceb41ce4
+    inputFieldName: positive
+    outputFieldName: Positive
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 2745b70c-6eb2-4a65-ab1d-79881e1b994c
+    owner: {fileID: 11400000}
+    inputNodeGUID: 7aa7dcb2-4693-46af-ab5a-278b3f45a5d4
+    outputNodeGUID: 66f2cd7f-dfe3-42cd-a234-2e87ceb41ce4
+    inputFieldName: negative
+    outputFieldName: Negative
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: d28d9203-0937-457d-becb-02ed5b836c06
+    owner: {fileID: 11400000}
+    inputNodeGUID: 298ffae2-0db0-4b43-9b34-bcab2e982a1f
+    outputNodeGUID: 7aa7dcb2-4693-46af-ab5a-278b3f45a5d4
+    inputFieldName: prompt
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 5b618c23-8707-42c8-ba6d-8331b53d1096
+    owner: {fileID: 11400000}
+    inputNodeGUID: 298ffae2-0db0-4b43-9b34-bcab2e982a1f
+    outputNodeGUID: c67fdd22-2a15-4b5f-89fa-8d94713525e0
+    inputFieldName: extension
+    outputFieldName: extensionOut
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 8c9275cd-1616-4787-b6ab-a39f216e76ad
+    owner: {fileID: 11400000}
+    inputNodeGUID: 645ffebe-34b1-4432-9e7e-a8c6da242e40
+    outputNodeGUID: d7908568-e075-4ece-a3f5-390159b3036f
+    inputFieldName: executed
+    outputFieldName: executes
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 63f248a7-8f91-4819-9930-85254c143dfd
+    owner: {fileID: 11400000}
+    inputNodeGUID: 298ffae2-0db0-4b43-9b34-bcab2e982a1f
+    outputNodeGUID: 645ffebe-34b1-4432-9e7e-a8c6da242e40
+    inputFieldName: executed
+    outputFieldName: loopBody
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 9b095646-8ee3-4781-b291-d70a36974e9a
+    owner: {fileID: 11400000}
+    inputNodeGUID: 858f191d-e5ba-406a-be67-3e8757ab476c
+    outputNodeGUID: 8d7d19e8-9937-49f4-9ebd-40015d9b775e
+    inputFieldName: inputA
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 6b828c97-5421-455c-9995-b3c0d1794899
+    owner: {fileID: 11400000}
+    inputNodeGUID: 858f191d-e5ba-406a-be67-3e8757ab476c
+    outputNodeGUID: 645ffebe-34b1-4432-9e7e-a8c6da242e40
+    inputFieldName: inputB
+    outputFieldName: index
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 75cf9fa1-70fb-4bee-9368-ce9f1fb9f27f
+    owner: {fileID: 11400000}
+    inputNodeGUID: 298ffae2-0db0-4b43-9b34-bcab2e982a1f
+    outputNodeGUID: 858f191d-e5ba-406a-be67-3e8757ab476c
+    inputFieldName: seed
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 
   groups: []
   stackNodes: []
   pinnedElements: []
@@ -59,8 +119,8 @@ MonoBehaviour:
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: -1436, y: 1451.3334, z: 0}
-  scale: {x: 0.7561437, y: 0.7561437, z: 1}
+  position: {x: -1966, y: 1622.6666, z: 0}
+  scale: {x: 0.8695652, y: 0.8695652, z: 1}
   settings:
     widthScale: 1
     heightScale: 1
@@ -92,10 +152,10 @@ MonoBehaviour:
         computeOrder: 0
         position:
           serializedVersion: 2
-          x: 2233
-          y: -1702.3334
+          x: 2038.9258
+          y: -1799.2092
           width: 200
-          height: 125.333374
+          height: 125.33325
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -143,10 +203,10 @@ MonoBehaviour:
         computeOrder: 1
         position:
           serializedVersion: 2
-          x: 2474
-          y: -1702.6667
+          x: 2279.5925
+          y: -1799.2092
           width: 200
-          height: 133.33337
+          height: 154.66663
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -181,7 +241,12 @@ MonoBehaviour:
         previewSlice: 0
         isPinned: 0
         ServerURL: 
-        modelNames: []
+        modelNames:
+        - v1-5-pruned-emaonly
+        - Real_analogMadness_v60
+        - Real_chilloutmix_NiPrunedFp32Fix
+        - Real_minadukiMix_v10
+        - Real_realisticVisionV51_v51VAE
         currentIndex: 0
         Model: 
     - rid: 398521611895439387
@@ -189,11 +254,11 @@ MonoBehaviour:
       data:
         nodeCustomName: 
         GUID: 298ffae2-0db0-4b43-9b34-bcab2e982a1f
-        computeOrder: 2
+        computeOrder: 8
         position:
           serializedVersion: 2
-          x: 2849.6667
-          y: -1532.3334
+          x: 3277.0972
+          y: -1493.5934
           width: 256
           height: 667.3333
         expanded: 0
@@ -204,11 +269,11 @@ MonoBehaviour:
           widthScale: 1
           heightScale: 1
           depthScale: 1
-          width: 512
+          width: 1024
           height: 512
           depth: 1
           potSize: 0
-          sizeMode: -2
+          sizeMode: 1
           dimension: -2
           outputChannels: -2
           outputPrecision: -2
@@ -237,37 +302,246 @@ MonoBehaviour:
           hr_resize_x: 0
           hr_resize_y: 0
         prompt:
-          positive: 
-          negative: 
-        width: 512
+          positive: masterpiece,best quality,landscape
+          negative: lowres,low quality,worst quality,ugly,poorly drawn hands,out
+            of focus
+        width: 1024
         height: 512
         step: 20
         cfg: 7
-        seed: -1
+        seed: 1730012023
         isTiling: 0
-        extension: 
+        extension: '"Asymmetric Tiling":{"args":[true,true,false,0,-1]}'
         outputImage: {fileID: 0}
-        outSeed: 0
-        progress: 0
+        outSeed: 1730012023
+        progress: 1
         pre_step: 0
         pre_step_count: 20
-        pre_job_no: 0
+        pre_job_no: -1
         job_no_count: 0
-        speed: 0
+        speed: 4.472634
         samplerMethod: Euler
         savePath: 
-    - rid: 398521611895439388
-      type: {class: SDHSVNode, ns: FernNPRCore.SDNodeGraph, asm: FernRender.SDGraph.Runtime}
+    - rid: 2101531907433693225
+      type: {class: SDPromptRegisterNode, ns: FernNPRCore.SDNodeGraph, asm: FernRender.SDGraph.Runtime}
       data:
         nodeCustomName: 
-        GUID: 98cfa19e-912a-4603-8bd0-726614d144e4
+        GUID: 66f2cd7f-dfe3-42cd-a234-2e87ceb41ce4
+        computeOrder: 6
+        position:
+          serializedVersion: 2
+          x: 1477.9615
+          y: -1399.9087
+          width: 632.66675
+          height: 488.00006
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 0
+        hasPreview: 0
+        isCanSaveTexture: 0
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        RegisterData:
+          title:
+            m_Text: 
+            m_Image: {fileID: 0}
+            m_Tooltip: 
+          positiveDatas:
+          - word: "\u6770\u4F5C"
+            weight: 0
+            end: 0
+            process: 0
+            color: 0
+          - word: "\u6700\u9AD8\u8D28\u91CF"
+            weight: 0
+            end: 0
+            process: 0
+            color: 0
+          - word: landscape
+            weight: 0
+            end: 0
+            process: 0
+            color: 0
+          negativeDatas:
+          - word: "\u4F4E\u5206\u8FA8\u7387"
+            weight: 0
+            end: 0
+            process: 0
+            color: 0
+          - word: "\u4F4E\u8D28\u91CF"
+            weight: 0
+            end: 0
+            process: 0
+            color: 0
+          - word: "\u6700\u5DEE\u8D28\u91CF"
+            weight: 0
+            end: 0
+            process: 0
+            color: 0
+          - word: "\u4E11\u964B"
+            weight: 0
+            end: 0
+            process: 0
+            color: 0
+          - word: "\u624B\u90E8\u753B\u5F97\u5F88\u5DEE"
+            weight: 0
+            end: 0
+            process: 0
+            color: 0
+          - word: "\u8131\u79BB\u7126\u70B9"
+            weight: 0
+            end: 0
+            process: 0
+            color: 0
+        Prompt:
+          positive: masterpiece,best quality,landscape
+          negative: lowres,low quality,worst quality,ugly,poorly drawn hands,out
+            of focus
+        Positive: masterpiece,best quality,landscape
+        Negative: lowres,low quality,worst quality,ugly,poorly drawn hands,out of
+          focus
+    - rid: 2101531907433693226
+      type: {class: SDPromptNode, ns: FernNPRCore.SDNodeGraph, asm: FernRender.SDGraph.Runtime}
+      data:
+        nodeCustomName: 
+        GUID: 7aa7dcb2-4693-46af-ab5a-278b3f45a5d4
+        computeOrder: 7
+        position:
+          serializedVersion: 2
+          x: 2214.6282
+          y: -1399.9087
+          width: 200
+          height: 106.66675
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 0
+        hasPreview: 0
+        isCanSaveTexture: 0
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        positive: masterpiece,best quality,landscape
+        negative: lowres,low quality,worst quality,ugly,poorly drawn hands,out of
+          focus
+        output:
+          positive: masterpiece,best quality,landscape
+          negative: lowres,low quality,worst quality,ugly,poorly drawn hands,out
+            of focus
+    - rid: 2101531907433693227
+      type: {class: SDExtensionTilingNode, ns: FernNPRCore.SDNodeGraph, asm: FernRender.SDGraph.Runtime}
+      data:
+        nodeCustomName: 
+        GUID: c67fdd22-2a15-4b5f-89fa-8d94713525e0
+        computeOrder: 2
+        position:
+          serializedVersion: 2
+          x: 2697.3333
+          y: -1188.6884
+          width: 260
+          height: 178.66669
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        settings:
+          widthScale: 1
+          heightScale: 1
+          depthScale: 1
+          width: 512
+          height: 512
+          depth: 1
+          potSize: 0
+          sizeMode: -2
+          dimension: -2
+          outputChannels: -2
+          outputPrecision: -2
+          editFlags: -257
+          doubleBuffered: 0
+          wrapMode: -2
+          filterMode: -2
+          refreshMode: 0
+          period: 0
+        hasSettings: 0
+        hasPreview: 0
+        isCanSaveTexture: 0
+        isPreviewCollapsed: 0
+        previewMode: 15
+        previewSRGB: 0
+        previewMip: 0
+        previewVisible: 1
+        previewEV100: 0
+        previewSlice: 0
+        isPinned: 0
+        extension: 
+        extensionOut: '"Asymmetric Tiling":{"args":[true,true,false,0,-1]}'
+        active: 1
+        tilingX: 1
+        tilingY: 0
+        startTilingFromStep: 0
+        stoptilingAfterStep: -1
+    - rid: 2101531907433693228
+      type: {class: ForLoopNode, ns: , asm: FernRender.SDGraph.Runtime}
+      data:
+        nodeCustomName: 
+        GUID: 645ffebe-34b1-4432-9e7e-a8c6da242e40
         computeOrder: 3
         position:
           serializedVersion: 2
-          x: 3205.6692
-          y: -1438.7268
-          width: 256
-          height: 493.99994
+          x: 2569.9675
+          y: -1799.3334
+          width: 210.6665
+          height: 189.33337
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -290,8 +564,8 @@ MonoBehaviour:
           filterMode: -2
           refreshMode: 0
           period: 0
-        hasSettings: 1
-        hasPreview: 1
+        hasSettings: 0
+        hasPreview: 0
         isCanSaveTexture: 0
         isPreviewCollapsed: 0
         previewMode: 15
@@ -301,172 +575,43 @@ MonoBehaviour:
         previewEV100: 0
         previewSlice: 0
         isPinned: 0
-        output: {fileID: 0}
-        shader: {fileID: 4800000, guid: a3ba7c94177ca5a4bad9dbfc61b32d29, type: 3}
-        material: {fileID: 0}
-        shaderGUID: a3ba7c94177ca5a4bad9dbfc61b32d29
-        inputImage: {fileID: 0}
-        hsvOffsetImage: {fileID: 0}
-        hue: 0.5
-        saturation: 0.5
-        value: 0.5
-        maxValue: 0.5
-    - rid: 398521611895439389
-      type: {class: SDLevelNode, ns: FernNPRCore.SDNodeGraph, asm: FernRender.SDGraph.Runtime}
+        start: 0
+        end: 10
+        index: 9
+    - rid: 2101531907433693229
+      type: {class: DoubleNode, ns: , asm: FernRender.SDGraph.Runtime}
       data:
         nodeCustomName: 
-        GUID: b6af57c5-263e-4467-a94c-53c92b35a9e6
+        GUID: 8d7d19e8-9937-49f4-9ebd-40015d9b775e
         computeOrder: 4
         position:
           serializedVersion: 2
-          x: 3543.2144
-          y: -1349.3336
-          width: 256
-          height: 484
+          x: 2853.3333
+          y: -1565.6667
+          width: 104
+          height: 101.333374
         expanded: 0
         debug: 0
         nodeLock: 0
         isUpdate: 0
-        settings:
-          widthScale: 1
-          heightScale: 1
-          depthScale: 1
-          width: 512
-          height: 512
-          depth: 1
-          potSize: 0
-          sizeMode: -2
-          dimension: -2
-          outputChannels: -2
-          outputPrecision: -2
-          editFlags: -257
-          doubleBuffered: 0
-          wrapMode: -2
-          filterMode: -2
-          refreshMode: 0
-          period: 0
-        hasSettings: 1
-        hasPreview: 1
-        isCanSaveTexture: 0
-        isPreviewCollapsed: 0
-        previewMode: 15
-        previewSRGB: 0
-        previewMip: 0
-        previewVisible: 1
-        previewEV100: 0
-        previewSlice: 0
-        isPinned: 0
-        output: {fileID: 0}
-        shader: {fileID: 4800000, guid: 8d37ac1ca6ef8224abd423570da36e26, type: 3}
-        material: {fileID: 0}
-        shaderGUID: 8d37ac1ca6ef8224abd423570da36e26
-        inputImage: {fileID: 0}
-        min: 0
-        max: 1
-        mode: 0
-        channelMode: 0
-        interpolationCurve:
+        output: 1730012032
+        input: 1730012032
+    - rid: 2101531907433693230
+      type: {class: SubNode, ns: , asm: FernRender.SDGraph.Runtime}
+      data:
+        nodeCustomName: 
+        GUID: 858f191d-e5ba-406a-be67-3e8757ab476c
+        computeOrder: 5
+        position:
           serializedVersion: 2
-          m_Curve:
-          - serializedVersion: 3
-            time: 0
-            value: 0
-            inSlope: 0
-            outSlope: 1
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          - serializedVersion: 3
-            time: 1
-            value: 1
-            inSlope: 1
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
-        interpolationCurveR:
-          serializedVersion: 2
-          m_Curve:
-          - serializedVersion: 3
-            time: 0
-            value: 0
-            inSlope: 0
-            outSlope: 1
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          - serializedVersion: 3
-            time: 1
-            value: 1
-            inSlope: 1
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
-        interpolationCurveG:
-          serializedVersion: 2
-          m_Curve:
-          - serializedVersion: 3
-            time: 0
-            value: 0
-            inSlope: 0
-            outSlope: 1
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          - serializedVersion: 3
-            time: 1
-            value: 1
-            inSlope: 1
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
-        interpolationCurveB:
-          serializedVersion: 2
-          m_Curve:
-          - serializedVersion: 3
-            time: 0
-            value: 0
-            inSlope: 0
-            outSlope: 1
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          - serializedVersion: 3
-            time: 1
-            value: 1
-            inSlope: 1
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
-        histogramMode: 0
-        curveTexture: {fileID: 0}
-        curveTextureR: {fileID: 0}
-        histogramData:
-          mode: 0
-          bucketCount: 256
-          previewMaterial: {fileID: 0}
-          minLuminance: 0
-          maxLuminance: 0
+          x: 3019.6106
+          y: -1494
+          width: 102
+          height: 101.33325
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        isUpdate: 0
+        inputA: 1730012032
+        inputB: 9
+        output: 1730012023
