@@ -27,6 +27,7 @@ MonoBehaviour:
   ProgressAPI: /sdapi/v1/progress
   ExtraSingleImage: /sdapi/v1/extra-single-image
   SavePath: TmpPhotos
+  SavePath_Upscale: TmpPhotos/Upscale
   UseAuth: 0
   Username: 
   Password: 
@@ -137,8 +138,8 @@ MonoBehaviour:
     - 1,1,1,1,1,1,0.2,1,0.2,0,0,0.8,1,1,1,0,0
   modelUse: 
   loraUse: 
-  OverrideSettings: 0
-  OverrideServerURL: 
+  OverrideSettings: 1
+  OverrideServerURL: http://127.0.0.1:7860
   OverrideUseAuth: 0
   OverrideUsername: 
   OverridePassword: 

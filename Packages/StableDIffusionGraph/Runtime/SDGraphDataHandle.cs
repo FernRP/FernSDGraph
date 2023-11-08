@@ -24,6 +24,7 @@ namespace FernNPRCore.SDNodeGraph
         public string ProgressAPI = "/sdapi/v1/progress";
         public string ExtraSingleImage = "/sdapi/v1/extra-single-image";
         public string SavePath = "TmpPhotos";
+        public string SavePath_Upscale = "TmpPhotos/UpScale";
         public bool UseAuth = false;
         public string Username = "";
         public string Password = "";
