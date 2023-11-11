@@ -1,7 +1,5 @@
 # FernSDGraph
 
-[中文](https://github.com/FernRender/FernSDGraph/blob/master/README_CN.md) | [English](https://github.com/FernRender/FernSDGraph/blob/master/README.md)
-
 FernSDGraph is a Graph tool in Unity, which can obtain the scene information of Unity and generate images using Stable Diffusion.
 
 The old Git repository was: https://github.com/FernRender/FernNPR
@@ -14,6 +12,8 @@ Please read the documentation before using this project：
 [Fern SD Graph Documentation](https://www.notion.so/rookiefern/Fern-Render-Stable-Diffusion-Graph-c93aa9a1d29748ef8f5fdc4523af503b)
 
 ## Showcase
+
+![](/DocAssets/Example.png)
 
 ### Tiling Texture
 
