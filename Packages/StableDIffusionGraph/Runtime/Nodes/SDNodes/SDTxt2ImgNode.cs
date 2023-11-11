@@ -45,6 +45,7 @@ namespace FernNPRCore.SDNodeGraph
         [HideInInspector] public int job_no_count;
         [HideInInspector] public float speed; // it/s
         [HideInInspector] public string samplerMethod = "Euler";
+        [HideInInspector] public bool isAutoSave = false;
         [HideInInspector] public string savePath = null;
 
         public override string name => "SD Txt2Img";
@@ -295,21 +296,24 @@ namespace FernNPRCore.SDNodeGraph
                             // Read the seed that was used by Stable Diffusion to generate this result
                             outSeed = info.seed;
                             OutputImage.name = info.seed.ToString();
-                            string tempSavePath = null;
-                            if (!string.IsNullOrEmpty(savePath) && Directory.Exists(SDGraphResource.SdGraphDataHandle.SavePath))
+                            if (isAutoSave)
                             {
-                                tempSavePath = savePath;
+                                string tempSavePath = null;
+                                if (!string.IsNullOrEmpty(savePath) && Directory.Exists(SDGraphResource.SdGraphDataHandle.SavePath))
+                                {
+                                    tempSavePath = savePath;
+                                }
+                                else
+                                {
+                                    if (!Directory.Exists(SDGraphResource.SdGraphDataHandle.SavePath))
+                                        Directory.CreateDirectory(SDGraphResource.SdGraphDataHandle.SavePath);
+                                    tempSavePath =
+                                        $"{SDGraphResource.SdGraphDataHandle.SavePath}/img_{DateTime.Now.ToString("yyyyMMddHHmmss")}_{outSeed}.png";
+                                }
+                                File.WriteAllBytes(tempSavePath,imageData);
+                                OnUpdateSeedField?.Invoke(this.seed, outSeed);
+                                AssetDatabase.Refresh();
                             }
-                            else
-                            {
-                                if (!Directory.Exists(SDGraphResource.SdGraphDataHandle.SavePath))
-                                    Directory.CreateDirectory(SDGraphResource.SdGraphDataHandle.SavePath);
-                                tempSavePath =
-                                    $"{SDGraphResource.SdGraphDataHandle.SavePath}/img_{DateTime.Now.ToString("yyyyMMddHHmmss")}_{outSeed}.png";
-                            }
-                            File.WriteAllBytes(tempSavePath,imageData);
-                            OnUpdateSeedField?.Invoke(this.seed, outSeed);
-                            AssetDatabase.Refresh();
                             SDUtil.Log("Txt 2 Img");
                             InvokeOnExecuteFinsih();
                         }

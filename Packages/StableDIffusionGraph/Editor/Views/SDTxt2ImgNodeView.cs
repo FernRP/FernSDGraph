@@ -65,7 +65,16 @@ public class SDTxt2ImgNodeView : SDNodeView
 		extensionContainer.Add(containerLastSeed);
 		
 		// Save Path
-		var savePath = new Label("Auto Save");
+		var saveToggle = new Toggle("Auto Save");
+		saveToggle.labelElement.style.minWidth = 62;
+		saveToggle.style.width = StyleKeyword.Auto;
+		saveToggle.style.flexGrow = 1;
+		saveToggle.style.marginLeft = 0;
+		saveToggle.style.marginRight = 0;
+		saveToggle.RegisterValueChangedCallback(OnAutoSaveToggleChange);
+		extensionContainer.Add(saveToggle);
+		
+		var savePath = new Label("Save Path");
 		savePath.style.width = StyleKeyword.Auto;
 		savePath.style.marginRight = 5;
 		savePathTxtField = new TextField();
@@ -96,6 +105,16 @@ public class SDTxt2ImgNodeView : SDNodeView
 		node.onProgressFinish += OnProgressBarFinish;
 		
 		RefreshExpandedState();
+	}
+
+	private void OnAutoSaveToggleChange(ChangeEvent<bool> evt)
+	{
+		node.isAutoSave = evt.newValue;
+	}
+
+	private void OnAutoSaveToggleChange()
+	{
+		
 	}
 
 	private void SavePathBtn()

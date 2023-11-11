@@ -34,6 +34,7 @@ namespace FernNPRCore.SDNodeGraph
         [HideInInspector] public int upscaler1_index = 0;
         [HideInInspector] public string upscaler_2 = "None";
         [HideInInspector] public int upscaler2_index = 0;
+        [HideInInspector] public bool isAutoSave = false;
         [HideInInspector] public string savePath = null;
         
         [Output] public Texture2D outputImage;
@@ -165,20 +166,23 @@ namespace FernNPRCore.SDNodeGraph
                 // Decode the image from Base64 string into an array of bytes
                 byte[] imageData = Convert.FromBase64String(json.image);
                 OutputImage.LoadImage(imageData);
-                
-                string tempSavePath = null;
-                if (!string.IsNullOrEmpty(savePath) && Directory.Exists(SDGraphResource.SdGraphDataHandle.SavePath_Upscale))
+
+                if (isAutoSave)
                 {
-                    tempSavePath = savePath;
+                    string tempSavePath = null;
+                    if (!string.IsNullOrEmpty(savePath) && Directory.Exists(SDGraphResource.SdGraphDataHandle.SavePath_Upscale))
+                    {
+                        tempSavePath = savePath;
+                    }
+                    else
+                    {
+                        if (!Directory.Exists(SDGraphResource.SdGraphDataHandle.SavePath_Upscale))
+                            Directory.CreateDirectory(SDGraphResource.SdGraphDataHandle.SavePath_Upscale);
+                        tempSavePath =
+                            $"{SDGraphResource.SdGraphDataHandle.SavePath_Upscale}/img_{DateTime.Now.ToString("yyyyMMddHHmmss")}.png";
+                    }
+                    File.WriteAllBytes(tempSavePath,imageData);
                 }
-                else
-                {
-                    if (!Directory.Exists(SDGraphResource.SdGraphDataHandle.SavePath_Upscale))
-                        Directory.CreateDirectory(SDGraphResource.SdGraphDataHandle.SavePath_Upscale);
-                    tempSavePath =
-                        $"{SDGraphResource.SdGraphDataHandle.SavePath_Upscale}/img_{DateTime.Now.ToString("yyyyMMddHHmmss")}.png";
-                }
-                File.WriteAllBytes(tempSavePath,imageData);
             }
 
             yield return null;

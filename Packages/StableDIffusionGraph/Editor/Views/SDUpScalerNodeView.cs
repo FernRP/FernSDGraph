@@ -50,6 +50,7 @@ namespace FernNPRCore.SDNodeGraph
             });
             upScalerModelDropdown2.style.flexGrow = 1;
             upScalerModelDropdown2.style.maxWidth = 140;
+            
             var container2 = new VisualElement();
             container2.style.flexDirection = FlexDirection.Row;
             container2.style.alignItems = Align.Center;
@@ -57,7 +58,23 @@ namespace FernNPRCore.SDNodeGraph
             container2.Add(upScalerModelDropdown2);
             extensionContainer.Add(container1);
             extensionContainer.Add(container2);
+            
+            // Save Path
+            var saveToggle = new Toggle("Auto Save");
+            saveToggle.labelElement.style.minWidth = 62;
+            saveToggle.style.width = StyleKeyword.Auto;
+            saveToggle.style.flexGrow = 1;
+            saveToggle.style.marginLeft = 0;
+            saveToggle.style.marginRight = 0;
+            saveToggle.RegisterValueChangedCallback(OnAutoSaveToggleChange);
+            extensionContainer.Add(saveToggle);
+            
             RefreshExpandedState();
+        }
+
+        private void OnAutoSaveToggleChange(ChangeEvent<bool> evt)
+        {
+            node.isAutoSave = evt.newValue;
         }
     }
 }
