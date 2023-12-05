@@ -90,6 +90,11 @@ namespace FernNPRCore.SDNodeGraph
             base.OnEnable();
         }
 
+        public void Open()
+        {
+            OnEnable();
+        }
+
         void MigrateGraph()
         {
             foreach (var node in nodes)

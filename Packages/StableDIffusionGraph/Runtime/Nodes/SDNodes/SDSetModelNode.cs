@@ -49,10 +49,10 @@ namespace FernNPRCore.SDNodeGraph
             // Load the list of models if not filled already
             if (string.IsNullOrEmpty(Model))
             {
-                SDUtil.Log("Model is null");
+                SDUtil.Log(url + ": Model is null");
                 yield return null;
             }
-
+            
             HttpWebRequest httpWebRequest = null;
             try
             {
@@ -62,6 +62,7 @@ namespace FernNPRCore.SDNodeGraph
                 httpWebRequest.Method = "POST";
                 if (SDGraphResource.SdGraphDataHandle.GetUseAuth() && !string.IsNullOrEmpty(SDGraphResource.SdGraphDataHandle.GetUserName()) && !string.IsNullOrEmpty(SDGraphResource.SdGraphDataHandle.GetPassword()))
                 {
+
                     httpWebRequest.PreAuthenticate = true;
                     byte[] bytesToEncode = Encoding.UTF8.GetBytes(SDGraphResource.SdGraphDataHandle.GetUserName() + ":" + SDGraphResource.SdGraphDataHandle.GetPassword());
                     string encodedCredentials = Convert.ToBase64String(bytesToEncode);
@@ -91,18 +92,19 @@ namespace FernNPRCore.SDNodeGraph
             
             if (httpWebRequest != null)
             {
+
                 // Wait that the generation is complete before procedding
                 Task<WebResponse> webResponse = httpWebRequest.GetResponseAsync();
+
                 while (!webResponse.IsCompleted)
-                {           
+                {
 #if UNITY_EDITOR
                     EditorUtility.ClearProgressBar();
 #endif
-                    yield return new WaitForSeconds(100);
+                    yield return new WaitForSeconds(1);
                 }
                 // Stream the result from the server
                 var httpResponse = webResponse.Result;
-                
                 try
                 {
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -113,6 +115,7 @@ namespace FernNPRCore.SDNodeGraph
                 }
                 catch (WebException e)
                 {
+                    Debug.LogError(url);
                     SDUtil.Log("Error: " + e.Message);
                 }
             }

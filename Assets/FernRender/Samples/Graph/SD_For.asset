@@ -32,14 +32,6 @@ MonoBehaviour:
     outputFieldName: executes
     inputPortIdentifier: 
     outputPortIdentifier: 
-  - GUID: f42ad5f9-ff8c-4120-b598-757db3037ab6
-    owner: {fileID: 11400000}
-    inputNodeGUID: b6af57c5-263e-4467-a94c-53c92b35a9e6
-    outputNodeGUID: 98cfa19e-912a-4603-8bd0-726614d144e4
-    inputFieldName: inputImage
-    outputFieldName: output
-    inputPortIdentifier: 
-    outputPortIdentifier: 
   - GUID: b658c7f8-778d-4cfc-a019-e92c711c0b36
     owner: {fileID: 11400000}
     inputNodeGUID: 7aa7dcb2-4693-46af-ab5a-278b3f45a5d4
@@ -119,8 +111,8 @@ MonoBehaviour:
   serializedParameterList: []
   stickyNotes: []
   nodeInspectorReference: {fileID: 0}
-  position: {x: -1966, y: 1622.6666, z: 0}
-  scale: {x: 0.8695652, y: 0.8695652, z: 1}
+  position: {x: -2050.6667, y: 2250.6667, z: 0}
+  scale: {x: 1.15, y: 1.15, z: 1}
   settings:
     widthScale: 1
     heightScale: 1
@@ -190,7 +182,7 @@ MonoBehaviour:
         previewSlice: 0
         isPinned: 0
         outServerURL: http://127.0.0.1:7860
-        overrideSettings: 0
+        overrideSettings: 1
         serverURL: http://127.0.0.1:7860
         useAuth: 0
         user: 
@@ -245,10 +237,12 @@ MonoBehaviour:
         - v1-5-pruned-emaonly
         - Real_analogMadness_v60
         - Real_chilloutmix_NiPrunedFp32Fix
+        - Real_lazymixRealAmateur_v30b
+        - Real_majicmixRealistic_v7
         - Real_minadukiMix_v10
         - Real_realisticVisionV51_v51VAE
-        currentIndex: 0
-        Model: 
+        currentIndex: 1
+        Model: Real_analogMadness_v60
     - rid: 398521611895439387
       type: {class: SDTxt2ImgNode, ns: FernNPRCore.SDNodeGraph, asm: FernRender.SDGraph.Runtime}
       data:
@@ -309,18 +303,20 @@ MonoBehaviour:
         height: 512
         step: 20
         cfg: 7
-        seed: 1730012023
+        seed: 1730012032
+        subSeed: -1
         isTiling: 0
         extension: '"Asymmetric Tiling":{"args":[true,true,false,0,-1]}'
         outputImage: {fileID: 0}
-        outSeed: 1730012023
-        progress: 1
+        outSeed: 1730012032
+        progress: -Infinity
         pre_step: 0
         pre_step_count: 20
         pre_job_no: -1
         job_no_count: 0
-        speed: 4.472634
+        speed: 13.60796
         samplerMethod: Euler
+        isAutoSave: 0
         savePath: 
     - rid: 2101531907433693225
       type: {class: SDPromptRegisterNode, ns: FernNPRCore.SDNodeGraph, asm: FernRender.SDGraph.Runtime}
@@ -576,8 +572,8 @@ MonoBehaviour:
         previewSlice: 0
         isPinned: 0
         start: 0
-        end: 10
-        index: 9
+        end: 1
+        index: 0
     - rid: 2101531907433693229
       type: {class: DoubleNode, ns: , asm: FernRender.SDGraph.Runtime}
       data:
@@ -587,9 +583,9 @@ MonoBehaviour:
         position:
           serializedVersion: 2
           x: 2853.3333
-          y: -1565.6667
+          y: -1557
           width: 104
-          height: 101.333374
+          height: 101.33325
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -613,5 +609,5 @@ MonoBehaviour:
         nodeLock: 0
         isUpdate: 0
         inputA: 1730012032
-        inputB: 9
-        output: 1730012023
+        inputB: 0
+        output: 1730012032

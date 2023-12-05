@@ -125,7 +125,7 @@ namespace NodeGraphProcessor.Examples
                         // Execute the conditional node:
                         yield return node.OnExecute();
                         
-                        yield return node;
+                        //yield return node;
 
                         // And select the next nodes to execute:
                         switch (node)
