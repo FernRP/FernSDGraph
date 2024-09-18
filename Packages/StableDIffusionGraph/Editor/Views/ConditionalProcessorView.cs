@@ -29,6 +29,6 @@ public class ConditionalProcessorView : PinnedElementView
 
     void OnPlay()
     {
-        EditorCoroutineUtility.StartCoroutine(processor.RunAsync(), this);
+        EditorCoroutineUtility.StartCoroutine(processor.RunAsync(), graphView);
     }
 }

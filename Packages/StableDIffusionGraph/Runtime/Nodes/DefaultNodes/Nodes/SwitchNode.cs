@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GraphProcessor;
 using System.Linq;
-using FernNPRCore.SDNodeGraph;
+using UnityEngine.SDGraph;
 
 [System.Serializable, NodeMenuItem("Control Flow/Switch")]
 public class SwitchNode : LinearSDProcessorNode
@@ -17,7 +17,7 @@ public class SwitchNode : LinearSDProcessorNode
 
     public override string name => "Switch";
 
-    protected override void Process()
+    public override void Process()
     {
         if (inputs == null || index < 0 || index >= inputs.Count)
             return;

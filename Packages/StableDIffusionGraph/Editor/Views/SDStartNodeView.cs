@@ -7,56 +7,41 @@ using UnityEditor.UIElements;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
 using GraphProcessor;
+using NodeGraphProcessor.Examples;
+using Unity.EditorCoroutines.Editor;
+using UnityEngine.SDGraph;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEditor.SDGraph
 {
 	[NodeCustomEditor(typeof(SDStartNode))]
 	public class SDStartNodeView : SDNodeView
 	{
 		private Button setOverrideServerBtn;
-		private bool isDebug = false;
+		private Button executeBtn;
+		private bool isDebug = true;
 		private SDStartNode node;
+
+		private ConditionalProcessor executor;
+		private SDProcessGraphProcessor processor;
+		
 		public override void Enable()
 		{
 			base.Enable();
 			node = nodeTarget as SDStartNode;
 			if (node == null) return;
-			setOverrideServerBtn = new Button(SetServerURL);
-			setOverrideServerBtn.text = "Override ServerURL";
+
+			executor = new ConditionalProcessor(owner.graph);
+			executeBtn = new Button(StartExecute);
+			executeBtn.text = "SD Start";
+			mainContainer.Add(executeBtn);
+			processor = new SDProcessGraphProcessor(owner.graph);
 			RefreshExpandedState();
 		}
-		
-		private void SetServerURL()
-		{
-			var node = nodeTarget as SDStartNode;
-			SDGraphResource.SdGraphDataHandle.OverrideSettings = true;
-			if(node == null) return;
-			SDGraphResource.SdGraphDataHandle.OverrideServerURL = node.serverURL;
-			SDGraphResource.SdGraphDataHandle.OverrideUseAuth = node.useAuth;
-			SDGraphResource.SdGraphDataHandle.OverrideUsername = node.user;
-			SDGraphResource.SdGraphDataHandle.OverridePassword = node.pass;
-			node.outServerURL = node.serverURL;
-			SDUtil.Log($"Override ServerURL: {node.serverURL}", isDebug);
-		}
 
-		protected override void OnFieldChanged(string fieldName, object value)
-		{			
-			if(node == null) return;
-			SDUtil.Log($"{fieldName} has changed", isDebug);
-			if (fieldName == nameof(node.overrideSettings))
-			{
-				bool fileValue = (bool)value;
-				if (!fileValue)
-				{
-					extensionContainer.Clear();
-					RefreshExpandedState();
-				}
-				else
-				{
-					extensionContainer.Add(setOverrideServerBtn);
-					RefreshExpandedState();
-				}
-			}
+		private void StartExecute()
+		{
+			processor.Run();
+			EditorCoroutineUtility.StartCoroutine(executor.RunAsyncWithStartNode(node), owner);
 		}
 	}
 }

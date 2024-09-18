@@ -4,7 +4,7 @@ using GraphProcessor;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     // Undo.RecordObject(cur_register.RegisterData, tag);
     [Serializable]
@@ -62,7 +62,7 @@ namespace FernNPRCore.SDNodeGraph
 
         public override string name => "SD Prompt Register";        
         
-        protected override void Process()
+        public override void Process()
         {
             Positive = Prompt.positive;
             Negative = Prompt.negative;

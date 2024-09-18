@@ -6,12 +6,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     /// <summary>
     /// Extention From: https://github.com/tjm35/asymmetric-tiling-sd-webui/
     /// </summary>
-    [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Extension Asymmetric Tiling")]
+    [System.Serializable, NodeMenuItem("Stable Diffusion Graph/Asymmetric Tiling Extension")]
     public class SDExtensionTilingNode : SDNode
     {
         public class AsymmetricTiling
@@ -35,7 +35,7 @@ namespace FernNPRCore.SDNodeGraph
         private AsymmetricTiling asymmetricTiling;
         private readonly string header = "\"Asymmetric Tiling\":{\"args\":[";
        
-        public override string name => "SD Extension Asymmetric Tiling";
+        public override string name => "Asymmetric Tiling Extension";
 
         protected override void Enable()
         {
@@ -51,7 +51,7 @@ namespace FernNPRCore.SDNodeGraph
             };
         }
 
-        protected override void Process()
+        public override void Process()
         {
             base.Process();
             asymmetricTiling.active = active;

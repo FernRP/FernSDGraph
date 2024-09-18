@@ -7,7 +7,7 @@ using NodeGraphProcessor.Examples;
 using Unity.EditorCoroutines.Editor;
 using Status = UnityEngine.UIElements.DropdownMenuAction.Status;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEditor.SDGraph
 {
     public class StableDiffusionToolbarView : ToolbarView
     {
@@ -30,8 +30,8 @@ namespace FernNPRCore.SDNodeGraph
             graphView.computeOrderUpdated += processor.UpdateComputeOrder;
             
             AddButton("Save", graphView.SaveGraphToDisk);
-            AddButton("Stable Diffusion Execute", RunExecute);
-            AddButton("Processor", RunProcessor);
+            //AddButton("Stable Diffusion Execute", RunExecute);
+            AddButton("Update All Node", RunProcessor);
             AddToggle("Always Update", false, OnAlwaysUpdate);
 
             bool exposedParamsVisible = graphView.GetPinnedElementStatus< ExposedParameterView >() != Status.Hidden;
@@ -45,13 +45,14 @@ namespace FernNPRCore.SDNodeGraph
             isAlwaysUpdate = obj;
         }
 
-        void RunExecute()
+        public void RunExecute()
         {
-            EditorCoroutineUtility.StartCoroutine(executor.RunAsync(), this);
+            EditorCoroutineUtility.StartCoroutine(executor.RunAsync(), graphView);
         }
         
         public void RunProcessor()
         {
+            processor.UpdateComputeOrder();
             processor.Run();
         }
     }

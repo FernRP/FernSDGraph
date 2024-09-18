@@ -8,8 +8,8 @@
 #pragma kernel CopyMinMaxToBuffer
 
 #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
-#include "../../../Editor/Resources/HistogramData.hlsl"
-#include "../../Shaders/SDMixComputeUtils.hlsl"
+#include "Packages/com.tateam.sdgraph/Editor/Resources/HistogramData.hlsl"
+#include "Packages/com.tateam.sdgraph/Shaders/SDMixComputeUtils.hlsl"
 
 float4 _InputTextureSize;
 uint _DispatchSizeX;

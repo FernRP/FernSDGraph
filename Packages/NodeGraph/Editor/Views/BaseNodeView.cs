@@ -670,8 +670,8 @@ namespace GraphProcessor
 
 		public virtual void Disable()
 		{
-			nodeTarget.onExecute -= Highlight;
-			nodeTarget.onExecuteFinish -= UnHighlight;
+			nodeTarget.onExecute -= ExecuteHighLight;
+			nodeTarget.onExecuteFinish -= ExecuteFinishHighLight;
 		}
 
 		Dictionary<string, List<(object value, VisualElement target)>> visibleConditions = new Dictionary<string, List<(object value, VisualElement target)>>();

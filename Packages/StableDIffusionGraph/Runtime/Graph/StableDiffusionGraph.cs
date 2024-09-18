@@ -6,7 +6,7 @@ using GraphProcessor;
 using UnityEditor;
 using UnityEngine;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     public enum NodeInheritanceMode
     {

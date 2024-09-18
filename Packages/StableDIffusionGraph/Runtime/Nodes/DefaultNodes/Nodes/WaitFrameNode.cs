@@ -1,13 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using FernNPRCore.SDNodeGraph;
+using UnityEngine.SDGraph;
 using GraphProcessor;
 using UnityEngine;
 
 namespace NodeGraphProcessor.Examples
 {
-	[Serializable, NodeMenuItem("Control Flow/Wait Frames")]
+	//[Serializable, NodeMenuItem("Control Flow/Wait Frames")]
 	public class WaitFrameNode : WaitableNode
 	{
 		public override string name => "Wait Frames";
@@ -17,7 +17,7 @@ namespace NodeGraphProcessor.Examples
 
 		private static WaitFrameMonoBehaviour waitFrameMonoBehaviour;
 
-		protected override void Process()
+		public override void Process()
 		{
 			if(waitFrameMonoBehaviour == null)
 			{

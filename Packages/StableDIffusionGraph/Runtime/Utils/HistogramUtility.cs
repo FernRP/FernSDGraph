@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using System;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     public enum HistogramMode
     {

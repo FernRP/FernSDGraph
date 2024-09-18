@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using FernNPRCore.SDNodeGraph;
+using UnityEngine.SDGraph;
 using GraphProcessor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Mirror")]
     public class SDMirror : SDShaderNode
@@ -35,7 +35,11 @@ namespace FernNPRCore.SDNodeGraph
         [Input(name = "Source")] public Texture inputImage;
         public override string name => "SD Mirror";
 
-        public override string shaderName => "Hidden/SDMix/Mirror";
+        protected override void Enable()
+        {
+            shader = SDGraphResource.SdGraphDataHandle.shaderData.mirrorPS;
+            base.Enable();
+        }
 
         public MirrorMode mode = MirrorMode.MirrorX;
         [VisibleIf(nameof(mode), MirrorMode.MirrorCorner)]

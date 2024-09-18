@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using FernNPRCore.SDNodeGraph;
+using UnityEditor.SDGraph;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -8,9 +8,10 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
 using GraphProcessor;
 using NodeGraphProcessor.Examples;
+using UnityEngine.SDGraph;
 using Unity.VisualScripting;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEditor.SDGraph
 {
     [NodeCustomEditor(typeof(SDPreviewNode))]
     public class SDPreviewNodeView : SDNodeView

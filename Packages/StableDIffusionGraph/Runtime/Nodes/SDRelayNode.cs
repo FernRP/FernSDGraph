@@ -4,7 +4,7 @@ using UnityEngine;
 using GraphProcessor;
 using System.Linq;
 using System;
-using FernNPRCore.SDNodeGraph;
+using UnityEngine.SDGraph;
 
 public class SDRelayNode : SDProcessorNode
 {

@@ -99,7 +99,7 @@ namespace GraphProcessor
         public event ProcessDelegate onProcessed;
 
         public event ProcessDelegate onExecute;
-        public event ProcessDelegate onExecuteFinish;
+        public ProcessDelegate onExecuteFinish;
         public event Action<string, NodeMessageType> onMessageAdded;
         public event Action<string> onMessageRemoved;
         
@@ -670,11 +670,8 @@ namespace GraphProcessor
         public void OnProcess()
         {
             inputPorts.PullDatas();
-
             ExceptionToLog.Call(() => Process());
-
             InvokeOnProcessed();
-
             outputPorts.PushDatas();
         }
 
@@ -686,7 +683,6 @@ namespace GraphProcessor
             afterProcessCleanup?.Invoke();
 
             InvokeOnProcessed();
-
             outputPorts.PushDatas();
         }
         
@@ -732,7 +728,7 @@ namespace GraphProcessor
         /// <summary>
         /// Override this method to implement custom processing
         /// </summary>
-        protected virtual void Process()
+        public virtual void Process()
         {
         }
         

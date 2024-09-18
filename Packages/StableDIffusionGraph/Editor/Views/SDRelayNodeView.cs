@@ -6,7 +6,7 @@ using System.Linq;
 using System;
 using UnityEditor.Experimental.GraphView;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEditor.SDGraph
 {
     [NodeCustomEditor(typeof(SDRelayNode))]
     public class SDRelayNodeView : BaseNodeView

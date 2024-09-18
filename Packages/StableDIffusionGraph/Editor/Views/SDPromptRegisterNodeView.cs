@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using GraphProcessor;
+using UnityEngine.SDGraph;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEditor.SDGraph
 {
     [NodeCustomEditor(typeof(SDPromptRegisterNode))]
     public class SDPromptRegisterNodeView : SDNodeView
@@ -123,82 +124,15 @@ namespace FernNPRCore.SDNodeGraph
             tags.Sort((a, b) => b.priority.CompareTo(a.priority));
         }
         
-        public static string favorite_data_path = "Assets/FernRender/FernNPRCore/StableDiffusionGraph_NodeGraph/Samples/StableDIffusionGraph/Resources";
         public void LoadConfigTxt()
         {
             favorite_Asset = Resources.Load<SDPromptFavoriteData>("SDPromptFavorite");
-            TextAsset config_positive_Asset = Resources.Load<TextAsset>("SDTag/config_positive_novelai");
-            var config_positive_Text = config_positive_Asset.text.Split("\n");
-            config_positive.Clear();
-            foreach (var line in config_positive_Text)
-            {
-                var words = line.Split("\t");
-                List<string> lineItems = new List<string>();
-                for (var i = 0; i < words.Length; i++)
-                {
-                    var word = words[i];
-                    word = word.Replace("\t", "").Replace("\n", "").Replace("\r", "");
-                    if (string.IsNullOrEmpty(word)) continue;
-                    lineItems.Add(word);
-                }
-
-                if (lineItems.Count > 0)
-                {
-                    config_positive.Add(lineItems);
-                }
-            }
             TextAsset danbooru_tag_Asset = Resources.Load<TextAsset>("SDTag/danbooru");
             TextAsset e621_tag_Asset = Resources.Load<TextAsset>("SDTag/e621");
             var tagList = new List<List<string>>();
             resolve_csv(danbooru_tag_Asset, ref tagList);
             resolve_csv(e621_tag_Asset, ref tagList);
             resolve_tag(tagList);
-            
-            TextAsset config_negative_Asset = Resources.Load<TextAsset>("SDTag/config_negative_common");
-            var config_negative_Text = config_negative_Asset.text.Split("\n");
-            config_negative.Clear();
-            foreach (var line in config_negative_Text)
-            {
-                var words = line.Split("\t");
-                List<string> lineItems = new List<string>();
-                for (var i = 0; i < words.Length; i++)
-                {
-                    var word = words[i];
-                    word = word.Replace("\t", "").Replace("\n", "").Replace("\r", "");
-                    if (string.IsNullOrEmpty(word)) continue;
-                    lineItems.Add(word);
-                }
-
-                if (lineItems.Count > 0)
-                {
-                    config_negative.Add(lineItems);
-                }
-            }
-            
-            TextAsset CN2ENAsset = Resources.Load<TextAsset>("SDTag/CN2EN");
-            var CN2ENtext = CN2ENAsset.text.Split("\n");
-            CN2EN.Clear();
-            foreach (var line in CN2ENtext)
-            {
-                var words = line.Split("\t");
-                List<string> lineItems = new List<string>();
-                for (var i = 0; i < words.Length; i++)
-                {
-                    var word = words[i];
-                    word = word.Replace("\t", "").Replace("\n", "").Replace("\r", "");
-                    if (string.IsNullOrEmpty(word)) continue;
-                    lineItems.Add(word);
-                }
-
-                if (lineItems.Count > 1)
-                {
-                    if (CN2EN.ContainsKey(lineItems[0]))
-                    {
-                        continue;
-                    }
-                    CN2EN.Add(lineItems[0], lineItems[1]);
-                }
-            }
         }
 
         #endregion
@@ -475,8 +409,8 @@ namespace FernNPRCore.SDNodeGraph
                     }, null);
                 Event.current.Use();
             }
+            toolbarSearchTextFieldPopup.normal.textColor = Color.white;
             searchingText = EditorGUI.TextField(rect, String.Empty, searchingText, toolbarSearchTextFieldPopup);
-
 			
             if (EditorGUI.EndChangeCheck())
                 isHasChanged = true;
@@ -492,6 +426,7 @@ namespace FernNPRCore.SDNodeGraph
                     EditorStyles.label.fontSize = toolbarSearchTextFieldPopup.fontSize;
                     EditorStyles.label.Draw(position1, $"{searchModeMenus[selectedMenusIndex]} (提示词仅支持英文输入)" , false, false, false, false);
                     EditorStyles.label.fontSize = fontSize;
+                    EditorStyles.label.normal.textColor = Color.white;
                 }
             }
 			
@@ -587,10 +522,11 @@ namespace FernNPRCore.SDNodeGraph
             EditorGUILayout.BeginHorizontal();
             
             // ----------------------------------------------1 ---------------------------------------
-            EditorGUILayout.BeginVertical(GUILayout.Width(140));
+            
             s1 = EditorGUILayout.BeginScrollView(s1, GUILayout.Height(300));
             if (!string.IsNullOrEmpty(searchingText))
             {
+                EditorGUILayout.BeginVertical(GUILayout.Width(140));
                 if (DoSearch)
                 {
                     step = 0;
@@ -599,7 +535,7 @@ namespace FernNPRCore.SDNodeGraph
                         EditorCoroutineUtility.StopCoroutine(search_coroutine);
                         search_coroutine = null;
                     }
-                    search_coroutine = EditorCoroutineUtility.StartCoroutine(SearchWords(menusIndex, searchingText, config), this);
+                    search_coroutine = EditorCoroutineUtility.StartCoroutine(SearchWords(menusIndex, searchingText, config), owner);
                 }
                 
                 if (searchwords is { Count: > 0 })
@@ -612,27 +548,31 @@ namespace FernNPRCore.SDNodeGraph
             }
             else
             {
-                while (foldouts.Count < config.Count)
-                {
-                    foldouts.Add(false);
-                }
-                for (var i = 0; i < config.Count; i++)
-                {
-                    if (menusIndex != 0 && menusIndex != i + 1) continue;
-                    var line = config[i];
-                    EditorGUILayout.BeginVertical("helpbox");
-                    foldouts[i] = EditorGUILayout.Foldout(foldouts[i], line[0], true);
-                    if (foldouts[i])
-                    {
-                        for (var j = 1; j < line.Count; j++)
-                        {
-                            DrawWord(promptDatas, line[j]);
-                        }
-                    }
-                    EditorGUILayout.EndVertical();
-            
-                }
+                EditorGUILayout.BeginVertical(GUILayout.Width(0));
             }
+            // else
+            // {
+            //     while (foldouts.Count < config.Count)
+            //     {
+            //         foldouts.Add(false);
+            //     }
+            //     for (var i = 0; i < config.Count; i++)
+            //     {
+            //         if (menusIndex != 0 && menusIndex != i + 1) continue;
+            //         var line = config[i];
+            //         EditorGUILayout.BeginVertical("helpbox");
+            //         foldouts[i] = EditorGUILayout.Foldout(foldouts[i], line[0], true);
+            //         if (foldouts[i])
+            //         {
+            //             for (var j = 1; j < line.Count; j++)
+            //             {
+            //                 DrawWord(promptDatas, line[j]);
+            //             }
+            //         }
+            //         EditorGUILayout.EndVertical();
+            //
+            //     }
+            // }
             EditorGUILayout.EndScrollView();
             EditorGUILayout.EndVertical();
             // ------------------------------------------------------------------------------------------------

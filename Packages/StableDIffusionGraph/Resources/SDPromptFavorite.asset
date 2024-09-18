@@ -14,63 +14,89 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FavoriteData:
   - title:
-      m_Text: "\u521D\u97F3"
+      m_Text: Dog
       m_Image: {fileID: 0}
-      m_Tooltip: "\u521D\u97F3"
+      m_Tooltip: Dog
     positiveDatas:
-    - word: "\u6770\u4F5C"
+    - word: dog
       weight: 0
       end: 0
       process: 0
       color: 0
-    - word: "\u6700\u9AD8\u8D28\u91CF"
+    negativeDatas: []
+  - title:
+      m_Text: Skybox1
+      m_Image: {fileID: 0}
+      m_Tooltip: Skybox1
+    positiveDatas:
+    - word: high quality
       weight: 0
       end: 0
       process: 0
       color: 0
-    - word: "\u5355\u4E2A\u5973\u6027"
+    - word: 360 view
       weight: 0
       end: 0
       process: 0
       color: 0
-    - word: "\u521D\u97F3\u672A\u6765"
+    - word: point-of-view
       weight: 0
       end: 0
       process: 0
       color: 0
-    negativeDatas:
-    - word: "\u4F4E\u5206\u8FA8\u7387"
+    - word: fantasy
       weight: 0
       end: 0
       process: 0
       color: 0
-    - word: "\u957F\u7ED3\u6784"
+    - word: wallpaper,360
       weight: 0
       end: 0
       process: 0
       color: 0
-    - word: "\u9519\u8BEF\u7ED3\u6784"
+    - word: cubemap
       weight: 0
       end: 0
       process: 0
       color: 0
-    - word: "\u9519\u8BEF\u624B\u90E8"
+    - word: ultrawide shot
       weight: 0
       end: 0
       process: 0
       color: 0
-    - word: "\u88C1\u5207\u4E0D\u6B63"
+    - word: skybox
       weight: 0
       end: 0
       process: 0
       color: 0
-    - word: "\u4F4E\u8D28\u91CF"
+    - word: best quality
       weight: 0
       end: 0
       process: 0
       color: 0
-    - word: "\u6700\u5DEE\u8D28\u91CF"
+    - word: ultra-detailed
       weight: 0
       end: 0
       process: 0
       color: 0
+    - word: illustration
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: 8k
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: cubemap
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    - word: (8k wallpaper)
+      weight: 0
+      end: 0
+      process: 0
+      color: 0
+    negativeDatas: []

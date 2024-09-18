@@ -15,7 +15,7 @@ public class MessageNode : BaseNode
 
     [Setting("Message Type")] public NodeMessageType messageType = NodeMessageType.Error;
 
-    protected override void Process()
+    public override void Process()
     {
         if (input != 42)
             AddMessage(k_InputIsNot42Error, messageType);

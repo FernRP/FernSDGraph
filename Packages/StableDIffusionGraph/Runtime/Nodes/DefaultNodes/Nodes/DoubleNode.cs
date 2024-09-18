@@ -14,5 +14,5 @@ public class DoubleNode : BaseNode
 
 	public override string name => "Float";
 
-	protected override void Process() => output = input;
+	public override void Process() => output = input;
 }

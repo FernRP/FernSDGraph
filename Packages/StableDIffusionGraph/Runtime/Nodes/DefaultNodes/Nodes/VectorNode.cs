@@ -13,7 +13,7 @@ public class VectorNode : BaseNode
 
     public override string name => "Vector";
 
-    protected override void Process()
+    public override void Process()
     {
         output = input;
     }

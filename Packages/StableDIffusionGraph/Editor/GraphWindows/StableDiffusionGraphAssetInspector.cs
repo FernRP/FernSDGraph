@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using FernNPRCore.SDNodeGraph;
+using UnityEditor.SDGraph;
 using UnityEngine;
 using UnityEditor;
 using GraphProcessor;
+using UnityEngine.SDGraph;
 using UnityEngine.UIElements;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEditor.SDGraph
 {
 	[CustomEditor(typeof(StableDiffusionGraph), true)]
 	public class StableDiffusionGraphAssetInspector : GraphInspector

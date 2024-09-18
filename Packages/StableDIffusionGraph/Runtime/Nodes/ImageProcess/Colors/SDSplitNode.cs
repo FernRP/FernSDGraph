@@ -9,7 +9,7 @@ using Unity.VisualScripting;
 using UnityEngine.Rendering;
 using Debug = UnityEngine.Debug;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
 	[System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Split")]
 	public class SDSplitNode : SDNode
@@ -47,7 +47,7 @@ namespace FernNPRCore.SDNodeGraph
 			UpdateTempRenderTexture(ref outputB);
 			UpdateTempRenderTexture(ref outputA);
 			
-			var mat = GetTempMaterial("Hidden/SDGraph/Separate");
+			var mat = new Material(SDGraphResource.SdGraphDataHandle.shaderData.separatePS);
 			outputRMat = new Material(mat){ hideFlags = HideFlags.HideAndDontSave };
 			outputGMat = new Material(mat){ hideFlags = HideFlags.HideAndDontSave };
 			outputBMat = new Material(mat){ hideFlags = HideFlags.HideAndDontSave };

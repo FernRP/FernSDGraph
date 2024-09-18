@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GraphProcessor;
 using System.Linq;
-using FernNPRCore.SDNodeGraph;
+using UnityEngine.SDGraph;
 
 [System.Serializable, NodeMenuItem("Constant/String")]
 public class StringNode : SDNode
@@ -19,7 +19,7 @@ public class StringNode : SDNode
     [HideInInspector]
     public bool isShowString = true;
 
-    protected override void Process()
+    public override void Process()
     {
         base.Process();
         output = inputString + textFiledValue;

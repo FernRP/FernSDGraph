@@ -4,7 +4,7 @@ using GraphProcessor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Level")]
     public class SDLevelNode : SDShaderNode
@@ -57,12 +57,12 @@ namespace FernNPRCore.SDNodeGraph
 
         public override string name => "SD Level";
 
-        public override string shaderName => "Hidden/SDMix/Levels";
         
         public override Texture previewTexture => output;
 
         protected override void Enable()
         {
+            shader = SDGraphResource.SdGraphDataHandle.shaderData.leverPS;
             base.Enable();
             minMaxBuffer = new ComputeBuffer(1, sizeof(float) * 2, ComputeBufferType.Structured);
             HistogramUtility.AllocateHistogramData(histogramBucketCount, histogramMode, out histogramData);

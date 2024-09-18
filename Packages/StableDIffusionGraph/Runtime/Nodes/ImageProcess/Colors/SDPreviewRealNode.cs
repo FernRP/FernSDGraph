@@ -9,7 +9,7 @@ using Unity.VisualScripting;
 using UnityEngine.Rendering;
 using Debug = UnityEngine.Debug;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
 	[System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Preview Real")]
 	public class SDPreviewRealNode : SDNode

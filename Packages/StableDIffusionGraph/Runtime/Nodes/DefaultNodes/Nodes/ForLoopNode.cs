@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using GraphProcessor;
 using System.Linq;
-using FernNPRCore.SDNodeGraph;
+using UnityEngine.SDGraph;
 using NodeGraphProcessor.Examples;
 
 [System.Serializable, NodeMenuItem("Control Flow/ForLoop")]
-public class ForLoopNode : LinearSDProcessorNode
+public class ForLoopNode : ForLoopSDProcessorNode
 {
+	public ConditionalLink executes;
+	
 	[Output(name = "Loop Body")]
 	public ConditionalLink		loopBody;
 	
@@ -23,7 +25,7 @@ public class ForLoopNode : LinearSDProcessorNode
 
 	public override string		name => "ForLoop";
 
-	protected override void Process() => index++; // Implement all logic that affects the loop inner fields
+	public override void Process() => index++; // Implement all logic that affects the loop inner fields
 
 	public override IEnumerable< SDProcessorNode >	GetExecutedNodes() => throw new System.Exception("Do not use GetExecutedNoes in for loop to get it's dependencies");
 

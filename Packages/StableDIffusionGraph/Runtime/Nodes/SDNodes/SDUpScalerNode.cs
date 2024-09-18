@@ -13,7 +13,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD UpScaler")]
     public class SDUpScalerNode : LinearSDProcessorNode
@@ -182,6 +182,7 @@ namespace FernNPRCore.SDNodeGraph
                             $"{SDGraphResource.SdGraphDataHandle.SavePath_Upscale}/img_{DateTime.Now.ToString("yyyyMMddHHmmss")}.png";
                     }
                     File.WriteAllBytes(tempSavePath,imageData);
+                    AssetDatabase.Refresh();
                 }
             }
 

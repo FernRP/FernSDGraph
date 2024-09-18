@@ -6,12 +6,13 @@ using System.Net;
 using System.Threading.Tasks;
 using GraphProcessor;
 using Newtonsoft.Json;
+using UnityEngine.SDGraph;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEditor.SDGraph
 {    
     [NodeCustomEditor(typeof(SDTxt2ImgUpscalers))]
     public class SDTxt2ImgUpscalersView : SDNodeView
@@ -82,7 +83,7 @@ namespace FernNPRCore.SDNodeGraph
         VisualElement modelsContainer = new VisualElement();
         private void OnAsync()
         {
-            EditorCoroutineUtility.StartCoroutine(ListModelsAsync(), this);
+            EditorCoroutineUtility.StartCoroutine(ListModelsAsync(), owner);
         }
         
         

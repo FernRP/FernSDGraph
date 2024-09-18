@@ -11,7 +11,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Lora")]
     public class SDLoraNode : SDNode
@@ -127,7 +127,7 @@ namespace FernNPRCore.SDNodeGraph
 #endif
         }
 
-        protected override void Process()
+        public override void Process()
         {
             GetPort(nameof(prompt), null).PullData();
             if (!string.IsNullOrEmpty(loraPrompt)&&!loraPrompt.EndsWith(","))

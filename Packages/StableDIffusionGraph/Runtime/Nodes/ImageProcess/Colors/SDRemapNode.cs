@@ -4,7 +4,7 @@ using GraphProcessor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Remap")]
     public class SDRemapNode : SDShaderNode
@@ -29,7 +29,11 @@ namespace FernNPRCore.SDNodeGraph
         
         public override string name => "SD Remap";
 
-        public override string shaderName => "Hidden/SDMix/Remap";
+        protected override void Enable()
+        {
+            shader = SDGraphResource.SdGraphDataHandle.shaderData.remapPS;
+            base.Enable();
+        }
 
         protected override void Process(CommandBuffer cmd)
         {

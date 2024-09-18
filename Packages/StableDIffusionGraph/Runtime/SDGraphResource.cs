@@ -1,22 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditor.VersionControl;
+#endif
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     public static class SDGraphResource
     {
-        private static SDGraphDataHandle sdGraphDataHandle = Resources.Load<SDGraphDataHandle>("SDGraphDataHandle");
+        private static string SDGraphDataHandleGUID = "dea2d18e10d08fb469d6cd38adb531fc";
+        private static SDGraphDataHandle sdGraphDataHandle;
 
         public static SDGraphDataHandle SdGraphDataHandle
         {
             get
             {
-                if (sdGraphDataHandle == null)
-                {
-                    sdGraphDataHandle = Resources.Load<SDGraphDataHandle>("SDGraphDataHandle");
-                }
+                #if UNITY_EDITOR
+                    if (sdGraphDataHandle == null)
+                    {
+                        sdGraphDataHandle =
+                            AssetDatabase.LoadAssetAtPath<SDGraphDataHandle>(
+                                AssetDatabase.GUIDToAssetPath(SDGraphDataHandleGUID));
+                    }
+                   
+                #else
+                    if (sdGraphDataHandle == null)
+                    {
+                        sdGraphDataHandle = Resources.Load<SDGraphDataHandle>("SDGraph/SDGraphDataHandle");
+                    }
+                #endif
+               
 
                 return sdGraphDataHandle;
             }
@@ -37,7 +53,7 @@ namespace FernNPRCore.SDNodeGraph
         }
 
         private static RenderPipelineAsset m_sdUniversal =
-            Resources.Load<RenderPipelineAsset>("SDGraphUniversalData/SDUniversalRenderPipeline");
+            Resources.Load<RenderPipelineAsset>("SDGraph/URPData/SDUniversalRenderPipeline");
 
         public static RenderPipelineAsset sdUniversal
         {
@@ -45,7 +61,7 @@ namespace FernNPRCore.SDNodeGraph
             {
                 if (m_sdUniversal == null)
                 {
-                    m_sdUniversal = Resources.Load<RenderPipelineAsset>("SDGraphUniversalData/SDUniversalRenderPipeline");
+                    m_sdUniversal = Resources.Load<RenderPipelineAsset>("SDGraph/URPData/SDUniversalRenderPipeline");
                 }
 
                 return m_sdUniversal;

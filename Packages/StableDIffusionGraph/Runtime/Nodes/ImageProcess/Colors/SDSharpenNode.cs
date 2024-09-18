@@ -4,7 +4,7 @@ using GraphProcessor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Sharpen")]
     public class SDSharpenNode : SDShaderNode
@@ -15,7 +15,11 @@ namespace FernNPRCore.SDNodeGraph
         
         public override string name => "SD Sharpen";
 
-        public override string shaderName => "Hidden/SDMix/Sharpen";
+        protected override void Enable()
+        {
+            shader = SDGraphResource.SdGraphDataHandle.shaderData.sharpenPS;
+            base.Enable();
+        }
 
         protected override void Process(CommandBuffer cmd)
         {

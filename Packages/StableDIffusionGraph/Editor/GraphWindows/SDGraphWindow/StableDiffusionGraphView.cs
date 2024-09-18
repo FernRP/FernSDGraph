@@ -3,9 +3,10 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using GraphProcessor;
 using System;
+using UnityEngine.SDGraph;
 using UnityEditor;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEditor.SDGraph
 {
 	
 	public class StableDiffusionGraphView : BaseGraphView

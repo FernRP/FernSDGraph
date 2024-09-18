@@ -6,13 +6,14 @@ using System.Net;
 using System.Threading.Tasks;
 using GraphProcessor;
 using Newtonsoft.Json;
+using UnityEngine.SDGraph;
 using Unity.EditorCoroutines.Editor;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEditor.SDGraph
 {    
     [NodeCustomEditor(typeof(UltimateSDUpscale))]
     public class UltimateSDUpscaleView : SDNodeView
@@ -136,7 +137,7 @@ namespace FernNPRCore.SDNodeGraph
         
         private void OnAsync()
         {
-            EditorCoroutineUtility.StartCoroutine(ListModelsAsync(), this);
+            EditorCoroutineUtility.StartCoroutine(ListModelsAsync(), owner);
         }
         
         

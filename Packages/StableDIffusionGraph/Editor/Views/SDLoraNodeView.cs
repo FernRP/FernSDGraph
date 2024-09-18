@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using FernNPRCore.SDNodeGraph;
+using UnityEditor.SDGraph;
 using GraphProcessor;
+using UnityEngine.SDGraph;
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEditor.SDGraph
 {
     
     [NodeCustomEditor(typeof(SDLoraNode))]
@@ -91,7 +92,7 @@ namespace FernNPRCore.SDNodeGraph
                         extensionContainer.Add(onGuiContainer);
                     RefreshExpandedState();
                 }
-            ), this);
+            ), owner);
         }
         
         IMGUIContainer onGuiContainer;

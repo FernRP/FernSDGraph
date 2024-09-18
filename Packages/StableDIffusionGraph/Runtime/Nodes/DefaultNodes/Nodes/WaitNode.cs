@@ -1,13 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using FernNPRCore.SDNodeGraph;
+using UnityEngine.SDGraph;
 using GraphProcessor;
 using UnityEngine;
 
 namespace NodeGraphProcessor.Examples
 {
-	[Serializable, NodeMenuItem("Control Flow/Wait")]
+	//[Serializable, NodeMenuItem("Control Flow/Wait")]
 	public class WaitNode : WaitableNode
 	{
 		public override string name => "Wait";
@@ -17,7 +17,27 @@ namespace NodeGraphProcessor.Examples
 
 		private static WaitMonoBehaviour waitMonoBehaviour;
 
-		protected override void Process()
+		protected override void Enable()
+		{
+			base.Enable();
+		}
+
+	
+
+
+		protected override IEnumerator Execute()
+		{
+			if(waitMonoBehaviour == null)
+			{
+				var go = new GameObject(name: "WaitGameObject");
+				waitMonoBehaviour = go.AddComponent<WaitMonoBehaviour>();
+			}
+
+			waitMonoBehaviour.Process(waitTime, ProcessFinished);
+			yield return null;
+		}
+
+		public override void Process()
 		{
 			//	We should check where this Process() called from. But i don't know if this is an elegant and performant way to do that.
 			//	If this function is called from other than the ConditionalNode, then there will be problems, errors, unforeseen consequences, tears.
@@ -31,13 +51,14 @@ namespace NodeGraphProcessor.Examples
 			}
 
 			waitMonoBehaviour.Process(waitTime, ProcessFinished);
-		}
+		}	
 	}
 
 	public class WaitMonoBehaviour : MonoBehaviour
 	{
 		public void Process(float time, Action callback)
 		{
+			Debug.Log("test");
 			StartCoroutine(_Process(time, callback));
 		}
 

@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using FernNPRCore.SDNodeGraph;
+using UnityEngine.SDGraph;
 using GraphProcessor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Directional Blur")]
     public class SDDirectionalBlur : SDShaderNode
@@ -13,7 +13,11 @@ namespace FernNPRCore.SDNodeGraph
         [Input(name = "Source")] public Texture inputImage;
         public override string name => "SD Directional Blur";
 
-        public override string shaderName => "Hidden/SDMix/DirectionalBlur";
+        protected override void Enable()
+        {
+            shader = SDGraphResource.SdGraphDataHandle.shaderData.directionalBlurPS;
+            base.Enable();
+        }
 
         [Range(0, 100)] public float radius = 0;
         public Vector4 direction = new Vector2(0.707f, 0.707f);

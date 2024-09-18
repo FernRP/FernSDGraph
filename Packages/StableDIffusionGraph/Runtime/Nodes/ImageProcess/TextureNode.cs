@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using GraphProcessor;
 using System.Linq;
-using FernNPRCore.SDNodeGraph;
+using UnityEngine.SDGraph;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     [System.Serializable, NodeMenuItem("Asset/TextureNode")]
     public class TextureNode : SDNode, ICreateNodeFrom<Texture>

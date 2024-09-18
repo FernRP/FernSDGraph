@@ -17,7 +17,7 @@ public class PortConnectionTests : BaseNode
 
 	public override string		name => "Port Tests";
 
-	protected override void Process() {}
+	public override void Process() {}
 
 	[CustomPortBehavior(nameof(inputs))]
 	IEnumerable< PortData > GetPortsForInputs(List< SerializableEdge > edges)

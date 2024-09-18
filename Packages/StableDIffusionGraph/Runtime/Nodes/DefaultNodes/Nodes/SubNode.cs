@@ -14,7 +14,7 @@ public class SubNode : BaseNode
 
     public override string name => "Sub";
 
-    protected override void Process()
+    public override void Process()
     {
         output = inputA - inputB;
     }

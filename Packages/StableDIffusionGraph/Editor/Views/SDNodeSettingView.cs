@@ -8,9 +8,10 @@ using UnityEditor.UIElements;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
 using GraphProcessor;
+using UnityEngine.SDGraph;
 using UnityEngine.Rendering;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEditor.SDGraph
 {
 	public class SDNodeSettingView : VisualElement
 	{

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using FernNPRCore.SDNodeGraph;
+using UnityEngine.SDGraph;
 using GraphProcessor;
 using Debug = UnityEngine.Debug;
 
@@ -11,11 +11,13 @@ namespace NodeGraphProcessor.Examples
     {
         List<BaseNode> processList;
         List<SDStartNode> startNodeList;
+        public bool pause;
+        private bool m_IsExecuting = false;
+        public bool IsExecuting => m_IsExecuting;
 
         Dictionary<BaseNode, List<BaseNode>> nonConditionalDependenciesCache =
             new Dictionary<BaseNode, List<BaseNode>>();
 
-        public bool pause;
 
         public IEnumerator<BaseNode> currentGraphExecution { get; private set; } = null;
 
@@ -50,6 +52,22 @@ namespace NodeGraphProcessor.Examples
         {
             
         }
+        
+        public IEnumerator RunAsyncWithStartNode(SDStartNode startNode)
+        {
+            if (m_IsExecuting)
+            {
+                SDUtil.Log("SD is In Executing");
+                yield break;
+            }
+
+            m_IsExecuting = true;
+            startNodeList.Clear();
+            startNodeList.Add(startNode);
+            processList = graph.nodes.OrderBy(n => n.computeOrder).ToList();
+            yield return RunAsync();
+            m_IsExecuting = false;
+        }
 
         public override IEnumerator RunAsync()
         {
@@ -79,7 +97,7 @@ namespace NodeGraphProcessor.Examples
         IEnumerable<BaseNode> GatherNonConditionalDependencies(BaseNode node)
         {
             Stack<BaseNode> dependencies = new Stack<BaseNode>();
-
+            
             dependencies.Push(node);
 
             while (dependencies.Count > 0)
@@ -106,61 +124,72 @@ namespace NodeGraphProcessor.Examples
 
         private IEnumerator RunTheGraph(Stack<BaseNode> nodeToExecute)
         {
-            HashSet<BaseNode> nodeDependenciesGathered = new HashSet<BaseNode>();
-            HashSet<BaseNode> skipConditionalHandling = new HashSet<BaseNode>();
+            HashSet<BaseNode> nodeDependenciesGathered = new HashSet<BaseNode>(); // 跟踪已经收集到的节点的依赖关系
 
             while (nodeToExecute.Count > 0)
             {
                 var node = nodeToExecute.Pop();
+                
+                
                 // TODO: maxExecutionTimeMS
 
                 if (node == null) continue;
 
                 // In case the node is conditional, then we need to execute it's non-conditional dependencies first
-                if (node is IConditionalNode && !skipConditionalHandling.Contains(node))
+                if (node is IConditionalNode)
                 {
-                    // Gather non-conditional deps: TODO, move to the cache:
-                    if (nodeDependenciesGathered.Contains(node))
+
+                    if (!nodeDependenciesGathered.Contains(node))
                     {
+                        nodeToExecute.Push(node);
+                        nodeDependenciesGathered.Add(node);
+                        foreach (var nonConditionalNode in GatherNonConditionalDependencies(node))
+                        {
+                            nodeToExecute.Push(nonConditionalNode);
+                        }
+                    }
+                    else
+                    {
+                        SDUtil.Log("Current Execute Node: " + node.name);
+
                         // Execute the conditional node:
                         yield return node.OnExecute();
                         
-                        yield return node;
+                        //yield return node;
 
                         // And select the next nodes to execute:
                         switch (node)
                         {
                             // special code path for the loop node as it will execute multiple times the same nodes
                             case ForLoopNode forLoopNode:
-                                Debug.Log("forLoopNode");
+                                
                                 forLoopNode.index = forLoopNode.start - 1; // Initialize the start index
-                                foreach (var n in forLoopNode.GetExecutedNodesLoopCompleted())
-                                    nodeToExecute.Push(n);
+                                
                                 for (int i = (int)forLoopNode.start; i < forLoopNode.end; i++)
                                 {
                                     foreach (var n in forLoopNode.GetExecutedNodesLoopBody())
                                         nodeToExecute.Push(n);
-
-                                    nodeToExecute.Push(node); // Increment the counter
                                 }
-
-                                skipConditionalHandling.Add(node);
+                                
+                                foreach (var n in forLoopNode.GetExecutedNodesLoopCompleted())
+                                    nodeToExecute.Push(n);
+                                
                                 break;
                             // another special case for waitable nodes, like "wait for a coroutine", wait x seconds", etc.
-                            case WaitableNode waitableNode:
-                                Debug.Log("WaitableNode");
-                                foreach (var n in waitableNode.GetExecutedNodes())
-                                    nodeToExecute.Push(n);
-
-                                waitableNode.onProcessFinished += (waitedNode) =>
-                                {
-                                    Stack<BaseNode> waitedNodes = new Stack<BaseNode>();
-                                    foreach (var n in waitedNode.GetExecuteAfterNodes())
-                                        waitedNodes.Push(n);
-                                    WaitedRun(waitedNodes);
-                                    waitableNode.onProcessFinished = null;
-                                };
-                                break;
+                            // case WaitableNode waitableNode:
+                            //     SDUtil.Log("WaitableNode");
+                            //     foreach (var n in waitableNode.GetExecutedNodes())
+                            //         nodeToExecute.Push(n);
+                            //
+                            //     waitableNode.onExecuteFinish -= WaitAffterExecute;
+                            //     waitableNode.onExecuteFinish += WaitAffterExecute;
+                            //     void WaitAffterExecute()
+                            //     {
+                            //        
+                            //         Debug.LogError("1");
+                            //     }
+                            //
+                            //     break;
                             case IConditionalNode cNode:
                                 foreach (var n in cNode.GetExecutedNodes())
                                     nodeToExecute.Push(n);
@@ -169,17 +198,9 @@ namespace NodeGraphProcessor.Examples
                                 Debug.LogError($"Conditional node {node} not handled");
                                 break;
                         }
+                        
 
                         nodeDependenciesGathered.Remove(node);
-                    }
-                    else
-                    {
-                        nodeToExecute.Push(node);
-                        nodeDependenciesGathered.Add(node);
-                        foreach (var nonConditionalNode in GatherNonConditionalDependencies(node))
-                        {
-                            nodeToExecute.Push(nonConditionalNode);
-                        }
                     }
                 }
                 else

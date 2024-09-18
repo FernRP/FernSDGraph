@@ -16,10 +16,12 @@ using Object = System.Object;
 using UnityEditor;
 #endif
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     public class SDTextureHandle
     {
+        public const string IconsPath = "Packages/com.tateam.sdgraph/Editor/Resources/Icons/";
+
         private static Texture2D _refreshIcon;
 
         public static Texture2D RefreshIcon
@@ -67,6 +69,21 @@ namespace FernNPRCore.SDNodeGraph
                 return _refreshIcon;
             }
         }
+        
+        private static Texture2D m_EyeIcon;
+
+        public static Texture2D EyeIcon
+        {
+            get
+            {
+                if (m_EyeIcon == null)
+                {
+                    m_EyeIcon = Resources.Load<Texture2D>("Icons/Eye");
+                }
+
+                return m_EyeIcon;
+            }
+        }
     }
 
     public class SDUtil
@@ -77,7 +94,7 @@ namespace FernNPRCore.SDNodeGraph
         public static readonly float smallNodeWidth = 150f;
 
         public static int[] ScaleList = new int[] { 25, 50, 75, 100 };
-        private const string LOG = "Fern SD Graph: ";
+        private const string LOG = "SD Graph: ";
 
         public static readonly string texture2DPrefix = "_2D";
         public static readonly string texture3DPrefix = "_3D";
@@ -411,8 +428,19 @@ namespace FernNPRCore.SDNodeGraph
 
     class SDParamsInTxt2Img
     {
+        public bool enable_hr = false;
+        public float denoising_strength = 0.75f;
+        public int firstphase_width = 0;
+        public int firstphase_height = 0;
+        public float hr_scale = 2;
+        public string hr_upscaler = "";
+        public int hr_second_pass_steps = 0;
+        public int hr_resize_x = 0;
+        public int hr_resize_y = 0;
+        public string hr_sampler_name = "";
+        public string hr_prompt = "";
+        public string hr_negative_prompt = "";
         public string prompt = "";
-        public string negative_prompt = "";
         public string[] styles = { };
         public long seed = -1;
         public long subseed = -1;
@@ -430,8 +458,8 @@ namespace FernNPRCore.SDNodeGraph
         public bool tiling = false;
         public bool do_not_save_samples = false;
         public bool do_not_save_grid = false;
+        public string negative_prompt = "";
         public float eta = 0;
-        public float denoising_strength = 0.75f;
         public float s_min_uncond = 0.75f;
         public float s_churn = 0;
         public float s_tmax = 0;
@@ -439,23 +467,11 @@ namespace FernNPRCore.SDNodeGraph
         public float s_noise = 1;
         // "override_settings": {},
         public bool override_settings_restore_afterwards = true;
-        public string refiner_checkpoint = "";
-        //public float refiner_switch_at = 0;
-        public bool disable_extra_networks = false;
-        //"comments": {},
-        public bool enable_hr = false;
-        public int firstphase_width = 0;
-        public int firstphase_height = 0;
-        public float hr_scale = 2;
-        public string hr_upscaler = "";
-        public int hr_second_pass_steps = 0;
-        public int hr_resize_x = 0;
-        public int hr_resize_y = 0;
-        public string hr_checkpoint_name = "";
-        public string hr_sampler_name = "";
-        public string hr_prompt = "";
-        public string hr_negative_prompt = "";
+        public object[] script_args = { };
         public string sampler_index = "Euler";
+        public string script_name = null;
+        public bool send_images = true;
+        public bool save_images = false;
     }
 
     class ControlNetDetect
@@ -519,12 +535,13 @@ namespace FernNPRCore.SDNodeGraph
     {
         public string[] init_images = { "" };
         public int resize_mode = 0;
-
         public float denoising_strength = 0.5f;
-
-        //public string mask = null; 
-        public int mask_blur = 4;
-        public int inpainting_fill = 1;
+        public float image_cfg_scale = 0.0f;
+        public string mask = null;
+        public int mask_blur = 0;
+        public int mask_blur_x = 4;
+        public int mask_blur_y = 4;
+        public int inpainting_fill = 0;
         public bool inpaint_full_res = true;
         public int inpaint_full_res_padding = 0;
         public int inpainting_mask_invert = 0;
@@ -545,6 +562,8 @@ namespace FernNPRCore.SDNodeGraph
         public int height = 512;
         public bool restore_faces = false;
         public bool tiling = false;
+        public bool do_not_save_samples = false;
+        public bool do_not_save_grid = false;
         public string negative_prompt = "";
         public float eta = 0;
         public float s_churn = 0;
@@ -555,11 +574,10 @@ namespace FernNPRCore.SDNodeGraph
         public bool override_settings_restore_afterwards = true;
         public object[] script_args = { };
         public string sampler_index = "Euler";
-
         public bool include_init_images = false;
-
         public string script_name = null;
-        public string mask = null;
+        public bool send_images = true;
+        public bool save_images = false;
         public class SettingsOveride
         {
         }
@@ -691,17 +709,17 @@ namespace FernNPRCore.SDNodeGraph
     public enum ResizeMode
     {
         JustResize = 0,
-        ScaleToFit_InnerFit = 1,
-        Envelope_OuterFit = 2
+        ScaleToFitInnerFit = 1,
+        EnvelopeOuterFit = 2
     }
 
     public enum ControlMode
     {
         Balanced = 0,
-        My_prompt_is_more_important = 1,
-        ControlNet_is_more_important = 2
+        MyPromptIsMoreImportant = 1,
+        ControlnetIsMoreImportant = 2
     }
-
+    
     public class ControlNetData
     {
         public string input_image = "";
@@ -709,15 +727,14 @@ namespace FernNPRCore.SDNodeGraph
         public string module = "none";
         public string model;
         public float weight = 1;
-        public int resize_mode = 1;
+        public string resize_mode = "Just Resize";
         public bool lowvram = false;
         public int processor_res = 64;
         public int threshold_a = 64;
         public int threshold_b = 64;
         public float guidance_start = 0.0f;
         public float guidance_end = 1.0f;
-        public float guidance = 1f;
-        public int control_mode = 0;
+        public string control_mode = "Balanced";
     }
 
     public class ControlNetDataArgs

@@ -13,7 +13,7 @@ public class MessageNode2 : BaseNode
 
     public override string name => "MessageNode2";
 
-    protected override void Process()
+    public override void Process()
     {
         output = input * 42;
     }

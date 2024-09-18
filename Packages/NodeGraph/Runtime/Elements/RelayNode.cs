@@ -33,7 +33,7 @@ public class RelayNode : BaseNode
 
 	const int		k_MaxPortSize = 14;
 
-	protected override void Process()
+	public override void Process()
 	{
 		outputIndex = 0;
 		output = input;

@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     public class SDPromptFavoriteData : ScriptableObject
     {
@@ -14,6 +14,7 @@ namespace FernNPRCore.SDNodeGraph
     {
         public override void OnInspectorGUI()
         {
+            base.OnInspectorGUI();
         }
     }
 }

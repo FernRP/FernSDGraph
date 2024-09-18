@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using GraphProcessor;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     
     [Serializable, NodeMenuItem("Stable Diffusion Graph/SD ControlNet Extension")]

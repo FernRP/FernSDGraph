@@ -8,7 +8,7 @@ using UnityEngine.Experimental.Rendering;
 using UnityEngine.Profiling;
 using UnityEngine.Rendering;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     public class SDNode : BaseNode
     {
@@ -207,11 +207,11 @@ namespace FernNPRCore.SDNodeGraph
         
         protected bool UpdateTempRenderTexture(ref CustomRenderTexture target, bool hasMips = false, bool autoGenerateMips = false,
 			CustomRenderTextureUpdateMode updateMode = CustomRenderTextureUpdateMode.OnDemand, bool depthBuffer = true,
-			GraphicsFormat overrideGraphicsFormat = GraphicsFormat.None, bool hideAsset = true)
+			GraphicsFormat overrideGraphicsFormat = GraphicsFormat.None, int outputWidth = 0, int outputHeight = 0, bool hideAsset = true)
 		{
 			bool changed = false;
-			int outputWidth = settings.GetResolvedWidth(graph);
-			int outputHeight = settings.GetResolvedHeight(graph);
+			if(outputWidth == 0) outputWidth = settings.GetResolvedWidth(graph);
+			if(outputHeight == 0)  outputHeight = settings.GetResolvedHeight(graph);
 			int outputDepth = settings.GetResolvedDepth(graph);
 			var filterMode = settings.GetResolvedFilterMode(graph);
 			var wrapMode = settings.GetResolvedWrapMode(graph);

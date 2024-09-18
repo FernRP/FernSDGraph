@@ -1,9 +1,10 @@
+using UnityEngine.SDGraph;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor;
 using UnityEditor.UIElements;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEditor.SDGraph
 {
 	public class HistogramView : VisualElement 
 	{

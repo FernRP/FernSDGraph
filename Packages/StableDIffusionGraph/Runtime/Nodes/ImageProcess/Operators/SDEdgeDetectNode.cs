@@ -4,7 +4,7 @@ using GraphProcessor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Edge Detection")]
     public class SDEdgeDetectNode : SDShaderNode
@@ -24,7 +24,11 @@ namespace FernNPRCore.SDNodeGraph
         
         public override string name => "SD Edge Detection";
 
-        public override string shaderName => "Hidden/SDMix/EdgeDetect";
+        protected override void Enable()
+        {
+            shader = SDGraphResource.SdGraphDataHandle.shaderData.edgeDetectPS;
+            base.Enable();
+        }
 
         protected override void Process(CommandBuffer cmd)
         {

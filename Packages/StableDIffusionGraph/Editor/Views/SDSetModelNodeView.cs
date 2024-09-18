@@ -11,10 +11,11 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
 using GraphProcessor;
 using Newtonsoft.Json;
+using UnityEngine.SDGraph;
 using Unity.EditorCoroutines.Editor;
 using UnityEngine.Events;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEditor.SDGraph
 {
 	[NodeCustomEditor(typeof(SDSetModelNode))]
 	public class SDSetModelNodeView : SDNodeView
@@ -63,7 +64,7 @@ namespace FernNPRCore.SDNodeGraph
 		public void GetModelList(UnityAction action = null)
         {
             //GetPort(nameof(setModelNode.ServerURL), null).PushData();
-            EditorCoroutineUtility.StartCoroutine(ListModelsAsync(action), this);
+            EditorCoroutineUtility.StartCoroutine(ListModelsAsync(action), owner);
 		}
 		 
 		/// <summary>
@@ -76,7 +77,7 @@ namespace FernNPRCore.SDNodeGraph
             try
             {
                 string serverUrl = "http://127.0.0.1:7860";
-                serverUrl = string.IsNullOrEmpty(setModelNode.ServerURL) ?  SDGraphResource.SdGraphDataHandle.GetServerURL() : setModelNode.ServerURL;
+                serverUrl = SDGraphResource.SdGraphDataHandle.GetServerURL();
                 string url = serverUrl + SDGraphResource.SdGraphDataHandle.ModelsAPI;
 
                 httpWebRequest = (HttpWebRequest)WebRequest.Create(url);

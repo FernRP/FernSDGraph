@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using GraphProcessor;
+using UnityEngine.SDGraph;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEditor.SDGraph
 {
     public class StableDiffusionGraphWindow : BaseGraphWindow
     {

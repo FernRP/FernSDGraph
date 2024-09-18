@@ -20,7 +20,7 @@ Shader "Hidden/SDGraph/Separate"
         Pass
         {
             HLSLPROGRAM
-            #include "../../../Runtime/Shaders/SDMixFixed.hlsl"
+            #include "Packages/com.tateam.sdgraph/Shaders/SDMixFixed.hlsl"
             #pragma vertex CustomRenderTextureVertexShader
             #pragma fragment SDMixFragment
             #pragma target 3.0

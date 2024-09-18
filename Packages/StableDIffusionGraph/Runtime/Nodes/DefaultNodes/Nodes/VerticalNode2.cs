@@ -18,7 +18,7 @@ public class VerticalNode2 : BaseNode
 
 	public override string		name => "Vertical 2";
 
-	protected override void Process()
+	public override void Process()
 	{
 	    output = input * 42;
 	}

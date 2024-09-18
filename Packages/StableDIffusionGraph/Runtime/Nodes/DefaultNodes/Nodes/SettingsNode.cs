@@ -23,5 +23,5 @@ public class SettingsNode : BaseNode
 	[Output]
 	public float			output;
 
-	protected override void Process() {}
+	public override void Process() {}
 }

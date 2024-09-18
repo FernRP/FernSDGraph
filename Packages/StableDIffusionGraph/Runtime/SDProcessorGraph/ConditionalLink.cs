@@ -1,6 +1,6 @@
 using System;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     [Serializable]
     public class ConditionalLink {}

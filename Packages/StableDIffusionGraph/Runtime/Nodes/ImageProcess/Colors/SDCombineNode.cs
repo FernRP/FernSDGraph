@@ -4,7 +4,7 @@ using GraphProcessor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Combine")]
     public class SDCombineNode : SDShaderNode
@@ -37,7 +37,11 @@ namespace FernNPRCore.SDNodeGraph
         
         public override string name => "SD Combine";
 
-        public override string shaderName => "Hidden/SDMix/Combine";
+        public override void OnNodeCreated()
+        {
+            base.OnNodeCreated();
+            shader = SDGraphResource.SdGraphDataHandle.shaderData.combinePS;
+        }
 
         protected override void Process(CommandBuffer cmd)
         {

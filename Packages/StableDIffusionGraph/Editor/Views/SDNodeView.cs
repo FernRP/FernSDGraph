@@ -6,9 +6,10 @@ using UnityEditor.UIElements;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
 using GraphProcessor;
+using UnityEngine.SDGraph;
 using UnityEngine.Rendering;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEditor.SDGraph
 {
 	[NodeCustomEditor(typeof(SDNode))]
 	public class SDNodeView : BaseNodeView
@@ -62,6 +63,7 @@ namespace FernNPRCore.SDNodeGraph
 			if(!styleSheets.Contains(stylesheet))
 				styleSheets.Add(stylesheet);
 			
+			nodeTarget.onExecuteFinish -= UpdateTexturePreview;
 			nodeTarget.onExecuteFinish += UpdateTexturePreview;
 			
 			// Fix the size of the node
@@ -107,7 +109,12 @@ namespace FernNPRCore.SDNodeGraph
 			UpdateTexturePreview();
 			DrawDefaultInspector();
 		}
-		
+
+		protected virtual void DrawDefaultInspector(bool fromInspector = false)
+		{
+			base.DrawDefaultInspector(fromInspector);
+		}
+
 		~SDNodeView()
 		{
 			
@@ -324,19 +331,25 @@ namespace FernNPRCore.SDNodeGraph
 			return GUILayoutUtility.GetRect(1, width, 1, height);
 		}
 
+		private Material previewMaterial;
+
 		protected virtual void DrawImGUIPreview(SDNode node, Rect previewRect, float currentSlice)
 		{
-			SDGraphResource.texture2DPreviewMaterial.SetTexture("_MainTex", node.previewTexture);
-			SDGraphResource.texture2DPreviewMaterial.SetVector("_Size",
+			if (previewMaterial == null)
+			{
+				previewMaterial = new Material(SDGraphResource.SdGraphDataHandle.shaderData.previewTexturePS);
+			}
+			previewMaterial.SetTexture("_MainTex", node.previewTexture);
+			previewMaterial.SetVector("_Size",
 				new Vector4(node.previewTexture.width, node.previewTexture.height, 1, 1));
-			SDGraphResource.texture2DPreviewMaterial.SetVector("_Channels", SDEditorUtils.GetChannelsMask(nodeTarget.previewMode));
-			SDGraphResource.texture2DPreviewMaterial.SetFloat("_PreviewMip", 0);
-			SDGraphResource.texture2DPreviewMaterial.SetFloat("_EV100", nodeTarget.previewEV100);
-			SDGraphResource.texture2DPreviewMaterial.SetFloat("_IsSRGB", 0);
-			SDGraphResource.texture2DPreviewMaterial.SetFloat("_IsSRGB", nodeTarget.previewSRGB? 1 : 0);
+			previewMaterial.SetVector("_Channels", SDEditorUtils.GetChannelsMask(nodeTarget.previewMode));
+			previewMaterial.SetFloat("_PreviewMip", 0);
+			previewMaterial.SetFloat("_EV100", nodeTarget.previewEV100);
+			previewMaterial.SetFloat("_IsSRGB", 0);
+			previewMaterial.SetFloat("_IsSRGB", nodeTarget.previewSRGB? 1 : 0);
 
 			if (Event.current.type == EventType.Repaint)
-				EditorGUI.DrawPreviewTexture(previewRect, node.previewTexture, SDGraphResource.texture2DPreviewMaterial,
+				EditorGUI.DrawPreviewTexture(previewRect, node.previewTexture, previewMaterial,
 					ScaleMode.ScaleToFit, 0, 0);
 		}
 	}

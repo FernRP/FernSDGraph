@@ -9,7 +9,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using Object = UnityEngine.Object;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Camera Render")]
     public class SDCameraRenderNode : SDNode
@@ -90,6 +90,8 @@ namespace FernNPRCore.SDNodeGraph
             RenderNormal();
             RenderDepth();
             RenderInpaint();
+            
+            SDGraphRenderHelper.Get().renderType = SDGraphRenderHelper.SDGraphRenderType.None;
         }
 
         private bool IsValidate()
@@ -149,28 +151,24 @@ namespace FernNPRCore.SDNodeGraph
         private void RenderNormal()
         {
             if(!isRenderNormal) return;
-            if(cameraUniversalData == null) return;
-            if(SDGraphResource.sdUniversal == null) return;
+            if (SDGraphRenderHelper.Get() == null)
+            {
+                SDUtil.LogWarning("Requires SDGraphRenderHelper object");
+            }
             
             // temp car param
             originRT = camera.targetTexture;
             var normalBackGround = camera.backgroundColor;
             var normalClearFlags = camera.clearFlags;
-            var normalRenderPipelineAsset = GraphicsSettings.renderPipelineAsset;
-            var normalLayer = camera.cullingMask;
             camera.clearFlags = CameraClearFlags.Color;
             camera.backgroundColor = Color.black;
-            GraphicsSettings.renderPipelineAsset = SDGraphResource.sdUniversal;
-            cameraUniversalData.SetRenderer(1);
+            SDGraphRenderHelper.Get().renderType = SDGraphRenderHelper.SDGraphRenderType.Normal;
             camera.targetTexture = normalTarget;
-
             camera.Render();
             
             // restore
             camera.backgroundColor = normalBackGround;
             camera.clearFlags = normalClearFlags;
-            GraphicsSettings.renderPipelineAsset = normalRenderPipelineAsset;
-            cameraUniversalData.SetRenderer(0); // TODO: may be no 0
             camera.targetTexture = originRT;
             normalTarget.Update();
         }
@@ -178,28 +176,24 @@ namespace FernNPRCore.SDNodeGraph
         private void RenderInpaint()
         {
             if(!isRenderInPaint) return;
-            if(cameraUniversalData == null) return;
-            if(SDGraphResource.sdUniversal == null) return;
+            if (SDGraphRenderHelper.Get() == null)
+            {
+                SDUtil.LogWarning("Requires SDGraphRenderHelper object");
+            }
             
             // temp car param
             originRT = camera.targetTexture;
             var normalBackGround = camera.backgroundColor;
             var normalClearFlags = camera.clearFlags;
-            var normalRenderPipelineAsset = GraphicsSettings.renderPipelineAsset;
-            var normalLayer = camera.cullingMask;
             camera.clearFlags = CameraClearFlags.Color;
             camera.backgroundColor = Color.clear;
-            GraphicsSettings.renderPipelineAsset = SDGraphResource.sdUniversal;
-            cameraUniversalData.SetRenderer(0);
             camera.targetTexture = depthTarget;
-            
+            SDGraphRenderHelper.Get().renderType = SDGraphRenderHelper.SDGraphRenderType.InPaint;
             camera.Render();
             
             // restore
             camera.backgroundColor = normalBackGround;
             camera.clearFlags = normalClearFlags;
-            GraphicsSettings.renderPipelineAsset = normalRenderPipelineAsset;
-            cameraUniversalData.SetRenderer(0); // TODO: may be no 0
             camera.targetTexture = originRT;
             inpaintTarget.Update();
         }
@@ -207,28 +201,25 @@ namespace FernNPRCore.SDNodeGraph
         private void RenderDepth()
         {
             if(!isRenderDepth) return;
-            if(cameraUniversalData == null) return;
-            if(SDGraphResource.sdUniversal == null) return;
+            if (SDGraphRenderHelper.Get() == null)
+            {
+                SDUtil.LogWarning("Requires SDGraphRenderHelper object");
+            }
             
             // temp car param
             originRT = camera.targetTexture;
             var normalBackGround = camera.backgroundColor;
             var normalClearFlags = camera.clearFlags;
-            var normalRenderPipelineAsset = GraphicsSettings.renderPipelineAsset;
             var normalLayer = camera.cullingMask;
             camera.clearFlags = CameraClearFlags.Color;
             camera.backgroundColor = Color.black;
-            GraphicsSettings.renderPipelineAsset = SDGraphResource.sdUniversal;
-            cameraUniversalData.SetRenderer(2);
             camera.targetTexture = depthTarget;
-
+            SDGraphRenderHelper.Get().renderType = SDGraphRenderHelper.SDGraphRenderType.Depth;
             camera.Render();
             
             // restore
             camera.backgroundColor = normalBackGround;
             camera.clearFlags = normalClearFlags;
-            GraphicsSettings.renderPipelineAsset = normalRenderPipelineAsset;
-            cameraUniversalData.SetRenderer(0); // TODO: may be no 0
             camera.targetTexture = originRT;
             depthTarget.Update();
         }

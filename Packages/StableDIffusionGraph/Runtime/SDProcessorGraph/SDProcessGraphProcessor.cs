@@ -36,10 +36,14 @@ namespace GraphProcessor
         public override void Run()
         {
             int count = processList.Count;
-
+            
             var cmd = CommandBufferPool.Get("SD Graph: " + graph.name);
             for (int i = 0; i < count; i++)
+            {
+                // TODO: 
+                processList[i].OnProcess();
                 processList[i].OnProcess(cmd);
+            }
             
             Graphics.ExecuteCommandBuffer(cmd);
         }

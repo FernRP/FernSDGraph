@@ -5,7 +5,7 @@ using GraphProcessor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Gradient HDR")]
     public class SDGradienMattetNode : SDShaderNode
@@ -49,8 +49,12 @@ namespace FernNPRCore.SDNodeGraph
         
         
         public override string name => "SD Gradient HDR";
-
-        public override string shaderName => "Hidden/SDMix/GradientMatte";
+        
+        protected override void Enable()
+        {
+            shader = SDGraphResource.SdGraphDataHandle.shaderData.gradientPS;
+            base.Enable();
+        }
 
         protected override void Process(CommandBuffer cmd)
         {

@@ -1,0 +1,165 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aacbed77200e8d4ba4930c89c0c83f5, type: 3}
+  m_Name: SDGraphDataHandle
+  m_EditorClassIdentifier: 
+  serverURL: http://127.0.0.1:7860
+  ModelsAPI: /sdapi/v1/sd-models
+  LorasAPI: /sdapi/v1/loras
+  ControlNetTex2Img: /controlnet/txt2img
+  UpscalersAPI: /sdapi/v1/upscalers
+  ControlNetModelList: /controlnet/model_list
+  ControlNetMoudleList: /controlnet/module_list
+  ControlNetDetect: /controlnet/detect
+  TextToImageAPI: /sdapi/v1/txt2img
+  ImageToImageAPI: /sdapi/v1/img2img
+  OptionAPI: /sdapi/v1/options
+  DataDirAPI: /sdapi/v1/cmd-flags
+  ProgressAPI: /sdapi/v1/progress
+  ExtraSingleImage: /sdapi/v1/extra-single-image
+  SavePath: TmpPhotos
+  SavePath_Upscale: TmpPhotos/Upscale
+  UseAuth: 0
+  Username: 
+  Password: 
+  samplers:
+  - Euler a
+  - Euler
+  - LMS
+  - Heun
+  - DPM2
+  - DPM2 a
+  - DPM++ 2S a
+  - DPM++ 2M
+  - DPM++ SDE
+  - DPM fast
+  - DPM adaptive
+  - LMS Karras
+  - DPM2 Karras
+  - DPM2 a Karras
+  - DPM++ 2S a Karras
+  - DPM++ 2M Karras
+  - DPM++ SDE Karras
+  - DDIM
+  - PLMS
+  UpscalerModel:
+  - None
+  - Lanczos
+  - Nearest
+  - ESRGAN_4x
+  - LDSR
+  - R-ESRGAN 4x+
+  - R-ESRGAN 4x+ Anime6B
+  - ScuNET
+  - ScuNET PSNR
+  - SwinIR 4x
+  loraBlockWeight:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 0
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 0
+    _keyValues:
+    - NONE
+    - ALL
+    - INS
+    - IND
+    - INALL
+    - MIDD
+    - OUTD
+    - OUTS
+    - OUTALL
+    - ALL0.5
+    - ONLYFACE
+    - DEFACE
+    - CLOTHES
+    - COLOR-STYLE
+    - BACKGROUND
+    - ACT
+    _keys:
+    - NONE
+    - ALL
+    - INS
+    - IND
+    - INALL
+    - MIDD
+    - OUTD
+    - OUTS
+    - OUTALL
+    - ALL0.5
+    - ONLYFACE
+    - DEFACE
+    - CLOTHES
+    - COLOR-STYLE
+    - BACKGROUND
+    - ACT
+    _values:
+    - 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    - 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+    - 1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+    - 1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0
+    - 1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0
+    - 1,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0
+    - 1,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0
+    - 1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1
+    - 1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1
+    - 0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+    - 1,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0
+    - 1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1
+    - 0,0,0,1,1,0,0.2,0.8,0.8,1,1,0.2,0,0,0,0,0
+    - 1,0,0,0,0,0,0,0,0,0,0,0.8,1,1,1,1,1
+    - 1,1,1,1,1,1,1,1,0.2,0,0,0.8,1,1,1,0,0
+    - 1,1,1,1,1,1,0.2,1,0.2,0,0,0.8,1,1,1,0,0
+  modelUse: 
+  loraUse: 
+  OverrideSettings: 1
+  OverrideServerURL: http://127.0.0.1:7860
+  OverrideUseAuth: 0
+  OverrideUsername: 
+  OverridePassword: 
+  shaderData:
+    blendPS: {fileID: 4800000, guid: 5d69ff00d9a32944ea012824393d489a, type: 3}
+    blurPS: {fileID: 4800000, guid: c1f8bac2a6637264ea45079cfa2c04e8, type: 3}
+    combinePS: {fileID: 4800000, guid: a781ed4dc6965674987a000e800f1898, type: 3}
+    contrastPS: {fileID: 4800000, guid: 20ff72437c5db5e4f91da56acd07c828, type: 3}
+    gradientPS: {fileID: 4800000, guid: 46c02ba1b0b63954bab0afcd9e828ac6, type: 3}
+    hsvPS: {fileID: 4800000, guid: a3ba7c94177ca5a4bad9dbfc61b32d29, type: 3}
+    invertPS: {fileID: 4800000, guid: f4d28858f82892b409a37c2b8f1746ab, type: 3}
+    leverPS: {fileID: 4800000, guid: 8d37ac1ca6ef8224abd423570da36e26, type: 3}
+    remapPS: {fileID: 4800000, guid: 4c38089cecadf714bbabc313d575804d, type: 3}
+    sharpenPS: {fileID: 4800000, guid: acca48792fde9a24484eaad8cfa111ac, type: 3}
+    directionalBlurPS: {fileID: 4800000, guid: c1d9aa14277868b48b77916131d3cc00, type: 3}
+    edgeDetectPS: {fileID: 4800000, guid: 62c4e7a707db68a4dbd8256c8edbb232, type: 3}
+    mirrorPS: {fileID: 4800000, guid: 7e366a80f11eae44fbd73f7357b65ca9, type: 3}
+    normalFromHeightPS: {fileID: -6465566751694194690, guid: 7cad23c262a495a4ba607510a558c0a6,
+      type: 3}
+    cubemapToEquirectPS: {fileID: 4800000, guid: 90d2603ce68aec342a17d76f8dabdffb,
+      type: 3}
+    previewTexturePS: {fileID: 4800000, guid: 27699fea84271994884c0e566ec95610, type: 3}
+    separatePS: {fileID: 4800000, guid: f339e6220e5eff64e842133b2e531302, type: 3}

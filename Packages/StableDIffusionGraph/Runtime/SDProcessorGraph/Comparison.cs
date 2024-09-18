@@ -19,7 +19,7 @@ namespace NodeGraphProcessor.Examples
 
 		public override string		name => "Comparison";
 
-		protected override void Process()
+		public override void Process()
 		{
 			switch (compareFunction)
 			{

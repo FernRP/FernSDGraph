@@ -1,7 +1,7 @@
 ﻿using GraphProcessor;
 using Newtonsoft.Json;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     public class SDExtensionNode : SDNode
     {
@@ -15,7 +15,7 @@ namespace FernNPRCore.SDNodeGraph
 
         public virtual string header => name;
         public virtual object args => null;
-        protected override void Process()
+        public override void Process()
         {
             base.Process();
             extensionOut = GetExtension(header, args, extensionInput);

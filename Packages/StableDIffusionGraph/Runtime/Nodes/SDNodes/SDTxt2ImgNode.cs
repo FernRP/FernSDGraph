@@ -17,7 +17,7 @@ using UnityEngine.Experimental.Rendering;
 using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Txt2Img")]
     public class SDTxt2ImgNode : LinearSDProcessorNode
@@ -190,6 +190,8 @@ namespace FernNPRCore.SDNodeGraph
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
                 httpWebRequest.Timeout = 1000 * 60 * 5;
+                
+                Debug.Log(SDGraphResource.SdGraphDataHandle.GetServerURL() + txt2ImgAPI);
 
                 // add auth-header to request
                 if (SDGraphResource.SdGraphDataHandle.GetUseAuth() &&

@@ -12,14 +12,12 @@ using UnityEditor;
 using UnityEngine.Events;
 
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
 	
 	[System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Set Model")]
 	public class SDSetModelNode : LinearSDProcessorNode
 	{
-		[Input("Server URL")] public string ServerURL;
-		
         [HideInInspector]
         public string[] modelNames;
         
@@ -45,6 +43,8 @@ namespace FernNPRCore.SDNodeGraph
         {
             // Stable diffusion API url for setting a model
             string url = SDGraphResource.SdGraphDataHandle.GetServerURL()+SDGraphResource.SdGraphDataHandle.OptionAPI;
+            
+            Debug.Log(url);
 
             // Load the list of models if not filled already
             if (string.IsNullOrEmpty(Model))
@@ -108,7 +108,7 @@ namespace FernNPRCore.SDNodeGraph
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
                         string result = streamReader.ReadToEnd();
-                        SDUtil.Log("Set Model");
+                        SDUtil.Log("Set Model: " + result);
                     }
                 }
                 catch (WebException e)

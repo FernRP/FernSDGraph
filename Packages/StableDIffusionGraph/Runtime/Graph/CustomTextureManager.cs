@@ -11,7 +11,7 @@ using System;
 using UnityEngine.Profiling;
 
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
 #if UNITY_EDITOR
     [UnityEditor.InitializeOnLoad]

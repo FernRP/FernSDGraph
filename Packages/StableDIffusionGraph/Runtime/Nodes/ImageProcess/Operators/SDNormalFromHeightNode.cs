@@ -4,7 +4,7 @@ using GraphProcessor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Normal Form Height")]
     public class SDNormalFromHeightNode : SDShaderNode
@@ -15,8 +15,11 @@ namespace FernNPRCore.SDNodeGraph
         
         public override string name => "SD Normal From Height";
 
-        public override string shaderName => "Hidden/SDMix/NormalFromHeight";
-
+        protected override void Enable()
+        {
+            shader = SDGraphResource.SdGraphDataHandle.shaderData.normalFromHeightPS;
+            base.Enable();
+        }
 
         protected override void Process(CommandBuffer cmd)
         {

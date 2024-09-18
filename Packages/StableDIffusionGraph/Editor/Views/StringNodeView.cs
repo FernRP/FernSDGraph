@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 using GraphProcessor;
 using System.Linq;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEditor.SDGraph
 {
     [NodeCustomEditor(typeof(StringNode))]
     public class StringNodeView : SDNodeView

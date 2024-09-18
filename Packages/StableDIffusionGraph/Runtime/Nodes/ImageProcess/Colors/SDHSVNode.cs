@@ -4,7 +4,7 @@ using GraphProcessor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD HSV")]
     public class SDHSVNode : SDShaderNode
@@ -22,7 +22,11 @@ namespace FernNPRCore.SDNodeGraph
         
         public override string name => "Hue Saturation Value";
 
-        public override string shaderName => "Hidden/SDMix/HSV";
+        protected override void Enable()
+        {
+            shader = SDGraphResource.SdGraphDataHandle.shaderData.hsvPS;
+            base.Enable();
+        }
 
         protected override void Process(CommandBuffer cmd)
         {

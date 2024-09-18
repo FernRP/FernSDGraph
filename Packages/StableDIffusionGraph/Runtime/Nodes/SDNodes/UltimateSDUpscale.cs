@@ -2,7 +2,7 @@
 using GraphProcessor;
 using UnityEngine;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     [Serializable, NodeMenuItem("Stable Diffusion Graph/Ultimate SD Upscale")]
     public class UltimateSDUpscale : SDNode
@@ -57,7 +57,7 @@ namespace FernNPRCore.SDNodeGraph
         
         public override string name => "Ultimate SD Upscale";
 
-        protected override void Process()
+        public override void Process()
         {
             script.name = name;
             script.args = new object[]

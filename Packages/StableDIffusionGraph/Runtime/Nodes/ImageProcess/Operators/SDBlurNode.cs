@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using FernNPRCore.SDNodeGraph;
+using UnityEngine.SDGraph;
 using GraphProcessor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Blur")]
     public class SDBlurNode : SDShaderNode
@@ -13,7 +13,11 @@ namespace FernNPRCore.SDNodeGraph
         [Input(name = "Source")] public Texture inputImage;
         public override string name => "SD Blur";
 
-        public override string shaderName => "Hidden/SDMix/Blur";
+        public override void OnNodeCreated()
+        {
+            base.OnNodeCreated();
+            shader = SDGraphResource.SdGraphDataHandle.shaderData.blurPS;
+        }
 
         [Range(0, 64)] public float radius = 0;
 

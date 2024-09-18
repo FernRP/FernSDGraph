@@ -7,15 +7,16 @@ using GraphProcessor;
 using UnityEditor.Callbacks;
 using System.IO;
 using System.Reflection;
+using UnityEngine.SDGraph;
 using UnityEditor.ProjectWindowCallback;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEditor.SDGraph
 {
     public class SDGraphAssetCallback
     {
         public static readonly string Extension = "asset";
 
-        [MenuItem("Assets/Create/FernGraph/NodeGraph/Stable Diffusion Graph", false, 10)]
+        [MenuItem("Assets/Create/SDGraph/NodeGraph/Stable Diffusion Graph", false, 10)]
         public static void CreateGraphPorcessor()
         {
             var graph = ScriptableObject.CreateInstance<StableDiffusionGraph>();

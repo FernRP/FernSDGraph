@@ -9,7 +9,7 @@ using Unity.VisualScripting;
 using UnityEngine.Rendering;
 using Debug = UnityEngine.Debug;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
 	[System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Preview")]
 	public class SDPreviewNode : SDNode
@@ -21,6 +21,8 @@ namespace FernNPRCore.SDNodeGraph
 		[Output(name = "Image")]
 		public CustomRenderTexture outImage;
 
+		public bool alwaysUpdate = false;
+
 		public override string name => "SD Preview";
 
 		public override Texture previewTexture => outImage;
@@ -29,9 +31,21 @@ namespace FernNPRCore.SDNodeGraph
 		{
 			hasPreview = true;
 			hasSettings = true;
+			isUpdate = alwaysUpdate;
 			base.Enable();
 
 			UpdateTempRenderTexture(ref outImage);
+		}
+
+		public override void Update()
+		{
+			base.Update();
+			if (alwaysUpdate)
+			{				
+				UpdateTempRenderTexture(ref outImage);
+				if(inputImage != null) Graphics.Blit(inputImage, outImage);
+				outImage.Update();
+			}
 		}
 
 		protected override void Process(CommandBuffer cmd)

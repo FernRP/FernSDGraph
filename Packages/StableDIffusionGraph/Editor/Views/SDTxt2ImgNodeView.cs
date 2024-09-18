@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using FernNPRCore.SDNodeGraph;
+using UnityEditor.SDGraph;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
 using GraphProcessor;
+using UnityEngine.SDGraph;
 
 [NodeCustomEditor(typeof(SDTxt2ImgNode))]
 public class SDTxt2ImgNodeView : SDNodeView
@@ -28,7 +29,9 @@ public class SDTxt2ImgNodeView : SDNodeView
 		List<string> samplerMethodList = new List<string>();
 		samplerMethodList.AddRange(SDGraphResource.SdGraphDataHandle.samplers);
 
-		samplerMethodDropdown = new DropdownField(samplerMethodList, 0);
+		var index = samplerMethodList.IndexOf(node.samplerMethod);
+		
+		samplerMethodDropdown = new DropdownField(samplerMethodList, index);
 		samplerMethodDropdown.RegisterValueChangedCallback(e =>
 		{
 			node.samplerMethod = e.newValue;

@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-using FernNPRCore.SDNodeGraph;
+using UnityEditor.SDGraph;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
 using GraphProcessor;
+using UnityEngine.SDGraph;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEditor.SDGraph
 {
 	[NodeCustomEditor(typeof(SDCameraRenderNode))]
 	public class SDCameraRenderNodeView : SDNodeView
@@ -27,6 +28,11 @@ namespace FernNPRCore.SDNodeGraph
 		{
 			base.Disable();
 			OnExpandAction = null;
+		}
+
+		protected override void DrawDefaultInspector(bool fromInspector = false)
+		{
+			base.DrawDefaultInspector(fromInspector);
 		}
 
 		private void OnExpandChange(bool isExpand)

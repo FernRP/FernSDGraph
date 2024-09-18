@@ -4,7 +4,7 @@ using UnityEngine;
 using GraphProcessor;
 using System.Linq;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Prompt")]
     public class SDPromptNode : SDNode
@@ -16,7 +16,7 @@ namespace FernNPRCore.SDNodeGraph
 
         public override string name => "SD Prompt";
 
-        protected override void Process()
+        public override void Process()
         {
             output.positive = positive;
             output.negative = negative;

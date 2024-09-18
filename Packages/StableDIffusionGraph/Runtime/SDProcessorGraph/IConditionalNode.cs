@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using GraphProcessor;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
 	public interface IConditionalNode
 	{

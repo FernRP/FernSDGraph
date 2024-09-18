@@ -15,7 +15,7 @@ using UnityEngine.Experimental.Rendering;
 using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
 	[System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Img2Img")]
 	public class SDImg2ImgNode : LinearSDProcessorNode

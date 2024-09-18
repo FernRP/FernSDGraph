@@ -8,21 +8,20 @@ using System.Text;
 using Newtonsoft.Json;
 using UnityEngine.Networking;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
 	[System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD ControlNet")]
 	public class SDControlNetNode : LinearSDProcessorNode
 	{
 		[Input("Image")] public Texture controlNetImg;
 		[Input("Weight"), ShowAsDrawer] public float weight = 1;
-		[Input("Resize Mode"), ShowAsDrawer] public ResizeMode resize_mode = ResizeMode.ScaleToFit_InnerFit;
+		[Input("Resize Mode"), ShowAsDrawer] public ResizeMode resize_mode = ResizeMode.ScaleToFitInnerFit;
 		[Input("Low Vrm"), ShowAsDrawer] public bool lowvram = false;
 		[Input("Processor Res"), ShowAsDrawer] public int processor_res = 64;
 		[Input("Threshold a"), ShowAsDrawer] public int threshold_a = 64;
 		[Input("Threshold b"), ShowAsDrawer] public int threshold_b = 64;
 		[Input("Guidance Start"), ShowAsDrawer] public float guidance_start = 0.0f;
 		[Input("Guidance End"), ShowAsDrawer] public float guidance_end = 1.0f;
-		[Input("Guidance"), ShowAsDrawer] public float guidance = 1f;
 		[Input("Control Mode"), ShowAsDrawer] public ControlMode control_mode = ControlMode.Balanced;
 		[Output("ControlNet"), SerializeField] public ControlNetData controlNet;
 		
@@ -40,6 +39,10 @@ namespace FernNPRCore.SDNodeGraph
 		public int currentMoudleListIndex = 0;
 
 		public override string		name => "SD ControlNet";
+		
+		private string[] controlModes = new string[] {"Balanced", "My prompt is more important", "ControlNet is more important"};
+		private string[] resizeModes = new string[] {"Just Resize", "Scale to Fit (Inner Fit)", "Envelope (Outer Fit)"};
+		
 
 		protected override void Enable()
 		{
@@ -53,7 +56,7 @@ namespace FernNPRCore.SDNodeGraph
 		/// Get the list of available Stable Diffusion models.
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerator ControlNetModelListAsync()
+		public IEnumerator ControlNetModelListAsync(Action finishFallback)
 		{
 			// Stable diffusion API url for getting the models list
 			string url = SDGraphResource.SdGraphDataHandle.GetServerURL() + SDGraphResource.SdGraphDataHandle.ControlNetModelList;
@@ -83,6 +86,8 @@ namespace FernNPRCore.SDNodeGraph
 				{
 					modelList.Add(m);
 				}
+				
+				finishFallback?.Invoke();
 
 				//model = modelList[0];
 			}
@@ -96,7 +101,7 @@ namespace FernNPRCore.SDNodeGraph
 		/// Get the list of available Stable Diffusion models.
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerator ControlNetMoudleList()
+		public IEnumerator ControlNetMoudleList(Action finishCallback)
 		{
 			// Stable diffusion API url for getting the models list
 			string url = SDGraphResource.SdGraphDataHandle.GetServerURL() + SDGraphResource.SdGraphDataHandle.ControlNetMoudleList;
@@ -125,6 +130,8 @@ namespace FernNPRCore.SDNodeGraph
 				{
 					moudleList.Add(m);
 				}
+				
+				finishCallback?.Invoke();
 
 				module = moudleList[0];
 			}
@@ -142,31 +149,30 @@ namespace FernNPRCore.SDNodeGraph
 		{
 			if (model.Equals("none"))
 			{
-				yield return ControlNetModelListAsync();
+				yield return ControlNetModelListAsync(null);
 			}
 			if (module.Equals("none"))
 			{
-				yield return ControlNetMoudleList();
+				yield return ControlNetMoudleList(null);
 			}
             
 			controlNet.module = module;
 			controlNet.model = model;
 			controlNet.weight = weight;
-			controlNet.resize_mode = (int)resize_mode;
+			controlNet.resize_mode = resizeModes[(int)resize_mode];
 			controlNet.lowvram = lowvram;
 			controlNet.processor_res = processor_res;
 			controlNet.threshold_a = threshold_a;
 			controlNet.threshold_b = threshold_b;
 			controlNet.guidance_start = guidance_start;
 			controlNet.guidance_end = guidance_end;
-			controlNet.guidance = guidance;
-			controlNet.control_mode = (int)control_mode;
-			if (controlNetImg != null)
-			{
+			controlNet.control_mode = controlModes[(int)control_mode];
+			//if (controlNetImg != null)
+			//{
 				byte[] inputImgBytes = SDUtil.TextureToTexture2D(controlNetImg).EncodeToPNG();
 				string inputImgString = Convert.ToBase64String(inputImgBytes);
 				controlNet.input_image = inputImgString;
-			}
+			//}
 			yield return null;
 		}
 
@@ -179,28 +185,27 @@ namespace FernNPRCore.SDNodeGraph
 		}
 		
 		
-		protected override void Process()
+		public override void Process()
 		{
 			base.Process();
 			controlNet ??= new ControlNetData();
 			controlNet.module = module;
 			controlNet.model = model;
 			controlNet.weight = weight;
-			controlNet.resize_mode = (int)resize_mode;
+			controlNet.resize_mode = resizeModes[(int)resize_mode];
 			controlNet.lowvram = lowvram;
 			controlNet.processor_res = processor_res;
 			controlNet.threshold_a = threshold_a;
 			controlNet.threshold_b = threshold_b;
 			controlNet.guidance_start = guidance_start;
 			controlNet.guidance_end = guidance_end;
-			controlNet.guidance = guidance;
-			controlNet.control_mode = (int)control_mode;
-			if (controlNetImg != null)
-			{
+			controlNet.control_mode = controlModes[(int)control_mode];
+			//if (controlNetImg != null)
+			//{
 				byte[] inputImgBytes = SDUtil.TextureToTexture2D(controlNetImg).EncodeToPNG();
 				string inputImgString = Convert.ToBase64String(inputImgBytes);
 				controlNet.input_image = inputImgString;
-			}
+			//}
 		}
 	}
 }

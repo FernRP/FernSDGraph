@@ -23,7 +23,7 @@ Shader "Hidden/HistogramPreview"
             #pragma shader_feature CRT_2D CRT_3D CRT_CUBE
             // #pragma enable_d3d11_debug_symbols
 
-            #include "../../Runtime/Shaders/SDMixUtils.hlsl"
+            #include "Packages/com.tateam.sdgraph/Shaders/SDMixUtils.hlsl"
             #include "HistogramData.hlsl"
 
             StructuredBuffer<HistogramBucket>   _HistogramReadOnly;

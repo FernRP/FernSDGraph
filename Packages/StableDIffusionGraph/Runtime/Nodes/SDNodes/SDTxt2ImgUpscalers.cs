@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 
-namespace FernNPRCore.SDNodeGraph
+namespace UnityEngine.SDGraph
 {
     [System.Serializable, NodeMenuItem("Stable Diffusion Graph/SD Hires Upscaler (txt2img)")]
     public class SDTxt2ImgUpscalers : SDNode
